@@ -1,0 +1,102 @@
+.profile-section-container {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  max-height: 600px;
+
+  &.closed {
+    max-height: 70px;
+  }
+}
+
+.profile-section-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.profile-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.profile-section-icon {
+  font-size: 22px;
+  color: #6b7280;
+}
+
+.profile-section-content {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.toolbar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 5px;
+  color: #374151;
+}
+
+.toolbar button:hover {
+  background: #e5f0ff;
+}
+
+.toolbar button.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* TipTap Editor */
+.editor-wrapper {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  min-height: 140px;
+  padding: 12px;
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+/* AI Button */
+.ai-button {
+  width: fit-content;
+  padding: 10px 18px;
+  background: #2563eb;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  transition: background 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: #1e40af;
+  }
+}
