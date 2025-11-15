@@ -1,6 +1,7 @@
 import React from "react";
 import { Typewriter } from "react-simple-typewriter";
 import "./herosection.scss";
+import { MdOutlineWork, MdOutlineWorkOutline } from "react-icons/md";
 
 const HeroSection: React.FC = () => {
   return (
@@ -42,7 +43,7 @@ const HeroSection: React.FC = () => {
               ✓ Incrementa Tus Posibilidades De Obtener Empleo
             </span>
             <span className="hero-section__reviews">
-               Trabaja Con Nosotros | Gana en USD.
+               <MdOutlineWorkOutline /> Trabaja Con Nosotros | Gana en USD.
             </span>
           </div>
         </div>
