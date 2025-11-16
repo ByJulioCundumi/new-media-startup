@@ -234,6 +234,9 @@
   opacity: 1;
   overflow: hidden;
   transition: max-height 0.35s ease, opacity 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .personalinfo-section.closed .collapsible-content {

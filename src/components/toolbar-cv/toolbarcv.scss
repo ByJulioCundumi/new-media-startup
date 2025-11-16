@@ -1,0 +1,118 @@
+.cv-toolbar {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 14px 20px;
+  position: sticky;
+  top: 5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  gap: 14px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+/* Title */
+.cv-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #1d1d1f;
+}
+
+.cv-title-input {
+  font-size: 20px;
+  padding: 4px 8px;
+  border: 1px solid #c8c8d9;
+  border-radius: 6px;
+  outline: none;
+  color: #1d1d1f;
+
+  &:focus {
+    border-color: #3f51ff;
+    box-shadow: 0 0 0 2px rgba(63, 81, 255, 0.15);
+  }
+}
+
+/* Buttons */
+.cv-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  background: #f5f5f9;
+  border: 1px solid #d9d9e6;
+  color: #2e2e42;
+
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+
+  svg {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: #ececff;
+    border-color: #b3b3ff;
+  }
+
+  &.primary {
+    background: #3f51ff;
+    border-color: #3f51ff;
+    color: #fff;
+
+    &:hover {
+      background: #2e3ee0;
+    }
+  }
+
+  &.success {
+    background: #00b37e;
+    border-color: #00b37e;
+    color: #fff;
+
+    &:hover {
+      background: #009268;
+    }
+  }
+}
+
+/* Icon-only button */
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  color: #3f51ff;
+  font-size: 20px;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: scale(1.12);
+    color: #2e3ee0;
+  }
+}

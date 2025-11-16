@@ -5,7 +5,7 @@ import Navbar from "../../components/navbar/Navbar"
 
 function LoggedSection() {
   return (
-    <section className="loggedSection">
+    <section className="logged-section">
         <Navbar/>
         <Sidebar/>
         <Outlet/>

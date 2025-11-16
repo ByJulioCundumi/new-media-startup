@@ -14,13 +14,16 @@ import HobbiesSection from "./hobbies-section/HobbiesSection"
 import ReferencesSection from "./references-section/ReferencesSection"
 import RelevantAwards from "./relevant-awards/RelevantAwards"
 import CustomSection from "./custom-section/CustomSection"
+import ToolbarCV from "../../components/toolbar-cv/ToolbarCV"
 
 function CreateCv() {
   const {showAwards, showCourses, showCustom, showHobbies, showLinks, showReferences} = useSelector((state:IState)=> state.addSections)
 
   return (
     <section className="create-cv">
-        <div className="create-cv__left">
+      <ToolbarCV />
+        <div className="create-cv__body">
+          <div className="create-cv__left">
           <div className="create-cv__left--sections">
             <PersonalInfoSection/>
             <Tiptap/>
@@ -39,6 +42,7 @@ function CreateCv() {
         </div>
         <div className="create-cv__right">
           preview
+        </div>
         </div>
     </section>
   )

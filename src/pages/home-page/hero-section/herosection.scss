@@ -1,6 +1,7 @@
 .hero-section {
   width: 100%;
-  padding: 70px 2rem;
+  padding: 75px 2rem;
+  padding-bottom: 0;
   padding-top: 100px;
   height: fit-content;
   background: #ffffff;
@@ -11,6 +12,7 @@
   &__container {
     width: 100%;
     max-width: 1250px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
