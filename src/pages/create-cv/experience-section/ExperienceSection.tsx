@@ -1,77 +1,34 @@
+// ExperienceSection.tsx
 import React, { useState } from "react";
 import {
-  FiChevronUp,
+  FiChevronDown,
   FiTrash2,
   FiPlus,
-  FiChevronDown,
 } from "react-icons/fi";
 import "./experiencesection.scss";
 
-interface ExperienceEntry {
-  id: string;
-  position: string;
-  employer: string;
-  location: string;
-  startMonth: string;
-  startYear: string;
-  endMonth?: string;
-  endYear?: string;
-  present: boolean;
-  description: string;
-}
-
-interface ExperienceSectionProps {
-  initialData?: ExperienceEntry[];
-  onChange?: (data: ExperienceEntry[]) => void;
-}
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import {
+  addExperience,
+  updateExperience,
+  removeExperience,
+} from "../../../reducers/experienceSlice";
 
 const months = [
-  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+  "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
 ];
 
 const years = Array.from({ length: 50 }, (_, i) => `${2025 - i}`);
 
-const ExperienceSection: React.FC<ExperienceSectionProps> = ({
-  initialData,
-  onChange,
-}) => {
+const ExperienceSection: React.FC = () => {
+  const dispatch = useDispatch();
+  const entries = useSelector((state: IState) => state.experienceEntries);
   const [isOpen, setIsOpen] = useState(true);
 
-  const [entries, setEntries] = useState<ExperienceEntry[]>(
-    initialData || []
-  );
-
-  const addEntry = () => {
-    const newEntry: ExperienceEntry = {
-      id: crypto.randomUUID(),
-      position: "",
-      employer: "",
-      location: "",
-      startMonth: "",
-      startYear: "",
-      endMonth: "",
-      endYear: "",
-      present: false,
-      description: "",
-    };
-    const updated = [...entries, newEntry];
-    setEntries(updated);
-    onChange?.(updated);
-  };
-
-  const updateEntry = (id: string, field: keyof ExperienceEntry, value: any) => {
-    const updated = entries.map((e) =>
-      e.id === id ? { ...e, [field]: value } : e
-    );
-    setEntries(updated);
-    onChange?.(updated);
-  };
-
-  const removeEntry = (id: string) => {
-    const updated = entries.filter((e) => e.id !== id);
-    setEntries(updated);
-    onChange?.(updated);
+  const updateField = (id: string, field: any, value: any) => {
+    dispatch(updateExperience({ id, field, value }));
   };
 
   return (
@@ -79,53 +36,57 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
       <div className="experience-section__header">
         <h2>Experiencia Profesional</h2>
 
-        <button className={`toggle-btn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <button
+          className={`toggle-btn ${isOpen ? "open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <FiChevronDown />
         </button>
       </div>
 
       {isOpen && (
-        <>
-          <div className="experience-section__content">
-            {entries.map((entry) => (
-              <div className="experience-card" key={entry.id}>
-                <div className="card-grid">
-                  
-                  <div className="field">
-                    <label>Puesto</label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Desarrollador Frontend"
-                      value={entry.position}
-                      onChange={(e) =>
-                        updateEntry(entry.id, "position", e.target.value)
-                      }
-                    />
-                  </div>
+        <div className="experience-section__content">
+          {entries.map((entry) => (
+            <div className="experience-card" key={entry.id}>
+              <div className="card-grid">
+                
+                <div className="field">
+                  <label>Puesto</label>
+                  <input
+                    type="text"
+                    placeholder="Ej: Desarrollador Backend"
+                    value={entry.position}
+                    onChange={(e) =>
+                      updateField(entry.id, "position", e.target.value)
+                    }
+                  />
+                </div>
 
-                  <div className="field">
-                    <label>Empleador</label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Google"
-                      value={entry.employer}
-                      onChange={(e) =>
-                        updateEntry(entry.id, "employer", e.target.value)
-                      }
-                    />
-                  </div>
+                <div className="field">
+                  <label>Empleador</label>
+                  <input
+                    type="text"
+                    placeholder="Ej: Google, Freelancer, Mi empresa"
+                    value={entry.employer}
+                    onChange={(e) =>
+                      updateField(entry.id, "employer", e.target.value)
+                    }
+                  />
+                </div>
 
-                  <div className="field">
-                    <label>Localidad</label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Madrid, España"
-                      value={entry.location}
-                      onChange={(e) =>
-                        updateEntry(entry.id, "location", e.target.value)
-                      }
-                    />
-                  </div>
+                <div className="field">
+                  <label>Localidad</label>
+                  <input
+                    type="text"
+                    placeholder="Ej: Bogotá, Colombia"
+                    value={entry.location}
+                    onChange={(e) =>
+                      updateField(entry.id, "location", e.target.value)
+                    }
+                  />
+                </div>
+
+                <div className="experience-section__dates">
 
                   <div className="field">
                     <label>Fecha de Inicio</label>
@@ -133,7 +94,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                       <select
                         value={entry.startMonth}
                         onChange={(e) =>
-                          updateEntry(entry.id, "startMonth", e.target.value)
+                          updateField(entry.id, "startMonth", e.target.value)
                         }
                       >
                         <option value="">Mes</option>
@@ -145,7 +106,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                       <select
                         value={entry.startYear}
                         onChange={(e) =>
-                          updateEntry(entry.id, "startYear", e.target.value)
+                          updateField(entry.id, "startYear", e.target.value)
                         }
                       >
                         <option value="">Año</option>
@@ -163,7 +124,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                         disabled={entry.present}
                         value={entry.endMonth}
                         onChange={(e) =>
-                          updateEntry(entry.id, "endMonth", e.target.value)
+                          updateField(entry.id, "endMonth", e.target.value)
                         }
                       >
                         <option value="">Mes</option>
@@ -176,7 +137,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                         disabled={entry.present}
                         value={entry.endYear}
                         onChange={(e) =>
-                          updateEntry(entry.id, "endYear", e.target.value)
+                          updateField(entry.id, "endYear", e.target.value)
                         }
                       >
                         <option value="">Año</option>
@@ -191,36 +152,39 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                         type="checkbox"
                         checked={entry.present}
                         onChange={(e) =>
-                          updateEntry(entry.id, "present", e.target.checked)
+                          updateField(entry.id, "present", e.target.checked)
                         }
                       />
                       Actualmente trabajando
                     </label>
                   </div>
-
-                  <div className="field full">
-                    <label>Descripción</label>
-                    <textarea
-                      placeholder="Ej: Responsable de desarrollo frontend en proyectos web…"
-                      value={entry.description}
-                      onChange={(e) =>
-                        updateEntry(entry.id, "description", e.target.value)
-                      }
-                    />
-                  </div>
                 </div>
 
-                <button className="remove-btn" onClick={() => removeEntry(entry.id)}>
-                  <FiTrash2 />
-                </button>
+                <div className="field full">
+                  <label>Descripción</label>
+                  <textarea
+                    placeholder="Describe tus responsabilidades, logros, tecnologías utilizadas, etc."
+                    value={entry.description}
+                    onChange={(e) =>
+                      updateField(entry.id, "description", e.target.value)
+                    }
+                  />
+                </div>
               </div>
-            ))}
 
-            <button className="add-btn" onClick={addEntry}>
-              <FiPlus /> Agregar Experiencia
-            </button>
-          </div>
-        </>
+              <button
+                className="remove-btn"
+                onClick={() => dispatch(removeExperience(entry.id))}
+              >
+                <FiTrash2 />
+              </button>
+            </div>
+          ))}
+
+          <button className="add-btn" onClick={() => dispatch(addExperience())}>
+            <FiPlus /> Agregar Experiencia
+          </button>
+        </div>
       )}
     </div>
   );

@@ -1,47 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./languagessection.scss";
+import type { IState } from "../../../interfaces/IState";
+import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
 
-interface Language {
-  id: string;
-  name: string;
-  level: "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Nativo";
-}
+const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
-interface LanguagesSectionProps {
-  initialData?: Language[];
-  onChange?: (data: Language[]) => void;
-}
+const LanguagesSection: React.FC = () => {
+  const dispatch = useDispatch();
+  const languages = useSelector((state: IState) => state.languagesEntries);
 
-const levels: Language["level"][] = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"];
-
-const LanguagesSection: React.FC<LanguagesSectionProps> = ({ initialData, onChange }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [languages, setLanguages] = useState<Language[]>(initialData || []);
 
   const addLanguage = () => {
-    const newLang: Language = {
-      id: crypto.randomUUID(),
-      name: "",
-      level: "A1",
-    };
-    const updated = [...languages, newLang];
-    setLanguages(updated);
-    onChange?.(updated);
-  };
-
-  const updateLanguage = (id: string, field: keyof Language, value: string) => {
-    const updated = languages.map((l) =>
-      l.id === id ? { ...l, [field]: value } : l
+    dispatch(
+      addLanguageEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        level: "A1",
+      })
     );
-    setLanguages(updated);
-    onChange?.(updated);
-  };
-
-  const removeLanguage = (id: string) => {
-    const updated = languages.filter((l) => l.id !== id);
-    setLanguages(updated);
-    onChange?.(updated);
   };
 
   return (
@@ -67,7 +47,15 @@ const LanguagesSection: React.FC<LanguagesSectionProps> = ({ initialData, onChan
                     type="text"
                     placeholder="Ej: Español"
                     value={lang.name}
-                    onChange={(e) => updateLanguage(lang.id, "name", e.target.value)}
+                    onChange={(e) =>
+                      dispatch(
+                        updateLanguageEntry({
+                          id: lang.id,
+                          field: "name",
+                          value: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </div>
 
@@ -75,7 +63,15 @@ const LanguagesSection: React.FC<LanguagesSectionProps> = ({ initialData, onChan
                   <label>Nivel</label>
                   <select
                     value={lang.level}
-                    onChange={(e) => updateLanguage(lang.id, "level", e.target.value)}
+                    onChange={(e) =>
+                      dispatch(
+                        updateLanguageEntry({
+                          id: lang.id,
+                          field: "level",
+                          value: e.target.value,
+                        })
+                      )
+                    }
                   >
                     {levels.map((lvl) => (
                       <option key={lvl} value={lvl}>
@@ -86,7 +82,10 @@ const LanguagesSection: React.FC<LanguagesSectionProps> = ({ initialData, onChan
                 </div>
               </div>
 
-              <button className="remove-btn" onClick={() => removeLanguage(lang.id)}>
+              <button
+                className="remove-btn"
+                onClick={() => dispatch(removeLanguageEntry(lang.id))}
+              >
                 <FiTrash2 />
               </button>
             </div>

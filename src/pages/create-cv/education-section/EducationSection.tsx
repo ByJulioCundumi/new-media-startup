@@ -1,76 +1,38 @@
 import React, { useState } from "react";
-import {
-  FiChevronUp,
-  FiEdit2,
-  FiTrash2,
-  FiPlus,
-  FiChevronDown,
-} from "react-icons/fi";
+import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
 import "./educationsection.scss";
 
-interface EducationEntry {
-  id: string;
-  institution: string;
-  location: string;
-  startMonth: string;
-  startYear: string;
-  endMonth?: string;
-  endYear?: string;
-  present: boolean;
-  description: string;
-}
-
-interface EducationSectionProps {
-  initialData?: EducationEntry[];
-  onChange?: (data: EducationEntry[]) => void;
-}
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import type { IEducationEntry } from "../../../interfaces/IEducation";
+import {
+  addEducation,
+  removeEducation,
+  updateEducation,
+} from "../../../reducers/educationSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
 ];
 
 const years = Array.from({ length: 50 }, (_, i) => `${2025 - i}`);
 
-const EducationSection: React.FC<EducationSectionProps> = ({
-  initialData,
-  onChange,
-}) => {
-  const [isOpen, setIsOpen] = useState(true);
+const EducationSection: React.FC = () => {
+  const dispatch = useDispatch();
 
-  const [entries, setEntries] = useState<EducationEntry[]>(
-    initialData || []
+  const entries = useSelector(
+    (state: IState) => state.educationEntries
   );
 
-  const addEntry = () => {
-    const newEntry: EducationEntry = {
-      id: crypto.randomUUID(),
-      institution: "",
-      location: "",
-      startMonth: "",
-      startYear: "",
-      endMonth: "",
-      endYear: "",
-      present: false,
-      description: "",
-    };
-    const updated = [...entries, newEntry];
-    setEntries(updated);
-    onChange?.(updated);
-  };
+  const [isOpen, setIsOpen] = useState(true);
 
-  const updateEntry = (id: string, field: keyof EducationEntry, value: any) => {
-    const updated = entries.map((e) =>
-      e.id === id ? { ...e, [field]: value } : e
-    );
-    setEntries(updated);
-    onChange?.(updated);
-  };
-
-  const removeEntry = (id: string) => {
-    const updated = entries.filter((e) => e.id !== id);
-    setEntries(updated);
-    onChange?.(updated);
+  const updateField = (
+    id: string,
+    field: keyof IEducationEntry,
+    value: any
+  ) => {
+    dispatch(updateEducation({ id, field, value }));
   };
 
   return (
@@ -78,135 +40,169 @@ const EducationSection: React.FC<EducationSectionProps> = ({
       <div className="education-section__header">
         <h2>Formación Académica</h2>
 
-        <button className={`toggle-btn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <button
+          className={`toggle-btn ${isOpen ? "open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <FiChevronDown />
         </button>
       </div>
 
       {isOpen && (
-        <>
-          <div className="education-section__content">
-            {entries.map((entry) => (
-              <div className="education-card" key={entry.id}>
-                <div className="card-grid">
-                  <div className="field">
-                    <label>Institución</label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Universidad Nacional"
-                      value={entry.institution}
+        <div className="education-section__content">
+          {entries.map((entry) => (
+            <div className="education-card" key={entry.id}>
+              <div className="card-grid">
+                {/* TÍTULO */}
+                <div className="field">
+                  <label>Título / Programa</label>
+                  <input
+                    type="text"
+                    value={entry.title}
+                    placeholder="Ej: Ingeniería de Sistemas"
+                    onChange={(e) =>
+                      updateField(entry.id, "title", e.target.value)
+                    }
+                  />
+                </div>
+
+                {/* INSTITUCIÓN */}
+                <div className="field">
+                  <label>Institución</label>
+                  <input
+                    type="text"
+                    value={entry.institution}
+                    placeholder="Ej: Universidad Nacional"
+                    onChange={(e) =>
+                      updateField(entry.id, "institution", e.target.value)
+                    }
+                  />
+                </div>
+
+                {/* LOCALIDAD */}
+                <div className="field">
+                  <label>Localidad</label>
+                  <input
+                    type="text"
+                    value={entry.location}
+                    placeholder="Ej: Bogotá, Colombia"
+                    onChange={(e) =>
+                      updateField(entry.id, "location", e.target.value)
+                    }
+                  />
+                </div>
+
+                <div className="education-section__dates">
+                  {/* FECHAS */}
+                <div className="field">
+                  <label>Fecha de Inicio</label>
+                  <div className="double">
+                    <select
+                      value={entry.startMonth}
                       onChange={(e) =>
-                        updateEntry(entry.id, "institution", e.target.value)
+                        updateField(entry.id, "startMonth", e.target.value)
                       }
-                    />
-                  </div>
+                    >
+                      <option value="">Mes</option>
+                      {months.map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
 
-                  <div className="field">
-                    <label>Localidad</label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Bogotá, Colombia"
-                      value={entry.location}
+                    <select
+                      value={entry.startYear}
                       onChange={(e) =>
-                        updateEntry(entry.id, "location", e.target.value)
+                        updateField(entry.id, "startYear", e.target.value)
                       }
-                    />
-                  </div>
-
-                  <div className="field">
-                    <label>Fecha de Inicio</label>
-                    <div className="double">
-                      <select
-                        value={entry.startMonth}
-                        onChange={(e) =>
-                          updateEntry(entry.id, "startMonth", e.target.value)
-                        }
-                      >
-                        <option value="">Mes</option>
-                        {months.map((m) => (
-                          <option key={m} value={m}>{m}</option>
-                        ))}
-                      </select>
-
-                      <select
-                        value={entry.startYear}
-                        onChange={(e) =>
-                          updateEntry(entry.id, "startYear", e.target.value)
-                        }
-                      >
-                        <option value="">Año</option>
-                        {years.map((y) => (
-                          <option key={y} value={y}>{y}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="field">
-                    <label>Fecha de Finalización</label>
-                    <div className="double">
-                      <select
-                        disabled={entry.present}
-                        value={entry.endMonth}
-                        onChange={(e) =>
-                          updateEntry(entry.id, "endMonth", e.target.value)
-                        }
-                      >
-                        <option value="">Mes</option>
-                        {months.map((m) => (
-                          <option key={m} value={m}>{m}</option>
-                        ))}
-                      </select>
-
-                      <select
-                        disabled={entry.present}
-                        value={entry.endYear}
-                        onChange={(e) =>
-                          updateEntry(entry.id, "endYear", e.target.value)
-                        }
-                      >
-                        <option value="">Año</option>
-                        {years.map((y) => (
-                          <option key={y} value={y}>{y}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <label className="present-toggle">
-                      <input
-                        type="checkbox"
-                        checked={entry.present}
-                        onChange={(e) =>
-                          updateEntry(entry.id, "present", e.target.checked)
-                        }
-                      />
-                      Actualmente cursando
-                    </label>
-                  </div>
-
-                  <div className="field full">
-                    <label>Descripción</label>
-                    <textarea
-                      placeholder="Ej: Licenciatura en Ingeniería de Sistemas..."
-                      value={entry.description}
-                      onChange={(e) =>
-                        updateEntry(entry.id, "description", e.target.value)
-                      }
-                    />
+                    >
+                      <option value="">Año</option>
+                      {years.map((y) => (
+                        <option key={y} value={y}>
+                          {y}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                <button className="remove-btn" onClick={() => removeEntry(entry.id)}>
-                  <FiTrash2 />
-                </button>
-              </div>
-            ))}
+                {/* FECHA FINAL */}
+                <div className="field">
+                  <label>Fecha de Finalización</label>
+                  <div className="double">
+                    <select
+                      disabled={entry.present}
+                      value={entry.endMonth}
+                      onChange={(e) =>
+                        updateField(entry.id, "endMonth", e.target.value)
+                      }
+                    >
+                      <option value="">Mes</option>
+                      {months.map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
 
-            <button className="add-btn" onClick={addEntry}>
-              <FiPlus /> Agregar Formación
-            </button>
-          </div>
-        </>
+                    <select
+                      disabled={entry.present}
+                      value={entry.endYear}
+                      onChange={(e) =>
+                        updateField(entry.id, "endYear", e.target.value)
+                      }
+                    >
+                      <option value="">Año</option>
+                      {years.map((y) => (
+                        <option key={y} value={y}>
+                          {y}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <label className="present-toggle">
+                    <input
+                      type="checkbox"
+                      checked={entry.present}
+                      onChange={(e) =>
+                        updateField(entry.id, "present", e.target.checked)
+                      }
+                    />
+                    Actualmente cursando
+                  </label>
+                </div>
+                </div>
+
+                {/* DESCRIPCIÓN */}
+                <div className="field full">
+                  <label>Informacion Extra</label>
+                  <textarea
+                    value={entry.description}
+                    placeholder="Ej: Modalidad presencial / virtual, etc..."
+                    onChange={(e) =>
+                      updateField(entry.id, "description", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* ELIMINAR */}
+              <button
+                className="remove-btn"
+                onClick={() => dispatch(removeEducation(entry.id))}
+              >
+                <FiTrash2 />
+              </button>
+            </div>
+          ))}
+
+          {/* AGREGAR */}
+          <button className="add-btn" onClick={() => dispatch(addEducation())}>
+            <FiPlus /> Agregar Formación
+          </button>
+        </div>
       )}
     </div>
   );

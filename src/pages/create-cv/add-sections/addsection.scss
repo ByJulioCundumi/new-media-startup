@@ -1,0 +1,138 @@
+.add-sections.improved {
+  background: #ffffff;
+  border: 1px solid rgba(90, 110, 255, 0.12);
+  border-radius: 22px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  box-shadow: 0 8px 24px rgba(0, 0, 60, 0.06);
+  transition: all 0.25s ease;
+
+  &__header {
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #232b88;
+      margin: 0;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      font-size: 15px;
+      color: #63658a;
+    }
+  }
+
+  &__content {
+    margin-top: 4px;
+  }
+}
+
+/* GRID */
+.selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+/* CARD */
+.selector-card {
+  background: #f7f7ff;
+  border: 1px solid rgba(130, 140, 255, 0.22);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+
+  text-align: left;
+
+  /* glass hover */
+  &:hover {
+    backdrop-filter: blur(6px);
+    border-color: #aab1ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(40, 50, 120, 0.12);
+  }
+}
+
+/* ICON WRAPPER */
+.card-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7ff;
+  transition: 0.3s ease;
+
+  .icon {
+      color: #3f48cc;
+      font-size: 22px;
+      transition: 0.3s ease;
+  }
+}
+
+/* TEXT */
+.info {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2a2a35;
+  }
+
+  .status {
+    font-size: 13px;
+    margin-top: 3px;
+    color: #6d6d85;
+  }
+}
+
+/* ACTIVE STATE */
+.selector-card.active {
+  background: #e7e9ff;
+  border: 1px solid #9aa2ff;
+
+  .card-icon-wrapper {
+    background: #4d56ff;
+
+    .icon {
+      color: #fff;
+    }
+  }
+
+  .info .label {
+    color: #242774;
+  }
+
+  .status {
+    color: #3840d0;
+    font-weight: 500;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .selector-card {
+    padding: 14px;
+  }
+
+  .card-icon-wrapper {
+    width: 42px;
+    height: 42px;
+
+    .icon {
+      font-size: 18px;
+    }
+  }
+}

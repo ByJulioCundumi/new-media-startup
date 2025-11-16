@@ -1,6 +1,7 @@
 .hero-section {
   width: 100%;
-  padding: 70px 0;
+  padding: 70px 2rem;
+  padding-top: 100px;
   height: fit-content;
   background: #ffffff;
   display: flex;
@@ -83,7 +84,9 @@
     font-size: 15px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 6px;
+    text-align: center;
 
     .hero-section__green {
       color: #8966fc;

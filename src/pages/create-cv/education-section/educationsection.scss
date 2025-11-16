@@ -33,6 +33,12 @@
     gap: 22px;
   }
 
+  &__dates{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .education-card {
     border: 1px solid rgba(90,110,255,0.18);
     border-radius: 18px;

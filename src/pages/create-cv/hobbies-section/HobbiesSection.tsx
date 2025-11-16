@@ -1,41 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./hobbiessection.scss";
 
-interface HobbyEntry {
-  id: string;
-  name: string;
-}
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import { addHobbyEntry, removeHobbyEntry, setHobbiesEntries, updateHobbyEntry } from "../../../reducers/hobbiesSlice";
 
-interface HobbiesSectionProps {
-  initialData?: HobbyEntry[];
-  onChange?: (data: HobbyEntry[]) => void;
-}
+const HobbiesSection: React.FC = () => {
+  const dispatch = useDispatch();
 
-const HobbiesSection: React.FC<HobbiesSectionProps> = ({ initialData, onChange }) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [hobbies, setHobbies] = useState<HobbyEntry[]>(initialData || []);
+  const hobbies = useSelector(
+    (state: IState) => state.hobbiesEntries
+  );
+
+  const [isOpen, setIsOpen] = React.useState(true);
+
+  // Inicializar si viene vacío
+  useEffect(() => {
+    if (!hobbies || hobbies.length === 0) {
+      dispatch(setHobbiesEntries([]));
+    }
+  }, []);
 
   const addHobby = () => {
-    const newHobby: HobbyEntry = {
-      id: crypto.randomUUID(),
-      name: "",
-    };
-    const updated = [...hobbies, newHobby];
-    setHobbies(updated);
-    onChange?.(updated);
+    dispatch(
+      addHobbyEntry({
+        id: crypto.randomUUID(),
+        name: "",
+      })
+    );
   };
 
   const updateHobby = (id: string, value: string) => {
-    const updated = hobbies.map((h) => (h.id === id ? { ...h, name: value } : h));
-    setHobbies(updated);
-    onChange?.(updated);
+    dispatch(updateHobbyEntry({ id, name: value }));
   };
 
   const removeHobby = (id: string) => {
-    const updated = hobbies.filter((h) => h.id !== id);
-    setHobbies(updated);
-    onChange?.(updated);
+    dispatch(removeHobbyEntry(id));
   };
 
   return (
@@ -60,6 +62,7 @@ const HobbiesSection: React.FC<HobbiesSectionProps> = ({ initialData, onChange }
                 value={hobby.name}
                 onChange={(e) => updateHobby(hobby.id, e.target.value)}
               />
+
               <button className="remove-btn" onClick={() => removeHobby(hobby.id)}>
                 <FiTrash2 />
               </button>

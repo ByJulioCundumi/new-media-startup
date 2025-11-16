@@ -227,3 +227,21 @@
 .toggle-btn.open svg {
   transform: rotate(180deg);
 }
+
+/* CONTENIDO COLAPSABLE */
+.collapsible-content {
+  max-height: 1000px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+
+.personalinfo-section.closed .collapsible-content {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.personalinfo-section.closed {
+  padding-bottom: 10px;
+}

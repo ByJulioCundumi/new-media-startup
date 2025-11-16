@@ -1,65 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import "./coursessection.scss";
-
-interface CourseEntry {
-  id: string;
-  name: string;
-  institution: string;
-  startDate: string;
-  endDate: string;
-  city?: string;
-  country?: string;
-  link?: string;
-  description?: string;
-  showLink?: boolean;
-}
+import type { ICourseEntry } from "../../../interfaces/ICourses";
+import type { IState } from "../../../interfaces/IState";
+import { addCourseEntry, removeCourseEntry, setCoursesEntries, updateCourseEntry } from "../../../reducers/coursesSlice";
 
 interface CoursesSectionProps {
-  initialData?: CourseEntry[];
-  onChange?: (data: CourseEntry[]) => void;
+  initialData?: ICourseEntry[];
+  onChange?: (data: ICourseEntry[]) => void;
 }
 
 const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }) => {
+  const dispatch = useDispatch();
+  const courses = useSelector((state: IState) => state.coursesEntries);
+
   const [isOpen, setIsOpen] = useState(true);
-  const [courses, setCourses] = useState<CourseEntry[]>(initialData || []);
+
+  // Sincronizar initialData si viene desde arriba
+  useEffect(() => {
+    if (initialData) {
+      dispatch(setCoursesEntries(initialData));
+    }
+  }, [initialData, dispatch]);
+
+  // Notificar cambios al padre
+  useEffect(() => {
+    onChange?.(courses);
+  }, [courses, onChange]);
 
   const addCourse = () => {
-    const newCourse: CourseEntry = {
-      id: crypto.randomUUID(),
-      name: "",
-      institution: "",
-      startDate: "",
-      endDate: "",
-      city: "",
-      country: "",
-      description: "",
-      showLink: false,
-    };
-    const updated = [...courses, newCourse];
-    setCourses(updated);
-    onChange?.(updated);
+    dispatch(
+      addCourseEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        institution: "",
+        startDate: "",
+        endDate: "",
+        city: "",
+        country: "",
+        description: "",
+        link: "",
+        showLink: false,
+      })
+    );
   };
 
-  const updateCourse = (id: string, field: keyof CourseEntry, value: any) => {
-    const updated = courses.map((c) =>
-      c.id === id ? { ...c, [field]: value } : c
-    );
-    setCourses(updated);
-    onChange?.(updated);
+  const updateCourse = (id: string, field: keyof ICourseEntry, value: any) => {
+    dispatch(updateCourseEntry({ id, field, value }));
   };
 
   const removeCourse = (id: string) => {
-    const updated = courses.filter((c) => c.id !== id);
-    setCourses(updated);
-    onChange?.(updated);
+    dispatch(removeCourseEntry(id));
   };
 
   const toggleLink = (id: string) => {
-    const updated = courses.map((c) =>
-      c.id === id ? { ...c, showLink: !c.showLink, link: c.showLink ? "" : c.link } : c
-    );
-    setCourses(updated);
+    const course = courses.find((c) => c.id === id);
+    if (!course) return;
+
+    const newShowLink = !course.showLink;
+
+    dispatch(updateCourseEntry({ id, field: "showLink", value: newShowLink }));
+
+    if (!newShowLink) {
+      dispatch(updateCourseEntry({ id, field: "link", value: "" }));
+    }
   };
 
   return (
@@ -119,7 +124,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
                 </div>
 
                 <div className="location-fields-vertical">
-                <div className="field">
+                  <div className="field">
                     <label>País</label>
                     <input
                       type="text"
@@ -128,6 +133,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
                       onChange={(e) => updateCourse(course.id, "country", e.target.value)}
                     />
                   </div>
+
                   <div className="field">
                     <label>Ciudad</label>
                     <input
@@ -139,17 +145,21 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
                   </div>
                 </div>
 
-                {/* Botón de agregar o quitar enlace */}
+                {/* Link */}
                 <div className="field full">
                   {course.showLink ? (
-                    <div className="link-input-row">
+                    <div className="courses-link-input-row">
                       <input
                         type="text"
                         placeholder="Ej: https://platzi.com/cursos/react"
                         value={course.link || ""}
                         onChange={(e) => updateCourse(course.id, "link", e.target.value)}
                       />
-                      <button type="button" className="remove-link-btn" onClick={() => toggleLink(course.id)}>
+                      <button
+                        type="button"
+                        className="remove-link-btn"
+                        onClick={() => toggleLink(course.id)}
+                      >
                         <FiX />
                       </button>
                     </div>
@@ -169,7 +179,9 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
                   <textarea
                     placeholder="Breve descripción del curso..."
                     value={course.description || ""}
-                    onChange={(e) => updateCourse(course.id, "description", e.target.value)}
+                    onChange={(e) =>
+                      updateCourse(course.id, "description", e.target.value)
+                    }
                   />
                 </div>
               </div>

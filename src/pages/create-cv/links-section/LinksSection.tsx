@@ -1,45 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import "./linkssection.scss";
-
-interface LinkItem {
-  id: string;
-  name: string;
-  url: string;
-}
+import type { ILinkEntry } from "../../../interfaces/ILinks";
+import type { IState } from "../../../interfaces/IState";
+import { addLinkEntry, removeLinkEntry, setLinksEntries, updateLinkEntry } from "../../../reducers/linksSlice";
 
 interface LinksSectionProps {
-  initialData?: LinkItem[];
-  onChange?: (data: LinkItem[]) => void;
+  initialData?: ILinkEntry[];
+  onChange?: (data: ILinkEntry[]) => void;
 }
 
 const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) => {
+  const dispatch = useDispatch();
+  const links = useSelector((state: IState) => state.linksEntries);
+
   const [isOpen, setIsOpen] = useState(true);
-  const [links, setLinks] = useState<LinkItem[]>(initialData || []);
+
+  // Si viene initialData, se sincroniza solo 1 vez
+  useEffect(() => {
+    if (initialData) {
+      dispatch(setLinksEntries(initialData));
+    }
+  }, [initialData, dispatch]);
+
+  // Notificar cambios al padre si envía onChange
+  useEffect(() => {
+    onChange?.(links);
+  }, [links, onChange]);
 
   const addLink = () => {
-    const newLink: LinkItem = {
-      id: crypto.randomUUID(),
-      name: "",
-      url: "",
-    };
-    const updated = [...links, newLink];
-    setLinks(updated);
-    onChange?.(updated);
-  };
-
-  const updateLink = (id: string, field: keyof LinkItem, value: string) => {
-    const updated = links.map((l) =>
-      l.id === id ? { ...l, [field]: value } : l
+    dispatch(
+      addLinkEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        url: "",
+      })
     );
-    setLinks(updated);
-    onChange?.(updated);
   };
 
-  const removeLink = (id: string) => {
-    const updated = links.filter((l) => l.id !== id);
-    setLinks(updated);
-    onChange?.(updated);
+  const updateLink = (id: string, field: keyof ILinkEntry, value: string) => {
+    dispatch(updateLinkEntry({ id, field, value }));
+  };
+
+  const remove = (id: string) => {
+    dispatch(removeLinkEntry(id));
   };
 
   return (
@@ -80,7 +85,7 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
                 </div>
               </div>
 
-              <button className="remove-btn" onClick={() => removeLink(link.id)}>
+              <button className="remove-btn" onClick={() => remove(link.id)}>
                 <FiTrash2 />
               </button>
             </div>

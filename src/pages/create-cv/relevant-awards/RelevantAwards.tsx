@@ -2,54 +2,45 @@ import React, { useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
 import "./relevantawards.scss";
 
-interface AwardEntry {
-  id: string;
-  name: string;
-  date: string;
-  link?: string;
-  description?: string;
-  showLink?: boolean;
-}
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import { addAwardEntry, removeAwardEntry, toggleAwardLink, updateAwardEntry } from "../../../reducers/awardsSlice";
 
-interface RelevantAwardsProps {
-  initialData?: AwardEntry[];
-  onChange?: (data: AwardEntry[]) => void;
-}
+const RelevantAwards: React.FC = () => {
+  const dispatch = useDispatch();
 
-const RelevantAwards: React.FC<RelevantAwardsProps> = ({ initialData, onChange }) => {
+  // Estado global: awardsEntries: IAwardEntry[]
+  const awards = useSelector((state: IState) => state.awardsEntries);
+
   const [isOpen, setIsOpen] = useState(true);
-  const [awards, setAwards] = useState<AwardEntry[]>(initialData || []);
 
   const addAward = () => {
-    const newAward: AwardEntry = {
-      id: crypto.randomUUID(),
-      name: "",
-      date: "",
-      description: "",
-      showLink: false,
-    };
-    const updated = [...awards, newAward];
-    setAwards(updated);
-    onChange?.(updated);
+    dispatch(
+      addAwardEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        date: "",
+        description: "",
+        showLink: false,
+      })
+    );
   };
 
-  const updateAward = (id: string, field: keyof AwardEntry, value: any) => {
-    const updated = awards.map((a) => (a.id === id ? { ...a, [field]: value } : a));
-    setAwards(updated);
-    onChange?.(updated);
+  const updateAward = (
+    id: string,
+    field: "name" | "date" | "link" | "description" | "showLink",
+    value: any
+  ) => {
+    dispatch(updateAwardEntry({ id, field, value }));
   };
 
   const removeAward = (id: string) => {
-    const updated = awards.filter((a) => a.id !== id);
-    setAwards(updated);
-    onChange?.(updated);
+    dispatch(removeAwardEntry(id));
   };
 
   const toggleLink = (id: string) => {
-    const updated = awards.map((a) =>
-      a.id === id ? { ...a, showLink: !a.showLink, link: a.showLink ? "" : a.link } : a
-    );
-    setAwards(updated);
+    dispatch(toggleAwardLink(id));
   };
 
   return (
@@ -88,7 +79,7 @@ const RelevantAwards: React.FC<RelevantAwardsProps> = ({ initialData, onChange }
                   />
                 </div>
 
-                {/* Input de enlace ocupa toda la fila */}
+                {/* Campo de enlace */}
                 <div className="field full">
                   {award.showLink ? (
                     <div className="link-input-row">
@@ -98,7 +89,9 @@ const RelevantAwards: React.FC<RelevantAwardsProps> = ({ initialData, onChange }
                           type="text"
                           placeholder="Ej: https://premios.com/proyecto"
                           value={award.link || ""}
-                          onChange={(e) => updateAward(award.id, "link", e.target.value)}
+                          onChange={(e) =>
+                            updateAward(award.id, "link", e.target.value)
+                          }
                         />
                         <button
                           type="button"
@@ -125,7 +118,9 @@ const RelevantAwards: React.FC<RelevantAwardsProps> = ({ initialData, onChange }
                   <textarea
                     placeholder="Breve descripción del premio..."
                     value={award.description || ""}
-                    onChange={(e) => updateAward(award.id, "description", e.target.value)}
+                    onChange={(e) =>
+                      updateAward(award.id, "description", e.target.value)
+                    }
                   />
                 </div>
               </div>

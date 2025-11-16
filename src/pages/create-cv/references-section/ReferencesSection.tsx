@@ -1,47 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./referencessection.scss";
 
-interface ReferenceEntry {
-  id: string;
-  name: string;
-  company: string;
-  phone: string;
-  email: string;
-}
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import {
+  addReferenceEntry,
+  removeReferenceEntry,
+  setReferencesEntries,
+  updateReferenceEntry,
+} from "../../../reducers/referencesSlice";
 
-interface ReferencesSectionProps {
-  initialData?: ReferenceEntry[];
-  onChange?: (data: ReferenceEntry[]) => void;
-}
+const ReferencesSection: React.FC = () => {
+  const dispatch = useDispatch();
 
-const ReferencesSection: React.FC<ReferencesSectionProps> = ({ initialData, onChange }) => {
+  const references = useSelector(
+    (state: IState) => state.referencesEntries
+  );
+
   const [isOpen, setIsOpen] = useState(true);
-  const [references, setReferences] = useState<ReferenceEntry[]>(initialData || []);
+
+  // Inicializar si viene vacío
+  useEffect(() => {
+    if (!references || references.length === 0) {
+      dispatch(setReferencesEntries([]));
+    }
+  }, []);
 
   const addReference = () => {
-    const newReference: ReferenceEntry = {
-      id: crypto.randomUUID(),
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-    };
-    const updated = [...references, newReference];
-    setReferences(updated);
-    onChange?.(updated);
+    dispatch(
+      addReferenceEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+      })
+    );
   };
 
-  const updateReference = (id: string, field: keyof ReferenceEntry, value: string) => {
-    const updated = references.map((r) => (r.id === id ? { ...r, [field]: value } : r));
-    setReferences(updated);
-    onChange?.(updated);
+  const updateReference = (
+    id: string,
+    field: "name" | "company" | "phone" | "email",
+    value: string
+  ) => {
+    dispatch(updateReferenceEntry({ id, field, value }));
   };
 
   const removeReference = (id: string) => {
-    const updated = references.filter((r) => r.id !== id);
-    setReferences(updated);
-    onChange?.(updated);
+    dispatch(removeReferenceEntry(id));
   };
 
   return (
@@ -67,7 +75,9 @@ const ReferencesSection: React.FC<ReferencesSectionProps> = ({ initialData, onCh
                     type="text"
                     placeholder="Ej: Juan Pérez"
                     value={ref.name}
-                    onChange={(e) => updateReference(ref.id, "name", e.target.value)}
+                    onChange={(e) =>
+                      updateReference(ref.id, "name", e.target.value)
+                    }
                   />
                 </div>
 
@@ -77,7 +87,9 @@ const ReferencesSection: React.FC<ReferencesSectionProps> = ({ initialData, onCh
                     type="text"
                     placeholder="Ej: Empresa XYZ"
                     value={ref.company}
-                    onChange={(e) => updateReference(ref.id, "company", e.target.value)}
+                    onChange={(e) =>
+                      updateReference(ref.id, "company", e.target.value)
+                    }
                   />
                 </div>
 
@@ -87,7 +99,9 @@ const ReferencesSection: React.FC<ReferencesSectionProps> = ({ initialData, onCh
                     type="tel"
                     placeholder="Ej: +57 300 1234567"
                     value={ref.phone}
-                    onChange={(e) => updateReference(ref.id, "phone", e.target.value)}
+                    onChange={(e) =>
+                      updateReference(ref.id, "phone", e.target.value)
+                    }
                   />
                 </div>
 
@@ -97,12 +111,17 @@ const ReferencesSection: React.FC<ReferencesSectionProps> = ({ initialData, onCh
                     type="email"
                     placeholder="Ej: juan.perez@email.com"
                     value={ref.email}
-                    onChange={(e) => updateReference(ref.id, "email", e.target.value)}
+                    onChange={(e) =>
+                      updateReference(ref.id, "email", e.target.value)
+                    }
                   />
                 </div>
               </div>
 
-              <button className="remove-btn" onClick={() => removeReference(ref.id)}>
+              <button
+                className="remove-btn"
+                onClick={() => removeReference(ref.id)}
+              >
                 <FiTrash2 />
               </button>
             </div>

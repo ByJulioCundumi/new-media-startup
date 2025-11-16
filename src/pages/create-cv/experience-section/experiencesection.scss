@@ -27,6 +27,12 @@
     }
   }
 
+  &__dates{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .experience-section__content {
     display: flex;
     flex-direction: column;

@@ -61,8 +61,8 @@ export const Toolbar = ({ commands, editorState }: any) => {
         </div>
 
         <div className="toolbar-right">
-          <button onClick={commands.saveContent} className="toolbar-save">
-            Guardar
+          <button className="toolbar-save">
+            Tips
           </button>
         </div>
       </nav>
