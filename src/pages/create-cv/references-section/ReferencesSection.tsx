@@ -11,6 +11,7 @@ import {
   setReferencesEntries,
   updateReferenceEntry,
 } from "../../../reducers/referencesSlice";
+import { MdOutlineRateReview } from "react-icons/md";
 
 const ReferencesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const ReferencesSection: React.FC = () => {
   return (
     <div className={`references-section ${!isOpen ? "closed" : ""}`}>
       <div className="references-section__header">
-        <h2>Referencias Laborales</h2>
+        <h2><MdOutlineRateReview /> Referencias Laborales</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

@@ -6,8 +6,9 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdOutlineAdminPanelSettings, MdOutlineWorkOutline, MdWork } from "react-icons/md";
 import { LuLayoutDashboard, LuSettings2, LuUsers } from "react-icons/lu";
-import { RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
+import { RiArrowGoBackFill, RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
 import type { IState } from "../../interfaces/IState";
+import { TbArrowBack } from "react-icons/tb";
 
 const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon">
-                <RiDashboardFill />
+                {sidebarOption === "cvs" ? <RiDashboardFill /> : <RiArrowGoBackFill/>}
               </span>
               <span className="sidebar__tooltip">Mis CV</span>
             </div>

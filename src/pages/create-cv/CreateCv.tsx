@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux"
-import Tiptap from "../../components/toolbar/Tiptap"
+import { useDispatch, useSelector } from "react-redux"
 import AddSections from "./add-sections/AddSection"
 import "./createcv.scss"
 import EducationSection from "./education-section/EducationSection"
@@ -15,9 +14,17 @@ import ReferencesSection from "./references-section/ReferencesSection"
 import RelevantAwards from "./relevant-awards/RelevantAwards"
 import CustomSection from "./custom-section/CustomSection"
 import ToolbarCV from "../../components/toolbar-cv/ToolbarCV"
+import ProfileSection from "./profile-section/ProfileSection"
+import { useEffect } from "react"
+import { setSidebar } from "../../reducers/sidebarSlice"
 
 function CreateCv() {
+  const dispatch = useDispatch()
   const {showAwards, showCourses, showCustom, showHobbies, showLinks, showReferences} = useSelector((state:IState)=> state.addSections)
+
+  useEffect(()=>{
+    dispatch(setSidebar("create"))
+  },[])
 
   return (
     <section className="create-cv">
@@ -26,7 +33,7 @@ function CreateCv() {
           <div className="create-cv__left">
           <div className="create-cv__left--sections">
             <PersonalInfoSection/>
-            <Tiptap/>
+            <ProfileSection/>
             <EducationSection/>
             <ExperienceSection/>
             <SkillsSection/>

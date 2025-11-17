@@ -10,6 +10,7 @@ import {
   removeEducation,
   updateEducation,
 } from "../../../reducers/educationSlice";
+import { PiStudentLight } from "react-icons/pi";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -38,7 +39,7 @@ const EducationSection: React.FC = () => {
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
-        <h2>Formación Académica</h2>
+        <h2><PiStudentLight /> Formación Académica</h2>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

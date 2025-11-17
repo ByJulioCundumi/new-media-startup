@@ -6,6 +6,7 @@ import "./customsection.scss";
 import type { IState } from "../../../interfaces/IState";
 import type { ICustomItem } from "../../../interfaces/ICustom";
 import { setCustomSection } from "../../../reducers/customSlice";
+import { BiLayerPlus } from "react-icons/bi";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const CustomSection: React.FC = () => {
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>
       <div className="custom-section__header">
+        <BiLayerPlus />
         <input
           className="section-title"
           type="text"

@@ -25,5 +25,6 @@ export interface IState{
     referencesEntries: IReferenceEntry[]
     awardsEntries: IAwardEntry[];
     customEntry: ICustomEntry;
-    addSections: IAddSections
+    addSections: IAddSections,
+    profileSection: String
 }

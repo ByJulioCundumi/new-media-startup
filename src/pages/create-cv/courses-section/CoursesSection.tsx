@@ -5,6 +5,9 @@ import "./coursessection.scss";
 import type { ICourseEntry } from "../../../interfaces/ICourses";
 import type { IState } from "../../../interfaces/IState";
 import { addCourseEntry, removeCourseEntry, setCoursesEntries, updateCourseEntry } from "../../../reducers/coursesSlice";
+import { FaGraduationCap } from "react-icons/fa";
+import { LuGraduationCap } from "react-icons/lu";
+import { PiGraduationCapLight } from "react-icons/pi";
 
 interface CoursesSectionProps {
   initialData?: ICourseEntry[];
@@ -70,7 +73,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
   return (
     <div className={`courses-section ${!isOpen ? "closed" : ""}`}>
       <div className="courses-section__header">
-        <h2>Cursos y Certificaciones</h2>
+        <h2><PiGraduationCapLight /> Cursos y Certificaciones</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

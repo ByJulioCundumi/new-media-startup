@@ -14,6 +14,7 @@ import {
   updateExperience,
   removeExperience,
 } from "../../../reducers/experienceSlice";
+import { GrGrow } from "react-icons/gr";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -34,7 +35,7 @@ const ExperienceSection: React.FC = () => {
   return (
     <div className={`experience-section ${!isOpen ? "closed" : ""}`}>
       <div className="experience-section__header">
-        <h2>Experiencia Profesional</h2>
+        <h2><GrGrow /> Experiencia Profesional</h2>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

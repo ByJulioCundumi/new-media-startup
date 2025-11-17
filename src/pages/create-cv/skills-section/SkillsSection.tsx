@@ -4,6 +4,7 @@ import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./skillssection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../reducers/skillsSlice";
+import { FaRegHandBackFist } from "react-icons/fa6";
 
 const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as const;
 
@@ -26,7 +27,7 @@ const SkillsSection: React.FC = () => {
   return (
     <div className={`skills-section ${!isOpen ? "closed" : ""}`}>
       <div className="skills-section__header">
-        <h2>Habilidades</h2>
+        <h2><FaRegHandBackFist /> Habilidades</h2>
         <button className={`toggle-btn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
           <FiChevronDown />
         </button>

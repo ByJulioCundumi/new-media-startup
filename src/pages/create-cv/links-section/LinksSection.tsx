@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiChevronDown, FiLink } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import "./linkssection.scss";
 import type { ILinkEntry } from "../../../interfaces/ILinks";
@@ -50,7 +50,7 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
   return (
     <div className={`links-section ${!isOpen ? "closed" : ""}`}>
       <div className="links-section__header">
-        <h2>Enlaces Relevantes</h2>
+        <h2><FiLink /> Enlaces Relevantes</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

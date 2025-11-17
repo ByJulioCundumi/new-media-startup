@@ -35,10 +35,7 @@ function Navbar() {
             <>
               <FaIdCardAlt className="vip-icon active" />
               <span className="membership-status">
-                Membresía activa
-                <span className="membership-end">
-                  Hasta: {user.membershipEnds}
-                </span>
+                {user.membershipEnds}
               </span>
             </>
           ) : (

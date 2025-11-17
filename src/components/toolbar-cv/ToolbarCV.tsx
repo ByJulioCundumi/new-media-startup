@@ -3,17 +3,16 @@ import {
   FaEdit,
   FaPalette,
   FaSyncAlt,
-  FaTrash,
-  FaSave,
   FaDownload,
 } from "react-icons/fa";
-import "./toolbarcv.scss";
-import { GiBroom, GiMagicBroom } from "react-icons/gi";
+import { GiBroom } from "react-icons/gi";
 import { LuEye } from "react-icons/lu";
+import "./toolbarcv.scss";
 
 const ToolbarCV: React.FC = () => {
   const [title, setTitle] = useState("Mi CV Profesional");
   const [editing, setEditing] = useState(false);
+  const [progress, setProgress] = useState(40);
 
   const handleEditTitle = () => {
     setEditing(true);
@@ -26,11 +25,11 @@ const ToolbarCV: React.FC = () => {
 
   return (
     <div className="cv-toolbar">
-      {/* Left Side: Title */}
-      <div className="cv-toolbar__left">
+      <div className="cv-toolbar__top">
+        <div className="cv-header">
         {editing ? (
           <input
-            className="cv-title-input"
+            className="cv-title-input editing"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={handleTitleBlur}
@@ -40,13 +39,27 @@ const ToolbarCV: React.FC = () => {
           <h2 className="cv-title">{title}</h2>
         )}
 
-        <button className="icon-btn" onClick={handleEditTitle} title="Editar título">
+        <button
+          className="icon-btn edit-title"
+          onClick={handleEditTitle}
+          title="Editar título"
+        >
           <FaEdit />
         </button>
       </div>
 
-      {/* Right Side: Actions */}
-      <div className="cv-toolbar__right">
+      <div className="progress-container">
+        <div className="progress-bar">
+          <div
+            className="progress-value"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <span className="progress-text">{progress}% completo</span>
+      </div>
+      </div>
+
+      <div className="cv-actions">
         <button className="cv-btn">
           <FaPalette />
           Colores
@@ -59,16 +72,15 @@ const ToolbarCV: React.FC = () => {
 
         <button className="cv-btn">
           <GiBroom />
+          Limpiar
         </button>
 
         <button className="cv-btn primary">
           <LuEye />
-          Vista Previa
         </button>
 
         <button className="cv-btn success">
           <FaDownload />
-          Descargar
         </button>
       </div>
     </div>

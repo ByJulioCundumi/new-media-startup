@@ -6,6 +6,8 @@ import "./hobbiessection.scss";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { addHobbyEntry, removeHobbyEntry, setHobbiesEntries, updateHobbyEntry } from "../../../reducers/hobbiesSlice";
+import { RiEmotionHappyLine } from "react-icons/ri";
+import { PiMaskHappy } from "react-icons/pi";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const HobbiesSection: React.FC = () => {
   return (
     <div className={`hobbies-section ${!isOpen ? "closed" : ""}`}>
       <div className="hobbies-section__header">
-        <h2>Pasatiempos</h2>
+        <h2><PiMaskHappy /> Pasatiempos</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

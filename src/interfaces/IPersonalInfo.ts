@@ -22,6 +22,9 @@ export interface IPersonalInfoData {
   customLabel?: string;
   customValue?: string;
 
+  /** Estado que deshabilita la foto */
+  disablePhoto: boolean;
+
   /** Lista de campos opcionales activos */
   activeFields: (keyof IPersonalInfoData)[];
 }

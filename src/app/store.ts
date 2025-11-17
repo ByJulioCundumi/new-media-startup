@@ -12,6 +12,7 @@ import referencesSlice from "../reducers/referencesSlice";
 import awardsSlice from "../reducers/awardsSlice";
 import customSlice from "../reducers/customSlice";
 import addSectionsSlice from "../reducers/addSectionsSlice";
+import profileSlice from "../reducers/profileSlice";
 
 export default configureStore({
     reducer: {
@@ -27,6 +28,7 @@ export default configureStore({
         referencesEntries: referencesSlice,
         awardsEntries: awardsSlice,
         customEntry: customSlice,
-        addSections: addSectionsSlice
+        addSections: addSectionsSlice,
+        profileSection: profileSlice
     }
 })

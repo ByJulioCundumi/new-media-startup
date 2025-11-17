@@ -1,4 +1,3 @@
-// src/store/slices/personalInfoSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IPersonalInfoData } from "../interfaces/IPersonalInfo";
 
@@ -10,6 +9,7 @@ const initialState: IPersonalInfoData = {
   email: "",
   phone: "",
   city: "",
+  disablePhoto: false,
   activeFields: [],
 
   address: "",
@@ -20,7 +20,7 @@ const initialState: IPersonalInfoData = {
   website: "",
   linkedin: "",
 
-  customLabel: "Campo personalizado",
+  customLabel: "",
   customValue: "",
 };
 
@@ -28,15 +28,13 @@ const personalInfoSlice = createSlice({
   name: "personalInfo",
   initialState,
   reducers: {
-    /** Set individual field */
-    setPersonalField: (
-      state,
-      action: PayloadAction<{ field: keyof IPersonalInfoData; value: any }>
+    setPersonalField: <K extends keyof IPersonalInfoData>(
+      state: IPersonalInfoData,
+      action: PayloadAction<{ field: K; value: IPersonalInfoData[K] }>
     ) => {
       state[action.payload.field] = action.payload.value;
     },
 
-    /** Set multiple fields */
     setPersonalData: (
       state,
       action: PayloadAction<Partial<IPersonalInfoData>>
@@ -44,7 +42,6 @@ const personalInfoSlice = createSlice({
       return { ...state, ...action.payload };
     },
 
-    /** Activate/deactivate optional field */
     toggleOptionalField: (
       state,
       action: PayloadAction<keyof IPersonalInfoData>
@@ -52,26 +49,36 @@ const personalInfoSlice = createSlice({
       const key = action.payload;
 
       if (state.activeFields.includes(key)) {
-        // Remove it
         state.activeFields = state.activeFields.filter((f) => f !== key);
 
-        // Reset its value
-        state[key] = "" as any;
+        if (typeof state[key] === "string") {
+          state[key] = "" as never;
+        }
 
-        // Special case for custom field
         if (key === "customLabel" || key === "customValue") {
           state.customLabel = "";
           state.customValue = "";
         }
       } else {
-        // Add it
         state.activeFields.push(key);
+      }
+    },
+
+    setDisablePhoto: (state, action: PayloadAction<boolean>) => {
+      state.disablePhoto = action.payload;
+
+      if (action.payload) {
+        state.photo = "";
       }
     },
   },
 });
 
-export const { setPersonalField, setPersonalData, toggleOptionalField } =
-  personalInfoSlice.actions;
+export const {
+  setPersonalField,
+  setPersonalData,
+  toggleOptionalField,
+  setDisablePhoto,
+} = personalInfoSlice.actions;
 
 export default personalInfoSlice.reducer;

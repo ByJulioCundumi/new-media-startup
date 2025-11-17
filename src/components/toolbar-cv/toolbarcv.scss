@@ -1,118 +1,156 @@
 .cv-toolbar {
   width: 100%;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  padding: 14px 20px;
-  position: sticky;
-  top: 5rem;
+  border: 1px solid rgba(40, 49, 180, 0.041);
+  border-radius: 18px;
+  padding: 22px 22px;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2rem;
 
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  gap: 14px;
-
-  &__left {
+  &__top{
     display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  &__right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    flex-direction: column;
+    margin-top: -0.4rem;
   }
 }
 
-/* Title */
+/* Header with title + edit icon */
+.cv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: -0.5rem;
+}
+
+/* Title text */
 .cv-title {
-  font-size: 20px;
+  font-size: 1.1rem;
   font-weight: 700;
   margin: 0;
-  color: #1d1d1f;
+  color: #1c1d27;
 }
 
+/* EDIT MODE — input como texto editable */
 .cv-title-input {
-  font-size: 20px;
-  padding: 4px 8px;
-  border: 1px solid #c8c8d9;
-  border-radius: 6px;
-  outline: none;
-  color: #1d1d1f;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  width: 100%;
 
-  &:focus {
-    border-color: #3f51ff;
-    box-shadow: 0 0 0 2px rgba(63, 81, 255, 0.15);
+  color: #1c1d27;
+  outline: none;
+  cursor: text;
+
+  transition: opacity 0.25s ease;
+}
+
+/* Estilo cuando se está editando */
+.cv-title-input.editing {
+  opacity: 0.55;
+}
+
+/* Edit icon */
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #3f51ff;
+  font-size: 18px;
+  padding: 4px;
+
+  &:hover {
+    transform: scale(1.12);
+    color: #2e3ee0;
   }
 }
 
-/* Buttons */
+/* Progress */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #eceeff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-value {
+  height: 100%;
+  background: linear-gradient(90deg, #6a5cff, #9c7dff);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3f3f55;
+}
+
+/* Action Buttons */
+.cv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .cv-btn {
   display: flex;
   align-items: center;
   gap: 6px;
 
-  background: #f5f5f9;
-  border: 1px solid #d9d9e6;
-  color: #2e2e42;
+  background: #f6f7ff;
+  border: 1px solid #cdd2ff;
+  color: #24243a;
 
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 10px;
-
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
 
-  transition: all 0.25s ease;
+  transition: 0.25s ease;
 
   svg {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   &:hover {
-    background: #ececff;
-    border-color: #b3b3ff;
+    background: #e9ebff;
+    border-color: #aeb5ff;
   }
 
   &.primary {
     background: #3f51ff;
     border-color: #3f51ff;
     color: #fff;
+  }
 
-    &:hover {
-      background: #2e3ee0;
-    }
+  &.primary:hover {
+    background: #2e3ee0;
   }
 
   &.success {
     background: #00b37e;
     border-color: #00b37e;
     color: #fff;
-
-    &:hover {
-      background: #009268;
-    }
   }
-}
 
-/* Icon-only button */
-.icon-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-
-  color: #3f51ff;
-  font-size: 20px;
-
-  transition: all 0.25s ease;
-
-  &:hover {
-    transform: scale(1.12);
-    color: #2e3ee0;
+  &.success:hover {
+    background: #009268;
   }
 }

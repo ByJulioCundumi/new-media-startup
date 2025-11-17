@@ -1,9 +1,9 @@
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 5rem;
   right: 0;
-  height: 72px;
+  height: 74px;
 
   background: #ffffff;
   border-bottom: 1px solid #e7effc;
@@ -13,7 +13,6 @@
   align-items: center;
   justify-content: space-between;
 
-  z-index: 1000;
   font-family: "Inter", sans-serif;
 
   // LOGO + TÍTULO

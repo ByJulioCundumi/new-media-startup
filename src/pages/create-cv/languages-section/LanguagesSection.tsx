@@ -5,6 +5,7 @@ import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./languagessection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
+import { HiOutlineLanguage } from "react-icons/hi2";
 
 const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
@@ -27,7 +28,7 @@ const LanguagesSection: React.FC = () => {
   return (
     <div className={`languages-section ${!isOpen ? "closed" : ""}`}>
       <div className="languages-section__header">
-        <h2>Idiomas</h2>
+        <h2><HiOutlineLanguage /> Idiomas</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

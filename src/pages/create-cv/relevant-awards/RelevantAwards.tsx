@@ -6,6 +6,7 @@ import "./relevantawards.scss";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { addAwardEntry, removeAwardEntry, toggleAwardLink, updateAwardEntry } from "../../../reducers/awardsSlice";
+import { BsAward } from "react-icons/bs";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const RelevantAwards: React.FC = () => {
   return (
     <div className={`awards-section ${!isOpen ? "closed" : ""}`}>
       <div className="awards-section__header">
-        <h2>Premios y Reconocimientos</h2>
+        <h2><BsAward /> Premios y Reconocimientos</h2>
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}
