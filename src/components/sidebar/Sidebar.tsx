@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon">
-                {sidebarOption === "cvs" ? <RiDashboardFill /> : <RiArrowGoBackFill/>}
+                {sidebarOption === "cvs" ? <RiDashboardFill /> : sidebarOption !== "create" ? <RiDashboardFill /> : <RiArrowGoBackFill/>}
               </span>
               <span className="sidebar__tooltip">Mis CV</span>
             </div>

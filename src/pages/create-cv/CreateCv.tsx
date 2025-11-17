@@ -15,25 +15,51 @@ import RelevantAwards from "./relevant-awards/RelevantAwards";
 import CustomSection from "./custom-section/CustomSection";
 import ToolbarCV from "../../components/toolbar-cv/ToolbarCV";
 import ProfileSection from "./profile-section/ProfileSection";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setSidebar } from "../../reducers/sidebarSlice";
+import { awardsMock, coursesMock, customSectionMock, educationMock, experienceMock, hobbiesMock, languagesMock, linksMock, personalInfoMock, profileMock, referencesMock, skillsMock } from "../../util/cvtemplatemock";
+import { templates } from "../../templates/templates";
 
 function CreateCv() {
   const dispatch = useDispatch();
   const sections = useSelector((state: IState) => state.cvSections);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>("default");
 
   useEffect(() => {
     dispatch(setSidebar("create"));
+  }, [dispatch]);
+
+  // Saber si una sección está habilitada
+  const isEnabled = (name: string) => sections.find((s) => s.name === name)?.enabled;
+
+  // Confirmación al cerrar o salir
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
-  // Función auxiliar para saber si una sección está habilitada
-  const isEnabled = (name: string) => sections.find((s) => s.name === name)?.enabled;
+  // Persistir la plantilla seleccionada
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedTemplate");
+    if (saved) setSelectedTemplate(saved);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedTemplate", selectedTemplate);
+  }, [selectedTemplate]);
+
+  const SelectedTemplate = templates.find(t => t.id === selectedTemplate)?.component;
 
   return (
     <section className="create-cv">
-      <ToolbarCV />
+      
       <div className="create-cv__body">
         <div className="create-cv__left">
+          <ToolbarCV />
           <div className="create-cv__left--sections">
             <PersonalInfoSection />
             <ProfileSection />
@@ -50,8 +76,40 @@ function CreateCv() {
           </div>
           <AddSections />
         </div>
+
         <div className="create-cv__right">
-          preview
+          {/* Selector de plantillas */}
+          <div className="template-selector">
+            {templates.map((tpl) => (
+              <button
+                key={tpl.id}
+                className={tpl.id === selectedTemplate ? "active" : ""}
+                onClick={() => setSelectedTemplate(tpl.id)}
+              >
+                {tpl.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Vista previa de la plantilla seleccionada */}
+          <div className="template-preview">
+            {SelectedTemplate && (
+              <SelectedTemplate
+                personalInfo={personalInfoMock}
+                profile={profileMock}
+                education={educationMock}
+                experience={experienceMock}
+                skills={skillsMock}
+                languages={languagesMock}
+                links={linksMock}
+                courses={coursesMock}
+                hobbies={hobbiesMock}
+                references={referencesMock}
+                awards={awardsMock}
+                customSection={customSectionMock}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
