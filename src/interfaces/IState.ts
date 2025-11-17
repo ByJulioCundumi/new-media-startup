@@ -1,4 +1,3 @@
-import type { IAddSections } from "./IAddSections";
 import type { IAwardEntry } from "./IAward";
 import type { ICourseEntry } from "./ICourses";
 import type { ICustomEntry } from "./ICustom";
@@ -26,7 +25,6 @@ export interface IState{
     referencesEntries: IReferenceEntry[]
     awardsEntries: IAwardEntry[];
     customEntry: ICustomEntry;
-    addSections: IAddSections,
     profileSection: String,
     cvSections: ICvSection[]
 }

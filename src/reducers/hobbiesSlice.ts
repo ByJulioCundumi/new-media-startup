@@ -30,6 +30,11 @@ const hobbiesSlice = createSlice({
     removeHobbyEntry: (state, action: PayloadAction<string>) => {
       return state.filter((h) => h.id !== action.payload);
     },
+
+    // Nuevo reducer para eliminar todos los hobbies
+    clearAllHobbies: () => {
+      return [];
+    },
   },
 });
 
@@ -38,6 +43,7 @@ export const {
   addHobbyEntry,
   updateHobbyEntry,
   removeHobbyEntry,
+  clearAllHobbies,
 } = hobbiesSlice.actions;
 
 export default hobbiesSlice.reducer;

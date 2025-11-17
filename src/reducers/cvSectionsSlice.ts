@@ -20,38 +20,46 @@ const cvSectionsSlice = createSlice({
   name: "cvSections",
   initialState,
   reducers: {
-    setSectionEnabled: (
-      state,
-      action: PayloadAction<{ name: string; enabled: boolean }>
-    ) => {
-      const section = state.find((s) => s.name === action.payload.name);
-      if (section) {
-        section.enabled = action.payload.enabled;
-      }
+    // Habilitar una sección
+    enableSection: (state, action: PayloadAction<string>) => {
+      const section = state.find((s) => s.name === action.payload);
+      if (section) section.enabled = true;
     },
 
+    // Deshabilitar una sección
+    disableSection: (state, action: PayloadAction<string>) => {
+      const section = state.find((s) => s.name === action.payload);
+      if (section) section.enabled = false;
+    },
+
+    // Actualizar progreso de una sección específica
     setSectionProgress: (
       state,
       action: PayloadAction<{ name: string; progress: number }>
     ) => {
       const section = state.find((s) => s.name === action.payload.name);
-      if (section) {
-        section.progress = action.payload.progress;
-      }
+      if (section) section.progress = action.payload.progress;
     },
 
-    resetAllProgress: (state) => {
-      state.forEach((s) => {
-        s.progress = 0;
-      });
+    // Actualizar habilitación y progreso en un solo dispatch
+    updateSection: (
+      state,
+      action: PayloadAction<{ name: string; enabled?: boolean; progress?: number }>
+    ) => {
+      const section = state.find((s) => s.name === action.payload.name);
+      if (section) {
+        if (action.payload.enabled !== undefined) section.enabled = action.payload.enabled;
+        if (action.payload.progress !== undefined) section.progress = action.payload.progress;
+      }
     },
   },
 });
 
 export const {
-  setSectionEnabled,
+  enableSection,
+  disableSection,
   setSectionProgress,
-  resetAllProgress,
+  updateSection,
 } = cvSectionsSlice.actions;
 
 export default cvSectionsSlice.reducer;

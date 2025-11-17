@@ -33,6 +33,11 @@ const coursesSlice = createSlice({
     removeCourseEntry: (state, action: PayloadAction<string>) => {
       return state.filter((c) => c.id !== action.payload);
     },
+
+    // Nuevo reducer para eliminar todos los cursos
+    clearAllCourses: () => {
+      return [];
+    },
   },
 });
 
@@ -41,6 +46,7 @@ export const {
   addCourseEntry,
   updateCourseEntry,
   removeCourseEntry,
+  clearAllCourses,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

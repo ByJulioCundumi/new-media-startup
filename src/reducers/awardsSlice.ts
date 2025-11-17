@@ -49,6 +49,11 @@ const relevantAwardsSlice = createSlice({
         };
       }
     },
+
+    // Nuevo reducer para eliminar todas las entradas
+    clearAllAwards: () => {
+      return [];
+    },
   },
 });
 
@@ -58,6 +63,7 @@ export const {
   updateAwardEntry,
   removeAwardEntry,
   toggleAwardLink,
+  clearAllAwards,
 } = relevantAwardsSlice.actions;
 
 export default relevantAwardsSlice.reducer;

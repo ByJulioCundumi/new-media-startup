@@ -10,13 +10,9 @@ import {
 } from "react-icons/fa";
 import type { IState } from "../../../interfaces/IState";
 import {
-  setShowLinks,
-  setShowCourses,
-  setShowHobbies,
-  setShowReferences,
-  setShowAwards,
-  setShowCustom,
-} from "../../../reducers/addSectionsSlice";
+  enableSection,
+  disableSection,
+} from "../../../reducers/cvSectionsSlice";
 import "./addsection.scss";
 import { PiMaskHappyFill } from "react-icons/pi";
 import { MdRateReview } from "react-icons/md";
@@ -26,26 +22,23 @@ import { BiSolidLayerPlus } from "react-icons/bi";
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
 
-  const {
-    showLinks,
-    showCourses,
-    showHobbies,
-    showReferences,
-    showAwards,
-    showCustom,
-  } = useSelector((state: IState) => state.addSections);
+  const cvSections = useSelector((state: IState) => state.cvSections);
 
   const sections = [
-    { label: "Enlaces", value: showLinks, action: setShowLinks, icon: <FaLink /> },
-    { label: "Cursos", value: showCourses, action: setShowCourses, icon: <FaGraduationCap /> },
-    { label: "Pasatiempos", value: showHobbies, action: setShowHobbies, icon: <PiMaskHappyFill /> },
-    { label: "Referencias", value: showReferences, action: setShowReferences, icon: <MdRateReview /> },
-    { label: "Premios Relevantes", value: showAwards, action: setShowAwards, icon: <BsAwardFill /> },
-    { label: "Sección Personalizada", value: showCustom, action: setShowCustom, icon: <BiSolidLayerPlus /> },
+    { name: "linkSection", label: "Enlaces", icon: <FaLink /> },
+    { name: "courseSection", label: "Cursos", icon: <FaGraduationCap /> },
+    { name: "hobbieSection", label: "Pasatiempos", icon: <PiMaskHappyFill /> },
+    { name: "referenceSection", label: "Referencias", icon: <MdRateReview /> },
+    { name: "awardSection", label: "Premios Relevantes", icon: <BsAwardFill /> },
+    { name: "customSection", label: "Sección Personalizada", icon: <BiSolidLayerPlus /> },
   ];
 
-  const toggleSection = (action: (value: boolean) => any, current: boolean) => {
-    dispatch(action(!current));
+  const toggleSection = (name: string, enabled: boolean) => {
+    if (enabled) {
+      dispatch(disableSection(name));
+    } else {
+      dispatch(enableSection(name));
+    }
   };
 
   return (
@@ -56,22 +49,27 @@ const AddSections: React.FC = () => {
 
       <div className="add-sections__content">
         <div className="selector-grid">
-          {sections.map((sec) => (
-            <button
-              key={sec.label}
-              className={`selector-card ${sec.value ? "active" : ""}`}
-              onClick={() => toggleSection(sec.action, sec.value)}
-            >
-              <div className="card-icon-wrapper">
-                <div className="icon">{sec.icon}</div>
-              </div>
+          {sections.map((sec) => {
+            const sectionState = cvSections.find((s) => s.name === sec.name);
+            const isEnabled = sectionState?.enabled || false;
 
-              <div className="info">
-                <span className="label">{sec.label}</span>
-                <span className="status">{sec.value ? "Activo" : "Inactivo"}</span>
-              </div>
-            </button>
-          ))}
+            return (
+              <button
+                key={sec.name}
+                className={`selector-card ${isEnabled ? "active" : ""}`}
+                onClick={() => toggleSection(sec.name, isEnabled)}
+              >
+                <div className="card-icon-wrapper">
+                  <div className="icon">{sec.icon}</div>
+                </div>
+
+                <div className="info">
+                  <span className="label">{sec.label}</span>
+                  <span className="status">{isEnabled ? "Activo" : "Inactivo"}</span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

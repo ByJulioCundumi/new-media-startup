@@ -33,6 +33,11 @@ const referencesSlice = createSlice({
     removeReferenceEntry: (state, action: PayloadAction<string>) => {
       return state.filter((r) => r.id !== action.payload);
     },
+
+    // Nuevo reducer para eliminar todas las referencias
+    clearAllReferences: () => {
+      return [];
+    },
   },
 });
 
@@ -41,6 +46,7 @@ export const {
   addReferenceEntry,
   updateReferenceEntry,
   removeReferenceEntry,
+  clearAllReferences,
 } = referencesSlice.actions;
 
 export default referencesSlice.reducer;

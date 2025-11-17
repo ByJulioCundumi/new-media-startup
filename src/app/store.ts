@@ -11,7 +11,6 @@ import hobbiesSlice from "../reducers/hobbiesSlice";
 import referencesSlice from "../reducers/referencesSlice";
 import awardsSlice from "../reducers/awardsSlice";
 import customSlice from "../reducers/customSlice";
-import addSectionsSlice from "../reducers/addSectionsSlice";
 import profileSlice from "../reducers/profileSlice";
 import cvSectionsSlice from "../reducers/cvSectionsSlice";
 
@@ -29,7 +28,6 @@ export default configureStore({
         referencesEntries: referencesSlice,
         awardsEntries: awardsSlice,
         customEntry: customSlice,
-        addSections: addSectionsSlice,
         profileSection: profileSlice,
         cvSections: cvSectionsSlice
     }

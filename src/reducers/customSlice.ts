@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction,  } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ICustomEntry, ICustomItem } from "../interfaces/ICustom";
 
 const initialState: ICustomEntry = {
@@ -24,6 +24,9 @@ const customSlice = createSlice({
       state.items = action.payload.items;
     },
     resetCustomSection: () => initialState,
+
+    // Nuevo reducer para eliminar todo (título e items)
+    clearCustomSection: () => initialState,
   },
 });
 
@@ -32,6 +35,7 @@ export const {
   setCustomItems,
   setCustomSection,
   resetCustomSection,
+  clearCustomSection,
 } = customSlice.actions;
 
 export default customSlice.reducer;

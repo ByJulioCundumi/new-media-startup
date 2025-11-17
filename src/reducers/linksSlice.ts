@@ -33,6 +33,11 @@ const linksSlice = createSlice({
     removeLinkEntry: (state, action: PayloadAction<string>) => {
       return state.filter((l) => l.id !== action.payload);
     },
+
+    // Nuevo reducer para eliminar todos los links
+    clearAllLinks: () => {
+      return [];
+    },
   },
 });
 
@@ -41,6 +46,7 @@ export const {
   addLinkEntry,
   updateLinkEntry,
   removeLinkEntry,
+  clearAllLinks,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;
