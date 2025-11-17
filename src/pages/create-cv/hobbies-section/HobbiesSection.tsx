@@ -1,24 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./hobbiessection.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { addHobbyEntry, removeHobbyEntry, setHobbiesEntries, updateHobbyEntry } from "../../../reducers/hobbiesSlice";
+import {
+  addHobbyEntry,
+  removeHobbyEntry,
+  updateHobbyEntry,
+} from "../../../reducers/hobbiesSlice";
 import { PiMaskHappy } from "react-icons/pi";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
-
   const hobbies = useSelector((state: IState) => state.hobbiesEntries);
-
   const [isOpen, setIsOpen] = useState(true);
 
-  useEffect(() => {
-    if (!hobbies || hobbies.length === 0) {
-      dispatch(setHobbiesEntries([]));
-    }
-  }, [hobbies, dispatch]);
+  const lastProgressRef = useRef<number>(-1); // para evitar despachos repetidos
 
   const addHobby = () => {
     dispatch(
@@ -37,29 +36,30 @@ const HobbiesSection: React.FC = () => {
     dispatch(removeHobbyEntry(id));
   };
 
-  // -------- PROGRESS LOGIC ----------
+  /** PROGRESS LOGIC **/
   const progress = useMemo(() => {
     const totalFields = hobbies.length;
     if (totalFields === 0) return 0;
-
-    let completed = 0;
-    for (const hobby of hobbies) {
-      if (hobby.name?.trim()) {
-        completed++;
-      }
-    }
-
+    const completed = hobbies.filter((h) => h.name?.trim()).length;
     return Math.round((completed / totalFields) * 100);
   }, [hobbies]);
+
+  // Guardar progreso solo si cambió
+  useEffect(() => {
+    if (progress !== lastProgressRef.current) {
+      lastProgressRef.current = progress;
+      dispatch(setSectionProgress({ name: "hobbieSection", progress }));
+    }
+  }, [progress, dispatch]);
 
   return (
     <div className={`hobbies-section ${!isOpen ? "closed" : ""}`}>
       <div className="hobbies-section__header">
-        <h2><PiMaskHappy /> Pasatiempos</h2>
+        <h2>
+          <PiMaskHappy /> Pasatiempos
+        </h2>
 
-        <div className="progress-indicator">
-          {progress}%
-        </div>
+        <div className="progress-indicator">{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

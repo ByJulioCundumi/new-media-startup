@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import { FiPlus, FiX, FiEdit2, FiChevronDown } from "react-icons/fi";
 import "./personalinfosection.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import {
 import type { IPersonalInfoData } from "../../../interfaces/IPersonalInfo";
 import { LuUserPen } from "react-icons/lu";
 import { IoIosCamera } from "react-icons/io";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 type OptionalFieldKey = Extract<
   keyof IPersonalInfoData,
@@ -137,6 +138,11 @@ const PersonalInfoSection: React.FC = () => {
     if (total <= 0) return 0;
     return Math.round((complete / total) * 100);
   }, [data]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "personalInfoSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`personalinfo-section ${isOpen ? "" : "closed"}`}>

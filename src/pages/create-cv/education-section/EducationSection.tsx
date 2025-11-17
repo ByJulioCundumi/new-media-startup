@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
 import "./educationsection.scss";
 
@@ -11,6 +11,7 @@ import {
   updateEducation,
 } from "../../../reducers/educationSlice";
 import { PiStudentLight } from "react-icons/pi";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -66,6 +67,11 @@ const EducationSection: React.FC = () => {
   };
 
   const progress = getProgress();
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "educationSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
 import "./relevantawards.scss";
 
@@ -13,6 +13,7 @@ import {
 } from "../../../reducers/awardsSlice";
 
 import { BsAward } from "react-icons/bs";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,11 @@ const RelevantAwards: React.FC = () => {
 
     return Math.round((filledFields / totalFields) * 100);
   }, [awards]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "awardSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`awards-section ${!isOpen ? "closed" : ""}`}>

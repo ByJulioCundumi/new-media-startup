@@ -5,6 +5,7 @@ import "./linkssection.scss";
 import type { ILinkEntry } from "../../../interfaces/ILinks";
 import type { IState } from "../../../interfaces/IState";
 import { addLinkEntry, removeLinkEntry, setLinksEntries, updateLinkEntry } from "../../../reducers/linksSlice";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 interface LinksSectionProps {
   initialData?: ILinkEntry[];
@@ -62,6 +63,11 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
 
     return Math.round((completed / totalFields) * 100);
   }, [links]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "linkSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`links-section ${!isOpen ? "closed" : ""}`}>

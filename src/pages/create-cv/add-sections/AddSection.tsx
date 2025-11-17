@@ -12,12 +12,21 @@ import type { IState } from "../../../interfaces/IState";
 import {
   enableSection,
   disableSection,
+  setSectionProgress,
 } from "../../../reducers/cvSectionsSlice";
+import {
+  clearCustomSection,
+} from "../../../reducers/customSlice";
 import "./addsection.scss";
 import { PiMaskHappyFill } from "react-icons/pi";
 import { MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
 import { BiSolidLayerPlus } from "react-icons/bi";
+import { clearAllLinks } from "../../../reducers/linksSlice";
+import { clearAllAwards } from "../../../reducers/awardsSlice";
+import { clearAllReferences } from "../../../reducers/referencesSlice";
+import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
+import { clearAllCourses } from "../../../reducers/coursesSlice";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,12 +43,36 @@ const AddSections: React.FC = () => {
   ];
 
   const toggleSection = (name: string, enabled: boolean) => {
-    if (enabled) {
-      dispatch(disableSection(name));
-    } else {
-      dispatch(enableSection(name));
+  if (enabled) {
+    dispatch(disableSection(name));
+    // Limpiar contenido y progreso según la sección
+    dispatch(setSectionProgress({ name, progress: 0 }));
+
+    switch (name) {
+      case "linkSection":
+        dispatch(clearAllLinks());
+        break;
+      case "courseSection":
+        dispatch(clearAllCourses());
+        break;
+      case "hobbieSection":
+        dispatch(clearAllHobbies());
+        break;
+      case "referenceSection":
+        dispatch(clearAllReferences());
+        break;
+      case "awardSection":
+        dispatch(clearAllAwards());
+        break;
+      case "customSection":
+        dispatch(clearCustomSection());
+        break;
     }
+  } else {
+    dispatch(enableSection(name));
+  }
   };
+
 
   return (
     <div className="add-sections improved">

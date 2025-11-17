@@ -7,6 +7,7 @@ import type { IState } from "../../../interfaces/IState";
 import type { ICustomItem } from "../../../interfaces/ICustom";
 import { setCustomSection } from "../../../reducers/customSlice";
 import { BiLayerPlus } from "react-icons/bi";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,11 @@ const CustomSection: React.FC = () => {
 
     return Math.round((completed / total) * 100);
   }, [title, items]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "customSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>

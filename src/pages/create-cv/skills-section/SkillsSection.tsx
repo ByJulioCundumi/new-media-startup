@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./skillssection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../reducers/skillsSlice";
 import { FaRegHandBackFist } from "react-icons/fa6";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as const;
 
@@ -40,6 +41,11 @@ const SkillsSection: React.FC = () => {
 
     return Math.round((filledFields / totalFields) * 100);
   }, [skills]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "skillSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`skills-section ${!isOpen ? "closed" : ""}`}>

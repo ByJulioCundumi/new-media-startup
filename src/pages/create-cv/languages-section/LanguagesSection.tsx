@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
@@ -6,6 +6,7 @@ import "./languagessection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
 import { HiOutlineLanguage } from "react-icons/hi2";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
@@ -41,6 +42,11 @@ const LanguagesSection: React.FC = () => {
 
     return Math.round((filledFields / totalFields) * 100);
   }, [languages]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "languageSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`languages-section ${!isOpen ? "closed" : ""}`}>

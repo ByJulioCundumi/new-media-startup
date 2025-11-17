@@ -1,5 +1,5 @@
 // ExperienceSection.tsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   FiChevronDown,
   FiTrash2,
@@ -15,6 +15,7 @@ import {
   removeExperience,
 } from "../../../reducers/experienceSlice";
 import { GrGrow } from "react-icons/gr";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -72,6 +73,11 @@ const ExperienceSection: React.FC = () => {
 
     return Math.round((completedFields / totalFields) * 100);
   }, [entries]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "experienceSection", progress }));
+}, [progress, dispatch]);
 
 
   return (

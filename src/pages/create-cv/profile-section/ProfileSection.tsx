@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { setProfileContent } from "../../../reducers/profileSlice";
 import Placeholder from "@tiptap/extension-placeholder";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 export default function ProfileSection() {
   const [isOpen, setIsOpen] = useState(true);
@@ -105,6 +106,11 @@ export default function ProfileSection() {
     },
     generateAI: () => {},
   };
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "profileSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`profile-section ${isOpen ? "open" : "closed"}`}>

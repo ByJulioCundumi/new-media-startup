@@ -12,6 +12,7 @@ import {
   updateReferenceEntry,
 } from "../../../reducers/referencesSlice";
 import { MdOutlineRateReview } from "react-icons/md";
+import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
 
 const ReferencesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,11 @@ const ReferencesSection: React.FC = () => {
 
     return Math.round((filledFields / totalFields) * 100);
   }, [references]);
+
+  // Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "referenceSection", progress }));
+}, [progress, dispatch]);
 
   return (
     <div className={`references-section ${!isOpen ? "closed" : ""}`}>
