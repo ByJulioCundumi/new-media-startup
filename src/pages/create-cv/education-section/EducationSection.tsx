@@ -36,10 +36,46 @@ const EducationSection: React.FC = () => {
     dispatch(updateEducation({ id, field, value }));
   };
 
+  const getProgress = () => {
+    if (!entries.length) return 0;
+
+    const requiredFields = ["title", "institution", "location", "startMonth", "startYear"];
+
+    let filled = 0;
+    let total = 0;
+
+    entries.forEach(entry => {
+      requiredFields.forEach(field => {
+        total++;
+        if (entry[field as keyof IEducationEntry]) filled++;
+      });
+
+      if (!entry.present) {
+        total++;
+        if (entry.endMonth) filled++;
+
+        total++;
+        if (entry.endYear) filled++;
+      }
+
+      total++;
+      if (entry.description?.trim()) filled++;
+    });
+
+    return Math.round((filled / total) * 100);
+  };
+
+  const progress = getProgress();
+
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
-        <h2><PiStudentLight /> Formación Académica</h2>
+
+        <h2>
+          <PiStudentLight /> Formación Académica
+        </h2>
+
+        <span className="progress-indicator">{progress}%</span>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -54,7 +90,7 @@ const EducationSection: React.FC = () => {
           {entries.map((entry) => (
             <div className="education-card" key={entry.id}>
               <div className="card-grid">
-                {/* TÍTULO */}
+                
                 <div className="field">
                   <label>Título / Programa</label>
                   <input
@@ -67,7 +103,6 @@ const EducationSection: React.FC = () => {
                   />
                 </div>
 
-                {/* INSTITUCIÓN */}
                 <div className="field">
                   <label>Institución</label>
                   <input
@@ -80,7 +115,6 @@ const EducationSection: React.FC = () => {
                   />
                 </div>
 
-                {/* LOCALIDAD */}
                 <div className="field">
                   <label>Localidad</label>
                   <input
@@ -94,89 +128,80 @@ const EducationSection: React.FC = () => {
                 </div>
 
                 <div className="education-section__dates">
-                  {/* FECHAS */}
-                <div className="field">
-                  <label>Fecha de Inicio</label>
-                  <div className="double">
-                    <select
-                      value={entry.startMonth}
-                      onChange={(e) =>
-                        updateField(entry.id, "startMonth", e.target.value)
-                      }
-                    >
-                      <option value="">Mes</option>
-                      {months.map((m) => (
-                        <option key={m} value={m}>
-                          {m}
-                        </option>
-                      ))}
-                    </select>
 
-                    <select
-                      value={entry.startYear}
-                      onChange={(e) =>
-                        updateField(entry.id, "startYear", e.target.value)
-                      }
-                    >
-                      <option value="">Año</option>
-                      {years.map((y) => (
-                        <option key={y} value={y}>
-                          {y}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                  <div className="field">
+                    <label>Fecha de Inicio</label>
+                    <div className="double">
+                      <select
+                        value={entry.startMonth}
+                        onChange={(e) =>
+                          updateField(entry.id, "startMonth", e.target.value)
+                        }
+                      >
+                        <option value="">Mes</option>
+                        {months.map((m) => (
+                          <option key={m} value={m}>{m}</option>
+                        ))}
+                      </select>
 
-                {/* FECHA FINAL */}
-                <div className="field">
-                  <label>Fecha de Finalización</label>
-                  <div className="double">
-                    <select
-                      disabled={entry.present}
-                      value={entry.endMonth}
-                      onChange={(e) =>
-                        updateField(entry.id, "endMonth", e.target.value)
-                      }
-                    >
-                      <option value="">Mes</option>
-                      {months.map((m) => (
-                        <option key={m} value={m}>
-                          {m}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      disabled={entry.present}
-                      value={entry.endYear}
-                      onChange={(e) =>
-                        updateField(entry.id, "endYear", e.target.value)
-                      }
-                    >
-                      <option value="">Año</option>
-                      {years.map((y) => (
-                        <option key={y} value={y}>
-                          {y}
-                        </option>
-                      ))}
-                    </select>
+                      <select
+                        value={entry.startYear}
+                        onChange={(e) =>
+                          updateField(entry.id, "startYear", e.target.value)
+                        }
+                      >
+                        <option value="">Año</option>
+                        {years.map((y) => (
+                          <option key={y} value={y}>{y}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  <label className="present-toggle">
-                    <input
-                      type="checkbox"
-                      checked={entry.present}
-                      onChange={(e) =>
-                        updateField(entry.id, "present", e.target.checked)
-                      }
-                    />
-                    Actualmente cursando
-                  </label>
-                </div>
+                  <div className="field">
+                    <label>Fecha de Finalización</label>
+                    <div className="double">
+                      <select
+                        disabled={entry.present}
+                        value={entry.endMonth}
+                        onChange={(e) =>
+                          updateField(entry.id, "endMonth", e.target.value)
+                        }
+                      >
+                        <option value="">Mes</option>
+                        {months.map((m) => (
+                          <option key={m} value={m}>{m}</option>
+                        ))}
+                      </select>
+
+                      <select
+                        disabled={entry.present}
+                        value={entry.endYear}
+                        onChange={(e) =>
+                          updateField(entry.id, "endYear", e.target.value)
+                        }
+                      >
+                        <option value="">Año</option>
+                        {years.map((y) => (
+                          <option key={y} value={y}>{y}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <label className="present-toggle">
+                      <input
+                        type="checkbox"
+                        checked={entry.present}
+                        onChange={(e) =>
+                          updateField(entry.id, "present", e.target.checked)
+                        }
+                      />
+                      Actualmente cursando
+                    </label>
+                  </div>
+
                 </div>
 
-                {/* DESCRIPCIÓN */}
                 <div className="field full">
                   <label>Informacion Extra</label>
                   <textarea
@@ -189,7 +214,6 @@ const EducationSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* ELIMINAR */}
               <button
                 className="remove-btn"
                 onClick={() => dispatch(removeEducation(entry.id))}
@@ -199,7 +223,6 @@ const EducationSection: React.FC = () => {
             </div>
           ))}
 
-          {/* AGREGAR */}
           <button className="add-btn" onClick={() => dispatch(addEducation())}>
             <FiPlus /> Agregar Formación
           </button>

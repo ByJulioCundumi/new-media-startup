@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./referencessection.scss";
 
@@ -53,10 +53,37 @@ const ReferencesSection: React.FC = () => {
     dispatch(removeReferenceEntry(id));
   };
 
+  // ==========================
+  // CÁLCULO DE PORCENTAJE
+  // ==========================
+  const progress = useMemo(() => {
+    if (!references.length) return 0;
+
+    const totalFields = references.length * 4;
+    let filledFields = 0;
+
+    references.forEach((ref) => {
+      if (ref.name?.trim()) filledFields++;
+      if (ref.company?.trim()) filledFields++;
+      if (ref.phone?.trim()) filledFields++;
+      if (ref.email?.trim()) filledFields++;
+    });
+
+    return Math.round((filledFields / totalFields) * 100);
+  }, [references]);
+
   return (
     <div className={`references-section ${!isOpen ? "closed" : ""}`}>
       <div className="references-section__header">
-        <h2><MdOutlineRateReview /> Referencias Laborales</h2>
+        <h2>
+          <MdOutlineRateReview /> Referencias Laborales
+        </h2>
+
+        {/* BADGE DE PROGRESO */}
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

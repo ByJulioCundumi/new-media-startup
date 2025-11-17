@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
 import "./relevantawards.scss";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { addAwardEntry, removeAwardEntry, toggleAwardLink, updateAwardEntry } from "../../../reducers/awardsSlice";
+import {
+  addAwardEntry,
+  removeAwardEntry,
+  toggleAwardLink,
+  updateAwardEntry,
+} from "../../../reducers/awardsSlice";
+
 import { BsAward } from "react-icons/bs";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
 
-  // Estado global: awardsEntries: IAwardEntry[]
   const awards = useSelector((state: IState) => state.awardsEntries);
 
   const [isOpen, setIsOpen] = useState(true);
@@ -44,10 +49,47 @@ const RelevantAwards: React.FC = () => {
     dispatch(toggleAwardLink(id));
   };
 
+  // ==========================
+  // CÁLCULO DE PORCENTAJE
+  // ==========================
+  const progress = useMemo(() => {
+    if (!awards.length) return 0;
+
+    let totalFields = 0;
+    let filledFields = 0;
+
+    awards.forEach((award) => {
+      // Obligatorios
+      totalFields += 2;
+      if (award.name?.trim()) filledFields++;
+      if (award.date?.trim()) filledFields++;
+
+      // Opcionales
+      totalFields += 1;
+      if (award.description?.trim()) filledFields++;
+
+      // Link opcional
+      if (award.showLink) {
+        totalFields += 1;
+        if (award.link?.trim()) filledFields++;
+      }
+    });
+
+    return Math.round((filledFields / totalFields) * 100);
+  }, [awards]);
+
   return (
     <div className={`awards-section ${!isOpen ? "closed" : ""}`}>
       <div className="awards-section__header">
-        <h2><BsAward /> Premios y Reconocimientos</h2>
+        <h2>
+          <BsAward /> Premios y Reconocimientos
+        </h2>
+
+        {/* BADGE DE PROGRESO */}
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

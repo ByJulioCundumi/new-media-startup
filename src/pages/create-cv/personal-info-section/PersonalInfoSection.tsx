@@ -145,7 +145,7 @@ const PersonalInfoSection: React.FC = () => {
           <LuUserPen /> Información Personal
         </h2>
 
-        <div className="progress-percentage">{progress}%</div>
+        <div className="progress-indicator">{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

@@ -2,6 +2,7 @@ import type { IAddSections } from "./IAddSections";
 import type { IAwardEntry } from "./IAward";
 import type { ICourseEntry } from "./ICourses";
 import type { ICustomEntry } from "./ICustom";
+import type { ICvSection } from "./ICvSections";
 import type { IEducationEntry } from "./IEducation";
 import type { IExperienceEntry } from "./IExperience";
 import type { IHobbyEntry } from "./IHobbies";
@@ -26,5 +27,6 @@ export interface IState{
     awardsEntries: IAwardEntry[];
     customEntry: ICustomEntry;
     addSections: IAddSections,
-    profileSection: String
+    profileSection: String,
+    cvSections: ICvSection[]
 }

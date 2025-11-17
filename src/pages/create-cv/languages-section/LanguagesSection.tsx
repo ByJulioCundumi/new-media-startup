@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
@@ -25,10 +25,35 @@ const LanguagesSection: React.FC = () => {
     );
   };
 
+  // ==========================
+  // CÁLCULO DE PORCENTAJE
+  // ==========================
+  const progress = useMemo(() => {
+    if (!languages.length) return 0;
+
+    const totalFields = languages.length * 2;
+    let filledFields = 0;
+
+    languages.forEach((lang) => {
+      if (lang.name?.trim()) filledFields++;
+      if (lang.level?.trim()) filledFields++; // siempre lleno
+    });
+
+    return Math.round((filledFields / totalFields) * 100);
+  }, [languages]);
+
   return (
     <div className={`languages-section ${!isOpen ? "closed" : ""}`}>
       <div className="languages-section__header">
-        <h2><HiOutlineLanguage /> Idiomas</h2>
+        <h2>
+          <HiOutlineLanguage /> Idiomas
+        </h2>
+
+        {/* BADGE DE PROGRESO */}
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

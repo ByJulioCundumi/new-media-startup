@@ -1,29 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./hobbiessection.scss";
 
-// Redux
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { addHobbyEntry, removeHobbyEntry, setHobbiesEntries, updateHobbyEntry } from "../../../reducers/hobbiesSlice";
-import { RiEmotionHappyLine } from "react-icons/ri";
 import { PiMaskHappy } from "react-icons/pi";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
 
-  const hobbies = useSelector(
-    (state: IState) => state.hobbiesEntries
-  );
+  const hobbies = useSelector((state: IState) => state.hobbiesEntries);
 
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
-  // Inicializar si viene vacío
   useEffect(() => {
     if (!hobbies || hobbies.length === 0) {
       dispatch(setHobbiesEntries([]));
     }
-  }, []);
+  }, [hobbies, dispatch]);
 
   const addHobby = () => {
     dispatch(
@@ -42,10 +37,30 @@ const HobbiesSection: React.FC = () => {
     dispatch(removeHobbyEntry(id));
   };
 
+  // -------- PROGRESS LOGIC ----------
+  const progress = useMemo(() => {
+    const totalFields = hobbies.length;
+    if (totalFields === 0) return 0;
+
+    let completed = 0;
+    for (const hobby of hobbies) {
+      if (hobby.name?.trim()) {
+        completed++;
+      }
+    }
+
+    return Math.round((completed / totalFields) * 100);
+  }, [hobbies]);
+
   return (
     <div className={`hobbies-section ${!isOpen ? "closed" : ""}`}>
       <div className="hobbies-section__header">
         <h2><PiMaskHappy /> Pasatiempos</h2>
+
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

@@ -1,5 +1,5 @@
 // ExperienceSection.tsx
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   FiChevronDown,
   FiTrash2,
@@ -32,10 +32,56 @@ const ExperienceSection: React.FC = () => {
     dispatch(updateExperience({ id, field, value }));
   };
 
+  /** PROGRESS SYSTEM **/
+  const progress = useMemo(() => {
+    if (!entries.length) return 0;
+
+    let totalFields = 0;
+    let completedFields = 0;
+
+    entries.forEach((entry) => {
+      const mandatory = [
+        entry.position,
+        entry.employer,
+        entry.startMonth,
+        entry.startYear,
+      ];
+
+      mandatory.forEach((field) => {
+        totalFields++;
+        if (field?.toString().trim()) completedFields++;
+      });
+
+      const optional = [
+        entry.location,
+        entry.description,
+      ];
+
+      optional.forEach((field) => {
+        totalFields++;
+        if (field?.toString().trim()) completedFields++;
+      });
+
+      // Fecha de fin solo si NO está en presente
+      if (!entry.present) {
+        totalFields += 2;
+        if (entry.endMonth?.trim()) completedFields++;
+        if (entry.endYear?.trim()) completedFields++;
+      }
+    });
+
+    return Math.round((completedFields / totalFields) * 100);
+  }, [entries]);
+
+
   return (
     <div className={`experience-section ${!isOpen ? "closed" : ""}`}>
       <div className="experience-section__header">
         <h2><GrGrow /> Experiencia Profesional</h2>
+
+        <div className="progress-indicator">
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

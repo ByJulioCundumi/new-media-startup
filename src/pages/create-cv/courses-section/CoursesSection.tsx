@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import "./coursessection.scss";
 import type { ICourseEntry } from "../../../interfaces/ICourses";
 import type { IState } from "../../../interfaces/IState";
-import { addCourseEntry, removeCourseEntry, setCoursesEntries, updateCourseEntry } from "../../../reducers/coursesSlice";
-import { FaGraduationCap } from "react-icons/fa";
-import { LuGraduationCap } from "react-icons/lu";
+import {
+  addCourseEntry,
+  removeCourseEntry,
+  setCoursesEntries,
+  updateCourseEntry,
+} from "../../../reducers/coursesSlice";
 import { PiGraduationCapLight } from "react-icons/pi";
 
 interface CoursesSectionProps {
@@ -20,14 +23,14 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
 
   const [isOpen, setIsOpen] = useState(true);
 
-  // Sincronizar initialData si viene desde arriba
+  // Sync external data
   useEffect(() => {
     if (initialData) {
       dispatch(setCoursesEntries(initialData));
     }
   }, [initialData, dispatch]);
 
-  // Notificar cambios al padre
+  // Callback notify
   useEffect(() => {
     onChange?.(courses);
   }, [courses, onChange]);
@@ -70,10 +73,58 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
     }
   };
 
+  /** PROGRESS SYSTEM **/
+  const progress = useMemo(() => {
+    if (!courses.length) return 0;
+
+    let totalFields = 0;
+    let completedFields = 0;
+
+    courses.forEach((course) => {
+      const mandatory = [
+        course.name,
+        course.institution,
+        course.startDate,
+      ];
+
+      mandatory.forEach((field) => {
+        totalFields++;
+        if (field?.toString().trim()) completedFields++;
+      });
+
+      const optional = [
+        course.endDate,
+        course.country,
+        course.city,
+        course.description,
+      ];
+
+      optional.forEach((field) => {
+        totalFields++;
+        if (field?.toString().trim()) completedFields++;
+      });
+
+      // Only valid if the link field is visible
+      if (course.showLink) {
+        totalFields++;
+        if (course.link?.toString().trim()) completedFields++;
+      }
+    });
+
+    return Math.round((completedFields / totalFields) * 100);
+  }, [courses]);
+
   return (
     <div className={`courses-section ${!isOpen ? "closed" : ""}`}>
       <div className="courses-section__header">
-        <h2><PiGraduationCapLight /> Cursos y Certificaciones</h2>
+        <h2>
+          <PiGraduationCapLight /> Cursos y Certificaciones
+        </h2>
+
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}
@@ -148,7 +199,6 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
                   </div>
                 </div>
 
-                {/* Link */}
                 <div className="field full">
                   {course.showLink ? (
                     <div className="courses-link-input-row">

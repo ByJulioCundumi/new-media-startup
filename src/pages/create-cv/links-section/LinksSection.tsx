@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiLink } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import "./linkssection.scss";
@@ -47,10 +47,31 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
     dispatch(removeLinkEntry(id));
   };
 
+  // -------- PROGRESS LOGIC ----------
+  const progress = useMemo(() => {
+    const fieldsPerEntry = 2; // name + url
+    const totalFields = fieldsPerEntry * links.length;
+
+    if (totalFields === 0) return 0;
+
+    let completed = 0;
+    for (const link of links) {
+      if (link.name?.trim()) completed++;
+      if (link.url?.trim()) completed++;
+    }
+
+    return Math.round((completed / totalFields) * 100);
+  }, [links]);
+
   return (
     <div className={`links-section ${!isOpen ? "closed" : ""}`}>
       <div className="links-section__header">
         <h2><FiLink /> Enlaces Relevantes</h2>
+
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}

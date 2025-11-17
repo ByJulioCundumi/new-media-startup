@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./skillssection.scss";
@@ -10,7 +10,7 @@ const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as con
 
 const SkillsSection: React.FC = () => {
   const dispatch = useDispatch();
-  const skills = useSelector((state: IState) => state.skillsEntries); // 👈 SIEMPRE array
+  const skills = useSelector((state: IState) => state.skillsEntries);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -24,10 +24,35 @@ const SkillsSection: React.FC = () => {
     );
   };
 
+  // ==========================
+  // CÁLCULO DE PORCENTAJE
+  // ==========================
+  const progress = useMemo(() => {
+    if (!skills.length) return 0;
+
+    const totalFields = skills.length * 2;
+    let filledFields = 0;
+
+    skills.forEach((skill) => {
+      if (skill.name?.trim()) filledFields++;
+      if (skill.level?.trim()) filledFields++; // siempre lleno
+    });
+
+    return Math.round((filledFields / totalFields) * 100);
+  }, [skills]);
+
   return (
     <div className={`skills-section ${!isOpen ? "closed" : ""}`}>
       <div className="skills-section__header">
-        <h2><FaRegHandBackFist /> Habilidades</h2>
+        <h2>
+          <FaRegHandBackFist /> Habilidades
+        </h2>
+
+        {/* BADGE DE PROGRESO */}
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button className={`toggle-btn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
           <FiChevronDown />
         </button>

@@ -13,6 +13,7 @@ import awardsSlice from "../reducers/awardsSlice";
 import customSlice from "../reducers/customSlice";
 import addSectionsSlice from "../reducers/addSectionsSlice";
 import profileSlice from "../reducers/profileSlice";
+import cvSectionsSlice from "../reducers/cvSectionsSlice";
 
 export default configureStore({
     reducer: {
@@ -29,6 +30,7 @@ export default configureStore({
         awardsEntries: awardsSlice,
         customEntry: customSlice,
         addSections: addSectionsSlice,
-        profileSection: profileSlice
+        profileSection: profileSlice,
+        cvSections: cvSectionsSlice
     }
 })

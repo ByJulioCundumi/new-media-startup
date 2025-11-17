@@ -175,3 +175,15 @@
 .toggle-btn.open svg {
   transform: rotate(180deg);
 }
+
+
+.progress-indicator {
+  margin-left: auto;
+  margin-right: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4f56ff;
+  background: rgba(79, 86, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 10px;
+}

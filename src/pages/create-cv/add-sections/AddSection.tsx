@@ -51,7 +51,7 @@ const AddSections: React.FC = () => {
   return (
     <div className="add-sections improved">
       <div className="add-sections__header">
-        <h2>Agregar Secciones</h2>
+        <h2 className="add-sections__title">Agregar Secciones</h2>
       </div>
 
       <div className="add-sections__content">

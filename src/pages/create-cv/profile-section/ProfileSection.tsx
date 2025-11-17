@@ -3,7 +3,7 @@ import { useEditor, EditorContent, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { FiChevronDown } from "react-icons/fi";
 import { MdOutlineWorkOutline } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { setProfileContent } from "../../../reducers/profileSlice";
@@ -75,6 +75,20 @@ export default function ProfileSection() {
     }),
   });
 
+  const progress = useMemo(() => {
+  if (!editor) return 0;
+
+  const html = editor.getHTML();
+  
+  // Limpia tags html, saltos y espacios
+  const text = html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, "")
+    .trim();
+
+  return text.length > 0 ? 100 : 0;
+}, [editor, content]);
+
   const commands = {
     toggleBold: () => editor?.chain().focus().toggleBold().run(),
     toggleItalic: () => editor?.chain().focus().toggleItalic().run(),
@@ -98,6 +112,8 @@ export default function ProfileSection() {
         <h2 onClick={() => setIsOpen(!isOpen)}>
           <MdOutlineWorkOutline /> Perfil Profesional
         </h2>
+
+        <div className="progress-indicator">{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

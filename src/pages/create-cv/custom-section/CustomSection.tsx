@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FiPlus, FiTrash2, FiX, FiChevronDown } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./customsection.scss";
 import type { IState } from "../../../interfaces/IState";
 import type { ICustomItem } from "../../../interfaces/ICustom";
@@ -11,23 +11,21 @@ import { BiLayerPlus } from "react-icons/bi";
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
 
-  // Obtener sección almacenada en Redux
   const { title: savedTitle, items: savedItems } = useSelector(
     (state: IState) => state.customEntry
   );
 
-  // Estados locales
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState(savedTitle);
   const [items, setItems] = useState<ICustomItem[]>(savedItems);
 
-  // Para sincronizar Redux → Local al cargar
+  // Sync Redux → Local
   useEffect(() => {
     setTitle(savedTitle);
     setItems(savedItems);
   }, [savedTitle, savedItems]);
 
-  // Para sincronizar Local → Redux al modificar
+  // Sync Local → Redux
   const syncRedux = (t: string, i: ICustomItem[]) => {
     dispatch(setCustomSection({ title: t, items: i }));
   };
@@ -61,10 +59,29 @@ const CustomSection: React.FC = () => {
     syncRedux(title, updated);
   };
 
+  // ---------- PROGRESS LOGIC ----------
+  const progress = useMemo(() => {
+    const total = 1 + items.length; // 1 título + N ítems
+    if (total === 0) return 0;
+
+    let completed = 0;
+
+    if (title?.trim()) completed++;
+
+    for (const item of items) {
+      if (item.content?.trim()) {
+        completed++;
+      }
+    }
+
+    return Math.round((completed / total) * 100);
+  }, [title, items]);
+
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>
       <div className="custom-section__header">
         <BiLayerPlus />
+
         <input
           className="section-title"
           type="text"
@@ -72,8 +89,13 @@ const CustomSection: React.FC = () => {
           value={title}
           onChange={(e) => updateTitle(e.target.value)}
         />
+
+        <div className="progress-indicator">
+          {progress}%
+        </div>
+
         <button
-          className={`toggle-btn ${isOpen ? "open" : ""}`}
+          className={`toggle-btn toggle-btn-custom ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <FiChevronDown />
@@ -89,7 +111,9 @@ const CustomSection: React.FC = () => {
                 <textarea
                   placeholder="Ej: Lideré un proyecto de mejora continua..."
                   value={item.content}
-                  onChange={(e) => updateItem(item.id, "content", e.target.value)}
+                  onChange={(e) =>
+                    updateItem(item.id, "content", e.target.value)
+                  }
                 />
               </div>
 
