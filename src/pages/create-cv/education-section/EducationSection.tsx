@@ -11,7 +11,7 @@ import {
   updateEducation,
 } from "../../../reducers/educationSlice";
 import { PiStudentLight } from "react-icons/pi";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -27,7 +27,11 @@ const EducationSection: React.FC = () => {
     (state: IState) => state.educationEntries
   );
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+      state.cvSections.find(s => s.name === "educationSection")
+    );
+  
+    const isOpen = sectionState?.isOpen ?? false;
 
   const updateField = (
     id: string,
@@ -85,7 +89,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("educationSection"))}
         >
           <FiChevronDown />
         </button>

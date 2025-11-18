@@ -12,7 +12,7 @@ import {
   updateReferenceEntry,
 } from "../../../reducers/referencesSlice";
 import { MdOutlineRateReview } from "react-icons/md";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const ReferencesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,11 @@ const ReferencesSection: React.FC = () => {
     (state: IState) => state.referencesEntries
   );
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+      state.cvSections.find(s => s.name === "referenceSection")
+    );
+            
+    const isOpen = sectionState?.isOpen ?? false;
 
   // Inicializar si viene vacío
   useEffect(() => {
@@ -92,7 +96,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("referenceSection"))}
         >
           <FiChevronDown />
         </button>

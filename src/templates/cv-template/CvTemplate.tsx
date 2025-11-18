@@ -1,6 +1,6 @@
 import React from "react";
-
 import "./cvtemplate.scss";
+
 import type { IPersonalInfoData } from "../../interfaces/IPersonalInfo";
 import type { IEducationEntry } from "../../interfaces/IEducation";
 import type { IExperienceEntry } from "../../interfaces/IExperience";
@@ -14,6 +14,7 @@ import type { IAwardEntry } from "../../interfaces/IAward";
 import type { ICustomEntry } from "../../interfaces/ICustom";
 
 interface CvTemplateProps {
+  photo?: { src: string | null };
   personalInfo: IPersonalInfoData;
   profile?: string;
   education: IEducationEntry[];
@@ -29,6 +30,7 @@ interface CvTemplateProps {
 }
 
 const CvTemplate: React.FC<CvTemplateProps> = ({
+  photo,
   personalInfo,
   profile,
   education,
@@ -46,10 +48,13 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
     <div className="cv-template">
       {/* HEADER */}
       <header className="cv-header">
+        {photo?.src && (
+          <div className="photo-wrapper">
+            <img src={photo.src} alt="Foto de perfil" className="cv-photo" />
+          </div>
+        )}
+
         <div className="personal-info">
-          {personalInfo.photo && !personalInfo.disablePhoto && (
-            <img src={personalInfo.photo} alt="Foto" className="photo" />
-          )}
           <h1>{personalInfo.firstName} {personalInfo.lastName}</h1>
           <h2>{personalInfo.desiredJob}</h2>
           <div className="contact">
@@ -64,27 +69,26 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* PROFILE */}
       {profile && (
-        <section className="cv-section profile">
+        <section className="cv-section">
           <h3>Perfil Profesional</h3>
-          <p>{profile}</p>
+          <p className="profile-text">{profile}</p>
         </section>
       )}
 
       {/* EDUCATION */}
       {education.length > 0 && (
-        <section className="cv-section education">
+        <section className="cv-section">
           <h3>Educación</h3>
           {education.map((edu) => (
             <div className="entry" key={edu.id}>
-              <div className="entry-left">
+              <div>
                 <strong>{edu.title}</strong>
-                <span>{edu.institution}</span>
-                <span>{edu.location}</span>
+                <span>{edu.institution} — {edu.location}</span>
               </div>
-              <div className="entry-right">
-                <span>{edu.startMonth}/{edu.startYear} - {edu.present ? "Actualidad" : `${edu.endMonth}/${edu.endYear}`}</span>
+              <div className="date">
+                {edu.startMonth}/{edu.startYear} - {edu.present ? "Actualidad" : `${edu.endMonth}/${edu.endYear}`}
               </div>
-              {edu.description && <p className="description">{edu.description}</p>}
+              {edu.description && <p>{edu.description}</p>}
             </div>
           ))}
         </section>
@@ -92,19 +96,18 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* EXPERIENCE */}
       {experience.length > 0 && (
-        <section className="cv-section experience">
+        <section className="cv-section">
           <h3>Experiencia</h3>
           {experience.map((exp) => (
             <div className="entry" key={exp.id}>
-              <div className="entry-left">
+              <div>
                 <strong>{exp.position}</strong>
-                <span>{exp.employer}</span>
-                <span>{exp.location}</span>
+                <span>{exp.employer} — {exp.location}</span>
               </div>
-              <div className="entry-right">
-                <span>{exp.startMonth}/{exp.startYear} - {exp.present ? "Actualidad" : `${exp.endMonth}/${exp.endYear}`}</span>
+              <div className="date">
+                {exp.startMonth}/{exp.startYear} - {exp.present ? "Actualidad" : `${exp.endMonth}/${exp.endYear}`}
               </div>
-              {exp.description && <p className="description">{exp.description}</p>}
+              {exp.description && <p>{exp.description}</p>}
             </div>
           ))}
         </section>
@@ -112,11 +115,11 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* SKILLS */}
       {skills.length > 0 && (
-        <section className="cv-section skills">
+        <section className="cv-section">
           <h3>Habilidades</h3>
-          <ul className="skills-list">
+          <ul className="inline-list">
             {skills.map((skill) => (
-              <li key={skill.id}>{skill.name} - {skill.level}</li>
+              <li key={skill.id}>{skill.name} ({skill.level})</li>
             ))}
           </ul>
         </section>
@@ -124,11 +127,11 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* LANGUAGES */}
       {languages.length > 0 && (
-        <section className="cv-section languages">
+        <section className="cv-section">
           <h3>Idiomas</h3>
-          <ul className="languages-list">
+          <ul className="inline-list">
             {languages.map((lang) => (
-              <li key={lang.id}>{lang.name} - {lang.level}</li>
+              <li key={lang.id}>{lang.name} ({lang.level})</li>
             ))}
           </ul>
         </section>
@@ -136,9 +139,9 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* LINKS */}
       {links && links.length > 0 && (
-        <section className="cv-section links">
+        <section className="cv-section">
           <h3>Enlaces</h3>
-          <ul>
+          <ul className="inline-list">
             {links.map((link) => (
               <li key={link.id}><a href={link.url} target="_blank" rel="noreferrer">{link.name}</a></li>
             ))}
@@ -148,11 +151,12 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* COURSES */}
       {courses && courses.length > 0 && (
-        <section className="cv-section courses">
+        <section className="cv-section">
           <h3>Cursos y Certificaciones</h3>
           {courses.map((course) => (
             <div key={course.id} className="entry">
-              <strong>{course.name}</strong> - {course.institution} ({course.startDate} - {course.endDate || "Actualidad"})
+              <strong>{course.name}</strong> — {course.institution}
+              <div className="date">{course.startDate} - {course.endDate || "Actualidad"}</div>
               {course.description && <p>{course.description}</p>}
             </div>
           ))}
@@ -161,9 +165,9 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* HOBBIES */}
       {hobbies && hobbies.length > 0 && (
-        <section className="cv-section hobbies">
+        <section className="cv-section">
           <h3>Pasatiempos</h3>
-          <ul>
+          <ul className="inline-list">
             {hobbies.map((h) => (
               <li key={h.id}>{h.name}</li>
             ))}
@@ -173,35 +177,36 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
       {/* REFERENCES */}
       {references && references.length > 0 && (
-        <section className="cv-section references">
+        <section className="cv-section">
           <h3>Referencias</h3>
           {references.map((ref) => (
-            <div key={ref.id} className="entry">
-              <strong>{ref.name}</strong> - {ref.company}
-              <span>{ref.phone}</span>
-              <span>{ref.email}</span>
-            </div>
+            <p key={ref.id}>
+              <strong>{ref.name}</strong> — {ref.company}<br />
+              {ref.phone} · {ref.email}
+            </p>
           ))}
         </section>
       )}
 
       {/* AWARDS */}
       {awards && awards.length > 0 && (
-        <section className="cv-section awards">
+        <section className="cv-section">
           <h3>Premios y Reconocimientos</h3>
           {awards.map((a) => (
-            <div key={a.id} className="entry">
-              <strong>{a.name}</strong> ({a.date})
-              {a.description && <p>{a.description}</p>}
-              {a.showLink && a.link && <a href={a.link}>{a.link}</a>}
-            </div>
+            <p key={a.id}>
+              <strong>{a.name}</strong> ({a.date})<br />
+              {a.description}
+              {a.showLink && a.link && (
+                <><br /><a href={a.link}>{a.link}</a></>
+              )}
+            </p>
           ))}
         </section>
       )}
 
       {/* CUSTOM SECTION */}
       {customSection && customSection.items.length > 0 && (
-        <section className="cv-section custom-section">
+        <section className="cv-section">
           <h3>{customSection.title}</h3>
           <ul>
             {customSection.items.map((item) => (

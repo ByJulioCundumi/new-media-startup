@@ -5,7 +5,7 @@ import "./linkssection.scss";
 import type { ILinkEntry } from "../../../interfaces/ILinks";
 import type { IState } from "../../../interfaces/IState";
 import { addLinkEntry, removeLinkEntry, setLinksEntries, updateLinkEntry } from "../../../reducers/linksSlice";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 interface LinksSectionProps {
   initialData?: ILinkEntry[];
@@ -16,7 +16,11 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
   const dispatch = useDispatch();
   const links = useSelector((state: IState) => state.linksEntries);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+        state.cvSections.find(s => s.name === "linkSection")
+      );
+          
+      const isOpen = sectionState?.isOpen ?? false;
 
   // Si viene initialData, se sincroniza solo 1 vez
   useEffect(() => {
@@ -80,7 +84,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("linkSection"))}
         >
           <FiChevronDown />
         </button>

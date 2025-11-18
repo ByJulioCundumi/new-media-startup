@@ -6,7 +6,7 @@ import "./languagessection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
 import { HiOutlineLanguage } from "react-icons/hi2";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
@@ -14,7 +14,11 @@ const LanguagesSection: React.FC = () => {
   const dispatch = useDispatch();
   const languages = useSelector((state: IState) => state.languagesEntries);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+      state.cvSections.find(s => s.name === "languageSection")
+    );
+        
+    const isOpen = sectionState?.isOpen ?? false;
 
   const addLanguage = () => {
     dispatch(
@@ -62,7 +66,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("languageSection"))}
         >
           <FiChevronDown />
         </button>

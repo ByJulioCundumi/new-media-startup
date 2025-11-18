@@ -15,7 +15,7 @@ import {
   removeExperience,
 } from "../../../reducers/experienceSlice";
 import { GrGrow } from "react-icons/gr";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -27,7 +27,11 @@ const years = Array.from({ length: 50 }, (_, i) => `${2025 - i}`);
 const ExperienceSection: React.FC = () => {
   const dispatch = useDispatch();
   const entries = useSelector((state: IState) => state.experienceEntries);
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+        state.cvSections.find(s => s.name === "experienceSection")
+      );
+    
+      const isOpen = sectionState?.isOpen ?? false;
 
   const updateField = (id: string, field: any, value: any) => {
     dispatch(updateExperience({ id, field, value }));
@@ -91,7 +95,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("experienceSection"))}
         >
           <FiChevronDown />
         </button>

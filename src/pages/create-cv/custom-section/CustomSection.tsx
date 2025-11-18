@@ -7,7 +7,7 @@ import type { IState } from "../../../interfaces/IState";
 import type { ICustomItem } from "../../../interfaces/ICustom";
 import { setCustomSection } from "../../../reducers/customSlice";
 import { BiLayerPlus } from "react-icons/bi";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,10 +15,14 @@ const CustomSection: React.FC = () => {
   const { title: savedTitle, items: savedItems } = useSelector(
     (state: IState) => state.customEntry
   );
-
-  const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState(savedTitle);
   const [items, setItems] = useState<ICustomItem[]>(savedItems);
+
+  const sectionState = useSelector((state: IState) =>
+      state.cvSections.find(s => s.name === "customSection")
+    );
+  
+    const isOpen = sectionState?.isOpen ?? false;
 
   // Sync Redux → Local
   useEffect(() => {
@@ -102,7 +106,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn toggle-btn-custom ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("customSection"))}
         >
           <FiChevronDown />
         </button>

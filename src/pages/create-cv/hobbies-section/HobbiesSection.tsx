@@ -10,12 +10,16 @@ import {
   updateHobbyEntry,
 } from "../../../reducers/hobbiesSlice";
 import { PiMaskHappy } from "react-icons/pi";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
   const hobbies = useSelector((state: IState) => state.hobbiesEntries);
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find(s => s.name === "hobbieSection")
+  );
+      
+  const isOpen = sectionState?.isOpen ?? false;
 
   const lastProgressRef = useRef<number>(-1); // para evitar despachos repetidos
 
@@ -63,7 +67,7 @@ const HobbiesSection: React.FC = () => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("hobbieSection"))}
         >
           <FiChevronDown />
         </button>

@@ -1,0 +1,147 @@
+.photo-section {
+  background: #fff;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
+  transition: all 0.25s ease;
+
+  &.closed {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2431a8;
+      margin: 0;
+
+      svg {
+        font-size: 1.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: -0.35rem;
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+.photo-container {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  border: 2px dashed rgba(120, 144, 255, 0.3);
+  background: #f9f9ff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #4f56ff;
+    font-size: 14px;
+    font-weight: 600;
+
+    svg {
+      font-size: 2rem;
+    }
+  }
+
+  .remove-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: #ff6161;
+    border: none;
+    padding: 7px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    transition: 0.2s;
+
+    &:hover {
+      background: #e84d4d;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.add-photo-btn {
+  background: #f6f6ff;
+  border: 1px solid #cdcfff;
+  color: #3842cb;
+  padding: 11px 18px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #eceaff;
+    border-color: #b6bdff;
+    transform: translateY(-1px);
+  }
+}
+
+.toggle-btn {
+  background: #f3f4ff;
+  border: 1px solid #d4d7ff;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 10px;
+  display: flex;
+  transition: 0.25s;
+  color: #3d47c5;
+
+  svg {
+    font-size: 20px;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    background: #e6e7ff;
+  }
+
+  &.open svg {
+    transform: rotate(180deg);
+  }
+}
+
+.progress-indicator {
+  margin-left: auto;
+  margin-right: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4f56ff;
+  background: rgba(79, 86, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 10px;
+}

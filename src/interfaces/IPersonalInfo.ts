@@ -1,6 +1,5 @@
 // src/interfaces/IPersonalInfo.ts
 export interface IPersonalInfoData {
-  photo: string;
   firstName: string;
   lastName: string;
   desiredJob: string;
@@ -21,9 +20,6 @@ export interface IPersonalInfoData {
   custom?: string;          // 👈 NECESARIO para usar key="custom"
   customLabel?: string;
   customValue?: string;
-
-  /** Estado que deshabilita la foto */
-  disablePhoto: boolean;
 
   /** Lista de campos opcionales activos */
   activeFields: (keyof IPersonalInfoData)[];

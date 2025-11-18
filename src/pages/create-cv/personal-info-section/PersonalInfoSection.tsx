@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { FiPlus, FiX, FiEdit2, FiChevronDown } from "react-icons/fi";
 import "./personalinfosection.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,12 +6,10 @@ import type { IState } from "../../../interfaces/IState";
 import {
   setPersonalField,
   toggleOptionalField,
-  setDisablePhoto,
 } from "../../../reducers/personalInfoSlice";
 import type { IPersonalInfoData } from "../../../interfaces/IPersonalInfo";
 import { LuUserPen } from "react-icons/lu";
-import { IoIosCamera } from "react-icons/io";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 type OptionalFieldKey = Extract<
   keyof IPersonalInfoData,
@@ -59,7 +57,11 @@ const safeString = (v: unknown): string => (typeof v === "string" ? v : "");
 
 const PersonalInfoSection: React.FC = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find(s => s.name === "personalInfoSection")
+  );
+          
+  const isOpen = sectionState?.isOpen ?? false;
 
   const data = useSelector((state: IState) => state.personalInfo);
 
@@ -87,23 +89,6 @@ const PersonalInfoSection: React.FC = () => {
     updateField("customLabel", (newValue || "Campo personalizado") as any);
   };
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (data.disablePhoto) return;
-
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => updateField("photo", reader.result as string);
-    reader.readAsDataURL(file);
-  };
-
-  const removePhoto = () => {
-    if (!data.disablePhoto) {
-      updateField("photo", "");
-    }
-  };
-
   const progress = useMemo(() => {
     // contabiliza base + foto (si está habilitada) + opcionales activos
     let total = BASE_FIELDS.length + 1; // +1 para la foto
@@ -113,13 +98,6 @@ const PersonalInfoSection: React.FC = () => {
     for (const f of BASE_FIELDS) {
       const val = data[f.key];
       if (typeof val === "string" && val.trim()) complete++;
-    }
-
-    // foto (solo si no está deshabilitada)
-    if (!data.disablePhoto) {
-      if (typeof data.photo === "string" && data.photo.trim()) complete++;
-    } else {
-      total--; // si está deshabilitada no cuenta en el total
     }
 
     // campos opcionales activos
@@ -155,63 +133,13 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("personalInfoSection"))}
         >
           <FiChevronDown />
         </button>
       </div>
 
       <div className="collapsible-content">
-        {/* FOTO */}
-        <div className="photo-upload-row">
-          <div className={`photo-upload-block ${data.disablePhoto ? "disabled" : ""}`}>
-            <div className="photo-upload-block__main">
-              <label className="photo-click">
-                {data.photo && !data.disablePhoto ? (
-                  <img src={data.photo} alt="Foto" />
-                ) : (
-                  <div className="photo-placeholder">
-                    <IoIosCamera />
-                  </div>
-                )}
-
-                {!data.disablePhoto && (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    disabled={data.disablePhoto}
-                    onChange={handlePhotoUpload}
-                  />
-                )}
-              </label>
-
-              <p>
-                {data.disablePhoto ? "Foto deshabilitada para esta plantilla" : "Tu foto de perfil"}
-              </p>
-            </div>
-
-            {!data.disablePhoto && data.photo && (
-              <button className="remove-photo-btn" onClick={removePhoto}>
-                <FiX />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Toggle para deshabilitar/habilitar foto 
-
-        <div className="disable-photo-toggle">
-          <button
-            onClick={() => dispatch(setDisablePhoto(!Boolean(data.disablePhoto)))}
-            className={data.disablePhoto ? "off" : "on"}
-          >
-            {data.disablePhoto ? "Habilitar foto" : "Deshabilitar foto"}
-          </button>
-        </div>
-        
-        */}
-        
-
         {/* CAMPOS BASE */}
         <div className="fields-grid">
           {BASE_FIELDS.map((f) => (

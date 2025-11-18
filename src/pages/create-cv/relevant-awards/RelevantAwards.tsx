@@ -13,14 +13,18 @@ import {
 } from "../../../reducers/awardsSlice";
 
 import { BsAward } from "react-icons/bs";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
 
   const awards = useSelector((state: IState) => state.awardsEntries);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find(s => s.name === "awardSection")
+  );
+            
+  const isOpen = sectionState?.isOpen ?? false;
 
   const addAward = () => {
     dispatch(
@@ -98,7 +102,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("awardSection"))}
         >
           <FiChevronDown />
         </button>

@@ -8,6 +8,7 @@ import type { IHobbyEntry } from "./IHobbies";
 import type { ILanguageEntry } from "./ILanguages";
 import type { ILinkEntry } from "./ILinks";
 import type { IPersonalInfoData } from "./IPersonalInfo";
+import type { IPhotoData } from "./IPhoto";
 import type { IReferenceEntry } from "./IReferences";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
@@ -26,5 +27,6 @@ export interface IState{
     awardsEntries: IAwardEntry[];
     customEntry: ICustomEntry;
     profileSection: String,
-    cvSections: ICvSection[]
+    cvSections: ICvSection[],
+    photo: IPhotoData
 }

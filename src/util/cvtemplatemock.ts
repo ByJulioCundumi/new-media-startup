@@ -10,9 +10,13 @@ import type { IPersonalInfoData } from "../interfaces/IPersonalInfo";
 import type { IReferenceEntry } from "../interfaces/IReferences";
 import type { ISkillEntry } from "../interfaces/ISkills";
 
+// PHOTO
+export const photoMock = {
+  src: "https://i.pravatar.cc/300?img=47", // puedes cambiar la imagen
+};
+
 // PERSONAL INFO
 export const personalInfoMock: IPersonalInfoData = {
-  photo: "https://randomuser.me/api/portraits/men/32.jpg",
   firstName: "Julio",
   lastName: "Cundumi",
   desiredJob: "Desarrollador Frontend",
@@ -26,7 +30,6 @@ export const personalInfoMock: IPersonalInfoData = {
   civilStatus: "Soltero",
   website: "https://julio.dev",
   linkedin: "https://linkedin.com/in/juliocundumi",
-  disablePhoto: false,
   activeFields: ["address", "postalCode", "birthDate", "nationality"],
 };
 

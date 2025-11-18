@@ -1,156 +1,88 @@
-.cv-toolbar {
+.cv-toolbar-wrapper {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid rgba(40, 49, 180, 0.041);
-  border-radius: 18px;
-  padding: 22px 22px;
-
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-
-  &__top{
-    display: flex;
-    flex-direction: column;
-    margin-top: -0.4rem;
-  }
-}
-
-/* Header with title + edit icon */
-.cv-header {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: -0.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(90, 110, 255, 0.15);
+  padding: 12px 0px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 
-/* Title text */
-.cv-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
-  color: #1c1d27;
-}
-
-/* EDIT MODE — input como texto editable */
-.cv-title-input {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  width: 100%;
-
-  color: #1c1d27;
-  outline: none;
-  cursor: text;
-
-  transition: opacity 0.25s ease;
-}
-
-/* Estilo cuando se está editando */
-.cv-title-input.editing {
-  opacity: 0.55;
-}
-
-/* Edit icon */
-.icon-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #3f51ff;
-  font-size: 18px;
-  padding: 4px;
-
-  &:hover {
-    transform: scale(1.12);
-    color: #2e3ee0;
-  }
-}
-
-/* Progress */
-.progress-container {
+.cv-toolbar-buttons {
   display: flex;
-  align-items: center;
   gap: 12px;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 8px;
-  background: #eceeff;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.progress-value {
-  height: 100%;
-  background: linear-gradient(90deg, #6a5cff, #9c7dff);
-  border-radius: 6px;
-  transition: width 0.4s ease;
-}
-
-.progress-text {
-  font-size: 14px;
-  font-weight: 600;
-  color: #3f3f55;
-}
-
-/* Action Buttons */
-.cv-actions {
-  display: flex;
   align-items: center;
-  justify-content: end;
-  gap: 10px;
-  flex-wrap: wrap;
 }
 
 .cv-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 
-  background: #f6f7ff;
-  border: 1px solid #cdd2ff;
-  color: #24243a;
-
-  padding: 8px 16px;
-  border-radius: 10px;
+  background: transparent;
+  border: none;
   cursor: pointer;
+
+  border-radius: 10px;
+  padding: 8px 14px;
   font-size: 14px;
   font-weight: 600;
-
+  color: #2e325a;
   transition: 0.25s ease;
 
   svg {
-    font-size: 15px;
+    font-size: 16px;
+    transition: 0.25s ease;
   }
 
   &:hover {
-    background: #e9ebff;
-    border-color: #aeb5ff;
+    background: rgba(66, 76, 255, 0.08);
+    color: #3f51ff;
   }
 
-  &.primary {
-    background: #3f51ff;
-    border-color: #3f51ff;
-    color: #fff;
+  &:active {
+    transform: scale(0.97);
   }
 
-  &.primary:hover {
-    background: #2e3ee0;
+  &.ghost {
+    border: 1px solid rgba(90, 110, 255, 0.15);
+
+    &:hover {
+      background: rgba(66, 76, 255, 0.12);
+      border-color: rgba(66, 76, 255, 0.3);
+    }
+  }
+
+  &.icon-btn {
+    padding: 9px;
+    border-radius: 8px;
+    border: 1px solid rgba(90, 110, 255, 0.15);
+
+    svg {
+      font-size: 18px;
+    }
+
+    &:hover {
+      background: rgba(66, 76, 255, 0.12);
+      border-color: rgba(66, 76, 255, 0.3);
+      color: #3f51ff;
+    }
   }
 
   &.success {
-    background: #00b37e;
-    border-color: #00b37e;
-    color: #fff;
-  }
+    border-color: rgba(0, 179, 126, 0.3);
 
-  &.success:hover {
-    background: #009268;
+    &:hover {
+      background: rgba(0, 179, 126, 0.1);
+      border-color: rgba(0, 179, 126, 0.6);
+      color: #00b37e;
+    }
   }
+}
+
+.cv-toolbar-end{
+  display: flex;
+  gap: 0.5rem;
 }

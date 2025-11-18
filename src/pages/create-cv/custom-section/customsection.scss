@@ -1,12 +1,10 @@
 .custom-section {
   background: #fff;
-  border: 1px solid rgba(90, 110, 255, 0.15);
-  border-radius: 22px;
   padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
   transition: all 0.25s ease;
 
   &.closed {
@@ -54,13 +52,9 @@
     border: 1px solid rgba(90,110,255,0.18);
     border-radius: 18px;
     padding: 22px;
-    background: #fafaff;
+    background: #ffffff;
     position: relative;
     transition: 0.2s;
-
-    &:hover {
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
 
     .remove-btn {
       position: absolute;
@@ -105,7 +99,7 @@
       border-radius: 12px;
       border: 1px solid rgba(120, 144, 255, 0.25);
       font-size: 15px;
-      background: #fbfbff;
+      background: #ffffff;
       transition: 0.2s ease;
 
       &:focus {

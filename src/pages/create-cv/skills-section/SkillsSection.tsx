@@ -5,7 +5,7 @@ import "./skillssection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../reducers/skillsSlice";
 import { FaRegHandBackFist } from "react-icons/fa6";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as const;
 
@@ -13,7 +13,11 @@ const SkillsSection: React.FC = () => {
   const dispatch = useDispatch();
   const skills = useSelector((state: IState) => state.skillsEntries);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+        state.cvSections.find(s => s.name === "skillSection")
+      );
+              
+      const isOpen = sectionState?.isOpen ?? false;
 
   const add = () => {
     dispatch(
@@ -59,7 +63,9 @@ useEffect(() => {
           {progress}%
         </div>
 
-        <button className={`toggle-btn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <button className={`toggle-btn ${isOpen ? "open" : ""}`} 
+          onClick={() => dispatch(toggleSectionOpen("skillSection"))}
+        >
           <FiChevronDown />
         </button>
       </div>

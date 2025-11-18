@@ -17,8 +17,10 @@ import ToolbarCV from "../../components/toolbar-cv/ToolbarCV";
 import ProfileSection from "./profile-section/ProfileSection";
 import { useEffect, useState } from "react";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { awardsMock, coursesMock, customSectionMock, educationMock, experienceMock, hobbiesMock, languagesMock, linksMock, personalInfoMock, profileMock, referencesMock, skillsMock } from "../../util/cvtemplatemock";
+import { awardsMock, coursesMock, customSectionMock, educationMock, experienceMock, hobbiesMock, languagesMock, linksMock, personalInfoMock, photoMock, profileMock, referencesMock, skillsMock } from "../../util/cvtemplatemock";
 import { templates } from "../../templates/templates";
+import ProgressBar from "../../components/progress-bar/ProgressBar";
+import PhotoSection from "./photo-section/PhotoSection";
 
 function CreateCv() {
   const dispatch = useDispatch();
@@ -59,8 +61,9 @@ function CreateCv() {
       
       <div className="create-cv__body">
         <div className="create-cv__left">
-          <ToolbarCV />
+          <ProgressBar />
           <div className="create-cv__left--sections">
+            <PhotoSection />
             <PersonalInfoSection />
             <ProfileSection />
             <EducationSection />
@@ -78,39 +81,31 @@ function CreateCv() {
         </div>
 
         <div className="create-cv__right">
-          {/* Selector de plantillas */}
-          <div className="template-selector">
-            {templates.map((tpl) => (
-              <button
-                key={tpl.id}
-                className={tpl.id === selectedTemplate ? "active" : ""}
-                onClick={() => setSelectedTemplate(tpl.id)}
-              >
-                {tpl.label}
-              </button>
-            ))}
-          </div>
+  <div className="cv-preview-header">
+    <ToolbarCV />
+  </div>
 
-          {/* Vista previa de la plantilla seleccionada */}
-          <div className="template-preview">
-            {SelectedTemplate && (
-              <SelectedTemplate
-                personalInfo={personalInfoMock}
-                profile={profileMock}
-                education={educationMock}
-                experience={experienceMock}
-                skills={skillsMock}
-                languages={languagesMock}
-                links={linksMock}
-                courses={coursesMock}
-                hobbies={hobbiesMock}
-                references={referencesMock}
-                awards={awardsMock}
-                customSection={customSectionMock}
-              />
-            )}
-          </div>
-        </div>
+  <div className="cv-preview-body">
+    {SelectedTemplate && (
+      <SelectedTemplate
+        photo={photoMock}
+        personalInfo={personalInfoMock}
+        profile={profileMock}
+        education={educationMock}
+        experience={experienceMock}
+        skills={skillsMock}
+        languages={languagesMock}
+        links={linksMock}
+        courses={coursesMock}
+        hobbies={hobbiesMock}
+        references={referencesMock}
+        awards={awardsMock}
+        customSection={customSectionMock}
+      />
+    )}
+  </div>
+</div>
+
       </div>
     </section>
   );

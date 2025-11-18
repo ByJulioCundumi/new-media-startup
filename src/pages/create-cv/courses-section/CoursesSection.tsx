@@ -11,7 +11,7 @@ import {
   updateCourseEntry,
 } from "../../../reducers/coursesSlice";
 import { PiGraduationCapLight } from "react-icons/pi";
-import { setSectionProgress } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 interface CoursesSectionProps {
   initialData?: ICourseEntry[];
@@ -22,7 +22,11 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
   const dispatch = useDispatch();
   const courses = useSelector((state: IState) => state.coursesEntries);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find(s => s.name === "courseSection")
+  );
+
+  const isOpen = sectionState?.isOpen ?? false;
 
   // Sync external data
   useEffect(() => {
@@ -133,7 +137,7 @@ useEffect(() => {
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch(toggleSectionOpen("courseSection"))}
         >
           <FiChevronDown />
         </button>

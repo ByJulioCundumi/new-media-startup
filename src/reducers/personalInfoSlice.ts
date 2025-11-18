@@ -2,14 +2,12 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IPersonalInfoData } from "../interfaces/IPersonalInfo";
 
 const initialState: IPersonalInfoData = {
-  photo: "",
   firstName: "",
   lastName: "",
   desiredJob: "",
   email: "",
   phone: "",
   city: "",
-  disablePhoto: false,
   activeFields: [],
 
   address: "",
@@ -63,14 +61,6 @@ const personalInfoSlice = createSlice({
         state.activeFields.push(key);
       }
     },
-
-    setDisablePhoto: (state, action: PayloadAction<boolean>) => {
-      state.disablePhoto = action.payload;
-
-      if (action.payload) {
-        state.photo = "";
-      }
-    },
   },
 });
 
@@ -78,7 +68,6 @@ export const {
   setPersonalField,
   setPersonalData,
   toggleOptionalField,
-  setDisablePhoto,
 } = personalInfoSlice.actions;
 
 export default personalInfoSlice.reducer;
