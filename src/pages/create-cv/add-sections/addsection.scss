@@ -1,142 +1,155 @@
-/* ──────────────────────────────────────────────── */
-/*   CONTENEDOR STICKY                              */
-/* ──────────────────────────────────────────────── */
-.add-sections-box {
+/* ===========================================================
+   CONTENEDOR STICKY (barra inferior profesional)
+   =========================================================== */
+.add-sections {
   position: sticky;
   bottom: 0;
-  left: 0;
   width: 100%;
   z-index: 60;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(22px);
 
-  border-top: 1px solid rgba(30, 60, 150, 0.08);
+  border-top: 1px solid rgba(1, 1, 1, 0.032);
   box-shadow:
-    0 -5px 12px rgba(0, 0, 0, 0.032),
-    0 4px 12px rgba(0, 0, 0, 0.02);
+    0 -4px 14px rgba(0, 0, 0, 0.034),
+    0 -1px 3px rgba(0, 0, 0, 0.016);
 }
 
-/* ──────────────────────────────────────────────── */
-/*   BARRA INTERIOR                                 */
-/* ──────────────────────────────────────────────── */
-.add-sections-bar {
+/* ===========================================================
+   CONTENIDO INTERNO
+   =========================================================== */
+.add-sections-inner {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  padding: 16px 16px;
+  gap: 8px;
+  padding: 15px 20px;
 }
 
-/* Título */
-.add-sections-title {
-  font-size: 17px;
+/* ===========================================================
+   TÍTULO
+   =========================================================== */
+.title {
+  font-size: 18px;
   font-weight: 700;
-  color: #1c1d27;
-  padding-left: 2px;
-  letter-spacing: -0.3px;
+  color: #1a1a1f;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #eef0ff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: #4a52f7;
+  }
 }
 
-/* ──────────────────────────────────────────────── */
-/*   ROW PRINCIPAL                                  */
-/* ──────────────────────────────────────────────── */
-.sections-row {
+/* ===========================================================
+   ROW PRINCIPAL
+   =========================================================== */
+.row {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Scroll interno */
-.sections-scroll {
+/* ===========================================================
+   SCROLL AREA
+   =========================================================== */
+.scroll-area {
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  scrollbar-width: none;
   flex: 1;
-  scroll-behavior: smooth;
 
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-/* ──────────────────────────────────────────────── */
-/*   PILLS                                          */
-/* ──────────────────────────────────────────────── */
-
+/* ===========================================================
+   PILLS
+   =========================================================== */
 .pill {
   display: flex;
   align-items: center;
-  gap: 7px;
+  height: fit-content;
+  gap: 8px;
 
-  padding: 10px 16px;
-  border-radius: 14px;
+  padding: 7px 18px;
+  border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
-
-  /* 🎨 Azul apagado */
-  border: 1px solid rgba(80, 90, 255, 0.18);
-  background: #f7f8ff;
-  color: #3a42a0;
-
-  transition: 0.22s ease;
   white-space: nowrap;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  border: 2px dashed #9fadad29;
+    background: #9baaaa0d;
+  color: #1d4272;
 
   &:hover {
     background: #eef0ff;
-    border-color: rgba(80, 90, 255, 0.32);
+    border-color: rgba(70, 80, 180, 0.32);
     transform: translateY(-1px);
   }
 
   .icon {
-    font-size: 1rem;
-    opacity: 0.85;
+    font-size: 1.05rem;
+    opacity: 0.9;
   }
 }
 
-/* Estado activo — estilo premium */
+/* ===========================================================
+   PILLS ACTIVAS (estilo premium con degradado)
+   =========================================================== */
 .pill.active {
-  background: linear-gradient(135deg, #5667ff, #8b95ff);
-  border-color: transparent;
-  color: #ffffff;
-
-  box-shadow:
-    0 4px 12px rgba(80, 90, 255, 0.25),
-    0 2px 5px rgba(80, 90, 255, 0.18);
+  background-color: #1185c88f;
+  border: none;
+  color: #fff;
+  border: 2px dashed #02201600;
 
   .icon {
     color: #fff;
   }
 }
 
-/* ──────────────────────────────────────────────── */
-/*   BOTONES DE SCROLLING                           */
-/* ──────────────────────────────────────────────── */
-
+/* ===========================================================
+   BOTONES DE SCROLL
+   =========================================================== */
 .scroll-btn {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(80, 90, 255, 0.18);
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  color: #5359ff;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(70, 80, 180, 0.2);
+  color: #4a52f7;
 
+  cursor: pointer;
   transition: 0.22s ease;
 
   &:hover {
-    background: rgba(80, 90, 255, 0.12);
-    transform: scale(1.1);
-    border-color: rgba(80, 90, 255, 0.35);
+    background: rgba(70, 80, 255, 0.12);
+    border-color: rgba(70, 80, 255, 0.35);
+    transform: scale(1.08);
   }
 
   svg {
-    font-size: 18px;
+    font-size: 19px;
   }
 }

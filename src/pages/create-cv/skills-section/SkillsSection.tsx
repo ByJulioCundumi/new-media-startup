@@ -51,6 +51,12 @@ useEffect(() => {
   dispatch(setSectionProgress({ name: "skillSection", progress }));
 }, [progress, dispatch]);
 
+const progressColorClass = useMemo(() => {
+  if (progress < 50) return "progress-red";
+  if (progress < 100) return "progress-yellow";
+  return "progress-blue"; // 100%
+}, [progress]);
+
   return (
     <div className={`skills-section ${!isOpen ? "closed" : ""}`}>
       <div className="skills-section__header">
@@ -59,9 +65,7 @@ useEffect(() => {
         </h2>
 
         {/* BADGE DE PROGRESO */}
-        <div className="progress-indicator">
-          {progress}%
-        </div>
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button className={`toggle-btn ${isOpen ? "open" : ""}`} 
           onClick={() => dispatch(toggleSectionOpen("skillSection"))}

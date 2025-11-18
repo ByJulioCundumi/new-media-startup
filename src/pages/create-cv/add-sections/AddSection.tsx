@@ -1,33 +1,22 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  FaLink,
-  FaGraduationCap,
-} from "react-icons/fa";
+
+import { FaLink, FaGraduationCap } from "react-icons/fa";
 import type { IState } from "../../../interfaces/IState";
+
 import {
   enableSection,
   disableSection,
   setSectionProgress,
 } from "../../../reducers/cvSectionsSlice";
-import {
-  clearCustomSection,
-} from "../../../reducers/customSlice";
-import {
-  clearAllLinks
-} from "../../../reducers/linksSlice";
-import {
-  clearAllAwards
-} from "../../../reducers/awardsSlice";
-import {
-  clearAllReferences
-} from "../../../reducers/referencesSlice";
-import {
-  clearAllHobbies
-} from "../../../reducers/hobbiesSlice";
-import {
-  clearAllCourses
-} from "../../../reducers/coursesSlice";
+
+import { clearCustomSection } from "../../../reducers/customSlice";
+import { clearAllLinks } from "../../../reducers/linksSlice";
+import { clearAllAwards } from "../../../reducers/awardsSlice";
+import { clearAllReferences } from "../../../reducers/referencesSlice";
+import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
+import { clearAllCourses } from "../../../reducers/coursesSlice";
+
 import "./addsection.scss";
 
 import { PiMaskHappyFill } from "react-icons/pi";
@@ -35,6 +24,7 @@ import { MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
 import { BiSolidLayerPlus } from "react-icons/bi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { TbNewSection } from "react-icons/tb";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
@@ -69,47 +59,57 @@ const AddSections: React.FC = () => {
     }
   };
 
-  const scrollLeft = () => {
-    scrollerRef.current?.scrollBy({ left: -160, behavior: "smooth" });
-  };
+  const scrollLeft = () =>
+    scrollerRef.current?.scrollBy({ left: -180, behavior: "smooth" });
 
-  const scrollRight = () => {
-    scrollerRef.current?.scrollBy({ left: 160, behavior: "smooth" });
-  };
+  const scrollRight = () =>
+    scrollerRef.current?.scrollBy({ left: 180, behavior: "smooth" });
+
+  // ✅ Calcular cuántas secciones del arreglo están activas
+  const activeSections = sections.filter((sec) => {
+    const s = cvSections.find((c) => c.name === sec.name);
+    return s?.enabled === true;
+  }).length;
 
   return (
-    <div className="add-sections-box">
-      <div className="add-sections-bar">
-      <h3 className="add-sections-title">Agregar Secciones</h3>
+    <div className="add-sections">
+      <div className="add-sections-inner">
 
-      <div className="sections-row">
-        <button className="scroll-btn left" onClick={scrollLeft}>
-          <IoIosArrowBack />
-        </button>
+        <h3 className="title">
+          Agregar Secciones
+          <span className="count">
+            <TbNewSection /> {activeSections}/6
+          </span>
+        </h3>
 
-        <div ref={scrollerRef} className="sections-scroll">
-          {sections.map((sec) => {
-            const sectionState = cvSections.find((s) => s.name === sec.name);
-            const isEnabled = sectionState?.enabled || false;
+        <div className="row">
+          <button className="scroll-btn" onClick={scrollLeft}>
+            <IoIosArrowBack />
+          </button>
 
-            return (
-              <button
-                key={sec.name}
-                className={`pill ${isEnabled ? "active" : ""}`}
-                onClick={() => toggleSection(sec.name, isEnabled)}
-              >
-                <span className="icon">{sec.icon}</span>
-                {sec.label}
-              </button>
-            );
-          })}
+          <div ref={scrollerRef} className="scroll-area">
+            {sections.map((sec) => {
+              const section = cvSections.find((s) => s.name === sec.name);
+              const enabled = section?.enabled;
+
+              return (
+                <button
+                  key={sec.name}
+                  className={`pill ${enabled ? "active" : ""}`}
+                  onClick={() => toggleSection(sec.name, enabled ?? false)}
+                >
+                  <span className="icon">{sec.icon}</span>
+                  {sec.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <button className="scroll-btn" onClick={scrollRight}>
+            <IoIosArrowForward />
+          </button>
         </div>
-
-        <button className="scroll-btn right" onClick={scrollRight}>
-          <IoIosArrowForward />
-        </button>
       </div>
-    </div>
     </div>
   );
 };

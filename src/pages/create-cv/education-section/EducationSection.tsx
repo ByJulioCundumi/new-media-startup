@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
 import "./educationsection.scss";
 
@@ -81,13 +81,20 @@ const EducationSection: React.FC = () => {
     dispatch(setSectionProgress({ name: "educationSection", progress }));
   }, [progress, dispatch]);
 
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue"; // 100%
+  }, [progress]);
+
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
         <h2>
           <PiStudentLight /> Formación Académica
         </h2>
-        <span className="progress-indicator">{progress}%</span>
+        
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

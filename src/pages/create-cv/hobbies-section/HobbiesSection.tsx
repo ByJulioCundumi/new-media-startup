@@ -56,6 +56,12 @@ const HobbiesSection: React.FC = () => {
     }
   }, [progress, dispatch]);
 
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue"; // 100%
+  }, [progress]);
+
   return (
     <div className={`hobbies-section ${!isOpen ? "closed" : ""}`}>
       <div className="hobbies-section__header">
@@ -63,7 +69,7 @@ const HobbiesSection: React.FC = () => {
           <PiMaskHappy /> Pasatiempos
         </h2>
 
-        <div className="progress-indicator">{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

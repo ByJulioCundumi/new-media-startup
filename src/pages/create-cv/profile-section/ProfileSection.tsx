@@ -110,6 +110,12 @@ useEffect(() => {
   dispatch(setSectionProgress({ name: "profileSection", progress }));
 }, [progress, dispatch]);
 
+const progressColorClass = useMemo(() => {
+  if (progress < 50) return "progress-red";
+  if (progress < 100) return "progress-yellow";
+  return "progress-blue"; // 100%
+}, [progress]);
+
   return (
     <div className={`profile-section ${isOpen ? "open" : "closed"}`}>
       <div className="profile-section__header">
@@ -117,7 +123,7 @@ useEffect(() => {
           <MdOutlineWorkOutline /> Perfil Profesional
         </h2>
 
-        <div className="progress-indicator">{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

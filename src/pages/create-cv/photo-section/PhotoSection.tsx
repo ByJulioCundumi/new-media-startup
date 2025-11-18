@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiCamera, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./photosection.scss";
@@ -40,14 +40,18 @@ const PhotoSection = () => {
     dispatch(setSectionProgress({ name: "photoSection", progress }));
   }, [progress, dispatch]);
 
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue"; // 100%
+  }, [progress]);
+
   return (
     <div className={`photo-section ${!isOpen ? "closed" : ""}`}>
       <div className="photo-section__header">
         <h2><FiCamera /> Foto de Perfil</h2>
 
-        <div className="progress-indicator">
-          {progress}%
-        </div>
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

@@ -21,7 +21,7 @@
   h2 {
     font-size: 19px;
     font-weight: 700;
-    color: #6c5ce7;
+    color: #8a9999;
     margin: 0;
     cursor: pointer;
 
@@ -66,16 +66,15 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  border: 1px solid rgba(90,110,255,0.18);
+  border: 2px dashed #9fadad29;
+  background: #9baaaa0d;
   border-radius: 18px;
   padding: 20px;
-  background: #fcfcfc;
 }
 
 /* TOOLBAR */
 .toolbar {
   background: #fff;
-  border: 1px solid rgba(90, 110, 255, 0.15);
   border-radius: 16px;
   padding: 12px 16px;
   display: flex;
@@ -84,6 +83,7 @@
   gap: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
   transition: 0.25s ease;
+  border: 1px solid #9fadad3e;
 
   .toolbar-left,
   .toolbar-right {
@@ -93,9 +93,9 @@
   }
 
   button {
-    background: #f5f7ff;
-    border: 1px solid rgba(90,110,255,0.25);
-    color: #5A6EFF;
+    background: #8a99990d;
+    border: 1px solid #9fadad3e;
+    color: #9fadad;
     padding: 8px 10px;
     border-radius: 12px;
     cursor: pointer;
@@ -147,7 +147,7 @@
 
 /* EDITOR */
 .editor-card {
-  border: 1px solid rgba(90,110,255,0.2);
+  border: 1px solid #9fadad3e;
   border-radius: 16px;
   background: #fff;
   padding: 16px;
@@ -226,15 +226,4 @@
   color: rgba(0, 0, 0, 0.35);
   pointer-events: none;
   height: 0;
-}
-
-.progress-indicator {
-  margin-left: auto;
-  margin-right: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #4f56ff;
-  background: rgba(79, 86, 255, 0.12);
-  padding: 4px 10px;
-  border-radius: 10px;
 }

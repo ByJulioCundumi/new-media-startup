@@ -20,7 +20,7 @@
     h2 {
       font-size: 20px;
       font-weight: 700;
-      color: #3f51b5;
+      color: #8a9999;
       margin: 0;
 
       svg{
@@ -44,11 +44,11 @@
   }
 
   .experience-card {
-    border: 1px solid rgba(90,110,255,0.18);
     border-radius: 18px;
     padding: 20px;
-    background: #ffffff;
     position: relative;
+    border: 2px dashed #9fadad29;
+    background: #9baaaa0d;
 
     .remove-btn {
       position: absolute;
@@ -62,6 +62,10 @@
       cursor: pointer;
       display: flex;
       transition: 0.2s;
+
+      svg{
+        font-size: 0.7rem;
+      }
 
       &:hover {
         background: #e84d4d;
@@ -96,7 +100,7 @@
     textarea {
       padding: 11px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(120, 144, 255, 0.25);
+      border: 1px solid #9fadad29;
       font-size: 15px;
       background: #ffffff;
       transition: 0.2s ease;
@@ -172,15 +176,4 @@
 
 .toggle-btn.open svg {
   transform: rotate(180deg);
-}
-
-.progress-indicator {
-  margin-left: auto;
-  margin-right: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #4f56ff;
-  background: rgba(79, 86, 255, 0.12);
-  padding: 4px 10px;
-  border-radius: 10px;
 }

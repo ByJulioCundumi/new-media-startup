@@ -87,6 +87,12 @@ useEffect(() => {
   dispatch(setSectionProgress({ name: "customSection", progress }));
 }, [progress, dispatch]);
 
+const progressColorClass = useMemo(() => {
+  if (progress < 50) return "progress-red";
+  if (progress < 100) return "progress-yellow";
+  return "progress-blue"; // 100%
+}, [progress]);
+
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>
       <div className="custom-section__header">
@@ -100,9 +106,7 @@ useEffect(() => {
           onChange={(e) => updateTitle(e.target.value)}
         />
 
-        <div className="progress-indicator">
-          {progress}%
-        </div>
+        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn toggle-btn-custom ${isOpen ? "open" : ""}`}

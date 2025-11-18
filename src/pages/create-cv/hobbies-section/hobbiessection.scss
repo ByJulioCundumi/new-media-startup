@@ -20,7 +20,7 @@
     h2 {
       font-size: 20px;
       font-weight: 700;
-      color: #ff7675;
+      color: #8a9999;
       margin: 0;
 
       svg{
@@ -46,7 +46,7 @@
       flex: 1;
       padding: 10px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(120, 144, 255, 0.25);
+      border: 1px solid #9fadad29;
       font-size: 15px;
       background: #ffffff;
       transition: 0.2s ease;
@@ -120,16 +120,4 @@
 
 .toggle-btn.open svg {
   transform: rotate(180deg);
-}
-
-
-.progress-indicator {
-  margin-left: auto;
-  margin-right: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #4f56ff;
-  background: rgba(79, 86, 255, 0.12);
-  padding: 4px 10px;
-  border-radius: 10px;
 }

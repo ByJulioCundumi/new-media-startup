@@ -20,7 +20,7 @@
     h2 {
       font-size: 20px;
       font-weight: 700;
-      color: #4f6ef7;
+      color: #8a9999;
       margin: 0;
 
       svg {
@@ -42,8 +42,8 @@
   width: 140px;
   height: 140px;
   border-radius: 20px;
-  border: 2px dashed rgba(120, 144, 255, 0.3);
-  background: #f9f9ff;
+  border: 2px dashed #9fadad29;
+  background: #8a99990d;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -61,7 +61,7 @@
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    color: #4f56ff;
+    color: #8a9999cb;
     font-size: 14px;
     font-weight: 600;
 
@@ -133,15 +133,4 @@
   &.open svg {
     transform: rotate(180deg);
   }
-}
-
-.progress-indicator {
-  margin-left: auto;
-  margin-right: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #4f56ff;
-  background: rgba(79, 86, 255, 0.12);
-  padding: 4px 10px;
-  border-radius: 10px;
 }

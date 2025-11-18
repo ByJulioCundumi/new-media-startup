@@ -82,7 +82,6 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(80, 90, 255, 0.1);
     transform: scale(1.1);
   }
 }
@@ -108,7 +107,7 @@
 .progress-bar-fill {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #5c57ff, #9488ff, #6f63ff);
+  background: linear-gradient(90deg, #0bae78, #11d4ad, #11d493);
   background-size: 200% 100%;
   animation: gradientShift 4s ease infinite;
   transition: width 0.4s ease;
@@ -141,4 +140,35 @@
   .progress-bar-text {
     font-size: 13px;
   }
+}
+
+
+/* ─────────────────────────────────────────────── */
+/* COLORES DINÁMICOS PARA LA BARRA DE PROGRESO     */
+/* ─────────────────────────────────────────────── */
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease, background 0.3s ease;
+}
+
+/* Rojo — progreso bajo */
+.progress-bar-fill.progress-red {
+  background: #ff8d8f;
+}
+
+/* Amarillo/Naranja — progreso medio */
+.progress-bar-fill.progress-yellow {
+  background: #fdea8c;
+}
+
+/* Azul — 70%–99% */
+.progress-bar-fill.progress-blue {
+  background: #3aa6ff; /* azul profesional */
+}
+
+/* Verde/Azul — progreso completo */
+.progress-bar-fill.progress-blue {
+  background: #08e69c;
 }
