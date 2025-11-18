@@ -1,11 +1,15 @@
 .profile-section {
   background: #fff;
-  padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 22px;
   transition: 0.3s ease;
   border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
+  margin: 0 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
   &.closed {
     padding-top: 20px;
@@ -29,35 +33,6 @@
       font-size: 1.8rem;
       margin-right: 0.5rem;
       margin-bottom: -0.35rem;
-    }
-  }
-
-  .toggle-btn {
-    background: rgba(90,110,255,0.1);
-    border: 1px solid rgba(90,110,255,0.3);
-    color: #5A6EFF;
-    border-radius: 12px;
-    padding: 6px;
-    cursor: pointer;
-    transition: 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    svg {
-      width: 20px;
-      height: 20px;
-      transition: transform 0.25s ease;
-      transform: rotate(0deg);
-    }
-
-    &:hover {
-      background: rgba(90,110,255,0.2);
-      border-color: rgba(90,110,255,0.6);
-    }
-
-    &.open svg {
-      transform: rotate(180deg);
     }
   }
 }

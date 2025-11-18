@@ -1,5 +1,6 @@
 import React from "react";
 import "./cvtemplate.scss";
+import DOMPurify from "dompurify";
 
 import type { IPersonalInfoData } from "../../interfaces/IPersonalInfo";
 import type { IEducationEntry } from "../../interfaces/IEducation";
@@ -12,7 +13,6 @@ import type { IHobbyEntry } from "../../interfaces/IHobbies";
 import type { IReferenceEntry } from "../../interfaces/IReferences";
 import type { IAwardEntry } from "../../interfaces/IAward";
 import type { ICustomEntry } from "../../interfaces/ICustom";
-import DOMPurify from "dompurify";
 
 interface CvTemplateProps {
   photo?: { src: string | null };
@@ -49,178 +49,118 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
 
   return (
     <div className="cv-template">
-      {/* HEADER */}
-      <header className="cv-header">
+
+      {/* LEFT COLUMN */}
+      <aside className="left-column">
+        {/* PHOTO */}
         {photo?.src && (
           <div className="photo-wrapper">
-            <img src={photo.src} alt="Foto de perfil" className="cv-photo" />
+            <img src={photo.src} alt="Foto de perfil" />
           </div>
         )}
 
-        <div className="personal-info">
-          <h1>{personalInfo.firstName} {personalInfo.lastName}</h1>
-          <h2>{personalInfo.desiredJob}</h2>
-          <div className="contact">
-            {personalInfo.email && <span>{personalInfo.email}</span>}
-            {personalInfo.phone && <span>{personalInfo.phone}</span>}
-            {personalInfo.city && <span>{personalInfo.city}</span>}
-            {personalInfo.website && <span>{personalInfo.website}</span>}
-            {personalInfo.linkedin && <span>{personalInfo.linkedin}</span>}
-          </div>
+        {/* NAME */}
+        <h1 className="name">
+          {personalInfo.firstName} {personalInfo.lastName}
+        </h1>
+        <h2 className="role">{personalInfo.desiredJob}</h2>
+
+        {/* CONTACT */}
+        <div className="section">
+          <h3>Contact</h3>
+          <ul className="info-list">
+            {personalInfo.email && <li>{personalInfo.email}</li>}
+            {personalInfo.city && <li>{personalInfo.city}</li>}
+            {personalInfo.phone && <li>{personalInfo.phone}</li>}
+            {personalInfo.website && <li>{personalInfo.website}</li>}
+            {personalInfo.linkedin && <li>{personalInfo.linkedin}</li>}
+          </ul>
         </div>
-      </header>
 
-      {/* PROFILE */}
-      {profile && (
-        <section className="cv-section">
-          <h3>Perfil Profesional</h3>
-          <div
-            className="profile-text rich-text"
-            dangerouslySetInnerHTML={{ __html: safeHTML }}
-          />
-        </section>
-      )}
+        {/* SKILLS */}
+        {skills.length > 0 && (
+          <div className="section">
+            <h3>Technical Skills</h3>
+            <ul className="skills-list">
+              {skills.map((s) => (
+                <li key={s.id}>
+                  <span>{s.name}</span>
+                  <div className="dots">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className={i < (s.level || 0) ? "dot filled" : "dot"}
+                      />
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
 
-      {/* EDUCATION */}
-      {education.length > 0 && (
-        <section className="cv-section">
-          <h3>Educación</h3>
-          {education.map((edu) => (
-            <div className="entry" key={edu.id}>
-              <div>
+      {/* RIGHT COLUMN */}
+      <main className="right-column">
+        {/* PROFILE */}
+        {profile && (
+          <section className="cv-section">
+            <h3 className="section-title">Professional Summary</h3>
+            <div
+              className="rich-text"
+              dangerouslySetInnerHTML={{ __html: safeHTML }}
+            />
+          </section>
+        )}
+
+        {/* EXPERIENCE */}
+        {experience.length > 0 && (
+          <section className="cv-section">
+            <h3 className="section-title">Employment</h3>
+            {experience.map((exp) => (
+              <div className="entry" key={exp.id}>
+                <div className="entry-header">
+                  <strong>{exp.position}</strong>
+                  <span className="job-type">{exp.type || ""}</span>
+                </div>
+                <div className="entry-sub">
+                  <span>{exp.employer}</span>
+                  <span>{exp.location}</span>
+                  <span>
+                    {exp.startMonth}/{exp.startYear} -{" "}
+                    {exp.present
+                      ? "Present"
+                      : `${exp.endMonth}/${exp.endYear}`}
+                  </span>
+                </div>
+                {exp.description && <p>{exp.description}</p>}
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* EDUCATION */}
+        {education.length > 0 && (
+          <section className="cv-section">
+            <h3 className="section-title">Education</h3>
+            {education.map((edu) => (
+              <div className="entry" key={edu.id}>
                 <strong>{edu.title}</strong>
-                <span>{edu.institution} — {edu.location}</span>
+                <div className="entry-sub">
+                  <span>{edu.institution}</span>
+                  <span>
+                    {edu.startMonth}/{edu.startYear} -{" "}
+                    {edu.present
+                      ? "Present"
+                      : `${edu.endMonth}/${edu.endYear}`}
+                  </span>
+                </div>
               </div>
-              <div className="date">
-                {edu.startMonth}/{edu.startYear} - {edu.present ? "Actualidad" : `${edu.endMonth}/${edu.endYear}`}
-              </div>
-              {edu.description && <p>{edu.description}</p>}
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* EXPERIENCE */}
-      {experience.length > 0 && (
-        <section className="cv-section">
-          <h3>Experiencia</h3>
-          {experience.map((exp) => (
-            <div className="entry" key={exp.id}>
-              <div>
-                <strong>{exp.position}</strong>
-                <span>{exp.employer} — {exp.location}</span>
-              </div>
-              <div className="date">
-                {exp.startMonth}/{exp.startYear} - {exp.present ? "Actualidad" : `${exp.endMonth}/${exp.endYear}`}
-              </div>
-              {exp.description && <p>{exp.description}</p>}
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* SKILLS */}
-      {skills.length > 0 && (
-        <section className="cv-section">
-          <h3>Habilidades</h3>
-          <ul className="inline-list">
-            {skills.map((skill) => (
-              <li key={skill.id}>{skill.name} ({skill.level})</li>
             ))}
-          </ul>
-        </section>
-      )}
+          </section>
+        )}
+      </main>
 
-      {/* LANGUAGES */}
-      {languages.length > 0 && (
-        <section className="cv-section">
-          <h3>Idiomas</h3>
-          <ul className="inline-list">
-            {languages.map((lang) => (
-              <li key={lang.id}>{lang.name} ({lang.level})</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* LINKS */}
-      {links && links.length > 0 && (
-        <section className="cv-section">
-          <h3>Enlaces</h3>
-          <ul className="inline-list">
-            {links.map((link) => (
-              <li key={link.id}><a href={link.url} target="_blank" rel="noreferrer">{link.name}</a></li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* COURSES */}
-      {courses && courses.length > 0 && (
-        <section className="cv-section">
-          <h3>Cursos y Certificaciones</h3>
-          {courses.map((course) => (
-            <div key={course.id} className="entry">
-              <strong>{course.name}</strong> — {course.institution}
-              <div className="date">{course.startDate} - {course.endDate || "Actualidad"}</div>
-              {course.description && <p>{course.description}</p>}
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* HOBBIES */}
-      {hobbies && hobbies.length > 0 && (
-        <section className="cv-section">
-          <h3>Pasatiempos</h3>
-          <ul className="inline-list">
-            {hobbies.map((h) => (
-              <li key={h.id}>{h.name}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* REFERENCES */}
-      {references && references.length > 0 && (
-        <section className="cv-section">
-          <h3>Referencias</h3>
-          {references.map((ref) => (
-            <p key={ref.id}>
-              <strong>{ref.name}</strong> — {ref.company}<br />
-              {ref.phone} · {ref.email}
-            </p>
-          ))}
-        </section>
-      )}
-
-      {/* AWARDS */}
-      {awards && awards.length > 0 && (
-        <section className="cv-section">
-          <h3>Premios y Reconocimientos</h3>
-          {awards.map((a) => (
-            <p key={a.id}>
-              <strong>{a.name}</strong> ({a.date})<br />
-              {a.description}
-              {a.showLink && a.link && (
-                <><br /><a href={a.link}>{a.link}</a></>
-              )}
-            </p>
-          ))}
-        </section>
-      )}
-
-      {/* CUSTOM SECTION */}
-      {customSection && customSection.items.length > 0 && (
-        <section className="cv-section">
-          <h3>{customSection.title}</h3>
-          <ul>
-            {customSection.items.map((item) => (
-              <li key={item.id}>{item.content}</li>
-            ))}
-          </ul>
-        </section>
-      )}
     </div>
   );
 };

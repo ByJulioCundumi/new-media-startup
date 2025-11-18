@@ -1,11 +1,20 @@
 .personalinfo-section {
   background: #fff;
-  padding: 20px 28px;
   display: flex;
   flex-direction: column;
   gap: 22px;
   transition: all 0.25s ease;
   border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
+  margin: 0 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  &.closed {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 
 .section-header {
@@ -172,32 +181,6 @@
   }
 }
 
-.toggle-btn {
-  background: #f3f4ff;
-  border: 1px solid #d4d7ff;
-  cursor: pointer;
-  padding: 7px;
-  border-radius: 10px;
-  transition: 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #3d47c5;
-
-  svg {
-    font-size: 20px;
-    transition: transform 0.25s ease;
-  }
-
-  &:hover {
-    background: #e6e7ff;
-  }
-}
-
-.toggle-btn.open svg {
-  transform: rotate(180deg);
-}
-
 /* CONTENIDO COLAPSABLE */
 .collapsible-content {
   max-height: 1000px;
@@ -219,63 +202,3 @@
   padding-bottom: 0px;
 }
 
-.progress-percentage {
-  font-size: 15px;
-  font-weight: 700;
-  color: #2431a8;
-  margin-right: auto;
-  margin-left: 12px;
-  opacity: 0.85;
-}
-
-
-.photo-upload-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.remove-photo-btn {
-  border: 1px solid #e74c3c;
-  background: transparent;
-  color: #e74c3c;
-  padding: 6px 12px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: 0.2s ease;
-
-  &:hover {
-    background: #e74c3c;
-    color: white;
-  }
-}
-
-.photo-upload-block.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.disable-photo-toggle {
-  margin-top: -12px;
-  margin-bottom: 12px;
-}
-
-.disable-photo-toggle button {
-  background: transparent;
-  border: 1px solid rgba(90,110,255,0.3);
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.disable-photo-toggle button.on {
-  color: #5a6eff;
-}
-
-.disable-photo-toggle button.off {
-  color: #d04444;
-}

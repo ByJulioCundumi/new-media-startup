@@ -1,11 +1,15 @@
 .awards-section {
   background: #fff;
-  padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 18px;
   border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
   transition: all 0.25s ease;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
+  margin: 0 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
   &.closed {
     padding-top: 20px;
@@ -143,30 +147,6 @@
       transform: translateY(-1px);
     }
   }
-}
-
-.toggle-btn {
-  background: #f3f4ff;
-  border: 1px solid #d4d7ff;
-  cursor: pointer;
-  padding: 7px;
-  border-radius: 10px;
-  display: flex;
-  transition: 0.25s;
-  color: #3d47c5;
-
-  svg {
-    font-size: 20px;
-    transition: transform 0.25s ease;
-  }
-
-  &:hover {
-    background: #e6e7ff;
-  }
-}
-
-.toggle-btn.open svg {
-  transform: rotate(180deg);
 }
 
 /* Link input fila completa */
