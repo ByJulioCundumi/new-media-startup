@@ -9,7 +9,11 @@ import {
 } from "../../../reducers/personalInfoSlice";
 import type { IPersonalInfoData } from "../../../interfaces/IPersonalInfo";
 import { LuUserPen } from "react-icons/lu";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import {
+  setOnlySectionOpen,
+  setSectionProgress,
+  toggleSectionOpen,
+} from "../../../reducers/cvSectionsSlice";
 
 type OptionalFieldKey = Extract<
   keyof IPersonalInfoData,
@@ -52,17 +56,17 @@ const BASE_FIELDS: {
   { key: "phone", label: "Teléfono", placeholder: "Ej: +57 301 0000000" },
 ];
 
-/** Normaliza cualquier valor a string seguro para `value` de un input */
+/** Normaliza cualquier valor para evitar crashes en inputs controlados */
 const safeString = (v: unknown): string => (typeof v === "string" ? v : "");
 
 const PersonalInfoSection: React.FC = () => {
   const dispatch = useDispatch();
-  const sectionState = useSelector((state: IState) =>
-    state.cvSections.find(s => s.name === "personalInfoSection")
-  );
-          
-  const isOpen = sectionState?.isOpen ?? false;
 
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find((s) => s.name === "personalInfoSection")
+  );
+
+  const isOpen = sectionState?.isOpen ?? false;
   const data = useSelector((state: IState) => state.personalInfo);
 
   const labelRef = useRef<HTMLSpanElement>(null);
@@ -82,45 +86,51 @@ const PersonalInfoSection: React.FC = () => {
 
   const handleInlineBlur = () => {
     if (!labelRef.current) return;
-
     labelRef.current.contentEditable = "false";
 
     const newValue = labelRef.current.innerText.trim();
     updateField("customLabel", (newValue || "Campo personalizado") as any);
   };
 
+  /** PROGRESO BASADO SOLO EN CAMPOS DE TEXTO USADOS */
   const progress = useMemo(() => {
-    // contabiliza base + foto (si está habilitada) + opcionales activos
-    let total = BASE_FIELDS.length + 1; // +1 para la foto
+    // total = base fields + active optional fields
+    const total = BASE_FIELDS.length + data.activeFields.length;
     let complete = 0;
 
-    // base fields
+    // count base fields with value
     for (const f of BASE_FIELDS) {
-      const val = data[f.key];
-      if (typeof val === "string" && val.trim()) complete++;
-    }
-
-    // campos opcionales activos
-    for (const key of data.activeFields) {
-      total++;
-      if (key === "custom") {
-        const v = data.customValue;
-        if (typeof v === "string" && v.trim()) complete++;
-      } else {
-        const v = data[key as keyof IPersonalInfoData];
-        if (typeof v === "string" && v.trim()) complete++;
+      const v = data[f.key];
+      if (typeof v === "string" && v.trim() !== "") {
+        complete++;
       }
     }
 
-    // evitar división por cero (por si acaso)
-    if (total <= 0) return 0;
+    // count optional active fields
+    for (const keyRaw of data.activeFields) {
+      if (keyRaw === "custom") {
+        const v = data.customValue;
+        if (typeof v === "string" && v.trim() !== "") {
+          complete++;
+        }
+      } else {
+        const v = data[keyRaw as keyof IPersonalInfoData];
+        if (typeof v === "string" && v.trim() !== "") {
+          complete++;
+        }
+      }
+    }
+
+    if (total === 0) return 0;
     return Math.round((complete / total) * 100);
   }, [data]);
 
-  // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "personalInfoSection", progress }));
-}, [progress, dispatch]);
+  /** Sincroniza el progreso con Redux */
+  useEffect(() => {
+    dispatch(
+      setSectionProgress({ name: "personalInfoSection", progress })
+    );
+  }, [progress, dispatch]);
 
   return (
     <div className={`personalinfo-section ${isOpen ? "" : "closed"}`}>
@@ -156,14 +166,13 @@ useEffect(() => {
 
           {/* CAMPOS OPCIONALES ACTIVOS */}
           {data.activeFields.map((keyRaw) => {
-            // keyRaw viene del state: keyof IPersonalInfoData
             const key = keyRaw as OptionalFieldKey;
             const field = OPTIONAL_FIELDS.find((o) => o.key === key);
             if (!field) return null;
 
             if (key === "custom") {
               return (
-                <div className="field optional" key={String(key)}>
+                <div className="field optional" key={key}>
                   <div className="custom-label-row">
                     <span
                       ref={labelRef}
@@ -183,7 +192,9 @@ useEffect(() => {
                       type="text"
                       placeholder="Valor..."
                       value={safeString(data.customValue)}
-                      onChange={(e) => updateField("customValue", e.target.value as any)}
+                      onChange={(e) =>
+                        updateField("customValue", e.target.value as any)
+                      }
                     />
 
                     <button
@@ -197,16 +208,17 @@ useEffect(() => {
               );
             }
 
-            // Para otros opcionales (city, address, etc.)
             return (
-              <div className="field optional" key={String(key)}>
+              <div className="field optional" key={key}>
                 <label>{field.label}</label>
                 <div className="input-remove">
                   <input
                     type="text"
                     placeholder={field.placeholder}
-                    value={safeString(data[key as keyof IPersonalInfoData])}
-                    onChange={(e) => updateField(key as any, e.target.value as any)}
+                    value={safeString(data[key])}
+                    onChange={(e) =>
+                      updateField(key, e.target.value as any)
+                    }
                   />
 
                   <button
@@ -223,7 +235,9 @@ useEffect(() => {
 
         {/* BOTONES PARA AGREGAR CAMPOS */}
         <div className="personalinfo-section__addfields">
-          {OPTIONAL_FIELDS.filter((f) => !data.activeFields.includes(f.key)).map((f) => (
+          {OPTIONAL_FIELDS.filter(
+            (f) => !data.activeFields.includes(f.key)
+          ).map((f) => (
             <button key={f.key} onClick={() => dispatch(toggleOptionalField(f.key))}>
               <FiPlus /> {f.label}
             </button>

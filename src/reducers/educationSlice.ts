@@ -20,6 +20,7 @@ const educationSlice = createSlice({
         endYear: "",
         present: false,
         description: "",
+        showExtraInfo: false
       });
     },
 

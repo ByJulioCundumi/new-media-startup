@@ -55,15 +55,9 @@ const cvSectionsSlice = createSlice({
     },
 
     // 🆕 TOGGLE isOpen (abrir/cerrar sección)
-    toggleSectionOpen: (state, action: PayloadAction<string | null>) => {
+    toggleSectionOpen: (state, action: PayloadAction<string>) => {
       const target = action.payload;
-
-      if (target === null) {
-        // Cierra todas
-        state.forEach((s) => (s.isOpen = false));
-        return;
-      }
-
+      
       const section = state.find((s) => s.name === target);
       if (!section) return;
 

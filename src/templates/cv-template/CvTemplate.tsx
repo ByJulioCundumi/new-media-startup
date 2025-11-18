@@ -12,6 +12,7 @@ import type { IHobbyEntry } from "../../interfaces/IHobbies";
 import type { IReferenceEntry } from "../../interfaces/IReferences";
 import type { IAwardEntry } from "../../interfaces/IAward";
 import type { ICustomEntry } from "../../interfaces/ICustom";
+import DOMPurify from "dompurify";
 
 interface CvTemplateProps {
   photo?: { src: string | null };
@@ -44,6 +45,8 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
   awards,
   customSection,
 }) => {
+  const safeHTML = DOMPurify.sanitize(profile ?? "");
+
   return (
     <div className="cv-template">
       {/* HEADER */}
@@ -71,7 +74,10 @@ const CvTemplate: React.FC<CvTemplateProps> = ({
       {profile && (
         <section className="cv-section">
           <h3>Perfil Profesional</h3>
-          <p className="profile-text">{profile}</p>
+          <div
+            className="profile-text rich-text"
+            dangerouslySetInnerHTML={{ __html: safeHTML }}
+          />
         </section>
       )}
 

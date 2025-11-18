@@ -20,7 +20,7 @@
     h2 {
       font-size: 20px;
       font-weight: 700;
-      color: #2431a8;
+      color: #ff9900c4;
       margin: 0;
 
       svg{
@@ -185,3 +185,26 @@
   padding: 4px 10px;
   border-radius: 10px;
 }
+
+
+.add-extra-btn{
+    background: #fbfbff;
+    border: 1px solid #cdcfff;
+    color: #3842cb;
+    padding: 11px 18px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: fit-content;
+
+    &:hover {
+      background: #fbfbff;
+      border-color: #b6bdff;
+      transform: translateY(-1px);
+    }
+  }

@@ -120,3 +120,89 @@
     }
   }
 }
+
+
+/* ===== RICH TEXT (estilos para HTML proveniente del editor) ===== */
+.rich-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2a2a2a;
+
+  p {
+    margin: 0 0 10px;
+  }
+
+  strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  u {
+    text-decoration: underline;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    margin: 20px 0 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 18px 0 8px;
+    color: #16226b;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 16px 0 6px;
+  }
+
+  ul, ol {
+    padding-left: 24px;
+    margin: 10px 0;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  a {
+    color: #5A6EFF;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: 0.2s ease;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid #5A6EFF;
+    padding-left: 12px;
+    color: #4a4a4a;
+    font-style: italic;
+    margin: 12px 0;
+  }
+
+  code {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 90%;
+    font-family: monospace;
+  }
+}

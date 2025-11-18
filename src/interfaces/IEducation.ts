@@ -10,4 +10,5 @@ export interface IEducationEntry {
   endYear?: string;
   present: boolean;
   description: string;
+  showExtraInfo: boolean;
 }

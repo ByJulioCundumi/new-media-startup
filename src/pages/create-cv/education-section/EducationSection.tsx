@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
 import "./educationsection.scss";
 
@@ -11,7 +11,7 @@ import {
   updateEducation,
 } from "../../../reducers/educationSlice";
 import { PiStudentLight } from "react-icons/pi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -23,15 +23,13 @@ const years = Array.from({ length: 50 }, (_, i) => `${2025 - i}`);
 const EducationSection: React.FC = () => {
   const dispatch = useDispatch();
 
-  const entries = useSelector(
-    (state: IState) => state.educationEntries
+  const entries = useSelector((state: IState) => state.educationEntries);
+  
+  const sectionState = useSelector((state: IState) =>
+    state.cvSections.find((s) => s.name === "educationSection")
   );
 
-  const sectionState = useSelector((state: IState) =>
-      state.cvSections.find(s => s.name === "educationSection")
-    );
-  
-    const isOpen = sectionState?.isOpen ?? false;
+  const isOpen = sectionState?.isOpen ?? false;
 
   const updateField = (
     id: string,
@@ -41,20 +39,23 @@ const EducationSection: React.FC = () => {
     dispatch(updateEducation({ id, field, value }));
   };
 
+  /** PROGRESO DINÁMICO SOLO SI LOS CAMPOS EXISTEN Y ESTÁN LLENOS */
   const getProgress = () => {
     if (!entries.length) return 0;
 
-    const requiredFields = ["title", "institution", "location", "startMonth", "startYear"];
+    const baseFields = ["title", "institution", "location", "startMonth", "startYear"];
 
     let filled = 0;
     let total = 0;
 
     entries.forEach(entry => {
-      requiredFields.forEach(field => {
+      // Campos obligatorios siempre presentes
+      baseFields.forEach(field => {
         total++;
         if (entry[field as keyof IEducationEntry]) filled++;
       });
 
+      // Fecha de finalización solo si NO está en curso
       if (!entry.present) {
         total++;
         if (entry.endMonth) filled++;
@@ -63,8 +64,11 @@ const EducationSection: React.FC = () => {
         if (entry.endYear) filled++;
       }
 
-      total++;
-      if (entry.description?.trim()) filled++;
+      // Información extra solo si está habilitada
+      if (entry.showExtraInfo) {
+        total++;
+        if (entry.description?.trim()) filled++;
+      }
     });
 
     return Math.round((filled / total) * 100);
@@ -73,18 +77,16 @@ const EducationSection: React.FC = () => {
   const progress = getProgress();
 
   // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "educationSection", progress }));
-}, [progress, dispatch]);
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "educationSection", progress }));
+  }, [progress, dispatch]);
 
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
-
         <h2>
           <PiStudentLight /> Formación Académica
         </h2>
-
         <span className="progress-indicator">{progress}%</span>
 
         <button
@@ -100,7 +102,7 @@ useEffect(() => {
           {entries.map((entry) => (
             <div className="education-card" key={entry.id}>
               <div className="card-grid">
-                
+
                 <div className="field">
                   <label>Título / Programa</label>
                   <input
@@ -138,7 +140,6 @@ useEffect(() => {
                 </div>
 
                 <div className="education-section__dates">
-
                   <div className="field">
                     <label>Fecha de Inicio</label>
                     <div className="double">
@@ -209,19 +210,37 @@ useEffect(() => {
                       Actualmente cursando
                     </label>
                   </div>
-
                 </div>
 
-                <div className="field full">
-                  <label>Informacion Extra</label>
-                  <textarea
-                    value={entry.description}
-                    placeholder="Ej: Modalidad presencial / virtual, etc..."
-                    onChange={(e) =>
-                      updateField(entry.id, "description", e.target.value)
-                    }
-                  />
-                </div>
+                {/* BOTÓN PARA MOSTRAR / OCULTAR INFO EXTRA */}
+                {!entry.showExtraInfo ? (
+                  <button
+                    className="add-extra-btn"
+                    onClick={() => updateField(entry.id, "showExtraInfo", true)}
+                  >
+                    <FiPlus /> Nota
+                  </button>
+                ) : (
+                  <div className="field full">
+                    <label>Información Extra</label>
+
+                    <textarea
+                      value={entry.description}
+                      placeholder="Ej: Modalidad presencial / virtual, etc..."
+                      onChange={(e) =>
+                        updateField(entry.id, "description", e.target.value)
+                      }
+                    />
+
+                    <button
+                      className="add-extra-btn"
+                      onClick={() => updateField(entry.id, "showExtraInfo", false)}
+                    >
+                      Ocultar información extra
+                    </button>
+                  </div>
+                )}
+
               </div>
 
               <button
