@@ -1,204 +1,166 @@
-.personalinfo-section {
+.personal-info-section {
   background: #fff;
   display: flex;
   flex-direction: column;
   gap: 22px;
   transition: all 0.25s ease;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
-
-  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
   margin: 0 28px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  margin-right: 0;
+  padding-top: 4px;
+  padding-bottom: 10px;
 
   &.closed {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 4px;
+    padding-bottom: 10px;
   }
-}
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #8a9999;
-    margin: 0;
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #8a9999;
+      margin: 0;
 
-    svg{
+      svg{
       font-size: 1.8rem;
       margin-right: 0.5rem;
       margin-bottom: -0.35rem;
     }
-  }
-}
-
-.fields-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  border: 2px dashed #9fadad29;
-  background: #9baaaa0d;
-    border-radius: 18px;
-    padding: 20px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #3e3e4c;
-  }
-
-  input {
-    padding: 11px 14px;
-    border-radius: 12px;
-    border: 1px solid #8a999919;
-    font-size: 15px;
-    background: #ffffff;
-    transition: 0.2s ease;
-
-    &:focus {
-      border-color: #4f56ff;
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(90, 85, 255, 0.2);
-      background: white;
     }
   }
-}
 
-.optional .input-remove {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.remove-btn {
-  background: #ff6161;
-  border: none;
-  color: white;
-  border-radius: 10px;
-  padding: 8px;
-  display: flex;
-  cursor: pointer;
-  transition: 0.2s;
-
-  svg {
-    font-size: 16px;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-left: -4.7rem;
   }
 
-  &:hover {
-    background: #e94848;
-    transform: scale(1.08);
-  }
-}
-
-/* CUSTOM LABEL INLINE EDIT MODE */
-
-.custom-label-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.custom-label {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #2f2f36;
-  cursor: text;
-  padding: 3px 3px;
-  border-radius: 6px;
-  transition: 0.2s;
-
-  &:hover {
-    background: #fffdf5ac;
-    color: rgba(255, 170, 0, 0.849);
-  }
-}
-
-.inline-editable[contenteditable="true"] {
-  outline: none;
-  color: rgba(236, 169, 35, 0.496);
-  background: transparent;
-}
-
-.edit-icon {
-  font-size: 15px;
-  opacity: 0.55;
-  cursor: pointer;
-  transition: 0.2s;
-
-  &:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-  }
-}
-
-.personalinfo-section__addfields {
-  margin-top: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  border: 1px solid rgba(90,110,255,0.18);
+  .info-card {
     border-radius: 18px;
     padding: 20px;
-    background: #fafaff;
+    border: 2px dashed #9fadad29;
+    background: #9baaaa00;
+    position: relative;
 
-  button {
-    background: #f6f6ff;
-    border: 1px solid #cdcfff;
-    color: #3842cb;
-    padding: 9px 14px;
-    border-radius: 12px;
-    font-size: 12px;
+    .remove-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ff6161;
+      border: none;
+      padding: 8px;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      transition: 0.2s;
+
+      svg {
+        font-size: 0.7rem;
+      }
+
+      &:hover {
+        background: #e84d4d;
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+  }
+
+  .field {
     display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3e3e4c;
+    }
+
+    input {
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid #9baaaa0d;
+      font-size: 15px;
+      background: #9baaaa0d;
+      transition: 0.2s ease;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(90, 85, 255, 0.2);
+        background: 9baaaa0d;
+      }
+    }
+  }
+
+  .add-btn {
+    background: #9baaaa0d;
+    border: 1px solid #9baaaa0d;
+    color: #9baaaa;
+    padding: 11px 18px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 7px;
+    gap: 8px;
     cursor: pointer;
     transition: 0.2s;
-    font-weight: 600;
 
     &:hover {
-      background: #ebeaff;
-      border-color: #b2b7ff;
+      background: #9baaaa1e;
       transform: translateY(-1px);
-    }
-
-    svg {
-      font-size: 17px;
     }
   }
 }
 
-/* CONTENIDO COLAPSABLE */
-.collapsible-content {
-  max-height: 1000px;
-  opacity: 1;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease;
+
+.suggestions-box {
+  background: #9baaaa00;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #e4e6ea;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-}
+  gap: 10px;
 
-.personalinfo-section.closed .collapsible-content {
-  max-height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
+  .suggestions-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #54606f;
+    margin: 0;
+  }
 
-.personalinfo-section.closed {
-  padding-bottom: 0px;
-}
+  .suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 
+  .suggestion-item {
+    background: #9baaaa0d;
+    border: 2px dashed #9baaaa39;
+    padding: 7px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #8d9b9b;
+    transition: 0.2s;
+
+    &:hover {
+      background: #dfe4ff;
+      transform: translateY(-1px);
+    }
+  }
+}

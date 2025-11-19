@@ -1,10 +1,10 @@
-.photo-section {
+.identity-section {
   background: #fff;
   display: flex;
   flex-direction: column;
   gap: 22px;
   transition: all 0.25s ease;
-  
+
   margin: 0 28px;
   margin-right: 0;
   padding-top: 4px;
@@ -38,14 +38,35 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
-    margin-left: -4.7rem;
+    margin-left: -5rem;
   }
 }
 
-.photo-container {
+/* ------------------------- */
+/* FOTO IZQUIERDA + INPUTS */
+/* ------------------------- */
+
+.identity-flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+/* FOTO + BOTÓN DEBAJO */
+.identity-section__photo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el botón debajo del cuadro */
+  gap: 12px;
+  margin: auto;
+  min-width: 230px;
+}
+
+/* CUADRO DE FOTO */
+.identity-section__photo-container {
   width: 140px;
   height: 140px;
-  border-radius: 20px;
+  border-radius: 100%;
   border: 2px dashed #9fadad29;
   background: #8a99990d;
   position: relative;
@@ -54,7 +75,7 @@
   justify-content: center;
   align-items: center;
 
-  .photo-preview {
+  .identity-section__photo-preview {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -76,8 +97,8 @@
 
   .remove-btn {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: 15px;
+    right: 25px;
     background: #ff6161;
     border: none;
     padding: 7px;
@@ -94,6 +115,7 @@
   }
 }
 
+/* BOTÓN SUBIR/CAMBIAR FOTO */
 .add-photo-btn {
   background: #f6f6ff;
   border: 1px solid #cdcfff;
@@ -107,6 +129,7 @@
   gap: 8px;
   cursor: pointer;
   transition: 0.2s;
+  white-space: nowrap;
 
   &:hover {
     background: #eceaff;
@@ -115,3 +138,34 @@
   }
 }
 
+/* INPUTS DERECHA */
+.identity-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+
+  label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #8a9999;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    input {
+      padding: 12px 15px;
+      border-radius: 14px;
+      border: 1px solid #dcdcdc;
+      background: #fafafa;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+
+      &:focus {
+        border-color: #8295ff;
+        background: #f2f4ff;
+      }
+    }
+  }
+}

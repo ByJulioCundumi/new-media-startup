@@ -3,17 +3,16 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
   transition: all 0.25s ease;
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
   margin: 0 28px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  margin-right: 0;
+  padding-top: 4px;
+  padding-bottom: 10px;
 
   &.closed {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 4px;
+    padding-bottom: 10px;
   }
 
   &__header {
@@ -39,6 +38,7 @@
       background: #fbfbff;
       transition: 0.2s;
       border: none;
+      color: #8a9898;
 
       &:focus {
         outline: none;
@@ -50,13 +50,14 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    margin-left: -4.7rem;
   }
 
   .item-card {
     border-radius: 18px;
     padding: 22px;
     border: 2px dashed #9fadad29;
-    background: #9baaaa0d;
+    background: #9baaaa00;
     position: relative;
     transition: 0.2s;
 
@@ -105,16 +106,14 @@
     textarea {
       padding: 12px 14px;
       border-radius: 12px;
-      border: 1px solid #9fadad29;
+      border: 1px solid #9baaaa0d;
       font-size: 15px;
-      background: #ffffff;
+      background: #9baaaa0d;
       transition: 0.2s ease;
 
       &:focus {
-        border-color: #4f56ff;
         outline: none;
-        box-shadow: 0 0 0 3px rgba(90, 85, 255, 0.2);
-        background: white;
+        background: #9baaaa0d;
       }
     }
 
@@ -126,9 +125,9 @@
 
   .add-btn,
   .add-link-btn {
-    background: #f6f6ff;
-    border: 1px solid #cdcfff;
-    color: #3842cb;
+    background: #9baaaa0d;
+    border: 1px solid #9baaaa0d;
+    color: #9baaaa;
     padding: 12px 18px;
     border-radius: 14px;
     font-size: 15px;
@@ -140,8 +139,7 @@
     transition: 0.2s;
 
     &:hover {
-      background: #eceaff;
-      border-color: #b6bdff;
+      background: #9baaaa1a;
       transform: translateY(-1px);
     }
   }

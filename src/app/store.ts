@@ -14,6 +14,8 @@ import customSlice from "../reducers/customSlice";
 import profileSlice from "../reducers/profileSlice";
 import cvSectionsSlice from "../reducers/cvSectionsSlice";
 import photoSlice from "../reducers/photoSlice";
+import identitySlice from "../reducers/identitySlice";
+import contactSlice from "../reducers/contactSlice";
 
 export default configureStore({
     reducer: {
@@ -31,6 +33,8 @@ export default configureStore({
         customEntry: customSlice,
         profileSection: profileSlice,
         cvSections: cvSectionsSlice,
-        photo: photoSlice
+        photo: photoSlice,
+        identity: identitySlice,
+        contactEntries: contactSlice
     }
 })

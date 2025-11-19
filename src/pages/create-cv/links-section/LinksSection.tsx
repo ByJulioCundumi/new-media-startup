@@ -17,8 +17,8 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
   const links = useSelector((state: IState) => state.linksEntries);
 
   const sectionState = useSelector((state: IState) =>
-        state.cvSections.find(s => s.name === "linkSection")
-      );
+    state.cvSections.sections.find((s) => s.name === "linkSection")
+  );
           
       const isOpen = sectionState?.isOpen ?? false;
 

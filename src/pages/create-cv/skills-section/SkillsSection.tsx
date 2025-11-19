@@ -14,8 +14,8 @@ const SkillsSection: React.FC = () => {
   const skills = useSelector((state: IState) => state.skillsEntries);
 
   const sectionState = useSelector((state: IState) =>
-        state.cvSections.find(s => s.name === "skillSection")
-      );
+    state.cvSections.sections.find((s) => s.name === "skillSection")
+  );
               
       const isOpen = sectionState?.isOpen ?? false;
 

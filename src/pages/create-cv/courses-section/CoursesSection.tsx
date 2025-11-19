@@ -23,7 +23,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
   const courses = useSelector((state: IState) => state.coursesEntries);
 
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find(s => s.name === "courseSection")
+    state.cvSections.sections.find((s) => s.name === "courseSection")
   );
 
   const isOpen = sectionState?.isOpen ?? false;

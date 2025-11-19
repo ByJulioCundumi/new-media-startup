@@ -22,8 +22,8 @@ const ReferencesSection: React.FC = () => {
   );
 
   const sectionState = useSelector((state: IState) =>
-      state.cvSections.find(s => s.name === "referenceSection")
-    );
+    state.cvSections.sections.find((s) => s.name === "referenceSection")
+  );
             
     const isOpen = sectionState?.isOpen ?? false;
 

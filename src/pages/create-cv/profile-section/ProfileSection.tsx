@@ -11,8 +11,9 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 
 export default function ProfileSection() {
+
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find(s => s.name === "profileSection")
+    state.cvSections.sections.find((s) => s.name === "profileSection")
   );
             
   const isOpen = sectionState?.isOpen ?? false;

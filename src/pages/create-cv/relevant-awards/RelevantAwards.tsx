@@ -21,7 +21,7 @@ const RelevantAwards: React.FC = () => {
   const awards = useSelector((state: IState) => state.awardsEntries);
 
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find(s => s.name === "awardSection")
+    state.cvSections.sections.find((s) => s.name === "awardSection")
   );
             
   const isOpen = sectionState?.isOpen ?? false;

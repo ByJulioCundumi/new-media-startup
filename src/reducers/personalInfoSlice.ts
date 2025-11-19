@@ -1,73 +1,51 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { IPersonalInfoData } from "../interfaces/IPersonalInfo";
+import type { IPersonalInfoEntry } from "../interfaces/IPersonalInfo";
 
-const initialState: IPersonalInfoData = {
-  firstName: "",
-  lastName: "",
-  desiredJob: "",
-  email: "",
-  phone: "",
-  city: "",
-  activeFields: [],
+export type PersonalInfoState = IPersonalInfoEntry[];
 
-  address: "",
-  postalCode: "",
-  birthDate: "",
-  nationality: "",
-  civilStatus: "",
-  website: "",
-  linkedin: "",
-
-  customLabel: "",
-  customValue: "",
-};
+const initialState: PersonalInfoState = [];
 
 const personalInfoSlice = createSlice({
-  name: "personalInfo",
+  name: "personalInfoEntries",
   initialState,
   reducers: {
-    setPersonalField: <K extends keyof IPersonalInfoData>(
-      state: IPersonalInfoData,
-      action: PayloadAction<{ field: K; value: IPersonalInfoData[K] }>
-    ) => {
-      state[action.payload.field] = action.payload.value;
+    setPersonalInfoEntries: (_, action: PayloadAction<IPersonalInfoEntry[]>) => {
+      return action.payload;
     },
 
-    setPersonalData: (
-      state,
-      action: PayloadAction<Partial<IPersonalInfoData>>
-    ) => {
-      return { ...state, ...action.payload };
+    addPersonalInfoEntry: (state, action: PayloadAction<IPersonalInfoEntry>) => {
+      state.push(action.payload);
     },
 
-    toggleOptionalField: (
+    updatePersonalInfoEntry: (
       state,
-      action: PayloadAction<keyof IPersonalInfoData>
+      action: PayloadAction<{ id: string; field: keyof IPersonalInfoEntry; value: string }>
     ) => {
-      const key = action.payload;
-
-      if (state.activeFields.includes(key)) {
-        state.activeFields = state.activeFields.filter((f) => f !== key);
-
-        if (typeof state[key] === "string") {
-          state[key] = "" as never;
-        }
-
-        if (key === "customLabel" || key === "customValue") {
-          state.customLabel = "";
-          state.customValue = "";
-        }
-      } else {
-        state.activeFields.push(key);
+      const index = state.findIndex((e) => e.id === action.payload.id);
+      if (index !== -1) {
+        state[index] = {
+          ...state[index],
+          [action.payload.field]: action.payload.value,
+        };
       }
+    },
+
+    removePersonalInfoEntry: (state, action: PayloadAction<string>) => {
+      return state.filter((e) => e.id !== action.payload);
+    },
+
+    clearAllPersonalInfo: () => {
+      return [];
     },
   },
 });
 
 export const {
-  setPersonalField,
-  setPersonalData,
-  toggleOptionalField,
+  setPersonalInfoEntries,
+  addPersonalInfoEntry,
+  updatePersonalInfoEntry,
+  removePersonalInfoEntry,
+  clearAllPersonalInfo,
 } = personalInfoSlice.actions;
 
 export default personalInfoSlice.reducer;

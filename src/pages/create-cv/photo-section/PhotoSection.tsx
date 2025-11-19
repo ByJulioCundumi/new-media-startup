@@ -15,7 +15,7 @@ const PhotoSection = () => {
   const progress = photoData.src ? 100 : 0;
 
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find((s) => s.name === "photoSection")
+    state.cvSections.sections.find((s) => s.name === "photoSection")
   );
 
   const isOpen = sectionState?.isOpen ?? false;

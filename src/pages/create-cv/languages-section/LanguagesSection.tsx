@@ -15,8 +15,8 @@ const LanguagesSection: React.FC = () => {
   const languages = useSelector((state: IState) => state.languagesEntries);
 
   const sectionState = useSelector((state: IState) =>
-      state.cvSections.find(s => s.name === "languageSection")
-    );
+    state.cvSections.sections.find((s) => s.name === "languageSection")
+  );
         
     const isOpen = sectionState?.isOpen ?? false;
 

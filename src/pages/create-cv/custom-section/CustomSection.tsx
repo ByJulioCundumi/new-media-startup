@@ -19,8 +19,8 @@ const CustomSection: React.FC = () => {
   const [items, setItems] = useState<ICustomItem[]>(savedItems);
 
   const sectionState = useSelector((state: IState) =>
-      state.cvSections.find(s => s.name === "customSection")
-    );
+    state.cvSections.sections.find((s) => s.name === "customSection")
+  );
   
     const isOpen = sectionState?.isOpen ?? false;
 

@@ -15,8 +15,9 @@ import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../..
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
   const hobbies = useSelector((state: IState) => state.hobbiesEntries);
+  
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find(s => s.name === "hobbieSection")
+    state.cvSections.sections.find((s) => s.name === "hobbieSection")
   );
       
   const isOpen = sectionState?.isOpen ?? false;

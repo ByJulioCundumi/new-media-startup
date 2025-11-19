@@ -1,151 +1,142 @@
-import React, { useRef, useMemo, useEffect } from "react";
-import { FiPlus, FiX, FiEdit2, FiChevronDown } from "react-icons/fi";
-import "./personalinfosection.scss";
+import React, { useEffect, useMemo } from "react";
+import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import "./personalinfosection.scss";
 import type { IState } from "../../../interfaces/IState";
+
 import {
-  setPersonalField,
-  toggleOptionalField,
+  addPersonalInfoEntry,
+  removePersonalInfoEntry,
+  updatePersonalInfoEntry,
+  setPersonalInfoEntries,
 } from "../../../reducers/personalInfoSlice";
-import type { IPersonalInfoData } from "../../../interfaces/IPersonalInfo";
-import { LuUserPen } from "react-icons/lu";
+
 import {
-  setOnlySectionOpen,
-  setSectionProgress,
   toggleSectionOpen,
+  setSectionProgress,
 } from "../../../reducers/cvSectionsSlice";
 
-type OptionalFieldKey = Extract<
-  keyof IPersonalInfoData,
-  | "city"
-  | "address"
-  | "postalCode"
-  | "birthDate"
-  | "nationality"
-  | "civilStatus"
-  | "website"
-  | "linkedin"
-  | "custom"
->;
+import type { IPersonalInfoEntry } from "../../../interfaces/IPersonalInfo";
+import { PiIdentificationBadge } from "react-icons/pi";
 
-const OPTIONAL_FIELDS: {
-  key: OptionalFieldKey;
-  label: string;
-  placeholder: string;
-}[] = [
-  { key: "city", label: "Ciudad", placeholder: "Ej: Bogotá, Colombia" },
-  { key: "address", label: "Dirección", placeholder: "Ej: Calle 123 #45" },
-  { key: "postalCode", label: "Código Postal", placeholder: "Ej: 110111" },
-  { key: "birthDate", label: "Fecha de Nacimiento", placeholder: "DD/MM/AAAA" },
-  { key: "nationality", label: "Nacionalidad", placeholder: "Ej: Colombiana" },
-  { key: "civilStatus", label: "Estado Civil", placeholder: "Ej: Soltero(a)" },
-  { key: "website", label: "Sitio Web", placeholder: "https://tusitio.com" },
-  { key: "linkedin", label: "LinkedIn", placeholder: "https://linkedin.com/in/usuario" },
-  { key: "custom", label: "Campo Personalizado", placeholder: "" },
+const SUGGESTIONS = [
+  "Ciudad y país",
+  "Dirección",
+  "Código postal",
+  "Nacionalidad",
+  "Fecha de nacimiento",
+  "Estado civil",
 ];
 
-const BASE_FIELDS: {
-  key: keyof IPersonalInfoData;
-  label: string;
-  placeholder: string;
-}[] = [
-  { key: "firstName", label: "Nombre", placeholder: "Ej: Carlos" },
-  { key: "lastName", label: "Apellidos", placeholder: "Ej: López Gómez" },
-  { key: "desiredJob", label: "Puesto deseado", placeholder: "Ej: Frontend Developer" },
-  { key: "email", label: "Correo", placeholder: "Ej: correo@ejemplo.com" },
-  { key: "phone", label: "Teléfono", placeholder: "Ej: +57 301 0000000" },
-];
+// === NUEVO: placeholders dinámicos según la sugerencia ===
+const PLACEHOLDERS: Record<string, string> = {
+  "Ciudad y país": "Ej: Medellín, Colombia",
+  "Dirección": "Ej: Calle 123 #45-67",
+  "Código postal": "Ej: 050010",
+  "Nacionalidad": "Ej: Colombiana",
+  "Fecha de nacimiento": "Ej: 12/08/1995",
+  "Estado civil": "Ej: Soltero",
+};
 
-/** Normaliza cualquier valor para evitar crashes en inputs controlados */
-const safeString = (v: unknown): string => (typeof v === "string" ? v : "");
+interface PersonalInfoSectionProps {
+  initialData?: IPersonalInfoEntry[];
+  onChange?: (data: IPersonalInfoEntry[]) => void;
+}
 
-const PersonalInfoSection: React.FC = () => {
+const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
+  initialData,
+  onChange,
+}) => {
   const dispatch = useDispatch();
+  const entries = useSelector((state: IState) => state.personalInfo);
 
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find((s) => s.name === "personalInfoSection")
+    state.cvSections.sections.find((s) => s.name === "personalInfoSection")
   );
 
   const isOpen = sectionState?.isOpen ?? false;
-  const data = useSelector((state: IState) => state.personalInfo);
 
-  const labelRef = useRef<HTMLSpanElement>(null);
-
-  const updateField = <K extends keyof IPersonalInfoData>(
-    field: K,
-    value: IPersonalInfoData[K]
-  ) => {
-    dispatch(setPersonalField({ field, value }));
-  };
-
-  const handleInlineEdit = () => {
-    if (!labelRef.current) return;
-    labelRef.current.contentEditable = "true";
-    labelRef.current.focus();
-  };
-
-  const handleInlineBlur = () => {
-    if (!labelRef.current) return;
-    labelRef.current.contentEditable = "false";
-
-    const newValue = labelRef.current.innerText.trim();
-    updateField("customLabel", (newValue || "Campo personalizado") as any);
-  };
-
-  /** PROGRESO BASADO SOLO EN CAMPOS DE TEXTO USADOS */
-  const progress = useMemo(() => {
-    // total = base fields + active optional fields
-    const total = BASE_FIELDS.length + data.activeFields.length;
-    let complete = 0;
-
-    // count base fields with value
-    for (const f of BASE_FIELDS) {
-      const v = data[f.key];
-      if (typeof v === "string" && v.trim() !== "") {
-        complete++;
-      }
-    }
-
-    // count optional active fields
-    for (const keyRaw of data.activeFields) {
-      if (keyRaw === "custom") {
-        const v = data.customValue;
-        if (typeof v === "string" && v.trim() !== "") {
-          complete++;
-        }
-      } else {
-        const v = data[keyRaw as keyof IPersonalInfoData];
-        if (typeof v === "string" && v.trim() !== "") {
-          complete++;
-        }
-      }
-    }
-
-    if (total === 0) return 0;
-    return Math.round((complete / total) * 100);
-  }, [data]);
-
-  /** Sincroniza el progreso con Redux */
+  // Sincronización inicial
   useEffect(() => {
+    if (initialData) dispatch(setPersonalInfoEntries(initialData));
+  }, [initialData, dispatch]);
+
+  // Notificar al padre
+  useEffect(() => {
+    onChange?.(entries);
+  }, [entries, onChange]);
+
+  // Crear campo manual
+  const addEntry = () => {
     dispatch(
-      setSectionProgress({ name: "personalInfoSection", progress })
+      addPersonalInfoEntry({
+        id: crypto.randomUUID(),
+        name: "",
+        value: "",
+      })
     );
+  };
+
+  // Crear campo desde sugerencia con placeholder dinámico
+  const addSuggestion = (title: string) => {
+    const exists = entries.some(
+      (e) => e.name.toLowerCase() === title.toLowerCase()
+    );
+    if (exists) return;
+
+    dispatch(
+      addPersonalInfoEntry({
+        id: crypto.randomUUID(),
+        name: title,
+        value: "",
+      })
+    );
+  };
+
+  const updateEntry = (
+    id: string,
+    field: keyof IPersonalInfoEntry,
+    value: string
+  ) => {
+    dispatch(updatePersonalInfoEntry({ id, field, value }));
+  };
+
+  const remove = (id: string) => {
+    dispatch(removePersonalInfoEntry(id));
+  };
+
+  // ---- PROGRESO ----
+  const progress = useMemo(() => {
+    if (entries.length === 0) return 0;
+
+    let filled = 0;
+    const total = entries.length * 2;
+
+    for (const e of entries) {
+      if (e.name.trim()) filled++;
+      if (e.value.trim()) filled++;
+    }
+
+    return Math.round((filled / total) * 100);
+  }, [entries]);
+
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "personalInfoSection", progress }));
   }, [progress, dispatch]);
 
-  const progressColorClass = useMemo(() => {
-  if (progress < 50) return "progress-red";
-  if (progress < 100) return "progress-yellow";
-  return "progress-blue"; // 100%
-}, [progress]);
+  const progressColorClass =
+    progress < 50 ? "progress-red" : progress < 100 ? "progress-yellow" : "progress-blue";
 
   return (
-    <div className={`personalinfo-section ${isOpen ? "" : "closed"}`}>
-      <div className="section-header">
+    <div className={`personal-info-section ${!isOpen ? "closed" : ""}`}>
+      <div className="personal-info-section__header">
         <h2>
-          <LuUserPen /> Información Personal
+          <PiIdentificationBadge /> Información Personal
         </h2>
 
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -155,101 +146,69 @@ const PersonalInfoSection: React.FC = () => {
         </button>
       </div>
 
-      <div className="collapsible-content">
-        {/* CAMPOS BASE */}
-        <div className="fields-grid">
-          {BASE_FIELDS.map((f) => (
-            <div className="field" key={String(f.key)}>
-              <label>{f.label}</label>
-              <input
-                type="text"
-                placeholder={f.placeholder}
-                value={safeString(data[f.key])}
-                onChange={(e) => updateField(f.key, e.target.value as any)}
-              />
+      {isOpen && (
+        <div className="personal-info-section__content">
+          {/* ------- CAMPOS DINÁMICOS ------- */}
+          {entries.map((entry) => (
+            <div className="info-card" key={entry.id}>
+              <div className="card-grid">
+                {/* ---- CAMPO TITULO ---- */}
+                <div className="field">
+                  <label>Título</label>
+                  <input
+                    type="text"
+                    placeholder="Ej: Dirección"
+                    value={entry.name}
+                    onChange={(e) =>
+                      updateEntry(entry.id, "name", e.target.value)
+                    }
+                  />
+                </div>
+
+                {/* ---- CAMPO VALOR CON PLACEHOLDER AUTOMÁTICO ---- */}
+                <div className="field">
+                  <label>Valor</label>
+                  <input
+                    type="text"
+                    placeholder={
+                      PLACEHOLDERS[entry.name] || "Ingresa un valor..."
+                    }
+                    value={entry.value}
+                    onChange={(e) =>
+                      updateEntry(entry.id, "value", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+
+              <button className="remove-btn" onClick={() => remove(entry.id)}>
+                <FiTrash2 />
+              </button>
             </div>
           ))}
 
-          {/* CAMPOS OPCIONALES ACTIVOS */}
-          {data.activeFields.map((keyRaw) => {
-            const key = keyRaw as OptionalFieldKey;
-            const field = OPTIONAL_FIELDS.find((o) => o.key === key);
-            if (!field) return null;
+          {/* ------- SUGERENCIAS ------- */}
+          <div className="suggestions-box">
+            <p className="suggestions-title">Sugerencias</p>
 
-            if (key === "custom") {
-              return (
-                <div className="field optional" key={key}>
-                  <div className="custom-label-row">
-                    <span
-                      ref={labelRef}
-                      className="custom-label inline-editable"
-                      onClick={handleInlineEdit}
-                      onBlur={handleInlineBlur}
-                      suppressContentEditableWarning
-                    >
-                      {safeString(data.customLabel) || "Campo personalizado"}
-                    </span>
+            <div className="suggestions-list">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  className="suggestion-item"
+                  onClick={() => addSuggestion(s)}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
 
-                    <FiEdit2 onClick={handleInlineEdit} className="edit-icon" />
-                  </div>
-
-                  <div className="input-remove">
-                    <input
-                      type="text"
-                      placeholder="Valor..."
-                      value={safeString(data.customValue)}
-                      onChange={(e) =>
-                        updateField("customValue", e.target.value as any)
-                      }
-                    />
-
-                    <button
-                      className="remove-btn"
-                      onClick={() => dispatch(toggleOptionalField(key))}
-                    >
-                      <FiX />
-                    </button>
-                  </div>
-                </div>
-              );
-            }
-
-            return (
-              <div className="field optional" key={key}>
-                <label>{field.label}</label>
-                <div className="input-remove">
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={safeString(data[key])}
-                    onChange={(e) =>
-                      updateField(key, e.target.value as any)
-                    }
-                  />
-
-                  <button
-                    className="remove-btn"
-                    onClick={() => dispatch(toggleOptionalField(key))}
-                  >
-                    <FiX />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+          <button className="add-btn" onClick={addEntry}>
+            <FiPlus /> Agregar Campo Personalizado
+          </button>
         </div>
-
-        {/* BOTONES PARA AGREGAR CAMPOS */}
-        <div className="personalinfo-section__addfields">
-          {OPTIONAL_FIELDS.filter(
-            (f) => !data.activeFields.includes(f.key)
-          ).map((f) => (
-            <button key={f.key} onClick={() => dispatch(toggleOptionalField(f.key))}>
-              <FiPlus /> {f.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -27,9 +27,10 @@ const years = Array.from({ length: 50 }, (_, i) => `${2025 - i}`);
 const ExperienceSection: React.FC = () => {
   const dispatch = useDispatch();
   const entries = useSelector((state: IState) => state.experienceEntries);
+
   const sectionState = useSelector((state: IState) =>
-        state.cvSections.find(s => s.name === "experienceSection")
-      );
+    state.cvSections.sections.find((s) => s.name === "experienceSection")
+  );
     
       const isOpen = sectionState?.isOpen ?? false;
 

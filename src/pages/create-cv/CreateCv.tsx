@@ -1,4 +1,14 @@
+// pages/CreateCv.tsx
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import type { IState } from "../../interfaces/IState";
+import { reorderSections } from "../../reducers/cvSectionsSlice";
+
 import AddSections from "./add-sections/AddSection";
 import "./createcv.scss";
 import EducationSection from "./education-section/EducationSection";
@@ -6,7 +16,6 @@ import ExperienceSection from "./experience-section/ExperienceSection";
 import LanguagesSection from "./languages-section/LanguagesSection";
 import PersonalInfoSection from "./personal-info-section/PersonalInfoSection";
 import SkillsSection from "./skills-section/SkillsSection";
-import type { IState } from "../../interfaces/IState";
 import LinksSection from "./links-section/LinksSection";
 import CoursesSection from "./courses-section/CoursesSection";
 import HobbiesSection from "./hobbies-section/HobbiesSection";
@@ -15,11 +24,13 @@ import RelevantAwards from "./relevant-awards/RelevantAwards";
 import CustomSection from "./custom-section/CustomSection";
 import ToolbarCV from "../../components/toolbar-cv/ToolbarCV";
 import ProfileSection from "./profile-section/ProfileSection";
-import { useEffect, useRef, useState } from "react";
-import { setSidebar } from "../../reducers/sidebarSlice";
-import { templates } from "../../templates/templates";
 import ProgressBar from "../../components/progress-bar/ProgressBar";
-import PhotoSection from "./photo-section/PhotoSection";
+import IdentitySection from "./identity-section/IdentitySection";
+import ContactSection from "./contact-section/ContactSection";
+import { templates } from "../../templates/templates";
+import { setSidebar } from "../../reducers/sidebarSlice";
+import SortableSection from "./sortable-section/SortableSection";
+import type { ICvSectionsState } from "../../interfaces/ICvSections";
 
 function CreateCv() {
   const dispatch = useDispatch();
@@ -29,7 +40,10 @@ function CreateCv() {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const prevEnabledSections = useRef<string[]>([]);
 
-  const sections = useSelector((state: IState) => state.cvSections);
+  const cvSectionsState = useSelector((state: IState) => state.cvSections) as ICvSectionsState;
+  const sections = cvSectionsState.sections;
+  const order = cvSectionsState.order;
+
   const photo = useSelector((state: IState) => state.photo);
   const personalInfo = useSelector((state: IState) => state.personalInfo);
   const profile = useSelector((state: IState) => state.profileSection);
@@ -49,7 +63,7 @@ function CreateCv() {
     dispatch(setSidebar("create"));
   }, [dispatch]);
 
-  // Confirmación al cerrar o salir
+  // beforeunload
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -59,14 +73,13 @@ function CreateCv() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
-  // Saber si una sección está habilitada
+  // Helper: comprobar si está habilitada
   const isEnabled = (name: string) => sections.find((s) => s.name === name)?.enabled;
 
-  // Scroll cuando se habilita una nueva sección
+  // Scroll cuando se habilita nueva sección
   useEffect(() => {
     const enabledNow = sections.filter((s) => s.enabled).map((s) => s.name);
 
-    // Scroll down solo si se habilitó una nueva sección
     if (enabledNow.length > prevEnabledSections.current.length) {
       setTimeout(() => {
         sectionsContainerRef.current?.scrollTo({
@@ -79,7 +92,7 @@ function CreateCv() {
     prevEnabledSections.current = enabledNow;
   }, [sections]);
 
-  // Scroll hacia la sección abierta (isOpen = true)
+  // Scroll hacia sección abierta
   useEffect(() => {
     const openSection = sections.find((s) => s.isOpen);
     if (openSection) {
@@ -92,17 +105,49 @@ function CreateCv() {
     }
   }, [sections]);
 
-  // Persistir la plantilla seleccionada
+  // Persist template
   useEffect(() => {
     const saved = localStorage.getItem("selectedTemplate");
     if (saved) setSelectedTemplate(saved);
   }, []);
-
   useEffect(() => {
     localStorage.setItem("selectedTemplate", selectedTemplate);
   }, [selectedTemplate]);
 
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplate)?.component;
+
+  // Map de componentes por nombre (mantén las importaciones actualizadas)
+  const sectionMap: Record<string, React.FC<any>> = {
+    identitySection: IdentitySection,
+    contactSection: ContactSection,
+    profileSection: ProfileSection,
+    educationSection: EducationSection,
+    experienceSection: ExperienceSection,
+    skillSection: SkillsSection,
+    languageSection: LanguagesSection,
+    personalInfoSection: PersonalInfoSection,
+    linkSection: LinksSection,
+    courseSection: CoursesSection,
+    hobbieSection: HobbiesSection,
+    referenceSection: ReferencesSection,
+    awardSection: RelevantAwards,
+    customSection: CustomSection,
+  };
+
+  // --- DnD handler ---
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over) return;
+    if (active.id === over.id) return;
+
+    const oldIndex = order.indexOf(String(active.id));
+    const newIndex = order.indexOf(String(over.id));
+
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    // Dispatch reorder
+    dispatch(reorderSections({ from: oldIndex, to: newIndex }));
+  }
 
   return (
     <section className="create-cv">
@@ -111,64 +156,37 @@ function CreateCv() {
           <ProgressBar />
 
           <div className="create-cv__left--sections" ref={sectionsContainerRef}>
-            <div ref={(el) => { sectionRefs.current["photoSection"] = el ?? null; }}>
-              <PhotoSection />
-            </div>
 
-            <div ref={(el) => { sectionRefs.current["personalInfoSection"] = el ?? null; }}>
-              <PersonalInfoSection />
-            </div>
+            {/* Dnd Context */}
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              {/* Solo las secciones (order) participan en el SortableContext.
+                  identitySection estará en order[0] y está deshabilitada dentro del SortableSection */
+              }
+              <SortableContext items={order} strategy={verticalListSortingStrategy}>
+                {order.map((sectionName) => {
+                  // Si la sección no existe (definición) o está deshabilitada, evitar renderizar
+                  const sectionDef = sections.find((s) => s.name === sectionName);
+                  if (!sectionDef) return null;
+                  if (!sectionDef.enabled && sectionName !== "identitySection") return null;
 
-            <div ref={(el) => { sectionRefs.current["profileSection"] = el ?? null; }}>
-              <ProfileSection />
-            </div>
+                  const SectionComponent = sectionMap[sectionName];
+                  if (!SectionComponent) return null;
 
-            <div ref={(el) => { sectionRefs.current["educationSection"] = el ?? null; }}>
-              <EducationSection />
-            </div>
-
-            <div ref={(el) => { sectionRefs.current["experienceSection"] = el ?? null; }}>
-              <ExperienceSection />
-            </div>
-
-            <div ref={(el) => { sectionRefs.current["skillSection"] = el ?? null; }}>
-              <SkillsSection />
-            </div>
-
-            <div ref={(el) => { sectionRefs.current["languageSection"] = el ?? null; }}>
-              <LanguagesSection />
-            </div>
-
-            {isEnabled("linkSection") && (
-              <div ref={(el) => { sectionRefs.current["linkSection"] = el ?? null; }}>
-                <LinksSection />
-              </div>
-            )}
-            {isEnabled("courseSection") && (
-              <div ref={(el) => { sectionRefs.current["courseSection"] = el ?? null; }}>
-                <CoursesSection />
-              </div>
-            )}
-            {isEnabled("hobbieSection") && (
-              <div ref={(el) => { sectionRefs.current["hobbieSection"] = el ?? null; }}>
-                <HobbiesSection />
-              </div>
-            )}
-            {isEnabled("referenceSection") && (
-              <div ref={(el) => { sectionRefs.current["referenceSection"] = el ?? null; }}>
-                <ReferencesSection />
-              </div>
-            )}
-            {isEnabled("awardSection") && (
-              <div ref={(el) => { sectionRefs.current["awardSection"] = el ?? null; }}>
-                <RelevantAwards />
-              </div>
-            )}
-            {isEnabled("customSection") && (
-              <div ref={(el) => { sectionRefs.current["customSection"] = el ?? null; }}>
-                <CustomSection />
-              </div>
-            )}
+                  return (
+                    <SortableSection key={sectionName} id={sectionName}>
+                      <div
+                        ref={(el) => {
+                          sectionRefs.current[sectionName] = el ?? null;
+                        }}
+                        data-id={sectionName}
+                      >
+                        <SectionComponent />
+                      </div>
+                    </SortableSection>
+                  );
+                })}
+              </SortableContext>
+            </DndContext>
           </div>
 
           <AddSections />

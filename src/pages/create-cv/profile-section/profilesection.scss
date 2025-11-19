@@ -4,16 +4,14 @@
   flex-direction: column;
   gap: 22px;
   transition: 0.3s ease;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.056);
-
-  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
   margin: 0 28px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  margin-right: 0;
+  padding-top: 4px;
+  padding-bottom: 10px;
 
   &.closed {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 4px;
+    padding-bottom: 10px;
   }
 }
 
@@ -45,6 +43,7 @@
   background: #9baaaa0d;
   border-radius: 18px;
   padding: 20px;
+  margin-left: -4.7rem;
 }
 
 /* TOOLBAR */

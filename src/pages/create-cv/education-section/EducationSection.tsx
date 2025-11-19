@@ -24,9 +24,9 @@ const EducationSection: React.FC = () => {
   const dispatch = useDispatch();
 
   const entries = useSelector((state: IState) => state.educationEntries);
-  
+
   const sectionState = useSelector((state: IState) =>
-    state.cvSections.find((s) => s.name === "educationSection")
+    state.cvSections.sections.find((s) => s.name === "educationSection")
   );
 
   const isOpen = sectionState?.isOpen ?? false;

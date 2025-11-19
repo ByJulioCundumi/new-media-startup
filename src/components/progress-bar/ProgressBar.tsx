@@ -22,14 +22,14 @@ const ProgressBar: React.FC = () => {
   };
 
   const handleTitleBlur = () => {
-    // Mantener el título por defecto si queda vacío
     if (!title.trim()) setTitle("Mi CV Profesional");
     setEditing(false);
   };
 
-  // Calcular progreso en tiempo real
+  // Calcular progreso
   useEffect(() => {
-    const enabledSections = cvSections.filter((s) => s.enabled);
+    const enabledSections = cvSections.sections.filter((s) => s.enabled);
+
     if (enabledSections.length === 0) {
       setProgress(0);
       return;
@@ -39,7 +39,6 @@ const ProgressBar: React.FC = () => {
     setProgress(Math.round(total / enabledSections.length));
   }, [cvSections]);
 
-  // Clase dinámica según el porcentaje
   const progressBarColorClass =
     progress < 50
       ? "progress-red"
@@ -50,8 +49,7 @@ const ProgressBar: React.FC = () => {
   return (
     <div className="progressbar">
       <div className="progress-bar-container">
-        
-        {/* Header - Título editable */}
+
         <div className="progress-bar-header">
           {editing ? (
             <input
@@ -63,11 +61,10 @@ const ProgressBar: React.FC = () => {
             />
           ) : (
             <h2 className="progress-bar-title">
-              {title} <span> / <TbFileCv /> Clásico</span>
+              {title} <p>/</p><span><TbFileCv /> Clásico</span>
             </h2>
           )}
 
-          {/* Botón dinámico: editar o guardar */}
           {editing ? (
             <button
               className="progress-bar-edit-btn save"
@@ -87,7 +84,6 @@ const ProgressBar: React.FC = () => {
           )}
         </div>
 
-        {/* Barra de progreso */}
         <div className="progress-bar-wrapper">
           <div className="progress-bar-track">
             <div
