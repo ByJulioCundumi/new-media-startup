@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { BsAward } from "react-icons/bs";
 import "./relevantawards.scss";
 
 // Redux
@@ -10,20 +11,28 @@ import {
   removeAwardEntry,
   updateAwardEntry,
 } from "../../../reducers/awardsSlice";
+import {
+  setSectionProgress,
+  toggleSectionOpen,
+  updateSectionTitle,
+} from "../../../reducers/cvSectionsSlice";
 
-import { BsAward } from "react-icons/bs";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+// RichTextEditor
+import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import type { IAwardEntry } from "../../../interfaces/IAward";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
-
   const awards = useSelector((state: IState) => state.awardsEntries);
 
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "awardSection")
   );
-            
+
   const isOpen = sectionState?.isOpen ?? false;
+  const title = sectionState?.title ?? "Premios";
+
+  const [editingTitle, setEditingTitle] = useState(false);
 
   const addAward = () => {
     dispatch(
@@ -36,10 +45,11 @@ const RelevantAwards: React.FC = () => {
     );
   };
 
-  const updateAward = (
+  // FUNCIÓN TIPO-SEGURA: evita errores de keyof
+  const updateAward = <K extends keyof IAwardEntry>(
     id: string,
-    field: "name" | "date" | "description",
-    value: any
+    field: K,
+    value: IAwardEntry[K]
   ) => {
     dispatch(updateAwardEntry({ id, field, value }));
   };
@@ -48,14 +58,14 @@ const RelevantAwards: React.FC = () => {
     dispatch(removeAwardEntry(id));
   };
 
-  // ==========================
-  // CÁLCULO DE PORCENTAJE
-  // ==========================
+  // === CÁLCULO DE PROGRESO (compatible con HTML) ===
   const progress = useMemo(() => {
     if (!awards.length) return 0;
 
     let totalFields = 0;
     let filledFields = 0;
+
+   14
 
     awards.forEach((award) => {
       // Obligatorios
@@ -63,59 +73,54 @@ const RelevantAwards: React.FC = () => {
       if (award.name?.trim()) filledFields++;
       if (award.date?.trim()) filledFields++;
 
-      // Opcionales
+      // Opcional: descripción
       totalFields += 1;
-      if (award.description?.trim()) filledFields++;
+
+      const cleanDesc = award.description
+        ?.replace(/<[^>]*>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .trim();
+      if (cleanDesc) filledFields++;
     });
 
     return Math.round((filledFields / totalFields) * 100);
   }, [awards]);
 
-  // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "awardSection", progress }));
-}, [progress, dispatch]);
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "awardSection", progress }));
+  }, [progress, dispatch]);
 
-const progressColorClass = useMemo(() => {
-  if (progress < 50) return "progress-red";
-  if (progress < 100) return "progress-yellow";
-  return "progress-blue"; // 100%
-}, [progress]);
-
-// -----------------------------
-      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
-      // -----------------------------
-      const [editingTitle, setEditingTitle] = useState(false);
-      const title = sectionState?.title ?? "Premios";
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue";
+  }, [progress]);
 
   return (
     <div className={`awards-section ${!isOpen ? "closed" : ""}`}>
       <div className="awards-section__header">
-        {/* TÍTULO EDITABLE */}
-      <div className="editable-title">
-        {!editingTitle ? (
-          <h2
-            className="title-display"
-            onClick={() => setEditingTitle(true)}
-          >
-            <BsAward /> {title}
-          </h2>
-        ) : (
-          <input
-            className="title-input"
-            autoFocus
-            value={title}
-            onChange={(e) =>
-              dispatch(updateSectionTitle({ name: "awardSection", title: e.target.value }))
-            }
-            onBlur={() => setEditingTitle(false)}
-            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
-          />
-        )}
-      </div>
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
+              <BsAward /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "awardSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
-        {/* BADGE DE PROGRESO */}
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -130,6 +135,7 @@ const progressColorClass = useMemo(() => {
           {awards.map((award) => (
             <div className="award-card" key={award.id}>
               <div className="card-grid">
+                {/* Nombre del premio */}
                 <div className="field">
                   <label>Nombre del premio</label>
                   <input
@@ -140,6 +146,7 @@ const progressColorClass = useMemo(() => {
                   />
                 </div>
 
+                {/* Fecha */}
                 <div className="field">
                   <label>Fecha</label>
                   <input
@@ -149,14 +156,13 @@ const progressColorClass = useMemo(() => {
                   />
                 </div>
 
-                <div className="field full">
-                  <label>Descripción</label>
-                  <textarea
-                    placeholder="Breve descripción del premio..."
+                {/* DESCRIPCIÓN CON RICHTEXTEDITOR */}
+                <div className="field full description-field">
+                  <label>Descripción (opcional)</label>
+                  <RichTextEditor
                     value={award.description || ""}
-                    onChange={(e) =>
-                      updateAward(award.id, "description", e.target.value)
-                    }
+                    onChange={(html) => updateAward(award.id, "description", html)}
+                    placeholder="Ej: Otorgado por la Universidad Nacional por excelencia académica..."
                   />
                 </div>
               </div>

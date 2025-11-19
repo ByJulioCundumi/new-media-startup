@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
+import { PiStudentLight } from "react-icons/pi";
 import "./educationsection.scss";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -10,8 +11,12 @@ import {
   removeEducation,
   updateEducation,
 } from "../../../reducers/educationSlice";
-import { PiStudentLight } from "react-icons/pi";
-import { setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import {
+  setSectionProgress,
+  toggleSectionOpen,
+  updateSectionTitle,
+} from "../../../reducers/cvSectionsSlice";
+import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -30,6 +35,9 @@ const EducationSection: React.FC = () => {
   );
 
   const isOpen = sectionState?.isOpen ?? false;
+  const title = sectionState?.title ?? "Educación";
+
+  const [editingTitle, setEditingTitle] = useState(false);
 
   const updateField = (
     id: string,
@@ -39,44 +47,37 @@ const EducationSection: React.FC = () => {
     dispatch(updateEducation({ id, field, value }));
   };
 
-  /** PROGRESO DINÁMICO SOLO SI LOS CAMPOS EXISTEN Y ESTÁN LLENOS */
+  // === CÁLCULO DE PROGRESO ===
   const getProgress = () => {
     if (!entries.length) return 0;
-
-    const baseFields = ["title", "institution", "location", "startMonth", "startYear"];
 
     let filled = 0;
     let total = 0;
 
-    entries.forEach(entry => {
-      // Campos obligatorios siempre presentes
-      baseFields.forEach(field => {
+    entries.forEach((entry) => {
+      const baseFields = ["title", "institution", "location", "startMonth", "startYear"];
+      baseFields.forEach((f) => {
         total++;
-        if (entry[field as keyof IEducationEntry]) filled++;
+        if (entry[f as keyof IEducationEntry]) filled++;
       });
 
-      // Fecha de finalización solo si NO está en curso
       if (!entry.present) {
-        total++;
+        total += 2;
         if (entry.endMonth) filled++;
-
-        total++;
         if (entry.endYear) filled++;
       }
 
-      // Información extra solo si está habilitada
       if (entry.showExtraInfo) {
         total++;
-        if (entry.description?.trim()) filled++;
+        if (entry.description && entry.description.trim() !== "") filled++;
       }
     });
 
-    return Math.round((filled / total) * 100);
+    return total > 0 ? Math.round((filled / total) * 100) : 0;
   };
 
   const progress = getProgress();
 
-  // Guardar progreso en tiempo real
   useEffect(() => {
     dispatch(setSectionProgress({ name: "educationSection", progress }));
   }, [progress, dispatch]);
@@ -84,25 +85,15 @@ const EducationSection: React.FC = () => {
   const progressColorClass = useMemo(() => {
     if (progress < 50) return "progress-red";
     if (progress < 100) return "progress-yellow";
-    return "progress-blue"; // 100%
+    return "progress-blue";
   }, [progress]);
-
-  // -----------------------------
-    // 🔵 STATE PARA EDICIÓN DEL TÍTULO
-    // -----------------------------
-    const [editingTitle, setEditingTitle] = useState(false);
-    const title = sectionState?.title ?? "Educación";
 
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
-        {/* TÍTULO EDITABLE */}
         <div className="editable-title">
           {!editingTitle ? (
-            <h2
-              className="title-display"
-              onClick={() => setEditingTitle(true)}
-            >
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
               <PiStudentLight /> {title}
             </h2>
           ) : (
@@ -118,8 +109,10 @@ const EducationSection: React.FC = () => {
             />
           )}
         </div>
-        
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -134,16 +127,14 @@ const EducationSection: React.FC = () => {
           {entries.map((entry) => (
             <div className="education-card" key={entry.id}>
               <div className="card-grid">
-
+                {/* Campos normales */}
                 <div className="field">
                   <label>Título / Programa</label>
                   <input
                     type="text"
                     value={entry.title}
                     placeholder="Ej: Ingeniería de Sistemas"
-                    onChange={(e) =>
-                      updateField(entry.id, "title", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "title", e.target.value)}
                   />
                 </div>
 
@@ -153,9 +144,7 @@ const EducationSection: React.FC = () => {
                     type="text"
                     value={entry.institution}
                     placeholder="Ej: Universidad Nacional"
-                    onChange={(e) =>
-                      updateField(entry.id, "institution", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "institution", e.target.value)}
                   />
                 </div>
 
@@ -165,33 +154,27 @@ const EducationSection: React.FC = () => {
                     type="text"
                     value={entry.location}
                     placeholder="Ej: Bogotá, Colombia"
-                    onChange={(e) =>
-                      updateField(entry.id, "location", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "location", e.target.value)}
                   />
                 </div>
 
+                {/* Fechas */}
                 <div className="education-section__dates">
                   <div className="field">
                     <label>Fecha de Inicio</label>
                     <div className="double">
                       <select
                         value={entry.startMonth}
-                        onChange={(e) =>
-                          updateField(entry.id, "startMonth", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "startMonth", e.target.value)}
                       >
                         <option value="">Mes</option>
                         {months.map((m) => (
                           <option key={m} value={m}>{m}</option>
                         ))}
                       </select>
-
                       <select
                         value={entry.startYear}
-                        onChange={(e) =>
-                          updateField(entry.id, "startYear", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "startYear", e.target.value)}
                       >
                         <option value="">Año</option>
                         {years.map((y) => (
@@ -207,22 +190,17 @@ const EducationSection: React.FC = () => {
                       <select
                         disabled={entry.present}
                         value={entry.endMonth}
-                        onChange={(e) =>
-                          updateField(entry.id, "endMonth", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "endMonth", e.target.value)}
                       >
                         <option value="">Mes</option>
                         {months.map((m) => (
                           <option key={m} value={m}>{m}</option>
                         ))}
                       </select>
-
                       <select
                         disabled={entry.present}
                         value={entry.endYear}
-                        onChange={(e) =>
-                          updateField(entry.id, "endYear", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "endYear", e.target.value)}
                       >
                         <option value="">Año</option>
                         {years.map((y) => (
@@ -235,16 +213,14 @@ const EducationSection: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={entry.present}
-                        onChange={(e) =>
-                          updateField(entry.id, "present", e.target.checked)
-                        }
+                        onChange={(e) => updateField(entry.id, "present", e.target.checked)}
                       />
                       Actualmente cursando
                     </label>
                   </div>
                 </div>
 
-                {/* BOTÓN PARA MOSTRAR / OCULTAR INFO EXTRA */}
+                {/* === INFORMACIÓN EXTRA CON RICHTEXTEDITOR === */}
                 {!entry.showExtraInfo ? (
                   <button
                     className="add-extra-btn"
@@ -253,26 +229,26 @@ const EducationSection: React.FC = () => {
                     <FiPlus /> Nota
                   </button>
                 ) : (
-                  <div className="field full">
+                  <div className="field full extra-info-field">
                     <label>Información Extra</label>
 
-                    <textarea
-                      value={entry.description}
-                      placeholder="Ej: Modalidad presencial / virtual, etc..."
-                      onChange={(e) =>
-                        updateField(entry.id, "description", e.target.value)
-                      }
+                    <RichTextEditor
+                      value={entry.description || ""}
+                      onChange={(html) => updateField(entry.id, "description", html)}
+                      placeholder="Ej: Mención honorífica, promedio 4.8/5.0, modalidad virtual..."
                     />
 
                     <button
-                      className="add-extra-btn"
-                      onClick={() => updateField(entry.id, "showExtraInfo", false)}
+                      className="add-extra-btn remove"
+                      onClick={() => {
+                        updateField(entry.id, "showExtraInfo", false);
+                        updateField(entry.id, "description", ""); // opcional: limpiar al ocultar
+                      }}
                     >
                       Ocultar información extra
                     </button>
                   </div>
                 )}
-
               </div>
 
               <button

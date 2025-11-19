@@ -1,9 +1,5 @@
-export interface ICustomItem {
-  id: string;
-  content: string;
-}
-
+// src/interfaces/ICustom.ts
 export interface ICustomEntry {
-  title: string;
-  items: ICustomItem[];
+  id: string;
+  value: string; // Texto libre (puede ser una línea, un párrafo, etc.)
 }

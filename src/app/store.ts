@@ -30,7 +30,7 @@ export default configureStore({
         hobbiesEntries: hobbiesSlice,
         referencesEntries: referencesSlice,
         awardsEntries: awardsSlice,
-        customEntry: customSlice,
+        customEntries: customSlice,
         profileSection: profileSlice,
         cvSections: cvSectionsSlice,
         photo: photoSlice,

@@ -1,0 +1,129 @@
+.rich-text-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 2px dashed #9fadad29;
+  background: #9baaaa0d;
+  border-radius: 18px;
+  padding: 20px;
+
+  &__toolbar {
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    border: 1px solid #9fadad3e;
+
+    &-left,
+    &-right {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    button {
+      background: #8a99990d;
+      border: 1px solid #9fadad3e;
+      color: #9fadad;
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: 0.2s ease;
+      font-weight: 600;
+      font-size: 13px;
+
+      &:hover {
+        background: rgba(90, 110, 255, 0.12);
+        border-color: rgba(90, 110, 255, 0.5);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+
+      &.active {
+        background: #5a6eff;
+        border-color: #5a6eff;
+        color: #fff;
+        box-shadow: 0 2px 6px rgba(90, 110, 255, 0.3);
+      }
+    }
+
+    &__tips-btn {
+      background: #5a6eff;
+      border: 1px solid #5a6eff;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(90, 110, 255, 0.25);
+
+      &:hover {
+        background: #4d59ff;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+    }
+  }
+
+  &__editor-card {
+    border: 1px solid #9fadad3e;
+    border-radius: 16px;
+    background: #fff;
+    padding: 16px;
+    min-height: 160px;
+  }
+
+  /* Estilos de Tiptap */
+  :global(.tiptap) {
+    outline: none;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #1f2937;
+
+    p {
+      margin: 0 0 10px;
+    }
+    strong { font-weight: 700; }
+    em { font-style: italic; }
+    u { text-decoration: underline; }
+
+    h1, h2, h3 {
+      margin: 20px 0 10px;
+      font-weight: 700;
+    }
+    h1 { font-size: 26px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+
+    ul, ol { padding-left: 24px; margin: 8px 0; }
+    ul { list-style: disc; }
+    ol { list-style: decimal; }
+
+    a {
+      color: #5a6eff;
+      text-decoration: underline;
+      font-weight: 500;
+      &:hover { opacity: 0.8; }
+    }
+
+    p.is-editor-empty:first-child::before {
+      content: attr(data-placeholder);
+      color: rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+      height: 0;
+      float: left;
+    }
+  }
+}

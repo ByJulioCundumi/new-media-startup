@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FiUser, FiCamera, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { FiCamera, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { FaRegUserCircle } from "react-icons/fa";
 
 import "./identitysection.scss";
 import type { IState } from "../../../interfaces/IState";
@@ -11,13 +12,13 @@ import {
   setFirstName,
   setLastName,
   setJobTitle,
+  resetIdentity, // ⭐ NUEVO
 } from "../../../reducers/identitySlice";
 
 import {
   setSectionProgress,
   toggleSectionOpen,
 } from "../../../reducers/cvSectionsSlice";
-import { FaRegUserCircle } from "react-icons/fa";
 
 const IdentitySection = () => {
   const dispatch = useDispatch();
@@ -31,13 +32,17 @@ const IdentitySection = () => {
 
   const isOpen = sectionState?.isOpen ?? false;
 
-  // Calcular progreso
+  // -----------------------------
+  // 🔥  Progreso (tolerante a estado vacío)
+  // -----------------------------
   const progress = useMemo(() => {
     let value = 0;
-    if (identity.photo) value += 25;
-    if (identity.firstName.trim()) value += 25;
-    if (identity.lastName.trim()) value += 25;
-    if (identity.jobTitle.trim()) value += 25;
+
+    if (identity?.photo) value += 25;
+    if (identity?.firstName?.trim()) value += 25;
+    if (identity?.lastName?.trim()) value += 25;
+    if (identity?.jobTitle?.trim()) value += 25;
+
     return value;
   }, [identity]);
 
@@ -51,7 +56,24 @@ const IdentitySection = () => {
     return "progress-blue";
   }, [progress]);
 
-  // Subir foto
+  // -----------------------------
+  // 🧹 Reset automático cuando todo está vacío
+  // -----------------------------
+  useEffect(() => {
+    const isAllEmpty =
+      (!identity?.photo || identity.photo === null) &&
+      (!identity?.firstName || identity.firstName.trim() === "") &&
+      (!identity?.lastName || identity.lastName.trim() === "") &&
+      (!identity?.jobTitle || identity.jobTitle.trim() === "");
+
+    if (isAllEmpty && Object.keys(identity).length > 0) {
+      dispatch(resetIdentity());
+    }
+  }, [identity, dispatch]);
+
+  // -----------------------------
+  // 📸 Upload photo
+  // -----------------------------
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -60,7 +82,6 @@ const IdentitySection = () => {
     reader.onloadend = () => {
       dispatch(setPhoto(reader.result as string));
 
-      // 🔥 Reset para permitir seleccionar la misma imagen nuevamente
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -70,6 +91,7 @@ const IdentitySection = () => {
 
   return (
     <div className={`identity-section ${!isOpen ? "closed" : ""}`}>
+      {/* HEADER */}
       <div className="identity-section__header">
         <h2>
           <FaRegUserCircle /> Sobre Mi
@@ -90,11 +112,10 @@ const IdentitySection = () => {
       {isOpen && (
         <div className="identity-section__content">
           <div className="identity-flex">
-
-            {/* FOTO + BOTÓN DEBAJO */}
+            {/* FOTO */}
             <div className="identity-section__photo-wrapper">
               <div className="identity-section__photo-container">
-                {identity.photo ? (
+                {identity?.photo ? (
                   <>
                     <img
                       src={identity.photo}
@@ -105,8 +126,6 @@ const IdentitySection = () => {
                       className="identity-section__remove-btn"
                       onClick={() => {
                         dispatch(removePhoto());
-
-                        // 🔥 Reset del input para permitir re-selección
                         if (fileInputRef.current) {
                           fileInputRef.current.value = "";
                         }
@@ -123,16 +142,16 @@ const IdentitySection = () => {
                 )}
               </div>
 
-              {/* Botón debajo del cuadro */}
-              {
-                identity.allowCvPhoto && <button
-                className="add-photo-btn"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <FiCamera />
-                {identity.photo ? "Cambiar Foto" : "Subir Foto"}
-              </button>
-              }
+              {/* Botón debajo */}
+              {(identity?.allowCvPhoto ?? true) && (
+                <button
+                  className="add-photo-btn"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <FiCamera />
+                  {identity?.photo ? "Cambiar Foto" : "Subir Foto"}
+                </button>
+              )}
 
               <input
                 type="file"
@@ -149,7 +168,7 @@ const IdentitySection = () => {
                 Nombre
                 <input
                   type="text"
-                  value={identity.firstName}
+                  value={identity?.firstName ?? ""}
                   onChange={(e) => dispatch(setFirstName(e.target.value))}
                   placeholder="Ej: Julio"
                 />
@@ -159,7 +178,7 @@ const IdentitySection = () => {
                 Apellidos
                 <input
                   type="text"
-                  value={identity.lastName}
+                  value={identity?.lastName ?? ""}
                   onChange={(e) => dispatch(setLastName(e.target.value))}
                   placeholder="Ej: Cespedes"
                 />
@@ -169,13 +188,12 @@ const IdentitySection = () => {
                 Puesto Deseado
                 <input
                   type="text"
-                  value={identity.jobTitle}
+                  value={identity?.jobTitle ?? ""}
                   onChange={(e) => dispatch(setJobTitle(e.target.value))}
                   placeholder="Ej: Desarrollador Frontend"
                 />
               </label>
             </div>
-
           </div>
         </div>
       )}

@@ -26,8 +26,8 @@ export interface IState{
     hobbiesEntries: IHobbyEntry[]; // cv sections
     referencesEntries: IReferenceEntry[] // cv sections
     awardsEntries: IAwardEntry[]; // cv sections
-    customEntry: ICustomEntry; // cv sections
-    profileSection: String, // cv sections
+    customEntries: ICustomEntry[] // cv sections
+    profileSection: string, // cv sections
     cvSections: ICvSectionsState,
     identity: IIdentityData; // cv sections
     contactEntries: IContactEntry[] // cv sections

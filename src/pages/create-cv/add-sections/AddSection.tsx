@@ -16,7 +16,7 @@ import {
 import { FaLink, FaGraduationCap } from "react-icons/fa";
 import { MdFormatListBulletedAdd, MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
-import { BiSolidLayerPlus } from "react-icons/bi";
+import { BiEditAlt, BiSolidLayerPlus } from "react-icons/bi";
 import { TbNewSection } from "react-icons/tb";
 
 import "./addsection.scss";
@@ -26,7 +26,7 @@ import { clearAllCourses } from "../../../reducers/coursesSlice";
 import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
 import { clearAllReferences } from "../../../reducers/referencesSlice";
 import { clearAllAwards } from "../../../reducers/awardsSlice";
-import { clearCustomSection } from "../../../reducers/customSlice";
+import { clearAllCustom } from "../../../reducers/customSlice";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const AddSections: React.FC = () => {
     { name: "hobbieSection", icon: <PiMaskHappyFill /> },
     { name: "referenceSection", icon: <MdRateReview /> },
     { name: "awardSection", icon: <BsAwardFill /> },
-    { name: "customSection", icon: <BiSolidLayerPlus /> },
+    { name: "customSection", icon: <BiEditAlt /> },
   ];
 
   const toggleSection = (name: string, enabled: boolean) => {
@@ -66,7 +66,7 @@ const AddSections: React.FC = () => {
           dispatch(clearAllAwards());
           break;
         case "customSection":
-          dispatch(clearCustomSection());
+          dispatch(clearAllCustom());
           break;
       }
     } else {
@@ -98,11 +98,6 @@ const AddSections: React.FC = () => {
 
             // tomar title desde el estado
             let finalTitle = data?.title || "";
-
-            // SI ES CUSTOM SECTION → usar fallback
-            if (sec.name === "customSection" && finalTitle.trim() === "") {
-              finalTitle = "Campo Personalizado";
-            }
 
             return (
               <button

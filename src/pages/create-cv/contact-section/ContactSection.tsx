@@ -9,29 +9,19 @@ import type { IState } from "../../../interfaces/IState";
 import {
   addContactEntry,
   removeContactEntry,
-  setContactEntries,
   updateContactEntry,
 } from "../../../reducers/contactSlice";
-
 import {
   toggleSectionOpen,
   setSectionProgress,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
-interface ContactSectionProps {
-  initialData?: IContactEntry[];
-  onChange?: (data: IContactEntry[]) => void;
-}
-
-const ContactSection: React.FC<ContactSectionProps> = ({
-  initialData,
-  onChange,
-}) => {
+const ContactSection: React.FC = () => {
   const dispatch = useDispatch();
 
   const contacts: IContactEntry[] = useSelector(
-    (state: IState) => state.contactEntries ?? []
+    (state: IState) => state.contactEntries || []
   );
 
   const sectionState = useSelector((state: IState) =>
@@ -39,89 +29,49 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   );
 
   const isOpen = sectionState?.isOpen ?? false;
-
-  // -----------------------------
-  // 🔵 STATE PARA EDICIÓN DEL TÍTULO
-  // -----------------------------
-  const [editingTitle, setEditingTitle] = useState(false);
   const title = sectionState?.title ?? "Contacto";
 
-  // -----------------------------
-  // Cargar initialData
-  // -----------------------------
-  useEffect(() => {
-    if (initialData) {
-      dispatch(setContactEntries(initialData));
-    }
-  }, [initialData, dispatch]);
+  const [editingTitle, setEditingTitle] = useState(false);
 
-  // Crear Teléfono y Email si no existen
-  useEffect(() => {
-    if (contacts.length === 0) {
-      dispatch(
-        setContactEntries([
-          {
-            id: crypto.randomUUID(),
-            type: "Teléfono",
-            value: "",
-          },
-          {
-            id: crypto.randomUUID(),
-            type: "Email",
-            value: "",
-          },
-        ])
-      );
-    }
-  }, [contacts.length, dispatch]);
-
-  // Notificar cambios al padre
-  useEffect(() => {
-    onChange?.(contacts);
-  }, [contacts, onChange]);
-
-  const addContact = () => {
-    dispatch(
-      addContactEntry({
-        id: crypto.randomUUID(),
-        type: "",
-        value: "",
-      })
-    );
+  // Activar sección creando Teléfono + Email
+  const activateSection = () => {
+    dispatch(addContactEntry({ id: crypto.randomUUID(), type: "Teléfono", value: "" }));
+    dispatch(addContactEntry({ id: crypto.randomUUID(), type: "Email", value: "" }));
   };
 
-  const updateContact = (
-    id: string,
-    field: keyof IContactEntry,
-    value: string
-  ) => {
+  const addExtraContact = () => {
+    dispatch(addContactEntry({ id: crypto.randomUUID(), type: "", value: "" }));
+  };
+
+  const updateContact = (id: string, field: keyof IContactEntry, value: string) => {
     dispatch(updateContactEntry({ id, field, value }));
   };
 
-  const remove = (id: string) => {
+  const removeContact = (id: string) => {
     dispatch(removeContactEntry(id));
   };
 
-  // ---------- PROGRESS ----------
+  // === PROGRESO: todos los campos cuentan ===
   const progress = useMemo(() => {
-    const safe = Array.isArray(contacts) ? contacts : [];
+    if (contacts.length === 0) return 0;
 
-    let completed = 0;
-    let total = 0;
+    let totalFields = 0;
+    let completedFields = 0;
 
-    safe.forEach((c, index) => {
-      if (index < 2) {
-        total += 1;
-        if (c.value?.trim()) completed += 1;
+    contacts.forEach((c) => {
+      // Teléfono y Email: solo value cuenta
+      if (c.type === "Teléfono" || c.type === "Email") {
+        totalFields += 1;
+        if (c.value?.trim()) completedFields += 1;
       } else {
-        total += 2;
-        if (c.type?.trim()) completed++;
-        if (c.value?.trim()) completed++;
+        // Otros: type + value
+        totalFields += 2;
+        if (c.type?.trim()) completedFields += 1;
+        if (c.value?.trim()) completedFields += 1;
       }
     });
 
-    if (total === 0) return 0;
-    return Math.round((completed / total) * 100);
+    return Math.round((completedFields / totalFields) * 100);
   }, [contacts]);
 
   useEffect(() => {
@@ -129,7 +79,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   }, [progress, dispatch]);
 
   const progressColorClass = useMemo(() => {
-    if (progress < 50) return "progress-red";
+    if (progress === 0) return "progress-red";
     if (progress < 100) return "progress-yellow";
     return "progress-blue";
   }, [progress]);
@@ -137,13 +87,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   return (
     <div className={`contact-section ${!isOpen ? "closed" : ""}`}>
       <div className="contact-section__header">
-        {/* TÍTULO EDITABLE */}
         <div className="editable-title">
           {!editingTitle ? (
-            <h2
-              className="title-display"
-              onClick={() => setEditingTitle(true)}
-            >
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
               <FiPhone /> {title}
             </h2>
           ) : (
@@ -174,55 +120,59 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
       {isOpen && (
         <div className="contact-section__content">
-          {contacts.map((c, index) => (
-            <div className="contact-card" key={c.id}>
-              <div className="card-grid">
-                <div className="field">
-                  <label>Tipo</label>
-
-                  <input
-                    type="text"
-                    value={c.type}
-                    readOnly={index < 2}
-                    placeholder="Ej: WhatsApp, LinkedIn"
-                    onChange={(e) =>
-                      index >= 2 &&
-                      updateContact(c.id, "type", e.target.value)
-                    }
-                    className={index < 2 ? "readonly" : ""}
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Contacto</label>
-                  <input
-                    type="text"
-                    placeholder={
-                      c.type === "Teléfono"
-                        ? "Ej: +57 300 000 0000"
-                        : c.type === "Email"
-                        ? "Ej: usuario@mail.com"
-                        : "Ej: enlace o dato de contacto"
-                    }
-                    value={c.value}
-                    onChange={(e) =>
-                      updateContact(c.id, "value", e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-
-              {index >= 2 && (
-                <button className="remove-btn" onClick={() => remove(c.id)}>
-                  <FiTrash2 />
-                </button>
-              )}
+          {/* Estado vacío */}
+          {contacts.length === 0 ? (
+            <div className="empty-state">
+              <button className="add-btn add-btn-full primary" onClick={activateSection}>
+                <FiPlus /> Agregar Contactos
+              </button>
             </div>
-          ))}
+          ) : (
+            <>
+              {contacts.map((c) => (
+                <div className="contact-card" key={c.id}>
+                  <div className="card-grid">
+                    <div className="field">
+                      <label>Tipo</label>
+                      <input
+                        type="text"
+                        value={c.type}
+                        readOnly={c.type === "Teléfono" || c.type === "Email"}
+                        placeholder="Ej: LinkedIn, GitHub, Web"
+                        onChange={(e) => updateContact(c.id, "type", e.target.value)}
+                        className={c.type === "Teléfono" || c.type === "Email" ? "readonly" : ""}
+                      />
+                    </div>
 
-          <button className="add-btn" onClick={addContact}>
-            <FiPlus /> Agregar Contacto
-          </button>
+                    <div className="field">
+                      <label>Contacto</label>
+                      <input
+                        type={c.type === "Email" ? "email" : "text"}
+                        placeholder={
+                          c.type === "Teléfono"
+                            ? "+57 300 000 0000"
+                            : c.type === "Email"
+                            ? "tuemail@dominio.com"
+                            : "Enlace o dato de contacto"
+                        }
+                        value={c.value}
+                        onChange={(e) => updateContact(c.id, "value", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Botón de eliminar para TODOS los campos (incluyendo Teléfono y Email) */}
+                  <button className="remove-btn" onClick={() => removeContact(c.id)}>
+                    <FiTrash2 />
+                  </button>
+                </div>
+              ))}
+
+              <button className="add-btn" onClick={addExtraContact}>
+                <FiPlus /> Agregar Otro Contacto
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>

@@ -1,41 +1,49 @@
+// src/reducers/customSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ICustomEntry, ICustomItem } from "../interfaces/ICustom";
+import type { ICustomEntry } from "../interfaces/ICustom";
 
-const initialState: ICustomEntry = {
-  title: "",
-  items: [],
-};
+export type CustomState = ICustomEntry[];
+
+const initialState: CustomState = [];
 
 const customSlice = createSlice({
-  name: "customEntry",
+  name: "customEntries",
   initialState,
   reducers: {
-    setCustomTitle: (state, action: PayloadAction<string>) => {
-      state.title = action.payload;
+    setCustomEntries: (_, action: PayloadAction<ICustomEntry[]>) => {
+      return action.payload;
     },
-    setCustomItems: (state, action: PayloadAction<ICustomItem[]>) => {
-      state.items = action.payload;
-    },
-    setCustomSection: (
-      state,
-      action: PayloadAction<{ title: string; items: ICustomItem[] }>
-    ) => {
-      state.title = action.payload.title;
-      state.items = action.payload.items;
-    },
-    resetCustomSection: () => initialState,
 
-    // Nuevo reducer para eliminar todo (título e items)
-    clearCustomSection: () => initialState,
+    addCustomEntry: (state, action: PayloadAction<ICustomEntry>) => {
+      state.push(action.payload);
+    },
+
+    updateCustomEntry: (
+      state,
+      action: PayloadAction<{ id: string; value: string }>
+    ) => {
+      const index = state.findIndex((c) => c.id === action.payload.id);
+      if (index !== -1) {
+        state[index].value = action.payload.value;
+      }
+    },
+
+    removeCustomEntry: (state, action: PayloadAction<string>) => {
+      return state.filter((c) => c.id !== action.payload);
+    },
+
+    clearAllCustom: () => {
+      return [];
+    },
   },
 });
 
 export const {
-  setCustomTitle,
-  setCustomItems,
-  setCustomSection,
-  resetCustomSection,
-  clearCustomSection,
+  setCustomEntries,
+  addCustomEntry,
+  updateCustomEntry,
+  removeCustomEntry,
+  clearAllCustom,
 } = customSlice.actions;
 
 export default customSlice.reducer;

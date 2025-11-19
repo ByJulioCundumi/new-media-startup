@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FiPlus, FiTrash2, FiChevronDown, FiX } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { PiGraduationCapLight } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import "./coursessection.scss";
+
 import type { ICourseEntry } from "../../../interfaces/ICourses";
 import type { IState } from "../../../interfaces/IState";
 import {
@@ -10,8 +12,14 @@ import {
   setCoursesEntries,
   updateCourseEntry,
 } from "../../../reducers/coursesSlice";
-import { PiGraduationCapLight } from "react-icons/pi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import {
+  setSectionProgress,
+  toggleSectionOpen,
+  updateSectionTitle,
+} from "../../../reducers/cvSectionsSlice";
+
+// Importamos el RichTextEditor
+import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
 
 interface CoursesSectionProps {
   initialData?: ICourseEntry[];
@@ -27,15 +35,17 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
   );
 
   const isOpen = sectionState?.isOpen ?? false;
+  const title = sectionState?.title ?? "Cursos y Certificados";
 
-  // Sync external data
+  const [editingTitle, setEditingTitle] = useState(false);
+
+  // Sincronización con datos externos (si los hay)
   useEffect(() => {
     if (initialData) {
       dispatch(setCoursesEntries(initialData));
     }
   }, [initialData, dispatch]);
 
-  // Callback notify
   useEffect(() => {
     onChange?.(courses);
   }, [courses, onChange]);
@@ -55,7 +65,12 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
     );
   };
 
-  const updateCourse = (id: string, field: keyof ICourseEntry, value: any) => {
+  // FUNCIÓN TIPO-SEGURA: Soluciona el error de keyof
+  const updateCourse = <K extends keyof ICourseEntry>(
+    id: string,
+    field: K,
+    value: ICourseEntry[K]
+  ) => {
     dispatch(updateCourseEntry({ id, field, value }));
   };
 
@@ -63,7 +78,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
     dispatch(removeCourseEntry(id));
   };
 
-  /** PROGRESS SYSTEM **/
+  // === PROGRESO (compatible con HTML en descripción) ===
   const progress = useMemo(() => {
     if (!courses.length) return 0;
 
@@ -71,60 +86,47 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
     let completedFields = 0;
 
     courses.forEach((course) => {
-      const mandatory = [
-        course.name,
-        course.institution,
-        course.startDate,
-      ];
-
+      // Obligatorios
+      const mandatory = [course.name, course.institution, course.startDate];
       mandatory.forEach((field) => {
         totalFields++;
         if (field?.toString().trim()) completedFields++;
       });
 
-      const optional = [
-        course.endDate,
-        course.country,
-        course.city,
-        course.description,
-      ];
+      // Opcionales
+      totalFields += 4; // endDate, country, city, description
 
-      optional.forEach((field) => {
-        totalFields++;
-        if (field?.toString().trim()) completedFields++;
-      });
+      if (course.endDate?.trim()) completedFields++;
+      if (course.country?.trim()) completedFields++;
+      if (course.city?.trim()) completedFields++;
+
+      // Descripción: limpiamos HTML para contar texto real
+      const cleanDesc = course.description
+        ?.replace(/<[^>]*>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .trim();
+      if (cleanDesc) completedFields++;
     });
 
     return Math.round((completedFields / totalFields) * 100);
   }, [courses]);
 
-  // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "courseSection", progress }));
-}, [progress, dispatch]);
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "courseSection", progress }));
+  }, [progress, dispatch]);
 
-const progressColorClass = useMemo(() => {
-  if (progress < 50) return "progress-red";
-  if (progress < 100) return "progress-yellow";
-  return "progress-blue"; // 100%
-}, [progress]);
-
-  // -----------------------------
-  // 🔵 STATE PARA EDICIÓN DEL TÍTULO
-  // -----------------------------
-  const [editingTitle, setEditingTitle] = useState(false);
-  const title = sectionState?.title ?? "Cursos y Certificados";
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue";
+  }, [progress]);
 
   return (
     <div className={`courses-section ${!isOpen ? "closed" : ""}`}>
       <div className="courses-section__header">
-        {/* TÍTULO EDITABLE */}
         <div className="editable-title">
           {!editingTitle ? (
-            <h2
-              className="title-display"
-              onClick={() => setEditingTitle(true)}
-            >
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
               <PiGraduationCapLight /> {title}
             </h2>
           ) : (
@@ -141,7 +143,9 @@ const progressColorClass = useMemo(() => {
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -156,6 +160,7 @@ const progressColorClass = useMemo(() => {
           {courses.map((course) => (
             <div className="course-card" key={course.id}>
               <div className="card-grid">
+                {/* Nombre del curso */}
                 <div className="field">
                   <label>Nombre del curso</label>
                   <input
@@ -166,16 +171,18 @@ const progressColorClass = useMemo(() => {
                   />
                 </div>
 
+                {/* Institución */}
                 <div className="field">
                   <label>Institución</label>
                   <input
                     type="text"
-                    placeholder="Ej: Platzi"
+                    placeholder="Ej: Platzi, Udemy, Coursera"
                     value={course.institution}
                     onChange={(e) => updateCourse(course.id, "institution", e.target.value)}
                   />
                 </div>
 
+                {/* Fechas */}
                 <div className="field double">
                   <div>
                     <label>Fecha de inicio</label>
@@ -195,6 +202,7 @@ const progressColorClass = useMemo(() => {
                   </div>
                 </div>
 
+                {/* Ubicación */}
                 <div className="location-fields-vertical">
                   <div className="field">
                     <label>País</label>
@@ -217,14 +225,13 @@ const progressColorClass = useMemo(() => {
                   </div>
                 </div>
 
-                <div className="field full">
-                  <label>Descripción</label>
-                  <textarea
-                    placeholder="Breve descripción del curso..."
+                {/* DESCRIPCIÓN CON RICHTEXTEDITOR */}
+                <div className="field full description-field">
+                  <label>Descripción (opcional)</label>
+                  <RichTextEditor
                     value={course.description || ""}
-                    onChange={(e) =>
-                      updateCourse(course.id, "description", e.target.value)
-                    }
+                    onChange={(html) => updateCourse(course.id, "description", html)}
+                    placeholder="Ej: Curso de 40 horas, certificado oficial, enfocado en hooks y rendimiento..."
                   />
                 </div>
               </div>

@@ -12,7 +12,7 @@ export interface ITemplateProps {
   hobbieSection: IState["hobbiesEntries"];
   referenceSection: IState["referencesEntries"];
   awardSection: IState["awardsEntries"];
-  customSection: IState["customEntry"];
+  customSection: IState["customEntries"];
 
   identitySection: IState["identity"];
   contactSection: IState["contactEntries"];

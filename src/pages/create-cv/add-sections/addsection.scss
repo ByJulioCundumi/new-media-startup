@@ -20,13 +20,14 @@
 
   h3 {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 500;
     display: flex;
-    gap: 6px;
+    gap: 0.6rem;
     color: #0073ff;
 
     svg {
       font-size: 1.45rem;
+      margin-top: 0.1rem;
     }
   }
 
@@ -34,7 +35,7 @@
     background: #f0f3ff;
     padding: 5px 13px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 400;
     color: #0073ff;
     display: flex;
     gap: 6px;

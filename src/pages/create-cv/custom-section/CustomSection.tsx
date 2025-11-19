@@ -1,129 +1,112 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { FiPlus, FiTrash2, FiChevronDown, FiEdit3 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-
-import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import "./customsection.scss";
+
+import type { ICustomEntry } from "../../../interfaces/ICustom";
 import type { IState } from "../../../interfaces/IState";
-import type { ICustomItem } from "../../../interfaces/ICustom";
-import { setCustomSection } from "../../../reducers/customSlice";
-import { BiLayerPlus } from "react-icons/bi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+
+import {
+  addCustomEntry,
+  removeCustomEntry,
+  updateCustomEntry,
+} from "../../../reducers/customSlice";
+import {
+  toggleSectionOpen,
+  setSectionProgress,
+  updateSectionTitle,
+} from "../../../reducers/cvSectionsSlice";
+
+import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { title: savedTitle, items: savedItems } = useSelector(
-    (state: IState) => state.customEntry
+  const entries: ICustomEntry[] = useSelector(
+    (state: IState) => state.customEntries || []
   );
+
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "customSection")
   );
 
-  const [items, setItems] = useState<ICustomItem[]>(savedItems);
+  const isOpen = sectionState?.isOpen ?? false;
+  const title = sectionState?.title ?? "Campo Personalizado";
   const [editingTitle, setEditingTitle] = useState(false);
-  const title = sectionState?.title ?? "";
 
-  
-    const isOpen = sectionState?.isOpen ?? false;
-
-  // Sync Local → Redux
-  const syncRedux = (t: string, i: ICustomItem[]) => {
-    dispatch(setCustomSection({ title: t, items: i }));
+  const activateSection = () => {
+    dispatch(addCustomEntry({ id: crypto.randomUUID(), value: "" }));
   };
 
-
-  const addItem = () => {
-    const newItem: ICustomItem = {
-      id: crypto.randomUUID(),
-      content: "",
-    };
-    const updated = [...items, newItem];
-    setItems(updated);
-    syncRedux(title, updated);
+  const addNewEntry = () => {
+    dispatch(addCustomEntry({ id: crypto.randomUUID(), value: "" }));
   };
 
-  const updateItem = (id: string, field: keyof ICustomItem, value: any) => {
-    const updated = items.map((item) =>
-      item.id === id ? { ...item, [field]: value } : item
-    );
-    setItems(updated);
-    syncRedux(title, updated);
+  const updateEntry = (id: string, html: string) => {
+    dispatch(updateCustomEntry({ id, value: html }));
   };
 
-  const removeItem = (id: string) => {
-    const updated = items.filter((item) => item.id !== id);
-    setItems(updated);
-    syncRedux(title, updated);
+  const removeEntry = (id: string) => {
+    dispatch(removeCustomEntry(id));
   };
 
-  // ---------- PROGRESS LOGIC ----------
-const progress = useMemo(() => {
-  const hasTitle = title.trim() !== "";
-  const hasFilledItems = items.some((item) => item.content.trim() !== "");
+  // PROGRESO CORREGIDO Y PRECISO
+  const progress = useMemo(() => {
+    if (entries.length === 0) return 0;
 
-  if (!hasTitle) return 0;
+    const completedCount = entries.filter((entry) => {
+      if (!entry.value || entry.value.trim() === "") return false;
 
-  // Si solo hay título
-  if (hasTitle && !hasFilledItems) return 50;
+      const textOnly = entry.value
+        .replace(/<[^>]*>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
-  // Título + al menos 1 ítem escrito
-  return 100;
-}, [title, items]);
+      return textOnly.length > 0;
+    }).length;
 
-// Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "customSection", progress }));
-}, [progress, dispatch]);
+    return Math.round((completedCount / entries.length) * 100);
+  }, [entries]);
 
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "customSection", progress }));
+  }, [progress, dispatch]);
 
-  // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "customSection", progress }));
-}, [progress, dispatch]);
-
-const progressColorClass = useMemo(() => {
-  if (progress < 50) return "progress-red";
-  if (progress < 100) return "progress-yellow";
-  return "progress-blue"; // 100%
-}, [progress]);
+  const progressColorClass = useMemo(() => {
+    if (progress === 0) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue";
+  }, [progress]);
 
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>
       <div className="custom-section__header">
-        {/* TÍTULO EDITABLE */}
-                <div className="editable-title">
-                  {!editingTitle ? (
-                    <h2
-                      className="title-display"
-                      onClick={() => setEditingTitle(true)}
-                    >
-                      <BiLayerPlus /> {title}
-                    </h2>
-                  ) : (
-                    <input
-                      className="title-input"
-                      autoFocus
-                      placeholder="Título de la sección personalizada"
-                      value={title}
-                      onChange={(e) => {
-                      const newTitle = e.target.value;
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
+              <FiEdit3 /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "customSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
-                      // Título del panel (usado por cvSections)
-                      dispatch(updateSectionTitle({ name: "customSection", title: newTitle }));
-
-                      // Guardar título REAL de la sección personalizada en Redux
-                      dispatch(setCustomSection({ title: newTitle, items }));
-                    }}
-                    onBlur={() => setEditingTitle(false)}
-                    onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
-                    />
-                  )}
-                </div>
-
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
-          className={`toggle-btn toggle-btn-custom ${isOpen ? "open" : ""}`}
+          className={`toggle-btn ${isOpen ? "open" : ""}`}
           onClick={() => dispatch(toggleSectionOpen("customSection"))}
         >
           <FiChevronDown />
@@ -132,28 +115,36 @@ const progressColorClass = useMemo(() => {
 
       {isOpen && (
         <div className="custom-section__content">
-          {items.map((item) => (
-            <div className="item-card" key={item.id}>
-              <div className="field full">
-                <label>Contenido del ítem</label>
-                <textarea
-                  placeholder="Ej: Lideré un proyecto de mejora continua..."
-                  value={item.content}
-                  onChange={(e) =>
-                    updateItem(item.id, "content", e.target.value)
-                  }
-                />
-              </div>
+          {entries.length === 0 ? (
+            <button className="add-btn" onClick={activateSection}>
+              <FiPlus /> Agregar Item
+            </button>
+          ) : (
+            <>
+              {entries.map((entry) => (
+                <div className="contact-card" key={entry.id}>
+                  <div className="card-grid">
+                    <div className="field">
+                      <label>Contenido</label>
+                      <RichTextEditor
+                        value={entry.value}
+                        onChange={(html) => updateEntry(entry.id, html)}
+                        placeholder="Escribe aquí tu texto personalizado con formato: negritas, listas, enlaces..."
+                      />
+                    </div>
+                  </div>
 
-              <button className="remove-btn" onClick={() => removeItem(item.id)}>
-                <FiTrash2 />
+                  <button className="remove-btn" onClick={() => removeEntry(entry.id)}>
+                    <FiTrash2 />
+                  </button>
+                </div>
+              ))}
+
+              <button className="add-btn" onClick={addNewEntry}>
+                <FiPlus /> Agregar otra entrada
               </button>
-            </div>
-          ))}
-
-          <button className="add-btn" onClick={addItem}>
-            <FiPlus /> Agregar Ítem
-          </button>
+            </>
+          )}
         </div>
       )}
     </div>

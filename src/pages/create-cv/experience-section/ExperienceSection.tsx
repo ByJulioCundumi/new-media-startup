@@ -5,6 +5,7 @@ import {
   FiTrash2,
   FiPlus,
 } from "react-icons/fi";
+import { GrGrow } from "react-icons/gr";
 import "./experiencesection.scss";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +15,13 @@ import {
   updateExperience,
   removeExperience,
 } from "../../../reducers/experienceSlice";
-import { GrGrow } from "react-icons/gr";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import {
+  setSectionProgress,
+  toggleSectionOpen,
+  updateSectionTitle,
+} from "../../../reducers/cvSectionsSlice";
+import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import type { IExperienceEntry } from "../../../interfaces/IExperience";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -31,14 +37,21 @@ const ExperienceSection: React.FC = () => {
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "experienceSection")
   );
-    
-      const isOpen = sectionState?.isOpen ?? false;
 
-  const updateField = (id: string, field: any, value: any) => {
+  const isOpen = sectionState?.isOpen ?? false;
+  const title = sectionState?.title ?? "Experiencia";
+
+  const [editingTitle, setEditingTitle] = useState(false);
+
+  const updateField = <K extends keyof IExperienceEntry>(
+    id: string,
+    field: K,
+    value: IExperienceEntry[K]
+  ): void => {
     dispatch(updateExperience({ id, field, value }));
   };
 
-  /** PROGRESS SYSTEM **/
+  // === CÁLCULO DE PROGRESO (compatible con HTML) ===
   const progress = useMemo(() => {
     if (!entries.length) return 0;
 
@@ -46,29 +59,25 @@ const ExperienceSection: React.FC = () => {
     let completedFields = 0;
 
     entries.forEach((entry) => {
-      const mandatory = [
-        entry.position,
-        entry.employer,
-        entry.startMonth,
-        entry.startYear,
-      ];
-
+      // Campos obligatorios
+      const mandatory = [entry.position, entry.employer, entry.startMonth, entry.startYear];
       mandatory.forEach((field) => {
         totalFields++;
         if (field?.toString().trim()) completedFields++;
       });
 
-      const optional = [
-        entry.location,
-        entry.description,
-      ];
+      // Campos opcionales
+      totalFields += 2; // location + description
+      if (entry.location?.trim()) completedFields++;
 
-      optional.forEach((field) => {
-        totalFields++;
-        if (field?.toString().trim()) completedFields++;
-      });
+      // Descripción: acepta HTML → limpiamos etiquetas para contar texto real
+      const cleanDesc = entry.description
+        ?.replace(/<[^>]*>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .trim();
+      if (cleanDesc) completedFields++;
 
-      // Fecha de fin solo si NO está en presente
+      // Fechas de fin (solo si no está presente)
       if (!entry.present) {
         totalFields += 2;
         if (entry.endMonth?.trim()) completedFields++;
@@ -79,33 +88,22 @@ const ExperienceSection: React.FC = () => {
     return Math.round((completedFields / totalFields) * 100);
   }, [entries]);
 
-  // Guardar progreso en tiempo real
-useEffect(() => {
-  dispatch(setSectionProgress({ name: "experienceSection", progress }));
-}, [progress, dispatch]);
+  useEffect(() => {
+    dispatch(setSectionProgress({ name: "experienceSection", progress }));
+  }, [progress, dispatch]);
 
-const progressColorClass = useMemo(() => {
-  if (progress < 50) return "progress-red";
-  if (progress < 100) return "progress-yellow";
-  return "progress-blue"; // 100%
-}, [progress]);
-
-// -----------------------------
-    // 🔵 STATE PARA EDICIÓN DEL TÍTULO
-    // -----------------------------
-    const [editingTitle, setEditingTitle] = useState(false);
-    const title = sectionState?.title ?? "Experiencia";
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue";
+  }, [progress]);
 
   return (
     <div className={`experience-section ${!isOpen ? "closed" : ""}`}>
       <div className="experience-section__header">
-        {/* TÍTULO EDITABLE */}
         <div className="editable-title">
           {!editingTitle ? (
-            <h2
-              className="title-display"
-              onClick={() => setEditingTitle(true)}
-            >
+            <h2 className="title-display" onClick={() => setEditingTitle(true)}>
               <GrGrow /> {title}
             </h2>
           ) : (
@@ -122,7 +120,9 @@ const progressColorClass = useMemo(() => {
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator ${progressColorClass}`}>
+          {progress}%
+        </div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}
@@ -137,65 +137,56 @@ const progressColorClass = useMemo(() => {
           {entries.map((entry) => (
             <div className="experience-card" key={entry.id}>
               <div className="card-grid">
-                
+                {/* Puesto */}
                 <div className="field">
                   <label>Puesto</label>
                   <input
                     type="text"
                     placeholder="Ej: Desarrollador Backend"
                     value={entry.position}
-                    onChange={(e) =>
-                      updateField(entry.id, "position", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "position", e.target.value)}
                   />
                 </div>
 
+                {/* Empleador */}
                 <div className="field">
                   <label>Empleador</label>
                   <input
                     type="text"
                     placeholder="Ej: Google, Freelancer, Mi empresa"
                     value={entry.employer}
-                    onChange={(e) =>
-                      updateField(entry.id, "employer", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "employer", e.target.value)}
                   />
                 </div>
 
+                {/* Localidad */}
                 <div className="field">
                   <label>Localidad</label>
                   <input
                     type="text"
                     placeholder="Ej: Bogotá, Colombia"
                     value={entry.location}
-                    onChange={(e) =>
-                      updateField(entry.id, "location", e.target.value)
-                    }
+                    onChange={(e) => updateField(entry.id, "location", e.target.value)}
                   />
                 </div>
 
+                {/* Fechas */}
                 <div className="experience-section__dates">
-
                   <div className="field">
                     <label>Fecha de Inicio</label>
                     <div className="double">
                       <select
                         value={entry.startMonth}
-                        onChange={(e) =>
-                          updateField(entry.id, "startMonth", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "startMonth", e.target.value)}
                       >
                         <option value="">Mes</option>
                         {months.map((m) => (
                           <option key={m} value={m}>{m}</option>
                         ))}
                       </select>
-
                       <select
                         value={entry.startYear}
-                        onChange={(e) =>
-                          updateField(entry.id, "startYear", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "startYear", e.target.value)}
                       >
                         <option value="">Año</option>
                         {years.map((y) => (
@@ -211,22 +202,17 @@ const progressColorClass = useMemo(() => {
                       <select
                         disabled={entry.present}
                         value={entry.endMonth}
-                        onChange={(e) =>
-                          updateField(entry.id, "endMonth", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "endMonth", e.target.value)}
                       >
                         <option value="">Mes</option>
                         {months.map((m) => (
                           <option key={m} value={m}>{m}</option>
                         ))}
                       </select>
-
                       <select
                         disabled={entry.present}
                         value={entry.endYear}
-                        onChange={(e) =>
-                          updateField(entry.id, "endYear", e.target.value)
-                        }
+                        onChange={(e) => updateField(entry.id, "endYear", e.target.value)}
                       >
                         <option value="">Año</option>
                         {years.map((y) => (
@@ -239,23 +225,20 @@ const progressColorClass = useMemo(() => {
                       <input
                         type="checkbox"
                         checked={entry.present}
-                        onChange={(e) =>
-                          updateField(entry.id, "present", e.target.checked)
-                        }
+                        onChange={(e) => updateField(entry.id, "present", e.target.checked)}
                       />
                       Actualmente trabajando
                     </label>
                   </div>
                 </div>
 
-                <div className="field full">
+                {/* DESCRIPCIÓN CON RICHTEXTEDITOR */}
+                <div className="field full description-field">
                   <label>Descripción</label>
-                  <textarea
-                    placeholder="Describe tus responsabilidades, logros, tecnologías utilizadas, etc."
-                    value={entry.description}
-                    onChange={(e) =>
-                      updateField(entry.id, "description", e.target.value)
-                    }
+                  <RichTextEditor
+                    value={entry.description || ""}
+                    onChange={(html) => updateField(entry.id, "description", html)}
+                    placeholder="Describe tus responsabilidades, logros, tecnologías utilizadas..."
                   />
                 </div>
               </div>

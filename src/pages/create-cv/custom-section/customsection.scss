@@ -1,12 +1,13 @@
+/* customsection.scss → ahora idéntico a contactsection.scss */
 .custom-section {
   background: #fff;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  transition: all 0.25s ease;
-
+  gap: 22px;
   margin: 0 28px;
   margin-right: 0;
+  padding-bottom: 20px;
+  transition: all 0.25s ease;
   padding-top: 4px;
   padding-bottom: 10px;
 
@@ -19,7 +20,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
 
     h2 {
       font-size: 20px;
@@ -32,40 +32,29 @@
       margin-right: 0.5rem;
       margin-bottom: -0.35rem;
     }
- }
-
-    .section-title {
-      flex: 1;
-      padding: 8px 15px;
-      border-radius: 14px;
-      border: 1px solid rgba(120, 144, 255, 0.25);
-      font-size: 15px;
-      font-weight: 300;
-      background: #fbfbff;
-      transition: 0.2s;
-      border: none;
-      color: #8a9898;
-
-      &:focus {
-        outline: none;
-      }
     }
   }
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
     margin-left: -4.7rem;
   }
 
-  .item-card {
+  /* === CARD (igual que contact-card) === */
+  .contact-card {  /* ← ¡Reutilizamos la misma clase que Contact! */
     border-radius: 18px;
-    padding: 22px;
+    padding: 20px;
     border: 2px dashed #9fadad29;
     background: #9baaaa00;
     position: relative;
-    transition: 0.2s;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* ← Solo un campo: el textarea */
+    gap: 18px;
   }
 
   .field {
@@ -73,43 +62,40 @@
     flex-direction: column;
     gap: 6px;
 
-    &.full {
-      width: 100%;
-    }
-
     label {
       font-size: 13px;
       font-weight: 600;
       color: #3e3e4c;
     }
 
-    input,
     textarea {
-      padding: 12px 14px;
+      padding: 11px 14px;
       border-radius: 12px;
-      border: 1px solid #9baaaa0d;
+      border: 1px solid #9fadad29;
       font-size: 15px;
       background: #9baaaa0d;
       transition: 0.2s ease;
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
 
       &:focus {
         outline: none;
-        background: #9baaaa0d;
+        box-shadow: 0 0 0 3px rgba(90, 85, 255, 0.2);
+        background: white;
       }
-    }
 
-    textarea {
-      resize: none;
-      min-height: 70px;
+      &::placeholder {
+        color: #9baaaa88;
+      }
     }
   }
 
-  .add-btn,
-  .add-link-btn {
+  .add-btn {
     background: #9baaaa0d;
     border: 1px solid #9baaaa0d;
     color: #9baaaa;
-    padding: 12px 18px;
+    padding: 11px 18px;
     border-radius: 14px;
     font-size: 15px;
     font-weight: 600;
@@ -120,38 +106,53 @@
     transition: 0.2s;
 
     &:hover {
-      background: #9baaaa1a;
+      background: #9baaaa1e;
       transform: translateY(-1px);
     }
-  }
-}
 
-.toggle-btn {
-  svg {
-    font-size: 20px;
-  }
-}
+    &.add-btn-full {
+      width: 100%;
+      justify-content: center;
+      background: #5a55ff;
+      color: white;
+      border: none;
 
-.toggle-btn-custom {
-  margin-left: -0.8rem;
-}
-
-
-/* Link input fila completa */
-.link-input-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-
-  .link-input-container {
-    display: flex;
-    width: 100%;
-    gap: 6px;
-    
-    input {
-      flex: 1;
+      &:hover {
+        background: #4839cc;
+      }
     }
   }
+
+  /* === ESTADO VACÍO === */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+  }
 }
 
+/* === TÍTULO EDITABLE (100% igual que ContactSection) === */
+.editable-title {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.title-display {
+  font-size: 20px;
+  font-weight: 700;
+  color: #8a9999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+
+  &:hover {
+    color: #6f7c7c;
+  }
+
+  svg {
+    font-size: 1.8rem;
+    margin-bottom: -0.35rem;
+  }
+}

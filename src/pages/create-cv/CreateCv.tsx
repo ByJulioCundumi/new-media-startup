@@ -62,7 +62,7 @@ function CreateCv() {
   const hobbies = useSelector((state: IState) => state.hobbiesEntries);
   const references = useSelector((state: IState) => state.referencesEntries);
   const awards = useSelector((state: IState) => state.awardsEntries);
-  const customSection = useSelector((state: IState) => state.customEntry);
+  const customSection = useSelector((state: IState) => state.customEntries);
   const identity = useSelector((state: IState) => state.identity);
   const contact = useSelector((state: IState) => state.contactEntries);
 
