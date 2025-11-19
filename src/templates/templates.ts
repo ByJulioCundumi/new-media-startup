@@ -1,4 +1,5 @@
 import CvTemplate from "./cv-template/CvTemplate";
+import CvTokyo from "./cv-tokyo/CvTokyo";
 
 /*
 categorias - Estilo visual
@@ -20,5 +21,6 @@ Contemporáneo
 */
 
 export const templates = [
-  { id: "default", label: "Minimalista", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
+  { id: "test", label: "Minimalista", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
+  { id: "default", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
 ];
