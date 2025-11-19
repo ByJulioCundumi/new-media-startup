@@ -35,18 +35,23 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
   }, [links, onChange]);
 
   const addLink = () => {
-    dispatch(
-      addLinkEntry({
-        id: crypto.randomUUID(),
-        name: "",
-        url: "",
-      })
-    );
-  };
+  dispatch(
+    addLinkEntry({
+      id: crypto.randomUUID(),
+      name: "",
+      url: "",
+      visible: true, // nuevo campo
+    })
+  );
+};
 
-  const updateLink = (id: string, field: keyof ILinkEntry, value: string) => {
-    dispatch(updateLinkEntry({ id, field, value }));
-  };
+const updateLink = (
+  id: string,
+  field: keyof ILinkEntry,
+  value: string | boolean
+) => {
+  dispatch(updateLinkEntry({ id, field, value }));
+};
 
   const remove = (id: string) => {
     dispatch(removeLinkEntry(id));
@@ -150,6 +155,23 @@ const progressColorClass = useMemo(() => {
               <button className="remove-btn" onClick={() => remove(link.id)}>
                 <FiTrash2 />
               </button>
+
+              <div className=" switch-field">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={link.visible}
+                    onChange={(e) => updateLink(link.id, "visible", e.target.checked)}
+                  />
+                  <span className="slider" />
+                </label>
+                <label>
+                  {link.visible
+                    ? "Enlace Visible"
+                    : "Enlace Oculto"}
+                </label>
+              </div>
+
             </div>
           ))}
 

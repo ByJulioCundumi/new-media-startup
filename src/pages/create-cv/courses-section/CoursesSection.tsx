@@ -51,8 +51,6 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
         city: "",
         country: "",
         description: "",
-        link: "",
-        showLink: false,
       })
     );
   };
@@ -63,19 +61,6 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
 
   const removeCourse = (id: string) => {
     dispatch(removeCourseEntry(id));
-  };
-
-  const toggleLink = (id: string) => {
-    const course = courses.find((c) => c.id === id);
-    if (!course) return;
-
-    const newShowLink = !course.showLink;
-
-    dispatch(updateCourseEntry({ id, field: "showLink", value: newShowLink }));
-
-    if (!newShowLink) {
-      dispatch(updateCourseEntry({ id, field: "link", value: "" }));
-    }
   };
 
   /** PROGRESS SYSTEM **/
@@ -108,12 +93,6 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
         totalFields++;
         if (field?.toString().trim()) completedFields++;
       });
-
-      // Only valid if the link field is visible
-      if (course.showLink) {
-        totalFields++;
-        if (course.link?.toString().trim()) completedFields++;
-      }
     });
 
     return Math.round((completedFields / totalFields) * 100);
@@ -236,34 +215,6 @@ const progressColorClass = useMemo(() => {
                       onChange={(e) => updateCourse(course.id, "city", e.target.value)}
                     />
                   </div>
-                </div>
-
-                <div className="field full">
-                  {course.showLink ? (
-                    <div className="courses-link-input-row">
-                      <input
-                        type="text"
-                        placeholder="Ej: https://platzi.com/cursos/react"
-                        value={course.link || ""}
-                        onChange={(e) => updateCourse(course.id, "link", e.target.value)}
-                      />
-                      <button
-                        type="button"
-                        className="remove-link-btn"
-                        onClick={() => toggleLink(course.id)}
-                      >
-                        <FiX />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      className="add-link-btn"
-                      onClick={() => toggleLink(course.id)}
-                    >
-                      <FiPlus /> Agregar enlace
-                    </button>
-                  )}
                 </div>
 
                 <div className="field full">

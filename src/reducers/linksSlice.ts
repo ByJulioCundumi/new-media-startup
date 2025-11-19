@@ -14,12 +14,15 @@ const linksSlice = createSlice({
     },
 
     addLinkEntry: (state, action: PayloadAction<ILinkEntry>) => {
-      state.push(action.payload);
+      state.push({
+        ...action.payload,
+        visible: action.payload.visible ?? true, // default visible
+      });
     },
 
     updateLinkEntry: (
       state,
-      action: PayloadAction<{ id: string; field: keyof ILinkEntry; value: string }>
+      action: PayloadAction<{ id: string; field: keyof ILinkEntry; value: string | boolean }>
     ) => {
       const index = state.findIndex((l) => l.id === action.payload.id);
       if (index !== -1) {

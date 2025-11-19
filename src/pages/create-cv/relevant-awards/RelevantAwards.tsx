@@ -8,7 +8,6 @@ import type { IState } from "../../../interfaces/IState";
 import {
   addAwardEntry,
   removeAwardEntry,
-  toggleAwardLink,
   updateAwardEntry,
 } from "../../../reducers/awardsSlice";
 
@@ -33,14 +32,13 @@ const RelevantAwards: React.FC = () => {
         name: "",
         date: "",
         description: "",
-        showLink: false,
       })
     );
   };
 
   const updateAward = (
     id: string,
-    field: "name" | "date" | "link" | "description" | "showLink",
+    field: "name" | "date" | "description",
     value: any
   ) => {
     dispatch(updateAwardEntry({ id, field, value }));
@@ -48,10 +46,6 @@ const RelevantAwards: React.FC = () => {
 
   const removeAward = (id: string) => {
     dispatch(removeAwardEntry(id));
-  };
-
-  const toggleLink = (id: string) => {
-    dispatch(toggleAwardLink(id));
   };
 
   // ==========================
@@ -72,12 +66,6 @@ const RelevantAwards: React.FC = () => {
       // Opcionales
       totalFields += 1;
       if (award.description?.trim()) filledFields++;
-
-      // Link opcional
-      if (award.showLink) {
-        totalFields += 1;
-        if (award.link?.trim()) filledFields++;
-      }
     });
 
     return Math.round((filledFields / totalFields) * 100);
@@ -159,40 +147,6 @@ const progressColorClass = useMemo(() => {
                     value={award.date}
                     onChange={(e) => updateAward(award.id, "date", e.target.value)}
                   />
-                </div>
-
-                {/* Campo de enlace */}
-                <div className="field full">
-                  {award.showLink ? (
-                    <div className="link-input-row">
-                      <label>Enlace del premio</label>
-                      <div className="link-input-container">
-                        <input
-                          type="text"
-                          placeholder="Ej: https://premios.com/proyecto"
-                          value={award.link || ""}
-                          onChange={(e) =>
-                            updateAward(award.id, "link", e.target.value)
-                          }
-                        />
-                        <button
-                          type="button"
-                          className="remove-link-btn"
-                          onClick={() => toggleLink(award.id)}
-                        >
-                          <FiX />
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      className="add-link-btn"
-                      onClick={() => toggleLink(award.id)}
-                    >
-                      <FiPlus /> Agregar enlace
-                    </button>
-                  )}
                 </div>
 
                 <div className="field full">

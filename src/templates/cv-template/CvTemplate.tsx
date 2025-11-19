@@ -1,7 +1,6 @@
 import React from "react";
 import "./cvtemplate.scss";
 import DOMPurify from "dompurify";
-
 import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 
 const CvTemplate: React.FC<ITemplateProps> = ({
@@ -23,191 +22,313 @@ const CvTemplate: React.FC<ITemplateProps> = ({
   sectionsOrder,
 }) => {
 
-  // ------------------------------
-  // ⭐ 1. Ordenar secciones reales
-  // ------------------------------
+  // -------------------------------------------------------------
+  // ORDENAR SECCIONES ACTIVAS SEGÚN EL ORDEN DEL SLICE
+  // -------------------------------------------------------------
   const orderedSections = sectionsOrder
     .map((name) => sectionsConfig.find((s) => s.name === name))
     .filter((s) => s && s.enabled);
 
-  // ------------------------------
-  // ⭐ 2. Separar por orientación
-  // ------------------------------
+  // -------------------------------------------------------------
+  // SEPARAR SECCIONES SEGÚN ORIENTACIÓN
+  // -------------------------------------------------------------
   const horizontalSlots: string[] = [];
   const bothSlots: string[] = [];
 
-  orderedSections.forEach((section) => {
-    if (!section) return;
-    if (section.orientation === "both") bothSlots.push(section.name);
-    else horizontalSlots.push(section.name);
+  orderedSections.forEach((s) => {
+    if (!s) return;
+    if (s.orientation === "both") bothSlots.push(s.name);
+    else horizontalSlots.push(s.name);
   });
 
-  // ------------------------------
-  // ⭐ 3. Renderizador de secciones
-  // ------------------------------
+  // -------------------------------------------------------------
+  // RENDER COMÚN POR SECCIÓN
+  // -------------------------------------------------------------
+  const SectionWrapper = (title: string, content: React.ReactNode) => (
+    <section className="cv-section">
+      {title && <h3 className="cv-section__title">{title}</h3>}
+      <div className="cv-section__content">{content}</div>
+    </section>
+  );
+
+  // -------------------------------------------------------------
+  // RENDERIZADO COMPLETO DE TODAS LAS SECCIONES
+  // -------------------------------------------------------------
   const renderSection = (name: string) => {
     switch (name) {
+
+      // ──────────────────────────────────────────────────────────────
+      // IDENTIDAD (Foto, Nombre, Cargo)
+      // ──────────────────────────────────────────────────────────────
       case "identitySection":
-        return identitySection && (
-          <section className="cv-section">
-            <h3>Identidad</h3>
-            <p>{identitySection.firstName} {identitySection.lastName}</p>
-            <p>{identitySection.jobTitle}</p>
-          </section>
+        if (!identitySection) return null;
+
+        return SectionWrapper(
+          "",
+          <div className="identity-header">
+            {identitySection.allowCvPhoto && identitySection.photo && (
+              <img src={identitySection.photo} className="identity-photo" />
+            )}
+
+            <div>
+              <h1>{identitySection.firstName} {identitySection.lastName}</h1>
+              <h2>{identitySection.jobTitle}</h2>
+            </div>
+          </div>
         );
 
+      // ──────────────────────────────────────────────────────────────
+      // CONTACTO (Email, Teléfono, WhatsApp, LinkedIn…)
+      // ──────────────────────────────────────────────────────────────
       case "contactSection":
-        return contactSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Contacto</h3>
-            <ul>
+        return contactSection.length > 0 &&
+          SectionWrapper(
+            "Contacto",
+            <ul className="list">
               {contactSection.map((c) => (
                 <li key={c.id}>
-                  {c.type}: {c.value}
+                  <strong>{c.type}: </strong>{c.value}
                 </li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // PERFIL PROFESIONAL — HTML Limpio
+      // ──────────────────────────────────────────────────────────────
       case "profileSection":
-        return profileSection && (
-          <section className="cv-section">
-            <h3>Perfil Profesional</h3>
+        return profileSection &&
+          SectionWrapper(
+            "Perfil Profesional",
             <div
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(String(profileSection)),
               }}
             />
-          </section>
-        );
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // EDUCACIÓN — TODOS LOS CAMPOS
+      // ──────────────────────────────────────────────────────────────
       case "educationSection":
-        return educationSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Educación</h3>
-            {educationSection.map((e) => (
-              <div key={e.id}>
-                <strong>{e.title}</strong>
-                <p>{e.institution}</p>
-              </div>
-            ))}
-          </section>
-        );
+        return educationSection.length > 0 &&
+          SectionWrapper(
+            "Educación",
+            educationSection.map((e) => (
+              <div className="entry" key={e.id}>
+                <div className="entry__title">{e.title}</div>
+                <div className="entry__subtitle">{e.institution}</div>
 
+                <div className="entry__location">{e.location}</div>
+
+                <div className="entry__dates">
+                  {e.startMonth}/{e.startYear} –{" "}
+                  {e.present ? "Actualidad" : `${e.endMonth}/${e.endYear}`}
+                </div>
+
+                {e.description && (
+                  <p className="entry__description">{e.description}</p>
+                )}
+              </div>
+            ))
+          );
+
+      // ──────────────────────────────────────────────────────────────
+      // EXPERIENCIA — TODOS LOS CAMPOS
+      // ──────────────────────────────────────────────────────────────
       case "experienceSection":
-        return experienceSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Experiencia</h3>
-            {experienceSection.map((e) => (
-              <div key={e.id}>
-                <strong>{e.position}</strong>
-                <p>{e.employer}</p>
+        return experienceSection.length > 0 &&
+          SectionWrapper(
+            "Experiencia Laboral",
+            experienceSection.map((e) => (
+              <div className="entry" key={e.id}>
+                <div className="entry__title">{e.position}</div>
+                <div className="entry__subtitle">{e.employer}</div>
+
+                <div className="entry__location">{e.location}</div>
+
+                <div className="entry__dates">
+                  {e.startMonth}/{e.startYear} –{" "}
+                  {e.present ? "Actualidad" : `${e.endMonth}/${e.endYear}`}
+                </div>
+
+                {e.description && (
+                  <p className="entry__description">{e.description}</p>
+                )}
               </div>
-            ))}
-          </section>
-        );
+            ))
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // HABILIDADES — Nombre + Nivel
+      // ──────────────────────────────────────────────────────────────
       case "skillSection":
-        return skillSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Habilidades</h3>
-            <ul>
+        return skillSection.length > 0 &&
+          SectionWrapper(
+            "Habilidades",
+            <ul className="list">
               {skillSection.map((s) => (
-                <li key={s.id}>
-                  {s.name} - {s.level}
-                </li>
+                <li key={s.id}>{s.name} — {s.level}</li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // IDIOMAS — Nombre + Nivel
+      // ──────────────────────────────────────────────────────────────
       case "languageSection":
-        return languageSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Idiomas</h3>
-            <ul>
+        return languageSection.length > 0 &&
+          SectionWrapper(
+            "Idiomas",
+            <ul className="list">
               {languageSection.map((l) => (
-                <li key={l.id}>
-                  {l.name} - {l.level}
-                </li>
+                <li key={l.id}>{l.name} — {l.level}</li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // ENLACES — Nombre + URL
+      // ──────────────────────────────────────────────────────────────
       case "linkSection":
-        return linkSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Enlaces</h3>
-            <ul>
+        return linkSection.length > 0 &&
+          SectionWrapper(
+            "Enlaces",
+            <ul className="list">
               {linkSection.map((l) => (
                 <li key={l.id}>
-                  {l.name}: {l.url}
+                  {l.visible ? (
+                    // Mostrar normal: Nombre: URL
+                    <>
+                      <strong>{l.name}:</strong> {l.url}
+                    </>
+                  ) : (
+                    // Mostrar solo el título como enlace clickeable
+                    <a
+                      href={l.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cv-link-hidden"
+                    >
+                      {l.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
+      // ──────────────────────────────────────────────────────────────
+// PERSONAL INFO — Lista dinámica (name + value)
+// ──────────────────────────────────────────────────────────────
+case "personalInfoSection":
+  return personalInfo.length > 0 &&
+    SectionWrapper(
+      "Información Personal",
+      <ul className="list">
+        {personalInfo.map((p) => (
+          <li key={p.id}>
+            <strong>{p.name}: </strong> {p.value}
+          </li>
+        ))}
+      </ul>
+    );
+
+
+      // ──────────────────────────────────────────────────────────────
+      // CURSOS — TODOS LOS CAMPOS
+      // ──────────────────────────────────────────────────────────────
+      case "courseSection":
+        return courseSection.length > 0 &&
+          SectionWrapper(
+            "Cursos y Certificaciones",
+            courseSection.map((c) => (
+              <div className="entry" key={c.id}>
+                <div className="entry__title">{c.name}</div>
+                <div className="entry__subtitle">{c.institution}</div>
+
+                {(c.city || c.country) && (
+                  <div className="entry__location">
+                    {[c.city, c.country].filter(Boolean).join(", ")}
+                  </div>
+                )}
+
+                <div className="entry__dates">
+                  {c.startDate} – {c.endDate}
+                </div>
+
+                {c.description && (
+                  <p className="entry__description">{c.description}</p>
+                )}
+              </div>
+            ))
+          );
+
+      // ──────────────────────────────────────────────────────────────
+      // HOBBIES — Solo nombre
+      // ──────────────────────────────────────────────────────────────
       case "hobbieSection":
-        return hobbieSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Pasatiempos</h3>
-            <ul>
+        return hobbieSection.length > 0 &&
+          SectionWrapper(
+            "Pasatiempos",
+            <ul className="list">
               {hobbieSection.map((h) => (
                 <li key={h.id}>{h.name}</li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
-      case "courseSection":
-        return courseSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Cursos</h3>
-            {courseSection.map((c) => (
-              <div key={c.id}>
-                <strong>{c.name}</strong>
-                <p>{c.institution}</p>
-              </div>
-            ))}
-          </section>
-        );
-
+      // ──────────────────────────────────────────────────────────────
+      // REFERENCIAS — TODOS LOS CAMPOS
+      // ──────────────────────────────────────────────────────────────
       case "referenceSection":
-        return referenceSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Referencias</h3>
-            {referenceSection.map((r) => (
-              <div key={r.id}>
-                {r.name} - {r.company}
+        return referenceSection.length > 0 &&
+          SectionWrapper(
+            "Referencias Laborales",
+            referenceSection.map((r) => (
+              <div className="entry" key={r.id}>
+                <div className="entry__title">{r.name}</div>
+                <div className="entry__subtitle">{r.company}</div>
+
+                <div className="entry__contact">
+                  <strong>Tel:</strong> {r.phone} — <strong>Email:</strong> {r.email}
+                </div>
               </div>
-            ))}
-          </section>
-        );
+            ))
+          );
 
+      // ──────────────────────────────────────────────────────────────
+      // PREMIOS — TODOS LOS CAMPOS
+      // ──────────────────────────────────────────────────────────────
       case "awardSection":
-        return awardSection.length > 0 && (
-          <section className="cv-section">
-            <h3>Premios</h3>
-            {awardSection.map((a) => (
-              <div key={a.id}>{a.name}</div>
-            ))}
-          </section>
-        );
+        return awardSection.length > 0 &&
+          SectionWrapper(
+            "Premios",
+            awardSection.map((a) => (
+              <div className="entry" key={a.id}>
+                <div className="entry__title">{a.name}</div>
+                <div className="entry__dates">{a.date}</div>
 
+                {a.description && (
+                  <p className="entry__description">{a.description}</p>
+                )}
+              </div>
+            ))
+          );
+
+      // ──────────────────────────────────────────────────────────────
+      // CUSTOM — Título + Items
+      // ──────────────────────────────────────────────────────────────
       case "customSection":
-        return customSection && (
-          <section className="cv-section">
-            <h3>{customSection.title}</h3>
-            <ul>
+        return customSection &&
+          SectionWrapper(
+            customSection.title,
+            <ul className="list">
               {customSection.items.map((i) => (
                 <li key={i.id}>{i.content}</li>
               ))}
             </ul>
-          </section>
-        );
+          );
 
       default:
         return null;
@@ -217,20 +338,23 @@ const CvTemplate: React.FC<ITemplateProps> = ({
   return (
     <div className="cv-template">
 
-      {/* LEFT COLUMN → Secciones BOTH */}
-      <aside className="left-column">
+      {/* LEFT COLUMN (orientation: both) */}
+      <aside className="cv-left">
         {bothSlots.map((name) => (
-          <div key={name}>{renderSection(name)}</div>
+          <div className="cv-block" key={name}>
+            {renderSection(name)}
+          </div>
         ))}
       </aside>
 
-      {/* RIGHT COLUMN → Secciones horizontales */}
-      <main className="right-column">
+      {/* RIGHT COLUMN (orientation: horizontal) */}
+      <main className="cv-right">
         {horizontalSlots.map((name) => (
-          <div key={name}>{renderSection(name)}</div>
+          <div className="cv-block" key={name}>
+            {renderSection(name)}
+          </div>
         ))}
       </main>
-
     </div>
   );
 };

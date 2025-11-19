@@ -105,11 +105,17 @@ const progressColorClass = useMemo(() => {
                       autoFocus
                       placeholder="Título de la sección personalizada"
                       value={title}
-                      onChange={(e) =>
-                        dispatch(updateSectionTitle({ name: "customSection", title: e.target.value }))
-                      }
-                      onBlur={() => setEditingTitle(false)}
-                      onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+                      onChange={(e) => {
+                      const newTitle = e.target.value;
+
+                      // Título del panel (usado por cvSections)
+                      dispatch(updateSectionTitle({ name: "customSection", title: newTitle }));
+
+                      // Guardar título REAL de la sección personalizada en Redux
+                      dispatch(setCustomSection({ title: newTitle, items }));
+                    }}
+                    onBlur={() => setEditingTitle(false)}
+                    onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
                     />
                   )}
                 </div>

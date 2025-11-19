@@ -11,6 +11,7 @@ import { reorderSections } from "../../reducers/cvSectionsSlice";
 
 import AddSections from "./add-sections/AddSection";
 import "./createcv.scss";
+
 import EducationSection from "./education-section/EducationSection";
 import ExperienceSection from "./experience-section/ExperienceSection";
 import LanguagesSection from "./languages-section/LanguagesSection";
@@ -38,7 +39,9 @@ function CreateCv() {
 
   const sectionsContainerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const prevEnabledSections = useRef<string[]>([]);
+
+  /** Para detectar cambio REAL de enabled */
+  const prevEnabledMap = useRef<Record<string, boolean>>({});
 
   const cvSectionsState = useSelector(
     (state: IState) => state.cvSections
@@ -47,7 +50,7 @@ function CreateCv() {
   const sections = cvSectionsState.sections;
   const order = cvSectionsState.order;
 
-  /** Selectores reales del store */
+  /** Selectores reales */
   const personalInfo = useSelector((state: IState) => state.personalInfo);
   const profile = useSelector((state: IState) => state.profileSection);
   const education = useSelector((state: IState) => state.educationEntries);
@@ -60,8 +63,6 @@ function CreateCv() {
   const references = useSelector((state: IState) => state.referencesEntries);
   const awards = useSelector((state: IState) => state.awardsEntries);
   const customSection = useSelector((state: IState) => state.customEntry);
-
-  /** ❗ Nuevos selectores: identity y contact */
   const identity = useSelector((state: IState) => state.identity);
   const contact = useSelector((state: IState) => state.contactEntries);
 
@@ -81,42 +82,46 @@ function CreateCv() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
-  // Helper: comprobar si está habilitada
-  const isEnabled = (name: string) =>
-    sections.find((s) => s.name === name)?.enabled;
-
-  // Scroll cuando se habilita nueva sección
+  /** ⛔ FIX: Scroll SOLO cuando una sección pasa de disabled → enabled */
   useEffect(() => {
-    const enabledNow = sections
-      .filter((s) => s.enabled)
-      .map((s) => s.name);
-
-    if (enabledNow.length > prevEnabledSections.current.length) {
-      setTimeout(() => {
-        sectionsContainerRef.current?.scrollTo({
-          top: sectionsContainerRef.current.scrollHeight,
-          behavior: "smooth",
-        });
-      }, 80);
-    }
-
-    prevEnabledSections.current = enabledNow;
+    sections.forEach((sec) => {
+      const prev = prevEnabledMap.current[sec.name];
+      if (prev === false && sec.enabled === true) {
+        setTimeout(() => {
+          sectionsContainerRef.current?.scrollTo({
+            top: sectionsContainerRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 80);
+      }
+      prevEnabledMap.current[sec.name] = sec.enabled;
+    });
   }, [sections]);
 
-  // Scroll hacia sección abierta
+  /** Scroll hacia sección abierta (solo cuando cambia isOpen real) */
+  const prevOpen = useRef<string | null>(null);
+
   useEffect(() => {
     const openSection = sections.find((s) => s.isOpen);
-    if (openSection) {
-      const el = sectionRefs.current[openSection.name];
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
-      }
+
+    if (!openSection) {
+      prevOpen.current = null;
+      return;
+    }
+
+    if (prevOpen.current === openSection.name) return; // no hacer nada
+
+    prevOpen.current = openSection.name;
+
+    const el = sectionRefs.current[openSection.name];
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
     }
   }, [sections]);
 
-  // Persist template
+  /** Persistencia template */
   useEffect(() => {
     const saved = localStorage.getItem("selectedTemplate");
     if (saved) setSelectedTemplate(saved);
@@ -125,11 +130,10 @@ function CreateCv() {
     localStorage.setItem("selectedTemplate", selectedTemplate);
   }, [selectedTemplate]);
 
-  const SelectedTemplate = templates.find(
-    (t) => t.id === selectedTemplate
-  )?.component;
+  const SelectedTemplate = templates.find((t) => t.id === selectedTemplate)
+    ?.component;
 
-  // Map de componentes por nombre
+  /** Mapa de secciones */
   const sectionMap: Record<string, React.FC<any>> = {
     identitySection: IdentitySection,
     contactSection: ContactSection,
@@ -147,7 +151,7 @@ function CreateCv() {
     customSection: CustomSection,
   };
 
-  // DnD handler
+  // DnD
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over) return;
@@ -184,6 +188,7 @@ function CreateCv() {
                     (s) => s.name === sectionName
                   );
                   if (!sectionDef) return null;
+
                   if (!sectionDef.enabled && sectionName !== "identitySection")
                     return null;
 
@@ -194,7 +199,7 @@ function CreateCv() {
                     <SortableSection key={sectionName} id={sectionName}>
                       <div
                         ref={(el) => {
-                          sectionRefs.current[sectionName] = el ?? null;
+                          sectionRefs.current[sectionName] = el;
                         }}
                         data-id={sectionName}
                       >
@@ -205,6 +210,7 @@ function CreateCv() {
                 })}
               </SortableContext>
             </DndContext>
+
             <AddSections />
           </div>
         </div>

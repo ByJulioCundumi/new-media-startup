@@ -38,18 +38,6 @@ const relevantAwardsSlice = createSlice({
       return state.filter((a) => a.id !== action.payload);
     },
 
-    toggleAwardLink: (state, action: PayloadAction<string>) => {
-      const index = state.findIndex((a) => a.id === action.payload);
-      if (index !== -1) {
-        const current = state[index];
-        state[index] = {
-          ...current,
-          showLink: !current.showLink,
-          link: current.showLink ? "" : current.link,
-        };
-      }
-    },
-
     // Nuevo reducer para eliminar todas las entradas
     clearAllAwards: () => {
       return [];
@@ -62,7 +50,6 @@ export const {
   addAwardEntry,
   updateAwardEntry,
   removeAwardEntry,
-  toggleAwardLink,
   clearAllAwards,
 } = relevantAwardsSlice.actions;
 

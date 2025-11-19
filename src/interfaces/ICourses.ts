@@ -6,7 +6,5 @@ export interface ICourseEntry {
   endDate: string;
   city?: string;
   country?: string;
-  link?: string;
   description?: string;
-  showLink?: boolean;
 }
