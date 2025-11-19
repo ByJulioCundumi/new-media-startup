@@ -10,7 +10,7 @@ import {
   updateHobbyEntry,
 } from "../../../reducers/hobbiesSlice";
 import { PiMaskHappy } from "react-icons/pi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -63,12 +63,37 @@ const HobbiesSection: React.FC = () => {
     return "progress-blue"; // 100%
   }, [progress]);
 
+  // -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Pasatiempos";
+
   return (
     <div className={`hobbies-section ${!isOpen ? "closed" : ""}`}>
       <div className="hobbies-section__header">
-        <h2>
-          <PiMaskHappy /> Pasatiempos
-        </h2>
+        {/* TÍTULO EDITABLE */}
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2
+              className="title-display"
+              onClick={() => setEditingTitle(true)}
+            >
+              <PiMaskHappy /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "hobbieSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

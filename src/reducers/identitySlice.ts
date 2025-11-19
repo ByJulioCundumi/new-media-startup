@@ -6,6 +6,7 @@ const initialState: IIdentityData = {
   firstName: "",
   lastName: "",
   jobTitle: "",
+  allowCvPhoto: true
 };
 
 const identitySlice = createSlice({
@@ -27,6 +28,9 @@ const identitySlice = createSlice({
     setJobTitle(state, action: PayloadAction<string>) {
       state.jobTitle = action.payload;
     },
+    setAllowCvPhoto(state, action: PayloadAction<boolean>){
+      state.allowCvPhoto = action.payload
+    }
   },
 });
 

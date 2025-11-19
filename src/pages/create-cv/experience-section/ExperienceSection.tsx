@@ -15,7 +15,7 @@ import {
   removeExperience,
 } from "../../../reducers/experienceSlice";
 import { GrGrow } from "react-icons/gr";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -90,10 +90,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+    // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+    // -----------------------------
+    const [editingTitle, setEditingTitle] = useState(false);
+    const title = sectionState?.title ?? "Experiencia";
+
   return (
     <div className={`experience-section ${!isOpen ? "closed" : ""}`}>
       <div className="experience-section__header">
-        <h2><GrGrow /> Experiencia Profesional</h2>
+        {/* TÍTULO EDITABLE */}
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2
+              className="title-display"
+              onClick={() => setEditingTitle(true)}
+            >
+              <GrGrow /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "experienceSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

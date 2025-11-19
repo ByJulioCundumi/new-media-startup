@@ -73,25 +73,6 @@
       font-size: 2rem;
     }
   }
-
-  .remove-btn {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background: #ff6161;
-    border: none;
-    padding: 7px;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    transition: 0.2s;
-
-    &:hover {
-      background: #e84d4d;
-      transform: scale(1.05);
-    }
-  }
 }
 
 .add-photo-btn {

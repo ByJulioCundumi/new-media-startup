@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import "./personalinfosection.scss";
@@ -14,6 +14,7 @@ import {
 import {
   toggleSectionOpen,
   setSectionProgress,
+  updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 import type { IPersonalInfoEntry } from "../../../interfaces/IPersonalInfo";
@@ -127,12 +128,37 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
   const progressColorClass =
     progress < 50 ? "progress-red" : progress < 100 ? "progress-yellow" : "progress-blue";
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Datos Personales";
+
   return (
     <div className={`personal-info-section ${!isOpen ? "closed" : ""}`}>
       <div className="personal-info-section__header">
-        <h2>
-          <PiIdentificationBadge /> Información Personal
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <PiIdentificationBadge /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "personalInfoSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>
           {progress}%

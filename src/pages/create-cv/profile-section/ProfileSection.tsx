@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { setProfileContent } from "../../../reducers/profileSlice";
 import Placeholder from "@tiptap/extension-placeholder";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 export default function ProfileSection() {
 
@@ -117,12 +117,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Perfil";
+
   return (
     <div className={`profile-section ${isOpen ? "open" : "closed"}`}>
       <div className="profile-section__header">
-        <h2>
-          <MdOutlineWorkOutline /> Perfil Profesional
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <MdOutlineWorkOutline /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "profileSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

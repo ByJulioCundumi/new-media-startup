@@ -5,7 +5,7 @@ import "./skillssection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../reducers/skillsSlice";
 import { FaRegHandBackFist } from "react-icons/fa6";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as const;
 
@@ -57,12 +57,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Habilidades";
+
   return (
     <div className={`skills-section ${!isOpen ? "closed" : ""}`}>
       <div className="skills-section__header">
-        <h2>
-          <FaRegHandBackFist /> Habilidades
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <FaRegHandBackFist /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "skillSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         {/* BADGE DE PROGRESO */}
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>

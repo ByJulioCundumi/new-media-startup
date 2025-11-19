@@ -11,7 +11,7 @@ import {
   updateCourseEntry,
 } from "../../../reducers/coursesSlice";
 import { PiGraduationCapLight } from "react-icons/pi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 interface CoursesSectionProps {
   initialData?: ICourseEntry[];
@@ -130,12 +130,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+  // -----------------------------
+  // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+  // -----------------------------
+  const [editingTitle, setEditingTitle] = useState(false);
+  const title = sectionState?.title ?? "Cursos y Certificados";
+
   return (
     <div className={`courses-section ${!isOpen ? "closed" : ""}`}>
       <div className="courses-section__header">
-        <h2>
-          <PiGraduationCapLight /> Cursos y Certificaciones
-        </h2>
+        {/* TÍTULO EDITABLE */}
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2
+              className="title-display"
+              onClick={() => setEditingTitle(true)}
+            >
+              <PiGraduationCapLight /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "courseSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

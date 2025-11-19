@@ -6,7 +6,7 @@ import "./languagessection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
 import { HiOutlineLanguage } from "react-icons/hi2";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
@@ -58,12 +58,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Idiomas";
+
   return (
     <div className={`languages-section ${!isOpen ? "closed" : ""}`}>
       <div className="languages-section__header">
-        <h2>
-          <HiOutlineLanguage /> Idiomas
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <HiOutlineLanguage /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "languageSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         {/* BADGE DE PROGRESO */}
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>

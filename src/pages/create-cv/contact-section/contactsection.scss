@@ -47,29 +47,6 @@
     border: 2px dashed #9fadad29;
     background: #9baaaa00;
     position: relative;
-
-    .remove-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #ff6161;
-      border: none;
-      padding: 8px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      transition: 0.2s;
-
-      svg {
-        font-size: 0.7rem;
-      }
-
-      &:hover {
-        background: #e84d4d;
-        transform: scale(1.05);
-      }
-    }
   }
 
   .card-grid {
@@ -123,5 +100,32 @@
       background: #9baaaa1e;
       transform: translateY(-1px);
     }
+  }
+}
+
+/* ---- TÍTULO EDITABLE ---- */
+
+.editable-title {
+  display: flex;
+  align-items: center;
+}
+
+.title-display {
+  font-size: 20px;
+  font-weight: 700;
+  color: #8a9999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+
+  &:hover {
+    color: #6f7c7c;
+  }
+
+  svg {
+    font-size: 1.8rem;
+    margin-bottom: -0.35rem;
   }
 }

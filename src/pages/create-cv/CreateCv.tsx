@@ -40,11 +40,14 @@ function CreateCv() {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const prevEnabledSections = useRef<string[]>([]);
 
-  const cvSectionsState = useSelector((state: IState) => state.cvSections) as ICvSectionsState;
+  const cvSectionsState = useSelector(
+    (state: IState) => state.cvSections
+  ) as ICvSectionsState;
+
   const sections = cvSectionsState.sections;
   const order = cvSectionsState.order;
 
-  const photo = useSelector((state: IState) => state.photo);
+  /** Selectores reales del store */
   const personalInfo = useSelector((state: IState) => state.personalInfo);
   const profile = useSelector((state: IState) => state.profileSection);
   const education = useSelector((state: IState) => state.educationEntries);
@@ -58,6 +61,10 @@ function CreateCv() {
   const awards = useSelector((state: IState) => state.awardsEntries);
   const customSection = useSelector((state: IState) => state.customEntry);
 
+  /** ❗ Nuevos selectores: identity y contact */
+  const identity = useSelector((state: IState) => state.identity);
+  const contact = useSelector((state: IState) => state.contactEntries);
+
   // Sidebar
   useEffect(() => {
     dispatch(setSidebar("create"));
@@ -70,15 +77,19 @@ function CreateCv() {
       e.returnValue = "";
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    return () =>
+      window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
   // Helper: comprobar si está habilitada
-  const isEnabled = (name: string) => sections.find((s) => s.name === name)?.enabled;
+  const isEnabled = (name: string) =>
+    sections.find((s) => s.name === name)?.enabled;
 
   // Scroll cuando se habilita nueva sección
   useEffect(() => {
-    const enabledNow = sections.filter((s) => s.enabled).map((s) => s.name);
+    const enabledNow = sections
+      .filter((s) => s.enabled)
+      .map((s) => s.name);
 
     if (enabledNow.length > prevEnabledSections.current.length) {
       setTimeout(() => {
@@ -114,9 +125,11 @@ function CreateCv() {
     localStorage.setItem("selectedTemplate", selectedTemplate);
   }, [selectedTemplate]);
 
-  const SelectedTemplate = templates.find((t) => t.id === selectedTemplate)?.component;
+  const SelectedTemplate = templates.find(
+    (t) => t.id === selectedTemplate
+  )?.component;
 
-  // Map de componentes por nombre (mantén las importaciones actualizadas)
+  // Map de componentes por nombre
   const sectionMap: Record<string, React.FC<any>> = {
     identitySection: IdentitySection,
     contactSection: ContactSection,
@@ -134,7 +147,7 @@ function CreateCv() {
     customSection: CustomSection,
   };
 
-  // --- DnD handler ---
+  // DnD handler
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over) return;
@@ -145,7 +158,6 @@ function CreateCv() {
 
     if (oldIndex === -1 || newIndex === -1) return;
 
-    // Dispatch reorder
     dispatch(reorderSections({ from: oldIndex, to: newIndex }));
   }
 
@@ -155,19 +167,25 @@ function CreateCv() {
         <div className="create-cv__left">
           <ProgressBar />
 
-          <div className="create-cv__left--sections" ref={sectionsContainerRef}>
-
-            {/* Dnd Context */}
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-              {/* Solo las secciones (order) participan en el SortableContext.
-                  identitySection estará en order[0] y está deshabilitada dentro del SortableSection */
-              }
-              <SortableContext items={order} strategy={verticalListSortingStrategy}>
+          <div
+            className="create-cv__left--sections"
+            ref={sectionsContainerRef}
+          >
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={order}
+                strategy={verticalListSortingStrategy}
+              >
                 {order.map((sectionName) => {
-                  // Si la sección no existe (definición) o está deshabilitada, evitar renderizar
-                  const sectionDef = sections.find((s) => s.name === sectionName);
+                  const sectionDef = sections.find(
+                    (s) => s.name === sectionName
+                  );
                   if (!sectionDef) return null;
-                  if (!sectionDef.enabled && sectionName !== "identitySection") return null;
+                  if (!sectionDef.enabled && sectionName !== "identitySection")
+                    return null;
 
                   const SectionComponent = sectionMap[sectionName];
                   if (!SectionComponent) return null;
@@ -187,9 +205,8 @@ function CreateCv() {
                 })}
               </SortableContext>
             </DndContext>
+            <AddSections />
           </div>
-
-          <AddSections />
         </div>
 
         <div className="create-cv__right">
@@ -200,19 +217,22 @@ function CreateCv() {
           <div className="cv-preview-body">
             {SelectedTemplate && (
               <SelectedTemplate
-                photo={photo}
                 personalInfo={personalInfo}
-                profile={String(profile)}
-                education={education}
-                experience={experience}
-                skills={skills}
-                languages={languages}
-                links={links}
-                courses={courses}
-                hobbies={hobbies}
-                references={references}
-                awards={awards}
+                profileSection={String(profile)}
+                educationSection={education}
+                experienceSection={experience}
+                skillSection={skills}
+                languageSection={languages}
+                linkSection={links}
+                courseSection={courses}
+                hobbieSection={hobbies}
+                referenceSection={references}
+                awardSection={awards}
                 customSection={customSection}
+                identitySection={identity}
+                contactSection={contact}
+                sectionsConfig={sections}
+                sectionsOrder={order}
               />
             )}
           </div>

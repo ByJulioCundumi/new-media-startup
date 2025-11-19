@@ -5,7 +5,7 @@ import "./linkssection.scss";
 import type { ILinkEntry } from "../../../interfaces/ILinks";
 import type { IState } from "../../../interfaces/IState";
 import { addLinkEntry, removeLinkEntry, setLinksEntries, updateLinkEntry } from "../../../reducers/linksSlice";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 interface LinksSectionProps {
   initialData?: ILinkEntry[];
@@ -79,10 +79,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Enlaces";
+
   return (
     <div className={`links-section ${!isOpen ? "closed" : ""}`}>
       <div className="links-section__header">
-        <h2><FiLink /> Enlaces Relevantes</h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <FiLink /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "linkSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

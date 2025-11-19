@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronDown, FiTrash2, FiPlus } from "react-icons/fi";
 import "./educationsection.scss";
 
@@ -11,7 +11,7 @@ import {
   updateEducation,
 } from "../../../reducers/educationSlice";
 import { PiStudentLight } from "react-icons/pi";
-import { setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -87,12 +87,37 @@ const EducationSection: React.FC = () => {
     return "progress-blue"; // 100%
   }, [progress]);
 
+  // -----------------------------
+    // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+    // -----------------------------
+    const [editingTitle, setEditingTitle] = useState(false);
+    const title = sectionState?.title ?? "Educación";
+
   return (
     <div className={`education-section ${!isOpen ? "closed" : ""}`}>
       <div className="education-section__header">
-        <h2>
-          <PiStudentLight /> Formación Académica
-        </h2>
+        {/* TÍTULO EDITABLE */}
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2
+              className="title-display"
+              onClick={() => setEditingTitle(true)}
+            >
+              <PiStudentLight /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "educationSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
         
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

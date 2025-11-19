@@ -53,29 +53,6 @@
     position: relative;
     border: 2px dashed #9fadad29;
     background: #9baaaa00;
-
-    .remove-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #ff6161;
-      border: none;
-      padding: 8px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      transition: 0.2s;
-
-      svg{
-        font-size: 0.7rem;
-      }
-
-      &:hover {
-        background: #e84d4d;
-        transform: scale(1.05);
-      }
-    }
   }
 
   .card-grid {

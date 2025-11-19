@@ -102,7 +102,7 @@ const IdentitySection = () => {
                       className="identity-section__photo-preview"
                     />
                     <button
-                      className="remove-btn"
+                      className="identity-section__remove-btn"
                       onClick={() => {
                         dispatch(removePhoto());
 
@@ -124,13 +124,15 @@ const IdentitySection = () => {
               </div>
 
               {/* Botón debajo del cuadro */}
-              <button
+              {
+                identity.allowCvPhoto && <button
                 className="add-photo-btn"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <FiCamera />
                 {identity.photo ? "Cambiar Foto" : "Subir Foto"}
               </button>
+              }
 
               <input
                 type="file"

@@ -3,4 +3,5 @@ export interface IIdentityData {
   firstName: string;
   lastName: string;
   jobTitle: string;
+  allowCvPhoto: boolean;
 }

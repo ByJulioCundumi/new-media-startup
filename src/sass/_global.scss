@@ -10,24 +10,27 @@
   margin-right: 14px;
   font-size: 14px;
   font-weight: 700;
-  padding: 4px 0;
-  border-radius: 10px;
+  padding: 3px 8px;
+  border-radius: 7px;
   transition: 0.25s ease;
 }
 
 /* Rojo — progreso bajo */
 .progress-indicator.progress-red {
   color: #ff8d8f;
+  background-color: #ffc3c448;
 }
 
 /* Amarillo/Naranja — progreso medio */
 .progress-indicator.progress-yellow {
-  color: #ffa73b;
+  color: #ffc13b;
+  background-color: #ffe96a48;
 }
 
 /* Azul — progreso completo */
 .progress-indicator.progress-blue {
   color: #11d493;
+  background-color: #c3ffe648;
 }
 
 
@@ -64,5 +67,61 @@
 
   .field {
     margin: 0; // evita doble espaciado
+  }
+}
+
+
+.remove-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #9baaaa00;
+      border: none;
+      border-radius: 10px;
+      color: #9baaaa;
+      cursor: pointer;
+      display: flex;
+      transition: 0.2s;
+
+      svg {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        color: #4d9de8;
+        transform: scale(1.05);
+      }
+    }
+
+    .remove-link-btn {
+      background: #9baaaa00;
+      border: none;
+      border-radius: 10px;
+      color: #9baaaa;
+      cursor: pointer;
+      display: flex;
+      transition: 0.2s;
+      font-size: 1.2rem;
+      margin: auto;
+
+      &:hover {
+        color: #4d9de8;
+        transform: scale(1.05);
+      }
+    }
+
+
+.title-input {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3e3e4c63;
+  outline: none;
+  border: none;
+  width: 180px;
+  transition: 0.2s;
+  width: fit-content;
+
+  &:focus {
+    background: #ffffff;
   }
 }

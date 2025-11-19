@@ -13,7 +13,7 @@ import {
 } from "../../../reducers/awardsSlice";
 
 import { BsAward } from "react-icons/bs";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
@@ -94,12 +94,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Premios";
+
   return (
     <div className={`awards-section ${!isOpen ? "closed" : ""}`}>
       <div className="awards-section__header">
-        <h2>
-          <BsAward /> Premios y Reconocimientos
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <BsAward /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "awardSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         {/* BADGE DE PROGRESO */}
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>

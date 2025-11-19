@@ -7,7 +7,7 @@ import type { IState } from "../../../interfaces/IState";
 import type { ICustomItem } from "../../../interfaces/ICustom";
 import { setCustomSection } from "../../../reducers/customSlice";
 import { BiLayerPlus } from "react-icons/bi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,30 +15,22 @@ const CustomSection: React.FC = () => {
   const { title: savedTitle, items: savedItems } = useSelector(
     (state: IState) => state.customEntry
   );
-  const [title, setTitle] = useState(savedTitle);
-  const [items, setItems] = useState<ICustomItem[]>(savedItems);
-
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "customSection")
   );
+
+  const [items, setItems] = useState<ICustomItem[]>(savedItems);
+  const [editingTitle, setEditingTitle] = useState(false);
+  const title = sectionState?.title ?? "";
+
   
     const isOpen = sectionState?.isOpen ?? false;
-
-  // Sync Redux → Local
-  useEffect(() => {
-    setTitle(savedTitle);
-    setItems(savedItems);
-  }, [savedTitle, savedItems]);
 
   // Sync Local → Redux
   const syncRedux = (t: string, i: ICustomItem[]) => {
     dispatch(setCustomSection({ title: t, items: i }));
   };
 
-  const updateTitle = (value: string) => {
-    setTitle(value);
-    syncRedux(value, items);
-  };
 
   const addItem = () => {
     const newItem: ICustomItem = {
@@ -65,22 +57,24 @@ const CustomSection: React.FC = () => {
   };
 
   // ---------- PROGRESS LOGIC ----------
-  const progress = useMemo(() => {
-    const total = 1 + items.length; // 1 título + N ítems
-    if (total === 0) return 0;
+const progress = useMemo(() => {
+  const hasTitle = title.trim() !== "";
+  const hasFilledItems = items.some((item) => item.content.trim() !== "");
 
-    let completed = 0;
+  if (!hasTitle) return 0;
 
-    if (title?.trim()) completed++;
+  // Si solo hay título
+  if (hasTitle && !hasFilledItems) return 50;
 
-    for (const item of items) {
-      if (item.content?.trim()) {
-        completed++;
-      }
-    }
+  // Título + al menos 1 ítem escrito
+  return 100;
+}, [title, items]);
 
-    return Math.round((completed / total) * 100);
-  }, [title, items]);
+// Guardar progreso en tiempo real
+useEffect(() => {
+  dispatch(setSectionProgress({ name: "customSection", progress }));
+}, [progress, dispatch]);
+
 
   // Guardar progreso en tiempo real
 useEffect(() => {
@@ -96,15 +90,29 @@ const progressColorClass = useMemo(() => {
   return (
     <div className={`custom-section ${!isOpen ? "closed" : ""}`}>
       <div className="custom-section__header">
-        <BiLayerPlus />
-
-        <input
-          className="section-title"
-          type="text"
-          placeholder="Título de la sección personalizada"
-          value={title}
-          onChange={(e) => updateTitle(e.target.value)}
-        />
+        {/* TÍTULO EDITABLE */}
+                <div className="editable-title">
+                  {!editingTitle ? (
+                    <h2
+                      className="title-display"
+                      onClick={() => setEditingTitle(true)}
+                    >
+                      <BiLayerPlus /> {title}
+                    </h2>
+                  ) : (
+                    <input
+                      className="title-input"
+                      autoFocus
+                      placeholder="Título de la sección personalizada"
+                      value={title}
+                      onChange={(e) =>
+                        dispatch(updateSectionTitle({ name: "customSection", title: e.target.value }))
+                      }
+                      onBlur={() => setEditingTitle(false)}
+                      onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+                    />
+                  )}
+                </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
 

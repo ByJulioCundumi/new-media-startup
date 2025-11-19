@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiPlus, FiTrash2, FiChevronDown, FiPhone } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import "./contactsection.scss";
@@ -16,6 +16,7 @@ import {
 import {
   toggleSectionOpen,
   setSectionProgress,
+  updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 interface ContactSectionProps {
@@ -39,7 +40,15 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
   const isOpen = sectionState?.isOpen ?? false;
 
-  // Cargar initialData si viene
+  // -----------------------------
+  // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+  // -----------------------------
+  const [editingTitle, setEditingTitle] = useState(false);
+  const title = sectionState?.title ?? "Contacto";
+
+  // -----------------------------
+  // Cargar initialData
+  // -----------------------------
   useEffect(() => {
     if (initialData) {
       dispatch(setContactEntries(initialData));
@@ -101,12 +110,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
     let total = 0;
 
     safe.forEach((c, index) => {
-      // Los primeros 2 solo cuentan el value
       if (index < 2) {
         total += 1;
         if (c.value?.trim()) completed += 1;
       } else {
-        // Los demás contactos cuentan type + value
         total += 2;
         if (c.type?.trim()) completed++;
         if (c.value?.trim()) completed++;
@@ -130,9 +137,28 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   return (
     <div className={`contact-section ${!isOpen ? "closed" : ""}`}>
       <div className="contact-section__header">
-        <h2>
-          <FiPhone /> Contacto
-        </h2>
+        {/* TÍTULO EDITABLE */}
+        <div className="editable-title">
+          {!editingTitle ? (
+            <h2
+              className="title-display"
+              onClick={() => setEditingTitle(true)}
+            >
+              <FiPhone /> {title}
+            </h2>
+          ) : (
+            <input
+              className="title-input"
+              autoFocus
+              value={title}
+              onChange={(e) =>
+                dispatch(updateSectionTitle({ name: "contactSection", title: e.target.value }))
+              }
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+            />
+          )}
+        </div>
 
         <div className={`progress-indicator ${progressColorClass}`}>
           {progress}%
@@ -154,7 +180,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="field">
                   <label>Tipo</label>
 
-                  {/* Teléfono y Email → NO editables */}
                   <input
                     type="text"
                     value={c.type}
@@ -187,7 +212,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 </div>
               </div>
 
-              {/* ❌ No eliminar Teléfono ni Email */}
               {index >= 2 && (
                 <button className="remove-btn" onClick={() => remove(c.id)}>
                   <FiTrash2 />

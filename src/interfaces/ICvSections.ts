@@ -3,6 +3,8 @@ export interface ICvSection {
   enabled: boolean;
   progress: number;
   isOpen: boolean;
+  title: string;
+  orientation: "horizontal" | "both" ;
 }
 
 // Estado del slice (sections + order)

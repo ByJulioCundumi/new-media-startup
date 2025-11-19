@@ -60,22 +60,6 @@
         background: #9baaaa0d;
       }
     }
-
-    .remove-btn {
-      background: #ff6161;
-      border: none;
-      padding: 8px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      transition: 0.2s;
-
-      &:hover {
-        background: #e84d4d;
-        transform: scale(1.05);
-      }
-    }
   }
 
   .add-btn {

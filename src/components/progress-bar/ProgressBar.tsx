@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { FaEdit, FaSave } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
 import type { IState } from "../../interfaces/IState";
 import "./progressbar.scss";
 import { TbFileCv } from "react-icons/tb";
+import { MdEditNote, MdModeEditOutline } from "react-icons/md";
+import { FaRegFaceFrown, FaRegFaceGrimace, FaRegFaceMeh, FaRegFaceRollingEyes, FaRegFaceSmileBeam, FaRegFaceSurprise } from "react-icons/fa6";
+import { BsEmojiSunglasses } from "react-icons/bs";
+import { RiEditFill, RiFileEditLine } from "react-icons/ri";
 
 const ProgressBar: React.FC = () => {
   const [title, setTitle] = useState("Mi CV Profesional");
@@ -46,6 +50,37 @@ const ProgressBar: React.FC = () => {
       ? "progress-yellow"
       : "progress-blue";
 
+  const progressColorClass = useMemo(() => {
+    if (progress < 50) return "progress-red";
+    if (progress < 100) return "progress-yellow";
+    return "progress-blue"; // 100%
+  }, [progress]);
+
+
+  const getProgressIcon = () => {
+  if (progress < 17)
+    return <FaRegFaceFrown className={`progress-icon ${progressColorClass}`} />; // Muy triste
+
+  if (progress < 34)
+    return <FaRegFaceGrimace className={`progress-icon ${progressColorClass}`} />; // Triste
+
+  if (progress < 50)
+    return <FaRegFaceRollingEyes className={`progress-icon ${progressColorClass}`} />; // Decepcionado
+
+  if (progress < 67)
+    return <FaRegFaceMeh className={`progress-icon ${progressColorClass}`} />; // Neutro
+
+  if (progress < 84)
+    return <FaRegFaceSurprise className={`progress-icon ${progressColorClass}`} />; // Feliz
+
+  if (progress < 99)
+    return <FaRegFaceSmileBeam className={`progress-icon ${progressColorClass}`} />; // Feliz
+
+  return <BsEmojiSunglasses className={`progress-icon ${progressColorClass}`} />; // Muy feliz
+};
+
+
+
   return (
     <div className="progressbar">
       <div className="progress-bar-container">
@@ -79,7 +114,7 @@ const ProgressBar: React.FC = () => {
               onClick={handleEditTitle}
               title="Editar título"
             >
-              <FaEdit />
+              <RiFileEditLine />
             </button>
           )}
         </div>
@@ -91,7 +126,7 @@ const ProgressBar: React.FC = () => {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <span className="progress-bar-text">{progress}% completo</span>
+          <span className="progress-bar-text"><div className={`progress-indicator ${progressColorClass}`}>{progress}%</div> {getProgressIcon()}</span>
         </div>
       </div>
     </div>

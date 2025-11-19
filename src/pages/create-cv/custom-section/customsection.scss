@@ -21,12 +21,18 @@
     align-items: center;
     gap: 12px;
 
-    svg{
-      font-size: 1.8rem;
-      margin-right: 0rem;
-      margin-bottom: 0rem;
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
       color: #8a9999;
+      margin: 0;
+
+      svg{
+      font-size: 1.8rem;
+      margin-right: 0.5rem;
+      margin-bottom: -0.35rem;
     }
+ }
 
     .section-title {
       flex: 1;
@@ -60,31 +66,6 @@
     background: #9baaaa00;
     position: relative;
     transition: 0.2s;
-
-    .remove-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: #ff6161;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: 0.2s;
-
-      svg{
-        font-size: 0.7rem;
-      }
-
-      &:hover {
-        background: #e84d4d;
-        transform: scale(1.05);
-      }
-    }
   }
 
   .field {
@@ -170,22 +151,6 @@
     
     input {
       flex: 1;
-    }
-
-    .remove-link-btn {
-      background: #ff6161;
-      border: none;
-      padding: 6px;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      transition: 0.2s;
-
-      &:hover {
-        background: #e84d4d;
-        transform: scale(1.05);
-      }
     }
   }
 }

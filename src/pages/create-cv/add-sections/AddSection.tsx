@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import type { IState } from "../../../interfaces/IState";
@@ -17,10 +17,10 @@ import { FaLink, FaGraduationCap } from "react-icons/fa";
 import { MdFormatListBulletedAdd, MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
 import { BiSolidLayerPlus } from "react-icons/bi";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { TbNewSection } from "react-icons/tb";
 
 import "./addsection.scss";
+
 import { clearAllLinks } from "../../../reducers/linksSlice";
 import { clearAllCourses } from "../../../reducers/coursesSlice";
 import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
@@ -30,17 +30,17 @@ import { clearCustomSection } from "../../../reducers/customSlice";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
-  const scrollerRef = useRef<HTMLDivElement>(null);
   const cvSections = useSelector((state: IState) => state.cvSections);
 
+  // Lista base con name + icon
   const sections = [
-    { name: "personalInfoSection", label: "Información Personal", icon: <PiIdentificationBadgeFill /> },
-    { name: "linkSection", label: "Enlaces", icon: <FaLink /> },
-    { name: "courseSection", label: "Cursos", icon: <FaGraduationCap /> },
-    { name: "hobbieSection", label: "Pasatiempos", icon: <PiMaskHappyFill /> },
-    { name: "referenceSection", label: "Referencias", icon: <MdRateReview /> },
-    { name: "awardSection", label: "Premios", icon: <BsAwardFill /> },
-    { name: "customSection", label: "Personalizado", icon: <BiSolidLayerPlus /> },
+    { name: "personalInfoSection", icon: <PiIdentificationBadgeFill /> },
+    { name: "linkSection", icon: <FaLink /> },
+    { name: "courseSection", icon: <FaGraduationCap /> },
+    { name: "hobbieSection", icon: <PiMaskHappyFill /> },
+    { name: "referenceSection", icon: <MdRateReview /> },
+    { name: "awardSection", icon: <BsAwardFill /> },
+    { name: "customSection", icon: <BiSolidLayerPlus /> },
   ];
 
   const toggleSection = (name: string, enabled: boolean) => {
@@ -74,11 +74,7 @@ const AddSections: React.FC = () => {
     }
   };
 
-  const scrollLeft = () =>
-    scrollerRef.current?.scrollBy({ left: -180, behavior: "smooth" });
-  const scrollRight = () =>
-    scrollerRef.current?.scrollBy({ left: 180, behavior: "smooth" });
-
+  // Calcular cuántas están activas
   const activeSections = sections.filter((sec) => {
     const match = cvSections.sections.find((c) => c.name === sec.name);
     return match?.enabled;
@@ -90,38 +86,41 @@ const AddSections: React.FC = () => {
 
         <div className="as-header">
           <h3><MdFormatListBulletedAdd /> Agregar Secciones</h3>
-
           <span className="counter">
             <TbNewSection /> {activeSections}/7
           </span>
         </div>
 
-        <div className="as-row">
-          <button className="scroll-btn shadow-left" onClick={scrollLeft}>
-            <IoIosArrowBack />
-          </button>
+        <div className="as-grid">
+          {sections.map((sec) => {
+            const data = cvSections.sections.find((s) => s.name === sec.name);
+            const enabled = data?.enabled ?? false;
 
-          <div ref={scrollerRef} className="scroll-area">
-            {sections.map((sec) => {
-              const data = cvSections.sections.find((s) => s.name === sec.name);
-              const enabled = data?.enabled ?? false;
+            // tomar title desde el estado
+            let finalTitle = data?.title || "";
 
-              return (
-                <button
-                  key={sec.name}
-                  className={`pill ${enabled ? "active" : ""}`}
-                  onClick={() => toggleSection(sec.name, enabled)}
-                >
-                  <span className="icon">{sec.icon}</span>
-                  {sec.label}
-                </button>
-              );
-            })}
-          </div>
+            // SI ES CUSTOM SECTION → usar fallback
+            if (sec.name === "customSection" && finalTitle.trim() === "") {
+              finalTitle = "Campo Personalizado";
+            }
 
-          <button className="scroll-btn shadow-right" onClick={scrollRight}>
-            <IoIosArrowForward />
-          </button>
+            return (
+              <button
+                key={sec.name}
+                className={`sec-item ${enabled ? "enabled" : "disabled"}`}
+                onClick={() => toggleSection(sec.name, enabled)}
+              >
+                <span className="icon">{sec.icon}</span>
+
+                <span className="label">
+                  {finalTitle}
+                  <small className="state-text">
+                    {enabled ? "(Activa)" : "(Inactiva)"}
+                  </small>
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

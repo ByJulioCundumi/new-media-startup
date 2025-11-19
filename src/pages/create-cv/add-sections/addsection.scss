@@ -1,181 +1,129 @@
-/* ===========================================================
-   CONTENEDOR sticky inferior
-   =========================================================== */
+/* Contenedor base */
 .add-sections {
-  position: sticky;
-  bottom: 0;
   width: 100%;
-  z-index: 40;
-
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(0, 0, 0, 0.037);
-
-  box-shadow:
-    0 -3px 12px rgba(0, 0, 0, 0.033),
-    0 -1px 10px rgba(0, 0, 0, 0.032);
-
 }
 
-
-/* ===========================================================
-   Contenido
-   =========================================================== */
 .add-sections-inner {
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-
-/* ===========================================================
-   Header (título + contador)
-   =========================================================== */
 .as-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -0.4rem;
 
   h3 {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
-    color: #0073ff;
-    opacity: 0.9;
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    gap: 6px;
+    color: #0073ff;
 
-    svg{
-      font-size: 1.5rem;
-      margin-top: -0.2rem;
+    svg {
+      font-size: 1.45rem;
     }
   }
 
   .counter {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    font-weight: 600;
     background: #f0f3ff;
-    color: #0073ff;
-    padding: 4px 12px;
+    padding: 5px 13px;
     border-radius: 8px;
+    font-weight: 600;
+    color: #0073ff;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+}
+
+/* GRID 2 COLUMNAS */
+.as-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 18px; /* más separación */
+}
+
+/* Cada sección (más grande + animada) */
+.sec-item {
+  width: 100%;
+  padding: 14px 18px; /* más grande */
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* más espacio entre icono y texto */
+  text-align: left;
+  cursor: pointer;
+
+  transition: all 0.25s ease; /* <--- Animación suave */
+  
+  .icon svg {
+    font-size: 1.45rem; /* icono más grande */
+    transition: all 0.25s ease;
+    margin-bottom: -0.4rem;
+  }
+
+  .label {
+    font-size: 16px; /* texto más grande */
+    transition: all 0.25s ease;
+  }
+}
+
+/* ====== DESHABILITADO (GRIS) ====== */
+.sec-item.disabled {
+  .icon svg {
+    color: #b8bcc7;
+  }
+
+  .label {
+    color: #9aa0ad;
+    font-weight: 500;
+  }
+}
+
+/* ====== HABILITADO (AZUL + NEGRO) ====== */
+.sec-item.enabled {
+  .icon svg {
+    color: #0073ff;
+  }
+
+  .label {
+    color: #0f1225;
+    font-weight: 400;
   }
 }
 
 
-/* ===========================================================
-   Row principal
-   =========================================================== */
-.as-row {
+.label {
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-
-/* ===========================================================
-   Scroll area
-   =========================================================== */
-.scroll-area {
-  flex: 1;
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 3px 0;
-
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-
-/* ===========================================================
-   Pills limpias, suaves, profesionales
-   =========================================================== */
-.pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  padding: 8px 18px;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-
-  background: #f7f9fc;
-  color: #2c3e50;
-  border: 2px dashed rgba(60, 60, 90, 0.12);
-
+  flex-direction: column;
+  font-size: 16px;
+  line-height: 1.2;
   transition: all 0.25s ease;
 
-  .icon {
-    font-size: 1.05rem;
-    opacity: 0.8;
-  }
-
-  &:hover {
-    background: #eef1ff;
-    border-color: rgba(80, 90, 255, 0.28);
-    transform: translateY(-2px);
+  .state-text {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 2px;
+    transition: all 0.25s ease;
   }
 }
 
-
-/* ===========================================================
-   Pills activas (estilo premium)
-   =========================================================== */
-.pill.active {
-  background: #08203b9c;
-  color: #ffffff;
-  border: 2px dashed rgba(16, 89, 123, 0);
-
-  .icon {
-    opacity: 1;
-  }
+.sec-item.enabled .state-text {
+  color: #0073ff;
+  font-weight: 400;
 }
 
-
-/* ===========================================================
-   Botones laterales
-   =========================================================== */
-.scroll-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: white;
-  border: 1px solid rgba(80, 90, 140, 0.22);
-  color: #4a52f7;
-
-  cursor: pointer;
-  transition: 0.22s ease;
-
-  &:hover {
-    background: rgba(70, 80, 255, 0.12);
-    border-color: rgba(70, 80, 255, 0.35);
-    transform: scale(1.08);
-  }
-
-  svg {
-    font-size: 18px;
-  }
-}
-
-/* Sombras laterales para sensación premium */
-.shadow-left {
-  box-shadow: -8px 0 12px -6px rgba(0, 0, 0, 0.07);
-}
-
-.shadow-right {
-  box-shadow: 8px 0 12px -6px rgba(0, 0, 0, 0.07);
+.sec-item.disabled .state-text {
+  color: #9aa0ad;
+  font-weight: 400;
 }

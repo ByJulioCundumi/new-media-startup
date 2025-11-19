@@ -12,7 +12,7 @@ import {
   updateReferenceEntry,
 } from "../../../reducers/referencesSlice";
 import { MdOutlineRateReview } from "react-icons/md";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
 const ReferencesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -88,12 +88,37 @@ const progressColorClass = useMemo(() => {
   return "progress-blue"; // 100%
 }, [progress]);
 
+// -----------------------------
+      // 🔵 STATE PARA EDICIÓN DEL TÍTULO
+      // -----------------------------
+      const [editingTitle, setEditingTitle] = useState(false);
+      const title = sectionState?.title ?? "Referencias Laborales";
+
   return (
     <div className={`references-section ${!isOpen ? "closed" : ""}`}>
       <div className="references-section__header">
-        <h2>
-          <MdOutlineRateReview /> Referencias Laborales
-        </h2>
+        {/* TÍTULO EDITABLE */}
+      <div className="editable-title">
+        {!editingTitle ? (
+          <h2
+            className="title-display"
+            onClick={() => setEditingTitle(true)}
+          >
+            <MdOutlineRateReview /> {title}
+          </h2>
+        ) : (
+          <input
+            className="title-input"
+            autoFocus
+            value={title}
+            onChange={(e) =>
+              dispatch(updateSectionTitle({ name: "referenceSection", title: e.target.value }))
+            }
+            onBlur={() => setEditingTitle(false)}
+            onKeyDown={(e) => e.key === "Enter" && setEditingTitle(false)}
+          />
+        )}
+      </div>
 
         {/* BADGE DE PROGRESO */}
         <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
