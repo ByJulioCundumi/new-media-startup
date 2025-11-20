@@ -13,7 +13,6 @@ import awardsSlice from "../reducers/awardsSlice";
 import customSlice from "../reducers/customSlice";
 import profileSlice from "../reducers/profileSlice";
 import cvSectionsSlice from "../reducers/cvSectionsSlice";
-import photoSlice from "../reducers/photoSlice";
 import identitySlice from "../reducers/identitySlice";
 import contactSlice from "../reducers/contactSlice";
 
@@ -33,7 +32,6 @@ export default configureStore({
         customEntries: customSlice,
         profileSection: profileSlice,
         cvSections: cvSectionsSlice,
-        photo: photoSlice,
         identity: identitySlice,
         contactEntries: contactSlice
     }

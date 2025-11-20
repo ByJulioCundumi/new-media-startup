@@ -31,29 +31,30 @@ const IdentitySection = () => {
 
   const isOpen = sectionState?.isOpen ?? false;
 
-  // Calcular progreso
-const progress = useMemo(() => {
-  let value = 0;
-  if (identity.photo) value += 25;
-  if (identity.firstName?.trim()) value += 25;
-  if (identity.lastName?.trim()) value += 25;
-  if (identity.jobTitle?.trim()) value += 25;
-  return value;
-}, [identity]);
+  // --------------------------
+  //  CALCULAR PROGRESO (sin foto)
+  // --------------------------
+  const progress = useMemo(() => {
+    const fields = [
+      identity.firstName?.trim(),
+      identity.lastName?.trim(),
+      identity.jobTitle?.trim(),
+    ];
 
-// Evitar despachos repetidos
-const lastProgressRef = useRef(-1);
+    const filled = fields.filter(Boolean).length;
 
-useEffect(() => {
-  if (progress !== lastProgressRef.current) {
-    lastProgressRef.current = progress;
-    dispatch(setSectionProgress({ name: "identitySection", progress }));
-  }
-}, [progress, dispatch]);
+    // Cada uno vale 33.33%
+    return Math.round((filled / 3) * 100);
+  }, [identity.firstName, identity.lastName, identity.jobTitle]);
 
+  // Evitar despachos repetidos
+  const lastProgressRef = useRef(-1);
 
   useEffect(() => {
-    dispatch(setSectionProgress({ name: "identitySection", progress }));
+    if (progress !== lastProgressRef.current) {
+      lastProgressRef.current = progress;
+      dispatch(setSectionProgress({ name: "identitySection", progress }));
+    }
   }, [progress, dispatch]);
 
   const progressColorClass = useMemo(() => {
@@ -62,7 +63,9 @@ useEffect(() => {
     return "progress-blue";
   }, [progress]);
 
-  // Subir foto
+  // --------------------------
+  //  SUBIR FOTO
+  // --------------------------
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -71,7 +74,6 @@ useEffect(() => {
     reader.onloadend = () => {
       dispatch(setPhoto(reader.result as string));
 
-      // 🔥 Reset para permitir seleccionar la misma imagen nuevamente
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -102,7 +104,7 @@ useEffect(() => {
         <div className="identity-section__content">
           <div className="identity-flex">
 
-            {/* FOTO + BOTÓN DEBAJO */}
+            {/* FOTO */}
             <div className="identity-section__photo-wrapper">
               <div className="identity-section__photo-container">
                 {identity.photo ? (
@@ -116,8 +118,6 @@ useEffect(() => {
                       className="identity-section__remove-btn"
                       onClick={() => {
                         dispatch(removePhoto());
-
-                        // 🔥 Reset del input para permitir re-selección
                         if (fileInputRef.current) {
                           fileInputRef.current.value = "";
                         }
@@ -134,16 +134,16 @@ useEffect(() => {
                 )}
               </div>
 
-              {/* Botón debajo del cuadro */}
-              {
-                identity.allowCvPhoto && <button
-                className="add-photo-btn"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <FiCamera />
-                {identity.photo ? "Cambiar Foto" : "Subir Foto"}
-              </button>
-              }
+              {/* Botón debajo */}
+              {identity.allowCvPhoto && (
+                <button
+                  className="add-photo-btn"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <FiCamera />
+                  {identity.photo ? "Cambiar Foto" : "Subir Foto"}
+                </button>
+              )}
 
               <input
                 type="file"
@@ -154,7 +154,7 @@ useEffect(() => {
               />
             </div>
 
-            {/* INPUTS DERECHA */}
+            {/* FORMULARIO */}
             <div className="identity-inputs">
               <label>
                 Nombre

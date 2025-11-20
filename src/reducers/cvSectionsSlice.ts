@@ -61,7 +61,7 @@ const initialSections: ICvSection[] = [
   },
   {
     name: "personalInfoSection",
-    title: "Datos Personales",
+    title: "Detalles",
     enabled: false,
     progress: 0,
     isOpen: false,

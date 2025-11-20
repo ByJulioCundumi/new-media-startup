@@ -1,10 +1,29 @@
 .cv-tokyo *{
   font-family: Arial, Helvetica, sans-serif;
 }
-
+.cv-tokyo h1,
+.cv-tokyo h2,
+.cv-tokyo h3,
+.cv-tokyo a {
+  word-break: break-word;
+  overflow: hidden;
+}
+.cv-tokyo a {
+  word-break: break-all;
+}
 .cv-tokyo {
-  padding: 2rem;
   color: rgba(0, 0, 0, 0.61);
+  width: 210mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  background: white;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  zoom: 1;
+  padding: 20mm;
+
   // ------------------------------
   // General - Horizontal
   // ------------------------------
@@ -32,6 +51,12 @@
       }
     }
 
+    &--item-date{
+      font-size: 0.85rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+
     &--item-name{
       color: rgba(0, 0, 0, 0.76);
     }
@@ -41,10 +66,14 @@
       justify-content: space-between;
       gap: 1rem;
 
+      &-employer, &-location{
+        color: rgba(0, 0, 0, 0.479);
+      }
+
       p{
         display: flex;
         gap: 0.2rem;
-        
+        font-size: 0.8rem;
       }
     }
   }
@@ -65,18 +94,32 @@
   &__identitySection {
     display: flex;
     gap: 2rem;
-    align-items: center;
+    align-items: start;
+    &.space {
+      justify-content: space-between;
+    }
+    &.start {
+      justify-content: flex-start;
+    }
+    //-------------------
+
+    &--qr-wrapper{
+      align-self: flex-start;
+    }
+
+    &--qr-text{
+      font-size: 0.8rem;
+    }
 
     &--title{
       color: black;
     }
 
     &--img {
-      width: 180px;
-      height: 180px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin-top: -1.8rem;
     }
 
     &--text {
@@ -88,8 +131,9 @@
     }
 
     &--title {
-      font-size: 3rem;
+      font-size: 2.9rem;
       font-weight: 700;
+      max-width: 400px;
     }
 
     &--occupation {
@@ -105,9 +149,10 @@
   &__split {
     display: flex;
     gap: 0rem;
+    height: 100%;
 
     &--vertical {
-      width: 30%;
+      width: 35%;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -117,7 +162,7 @@
     }
 
     &--horizontal {
-      width: 70%;
+      width: 65%;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -178,8 +223,10 @@
   // SKILL SECTION
   // ------------------------------
   &__skillSection {
+    margin-top: 1rem;
+
     &--item {
-      margin-top: 0.7rem;
+      margin-top: 0.9rem;
 
       &-name {
         font-size: 0.95rem;
@@ -188,7 +235,33 @@
 
       &-level {
         font-size: 0.9rem;
+        opacity: 0.8;
       }
+    }
+
+    /* Encabezado habilidad + nivel */
+    &--header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Contenedor de la barra */
+    &--progress {
+      margin-top: 0.35rem;
+      width: 100%;
+      height: 6px;
+      background-color: #dcdcdc; // gris claro
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* Barra interna */
+    &--progress-bar {
+      height: 100%;
+      background-color: #051235; // negro
+      border-radius: 4px;
+      transition: width 0.4s ease;
     }
   }
 
@@ -242,23 +315,31 @@
   // LINK SECTION
   // ------------------------------
   &__linkSection {
+    margin-top: 1rem;
+
     &--item {
       margin-top: 0.7rem;
 
+      /* Nombre del enlace (clickeable) */
       &-name {
         font-size: 0.95rem;
         font-weight: 600;
+        color: #051235;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+          opacity: 0.6;
+        }
       }
 
+      /* URL en texto pequeño (solo si visible) */
       &-url {
-        font-size: 0.95rem;
-        font-weight: 600;
-        text-decoration: underline;
-      }
-
-      &-text-url {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         opacity: 0.7;
+        margin-top: 0.15rem;
+        word-break: break-all; // para URL largas en CV
       }
     }
   }
@@ -267,12 +348,33 @@
   // HOBBIE SECTION
   // ------------------------------
   &__hobbieSection {
-    &--item {
-      margin-top: 0.7rem;
+    margin-top: 1rem;
 
-      &-name {
-        font-size: 0.9rem;
-      }
+    &--title {
+      margin-bottom: 0.6rem;
+    }
+
+    /* Contenedor de los chips */
+    &--list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    /* Chip individual */
+    &--item {
+      display: inline-block;
+      padding: 0.35rem 0.65rem;
+
+      background-color: #ffffff;
+      border-radius: 6px;
+
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #000;
+
+      border: 1px solid #051235;
+      transition: background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
     }
   }
 
@@ -320,6 +422,7 @@
         display: flex;
         gap: 1rem;
         margin: 0.5rem 0;
+        
 
         &-start,
         &-end {
@@ -487,3 +590,5 @@
     }
   }
 }
+
+

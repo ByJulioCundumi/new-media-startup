@@ -7,7 +7,7 @@ import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../redu
 import { FaRegHandBackFist } from "react-icons/fa6";
 import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
 
-const levels = ["Principiante", "Intermedio", "Bueno", "Alto", "Experto"] as const;
+const levels = ["Principiante", "Intermedio", "Bueno", "Profesional", "Experto"] as const;
 
 const SkillsSection: React.FC = () => {
   const dispatch = useDispatch();

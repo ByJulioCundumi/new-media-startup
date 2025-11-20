@@ -21,7 +21,7 @@ import type { IPersonalInfoEntry } from "../../../interfaces/IPersonalInfo";
 import { PiIdentificationBadge } from "react-icons/pi";
 
 const SUGGESTIONS = [
-  "Ciudad y país",
+  "Ubicación",
   "Dirección",
   "Código postal",
   "Nacionalidad",
@@ -31,7 +31,7 @@ const SUGGESTIONS = [
 
 // === NUEVO: placeholders dinámicos según la sugerencia ===
 const PLACEHOLDERS: Record<string, string> = {
-  "Ciudad y país": "Ej: Medellín, Colombia",
+  "Ubicación": "Ej: Medellín, Colombia",
   "Dirección": "Ej: Calle 123 #45-67",
   "Código postal": "Ej: 050010",
   "Nacionalidad": "Ej: Colombiana",
@@ -132,7 +132,7 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
       // 🔵 STATE PARA EDICIÓN DEL TÍTULO
       // -----------------------------
       const [editingTitle, setEditingTitle] = useState(false);
-      const title = sectionState?.title ?? "Datos Personales";
+      const title = sectionState?.title ?? "Detalles";
 
   return (
     <div className={`personal-info-section ${!isOpen ? "closed" : ""}`}>

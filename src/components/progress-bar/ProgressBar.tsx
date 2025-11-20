@@ -96,7 +96,7 @@ const ProgressBar: React.FC = () => {
             />
           ) : (
             <h2 className="progress-bar-title">
-              {title} <p>/</p><span><TbFileCv /> Clásico</span>
+              {title} <p>/</p><span><TbFileCv /> Tokyo</span>
             </h2>
           )}
 

@@ -167,8 +167,8 @@ const progressColorClass = useMemo(() => {
                 </label>
                 <label>
                   {link.visible
-                    ? "Enlace Visible"
-                    : "Enlace Oculto"}
+                    ? "URL Visible"
+                    : "URL Oculta"}
                 </label>
               </div>
 

@@ -2,5 +2,5 @@
 export interface ISkillEntry {
   id: string;
   name: string;
-  level: "Principiante" | "Intermedio" | "Bueno" | "Alto" | "Experto";
+  level: "Principiante" | "Intermedio" | "Bueno" | "Profesional" | "Experto";
 }
