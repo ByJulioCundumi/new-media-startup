@@ -27,7 +27,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(setAllowCvPhoto(false))
+    dispatch(setAllowCvPhoto(true))
   },[])
 
   const fullName = `${firstName || ""} ${lastName || ""}`.trim() || "";
