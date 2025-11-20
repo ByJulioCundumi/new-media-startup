@@ -40,6 +40,7 @@ export const {
   setFirstName,
   setLastName,
   setJobTitle,
+  setAllowCvPhoto
 } = identitySlice.actions;
 
 export default identitySlice.reducer;

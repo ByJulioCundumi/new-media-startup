@@ -1,4 +1,64 @@
+.cv-tokyo *{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .cv-tokyo {
+  padding: 2rem;
+  color: rgba(0, 0, 0, 0.61);
+  // ------------------------------
+  // General - Horizontal
+  // ------------------------------
+  &__contactSection, &__personalInfoSection, &__skillSection, &__languajeSection, &__linkSection,
+  &__hobbieSection, &__profileSection, &__experienceSection, &__educationSection, &__courseSection,
+  &__awardSection, &__referenceSection, &__customSection{
+
+    &--title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      position: relative;
+      display: inline-block; /* importante para que el borde mida solo el título */
+      padding-bottom: 4px;   /* espacio entre texto y borde */
+      margin-bottom: 0.5rem;
+      color: black;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;     /* <<--- el borde llega solo a la mitad */
+        height: 2px;
+        background: #000;
+      }
+    }
+
+    &--item-name{
+      color: rgba(0, 0, 0, 0.76);
+    }
+
+    &--item-head{
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      p{
+        display: flex;
+        gap: 0.2rem;
+        
+      }
+    }
+  }
+
+   // ------------------------------
+  // General - Vertical
+  // ------------------------------
+  &__personalInfoSection, &__contactSection, &__skillSection, &__languajeSection, &__linkSection, &__hobbieSection{
+    &--item{
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
   // ------------------------------
   // IDENTIDAD
   // ------------------------------
@@ -6,19 +66,25 @@
     display: flex;
     gap: 2rem;
     align-items: center;
-    margin-bottom: 1rem;
+
+    &--title{
+      color: black;
+    }
 
     &--img {
       width: 180px;
       height: 180px;
       border-radius: 50%;
       object-fit: cover;
+      margin-top: -1.8rem;
     }
 
     &--text {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
+      line-height: 3.5rem;
+      margin: auto 0;
     }
 
     &--title {
@@ -29,6 +95,7 @@
     &--occupation {
       font-size: 1.8rem;
       font-weight: 400;
+      padding-bottom: 2rem;
     }
   }
 
@@ -37,13 +104,16 @@
   // ------------------------------
   &__split {
     display: flex;
-    gap: 2rem;
+    gap: 0rem;
 
     &--vertical {
       width: 30%;
       display: flex;
       flex-direction: column;
       gap: 2rem;
+      padding: 1.5rem 0;
+      padding-right: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.11);
     }
 
     &--horizontal {
@@ -51,6 +121,11 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
+      border-left: 1px solid rgba(0, 0, 0, 0.11);
+      border-top: 1px solid rgba(0, 0, 0, 0.11);
+      padding: 1.5rem 2rem;
+      padding-top: 0;
+      padding-right: 0;
     }
   }
 
@@ -58,11 +133,6 @@
   // CONTACT SECTION
   // ------------------------------
   &__contactSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
     &--item {
       margin-top: 0.7rem;
 
@@ -90,11 +160,6 @@
   // PERSONAL INFO SECTION
   // ------------------------------
   &__personalInfoSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
     &--item {
       margin-top: 0.7rem;
 
@@ -113,11 +178,6 @@
   // SKILL SECTION
   // ------------------------------
   &__skillSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
     &--item {
       margin-top: 0.7rem;
 
@@ -136,13 +196,10 @@
   // LANGUAGE SECTION
   // ------------------------------
   &__languajeSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
+    margin-top: 1rem;
 
     &--item {
-      margin-top: 0.7rem;
+      margin-top: 0.9rem;
 
       &-name {
         font-weight: 600;
@@ -151,7 +208,33 @@
 
       &-level {
         font-size: 0.9rem;
+        opacity: 0.8;
       }
+    }
+
+    /* Encabezado idioma + nivel */
+    &--header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Contenedor de la barra */
+    &--progress {
+      margin-top: 0.35rem;
+      width: 100%;
+      height: 6px;
+      background-color: #dcdcdc; // gris suave
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* Barra interna */
+    &--progress-bar {
+      height: 100%;
+      background-color: #051235; // negro sólido
+      border-radius: 4px;
+      transition: width 0.4s ease;
     }
   }
 
@@ -159,11 +242,6 @@
   // LINK SECTION
   // ------------------------------
   &__linkSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
     &--item {
       margin-top: 0.7rem;
 
@@ -189,11 +267,6 @@
   // HOBBIE SECTION
   // ------------------------------
   &__hobbieSection {
-    &--title {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
     &--item {
       margin-top: 0.7rem;
 
@@ -207,15 +280,13 @@
   // PROFILE SECTION
   // ------------------------------
   &__profileSection {
-    &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       font-size: 0.95rem;
       line-height: 1.4;
+      margin-top: 1rem;
     }
   }
 
@@ -223,10 +294,8 @@
   // EXPERIENCE SECTION
   // ------------------------------
   &__experienceSection {
-    &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
@@ -272,10 +341,8 @@
   // EDUCATION SECTION
   // ------------------------------
   &__educationSection {
-    &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
@@ -319,10 +386,8 @@
   // COURSE SECTION
   // ------------------------------
   &__courseSection {
-    &--name {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
@@ -361,10 +426,8 @@
   // AWARD SECTION
   // ------------------------------
   &__awardSection {
-    &--name {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
@@ -389,10 +452,8 @@
   // REFERENCE SECTION
   // ------------------------------
   &__referenceSection {
-    &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
@@ -417,39 +478,12 @@
   // CUSTOM SECTION
   // ------------------------------
   &__customSection {
-    &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    padding-top: 1.5rem;
 
     &--item {
       margin-top: 1rem;
       font-size: 0.95rem;
     }
   }
-}
-
-
-.placeholder {
-  opacity: 0.45;
-  font-style: italic;
-  color: #666;
-  pointer-events: none;
-
-  h3, p, a, span {
-    opacity: 0.5;
-  }
-}
-
-.cv-tokyo__identitySection--img-placeholder {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  border: 3px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  color: #999;
 }
