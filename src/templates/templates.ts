@@ -21,6 +21,6 @@ Contemporáneo
 */
 
 export const templates = [
-  { id: "default", label: "Minimalista", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
-  { id: "s", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
+  { id: "test", label: "Minimalista", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
+  { id: "default", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
 ];

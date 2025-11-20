@@ -1,0 +1,657 @@
+import "./cvtokyo.scss"
+
+function CvTokyo() {
+  const allowCvPhoto = true;
+  const visible = false;
+  const present = false;
+  const showExtraInfo = false;
+
+  return (
+    <article className="cv-tokyo">
+      {/* identitySection - horizontal fixed 
+        {
+            photo?: string | null;
+            firstName?: string;
+            lastName?: string;
+            jobTitle?: string;
+            allowCvPhoto?: boolean;
+        }
+      */}
+      <div className="cv-tokyo__identitySection">
+        {
+          allowCvPhoto && <img src="" alt="" className="cv-tokyo__identitySection--img" />
+        }
+        <div className="cv-tokyo__identitySection--text">
+          <h1 className="cv-tokyo__identitySection--title">
+            Juan Eduardo Salazar Mendoza
+          </h1>
+          <p className="cv-tokyo__identitySection--occupation">
+            Desarrollador web
+          </p>
+        </div>
+      </div>
+
+      <div className="cv-tokyo__split">
+        <div className="cv-tokyo__split--vertical">
+          {/* contactSection - vertical 
+            [
+              {
+                id: string;
+                type: string;     
+                value: string; 
+              }
+            ]
+          */}
+          <div className="cv-tokyo__contactSection">
+              <h2 className="cv-tokyo__contactSection--title">
+                Contacto
+              </h2>
+            <div className="cv-tokyo__contactSection--item">
+              <h3 className="cv-tokyo__contactSection--item-name">
+                Telefono
+              </h3>
+              <p className="cv-tokyo__contactSection--item-value">
+                +57 3251457845
+              </p>
+            </div>
+            <div className="cv-tokyo__contactSection--item">
+              <h3 className="cv-tokyo__contactSection--item-name">
+                Email
+              </h3>
+              <p className="cv-tokyo__contactSection--item-value">
+                juan.dev@gmail.com
+              </p>
+            </div>
+          </div>
+
+          {/* personalInfoSection - vertical 
+            [
+              {
+                id: string;
+                name: string;
+                value: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__personalInfoSection">
+              <h2 className="cv-tokyo__personalInfoSection--title">
+                Detalles
+              </h2>
+            <div className="cv-tokyo__personalInfoSection--item">
+              <h3 className="cv-tokyo__personalInfoSection--item-name">
+                Ubicacion
+              </h3>
+              <p className="cv-tokyo__personalInfoSection--item-value">
+                Cali, Colombia
+              </p>
+            </div>
+            <div className="cv-tokyo__personalInfoSection--item">
+              <h3 className="cv-tokyo__personalInfoSection--item-name">
+                Nacionalidad
+              </h3>
+              <p className="cv-tokyo__personalInfoSection--item-value">
+                Colombiano
+              </p>
+            </div>
+          </div>
+
+          {/* skillSection - vertical 
+            [
+              {
+                id: string;
+                name: string;
+                level: "Principiante" | "Intermedio" | "Bueno" | "Alto" | "Experto";
+              }
+            ]
+          */}
+          <div className="cv-tokyo__skillSection">
+              <h2 className="cv-tokyo__skillSection--title">
+                Habilidades
+              </h2>
+            <div className="cv-tokyo__skillSection--item">
+              <h3 className="cv-tokyo__skillSection--item-name">
+                React js
+              </h3>
+              <p className="cv-tokyo__skillSection--item-level">
+                Intermedio
+              </p>
+            </div>
+            <div className="cv-tokyo__skillSection--item">
+              <h3 className="cv-tokyo__skillSection--item-name">
+                Node js
+              </h3>
+              <p className="cv-tokyo__skillSection--item-value">
+                Intermedio
+              </p>
+            </div>
+          </div>
+
+          {/* languageSection - vertical 
+            [
+              {
+                id: string;
+                name: string;
+                level: "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Nativo";
+              }
+            ]
+          */}
+          <div className="cv-tokyo__languajeSection">
+              <h2 className="cv-tokyo__languajeSection--title">
+                Idiomas
+              </h2>
+            <div className="cv-tokyo__languajeSection--item">
+              <h3 className="cv-tokyo__languajeSection--item-name">
+                Español
+              </h3>
+              <p className="cv-tokyo__languajeSection--item-level">
+                Nativo
+              </p>
+            </div>
+            <div className="cv-tokyo__languajeSection--item">
+              <h3 className="cv-tokyo__languajeSection--item-name">
+                Ingles
+              </h3>
+              <p className="cv-tokyo__languajeSection--item-level">
+                B1
+              </p>
+            </div>
+          </div>
+
+          {/* linkSection - vertical 
+            [
+              {
+                id: string;
+                name: string;
+                url: string;
+                visible: boolean; 
+              }
+            ]
+          */}
+          <div className="cv-tokyo__linkSection">
+              <h2 className="cv-tokyo__linkSection--title">
+                Enlaces
+              </h2>
+            <div className="cv-tokyo__linkSection--item">
+              {
+                visible ? 
+                <h3 className="cv-tokyo__linkSection--item-name">
+                  Portafolio
+                </h3>
+                :
+                <a href="" className="cv-tokyo__linkSection--item-url">
+                  Portafolio
+                </a>
+              }
+              {
+                visible === false &&
+                <p className="cv-tokyo__linkSection--item-text-url">
+                  https://www.deepl.com/es/translator
+                </p>
+              }
+            </div>
+            <div className="cv-tokyo__linkSection--item">
+              {
+                visible ? 
+                <h3 className="cv-tokyo__linkSection--item-name">
+                  Youtube
+                </h3>
+                :
+                <a href="" className="cv-tokyo__linkSection--item-url">
+                  Youtube
+                </a>
+              }
+              {
+                visible === false &&
+                <p className="cv-tokyo__linkSection--item-text-url">
+                  https://www.deepl.com/es/translator
+                </p>
+              }
+            </div>
+          </div>
+
+          {/* hobbieSection - vertical 
+            [{
+              id: string;
+              name: string;
+            }]
+          */}
+          <div className="cv-tokyo__hobbieSection">
+              <h2 className="cv-tokyo__hobbieSection--title">
+                Pasatiempos
+              </h2>
+            <div className="cv-tokyo__hobbieSection--item">
+              <p className="cv-tokyo__hobbieSection--item-name">
+                Lectura
+              </p>
+              <p className="cv-tokyo__hobbieSection--item-name">
+                Escritura
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="cv-tokyo__split--horizontal">
+          {/* profileSection - horizontal 
+            String -> html
+          */}
+          <div className="cv-tokyo__profileSection">
+            <h2 className="cv-tokyo__profileSection--title">
+              Perfil
+            </h2>
+            <div className="cv-tokyo__profileSection--item">
+              Lorem ipsum dolor, sit amet consectetur adipisicing 
+              elit. Nam, in? Necessitatibus aliquam minus error quidem 
+              repellendus, nam officia ad ex!
+            </div>
+          </div>
+
+          {/* experienceSection - horizontal 
+            [
+              {
+                id: string;
+                position: string;
+                employer: string;
+                location: string;
+                startMonth: string;
+                startYear: string;
+                endMonth?: string;
+                endYear?: string;
+                present: boolean;
+                description: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__experienceSection">
+            <h2 className="cv-tokyo__experienceSection--title">
+              Experiencia
+            </h2>
+            <div className="cv-tokyo__experienceSection--item">
+              <div className="cv-tokyo__experienceSection--item-head">
+                <h3 className="cv-tokyo__experienceSection--item-head-subtitle">
+                  {/* position */}
+                  Programador FullStack
+                  {/* employer */}
+                  <span className="cv-tokyo__experienceSection--item-head-employer">Platzi</span>
+                </h3>
+                <p className="cv-tokyo__experienceSection--item-head-location">
+                  Cali, Colombia
+                </p>
+              </div>
+              <div className="cv-tokyo__experienceSection--item-date">
+                  <p className="cv-tokyo__experienceSection--item-date-start">
+                    {/* startMonth */}
+                    <span>Ene</span>
+                    {/* startYear */}
+                    <span>2025</span>
+                  </p>
+                  <p className="cv-tokyo__experienceSection--item-date-end">
+                    {
+                      present ? 
+                      <>
+                        {/* endMonth */}
+                        <span>Oct</span>
+                        {/* endYear */}
+                        <span>2025</span>
+                      </>
+                      :
+                      <span>Actualidad</span>
+                      }
+                  </p>
+              </div>
+              <div className="cv-tokyo__experienceSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+            <div className="cv-tokyo__experienceSection--item">
+              <div className="cv-tokyo__experienceSection--item-head">
+                <h3 className="cv-tokyo__experienceSection--item-head-subtitle">
+                  {/* position */}
+                  Programador FullStack
+                  {/* employer */}
+                  <span className="cv-tokyo__experienceSection--item-head-employer">Platzi</span>
+                </h3>
+                <p className="cv-tokyo__experienceSection--item-head-location">
+                  Cali, Colombia
+                </p>
+              </div>
+              <div className="cv-tokyo__experienceSection--item-date">
+                  <p className="cv-tokyo__experienceSection--item-date-start">
+                    {/* startMonth */}
+                    <span>Ene</span>
+                    {/* startYear */}
+                    <span>2025</span>
+                  </p>
+                  <p className="cv-tokyo__experienceSection--item-date-end">
+                    {
+                      present ? 
+                      <>
+                        {/* endMonth */}
+                        <span>Oct</span>
+                        {/* endYear */}
+                        <span>2025</span>
+                      </>
+                      :
+                      <span>Actualidad</span>
+                      }
+                  </p>
+              </div>
+              <div className="cv-tokyo__experienceSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+          </div>
+
+          {/* educationSection - horizontal 
+            [
+              {
+                id: string;
+                institution: string;
+                location: string;
+                title: string;
+                startMonth: string;
+                startYear: string;
+                endMonth?: string;
+                endYear?: string;
+                present: boolean;
+                description: string;
+                showExtraInfo: boolean;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__educationSection">
+            <h2 className="cv-tokyo__educationSection--title">
+              Educacion
+            </h2>
+            <div className="cv-tokyo__educationSection--item">
+              <div className="cv-tokyo__educationSection--item-head">
+                <h3 className="cv-tokyo__educationSection--item-head-subtitle">
+                  {/* title */}
+                  Ingeniero de sistemas
+                  {/* institution */}
+                  <span className="cv-tokyo__educationSection--item-head-employer">
+                    Fundacion Universitaria Andres Bello
+                  </span>
+                </h3>
+                <p className="cv-tokyo__educationSection--item-head-location">
+                  Cali, Colombia
+                </p>
+              </div>
+              <div className="cv-tokyo__educationSection--item-date">
+                  <p className="cv-tokyo__educationSection--item-date-start">
+                    {/* startMonth */}
+                    <span>Ene</span>
+                    {/* startYear */}
+                    <span>2025</span>
+                  </p>
+                  <p className="cv-tokyo__educationSection--item-date-end">
+                    {
+                      present ? 
+                      <>
+                        {/* endMonth */}
+                        <span>Oct</span>
+                        {/* endYear */}
+                        <span>2025</span>
+                      </>
+                      :
+                      <span>Actualidad</span>
+                      }
+                  </p>
+              </div>
+              {
+                showExtraInfo ?? <div className="cv-tokyo__educationSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+              }
+            </div>
+            <div className="cv-tokyo__educationSection--item">
+              <div className="cv-tokyo__educationSection--item-head">
+                <h3 className="cv-tokyo__educationSection--item-head-subtitle">
+                  {/* title */}
+                  Ingeniero de sistemas
+                  {/* institution */}
+                  <span className="cv-tokyo__educationSection--item-head-employer">
+                    Fundacion Universitaria Andres Bello
+                  </span>
+                </h3>
+                <p className="cv-tokyo__educationSection--item-head-location">
+                  Cali, Colombia
+                </p>
+              </div>
+              <div className="cv-tokyo__educationSection--item-date">
+                  <p className="cv-tokyo__educationSection--item-date-start">
+                    {/* startMonth */}
+                    <span>Ene</span>
+                    {/* startYear */}
+                    <span>2025</span>
+                  </p>
+                  <p className="cv-tokyo__educationSection--item-date-end">
+                    {
+                      present ? 
+                      <>
+                        {/* endMonth */}
+                        <span>Oct</span>
+                        {/* endYear */}
+                        <span>2025</span>
+                      </>
+                      :
+                      <span>Actualidad</span>
+                      }
+                  </p>
+              </div>
+              {
+                showExtraInfo ?? <div className="cv-tokyo__educationSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+              }
+            </div>
+          </div>
+
+          {/* courseSection - horizontal 
+            [
+              {
+                id: string;
+                name: string;
+                institution: string;
+                startDate: string;
+                endDate: string;
+                city?: string;
+                country?: string;
+                description?: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__courseSection">
+            <h2 className="cv-tokyo__courseSection--name">
+              Cursos y Certificados
+            </h2>
+            <div className="cv-tokyo__courseSection--item">
+              <div className="cv-tokyo__courseSection--item-head">
+                <h3 className="cv-tokyo__courseSection--item-head-subtitle">
+                  {/* name */}
+                  Java desde cero a 100
+                  {/* institution */}
+                  <span className="cv-tokyo__courseSection--item-head-employer">
+                    Udemy
+                  </span>
+                </h3>
+                <p className="cv-tokyo__courseSection--item-head-location">
+                  {/* city, country */}
+                  <span>{"Cali"}, {"Colombia"}</span>
+                </p>
+              </div>
+              <div className="cv-tokyo__courseSection--item-date">
+                  <p className="cv-tokyo__courseSection--item-date-all">
+                    {/* startDate */}
+                    <span>Ene 2025</span>
+                    <span>-</span>
+                    {/* endDate */}
+                    <span>Oct 2025</span>
+                  </p>
+              </div>
+              <div className="cv-tokyo__courseSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+            <div className="cv-tokyo__courseSection--item">
+              <div className="cv-tokyo__courseSection--item-head">
+                <h3 className="cv-tokyo__courseSection--item-head-subtitle">
+                  {/* name */}
+                  Java desde cero a 100
+                  {/* institution */}
+                  <span className="cv-tokyo__courseSection--item-head-employer">
+                    Udemy
+                  </span>
+                </h3>
+                <p className="cv-tokyo__courseSection--item-head-location">
+                  {/* city, country */}
+                  <span>{"Cali"}, {"Colombia"}</span>
+                </p>
+              </div>
+              <div className="cv-tokyo__courseSection--item-date">
+                  <p className="cv-tokyo__courseSection--item-date-all">
+                    {/* startDate */}
+                    <span>Ene 2025</span>
+                    <span>-</span>
+                    {/* endDate */}
+                    <span>Oct 2025</span>
+                  </p>
+              </div>
+              <div className="cv-tokyo__courseSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+          </div>
+
+          {/* awardSection - horizontal 
+            [
+              {
+                id: string;
+                name: string;
+                date: string;
+                description?: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__awardSection">
+            <h2 className="cv-tokyo__awardSection--name">
+              Premios
+            </h2>
+            <div className="cv-tokyo__awardSection--item">
+              <h3 className="cv-tokyo__awardSection--item-subtitle">
+                {/* name */}
+                Mejor programador, Hackaton Platzi
+              </h3>
+                {/* date */}
+              <p className="cv-tokyo__awardSection--item-date">
+                Ene 2025
+              </p>
+              <div className="cv-tokyo__awardSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+            <div className="cv-tokyo__awardSection--item">
+              <h3 className="cv-tokyo__awardSection--item-subtitle">
+                {/* name */}
+                Mejor programador, Hackaton Platzi
+              </h3>
+                {/* date */}
+              <p className="cv-tokyo__awardSection--item-date">
+                Ene 2025
+              </p>
+              <div className="cv-tokyo__awardSection--item-date-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Tenetur earum laudantium cum rerum maxime ea ratione 
+                veniam odio vel praesentium?
+              </div>
+            </div>
+          </div>
+
+          {/* referenceSection - horizontal 
+            [
+              {
+                id: string;
+                name: string;
+                company: string;
+                phone: string;
+                email: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__referenceSection">
+            <h2 className="cv-tokyo__referenceSection--title">
+              Referencias Laborales
+            </h2>
+            <div className="cv-tokyo__referenceSection--item">
+              <p className="cv-tokyo__referenceSection--item-head">
+                {/* name */}
+                <span>Mejor programador, Hackaton Platzi</span>
+                {/* company */}
+                <span>Platzi</span>
+              </p>
+              <p className="cv-tokyo__referenceSection--item-phone">
+                +57 321151555
+              </p>
+              <p className="cv-tokyo__referenceSection--item-email">
+                uzbaldo.dev@gmail.com
+              </p>
+            </div>
+            <div className="cv-tokyo__referenceSection--item">
+              <p className="cv-tokyo__referenceSection--item-head">
+                {/* name */}
+                <span>Mejor programador, Hackaton Platzi</span>
+                {/* company */}
+                <span>Platzi</span>
+              </p>
+              <p className="cv-tokyo__referenceSection--item-phone">
+                +57 321151555
+              </p>
+              <p className="cv-tokyo__referenceSection--item-email">
+                uzbaldo.dev@gmail.com
+              </p>
+            </div>
+          </div>
+
+          {/* customSection - horizontal 
+            [
+              {
+                id: string;
+                value: string;
+              }
+            ]
+          */}
+          <div className="cv-tokyo__customSection">
+            <h2 className="cv-tokyo__customSection--title">
+              Campo Personalizado
+            </h2>
+            <div className="cv-tokyo__customSection--item">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+              Pariatur culpa accusamus eaque repellendus qui excepturi 
+              totam et explicabo, officia nulla?
+            </div>
+            <div className="cv-tokyo__customSection--item">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+              Pariatur culpa accusamus eaque repellendus qui excepturi 
+              totam et explicabo, officia nulla?
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+export default CvTokyo

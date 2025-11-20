@@ -1,7 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IIdentityData } from "../interfaces/IIdentity";
 
-const initialState: IIdentityData = {};
+const initialState: IIdentityData = {
+  photo: null,
+  firstName: "",
+  lastName: "",
+  jobTitle: "",
+  allowCvPhoto: true
+};
 
 const identitySlice = createSlice({
   name: "identity",
@@ -24,9 +30,6 @@ const identitySlice = createSlice({
     },
     setAllowCvPhoto(state, action: PayloadAction<boolean>){
       state.allowCvPhoto = action.payload
-    },
-    resetIdentity() {
-      return {};
     }
   },
 });
@@ -37,8 +40,6 @@ export const {
   setFirstName,
   setLastName,
   setJobTitle,
-  resetIdentity,
-  setAllowCvPhoto
 } = identitySlice.actions;
 
 export default identitySlice.reducer;
