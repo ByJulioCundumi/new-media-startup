@@ -12,6 +12,7 @@ function SectionProgress() {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const [addSections, setAddSections] = useState(false)
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const scrollUp = () => {
     containerRef.current?.scrollBy({ top: -150, behavior: "smooth" });
@@ -20,6 +21,20 @@ function SectionProgress() {
   const scrollDown = () => {
     containerRef.current?.scrollBy({ top: 150, behavior: "smooth" });
   };
+
+  useEffect(() => {
+  function handleClickOutside(e: MouseEvent) {
+    if (mainRef.current && !mainRef.current.contains(e.target as Node)) {
+      setAddSections(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
 
   /* ─────────────────────────────────────────────────── */
   /* LOGICA PARA ARRASTRAR EL COMPONENTE                 */
@@ -66,6 +81,7 @@ function SectionProgress() {
 
   return (
     <div
+      ref={mainRef}
       className="section-progress"
       style={{
         top: position.y,
@@ -140,7 +156,7 @@ function SectionProgress() {
       </div>
 
       {/* Contenedor inferior */}
-      <div className="section-progress__arrow-container section-progress__arrow-container--down" onClick={()=>setAddSections(!addSections)}>
+      <div className="section-progress__arrow-container section-progress__arrow-container--down to-click" onClick={()=>setAddSections(!addSections)}>
         <span className="section-progress__arrow-text"><MdFormatListBulletedAdd /> Agregar sección</span>
         <span>0/7</span>
       </div>

@@ -183,6 +183,10 @@
   }
 }
 
+.to-click{
+  cursor: pointer;
+}
+
 /* Permite mover el componente */
 .section-progress {
   position: absolute; // IMPORTANTE: antes estaba fixed
