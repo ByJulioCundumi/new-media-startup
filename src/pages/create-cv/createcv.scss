@@ -1,72 +1,21 @@
 .create-cv {
-  padding: 9rem 0rem;
+  padding: 6rem 0rem;
   min-height: 100vh;
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: #ffffff; // fondo blanco
-
-  /* ===== Estrellas sutiles (casi imperceptibles) ===== */
-  &::before,
-  &::after,
-  .stars-layer {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 160%;
-    height: 160%;
-    pointer-events: none;
-  }
-
-  /* ===== Capa 1 — puntos MUY finos gris claro ===== */
-  &::before {
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(0,0,0,0.08) 0%, transparent 60%),
-      radial-gradient(1px 1px at 40% 80%, rgba(0,0,0,0.06) 0%, transparent 60%),
-      radial-gradient(1px 1px at 80% 60%, rgba(0,0,0,0.07) 0%, transparent 60%),
-      radial-gradient(1px 1px at 30% 50%, rgba(0,0,0,0.05) 0%, transparent 60%);
-    opacity: 0.3; /* Super suave */
-    animation: softMove 90s linear infinite;
-  }
-
-  /* ===== Capa 2 — estrellas medianas más dispersas ===== */
-  &::after {
-    background-image:
-      radial-gradient(2px 2px at 25% 40%, rgba(0,0,0,0.08) 0%, transparent 70%),
-      radial-gradient(2px 2px at 60% 10%, rgba(0,0,0,0.05) 0%, transparent 70%),
-      radial-gradient(2px 2px at 75% 80%, rgba(0,0,0,0.06) 0%, transparent 70%);
-    opacity: 0.25;
-    animation: softMove 150s linear infinite, softBlink 6s ease-in-out infinite alternate;
-  }
-
-  /* ===== Capa 3 — motas grandes super difusas (textura premium) ===== */
-  .stars-layer {
-    background-image:
-      radial-gradient(5px 5px at 50% 20%, rgba(0,0,0,0.05) 0%, transparent 80%),
-      radial-gradient(4px 4px at 20% 70%, rgba(0,0,0,0.04) 0%, transparent 80%),
-      radial-gradient(5px 5px at 80% 50%, rgba(0,0,0,0.04) 0%, transparent 80%);
-    opacity: 0.18;
-    mix-blend-mode: multiply;
-    animation: softMove 200s linear infinite;
-  }
+  background: #f1f1f1; // fondo blanco
 
   /* Mantener contenido encima */
   &__template {
     width: fit-content;
-    margin: 0 auto;
     position: relative;
     z-index: 10;
+    
   }
-}
 
-/* ===== Animaciones suaves ===== */
-@keyframes softMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-8%, -8%); }
-}
-
-@keyframes softBlink {
-  0% { opacity: 0.18; }
-  100% { opacity: 0.32; }
+  &__main{
+    display: grid;
+    grid-template-columns: 500px 1fr;
+  }
 }

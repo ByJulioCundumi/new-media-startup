@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import type { IState } from "../../../interfaces/IState";
@@ -16,7 +16,7 @@ import {
 import { FaLink, FaGraduationCap } from "react-icons/fa";
 import { MdFormatListBulletedAdd, MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
-import { BiEditAlt, BiSolidLayerPlus } from "react-icons/bi";
+import { BiEditAlt } from "react-icons/bi";
 import { TbNewSection } from "react-icons/tb";
 
 import "./addsection.scss";
@@ -32,15 +32,14 @@ const AddSections: React.FC = () => {
   const dispatch = useDispatch();
   const cvSections = useSelector((state: IState) => state.cvSections);
 
-  // Lista base con name + icon
   const sections = [
-    { name: "personalInfoSection", icon: <PiIdentificationBadgeFill /> },
-    { name: "linkSection", icon: <FaLink /> },
-    { name: "courseSection", icon: <FaGraduationCap /> },
-    { name: "hobbieSection", icon: <PiMaskHappyFill /> },
-    { name: "referenceSection", icon: <MdRateReview /> },
-    { name: "awardSection", icon: <BsAwardFill /> },
-    { name: "customSection", icon: <BiEditAlt /> },
+    { name: "personalInfoSection", label: "Información Personal", icon: <PiIdentificationBadgeFill /> },
+    { name: "linkSection", label: "Enlaces", icon: <FaLink /> },
+    { name: "courseSection", label: "Cursos", icon: <FaGraduationCap /> },
+    { name: "hobbieSection", label: "Hobbies", icon: <PiMaskHappyFill /> },
+    { name: "referenceSection", label: "Referencias", icon: <MdRateReview /> },
+    { name: "awardSection", label: "Premios", icon: <BsAwardFill /> },
+    { name: "customSection", label: "Personalizado", icon: <BiEditAlt /> },
   ];
 
   const toggleSection = (name: string, enabled: boolean) => {
@@ -74,7 +73,6 @@ const AddSections: React.FC = () => {
     }
   };
 
-  // Calcular cuántas están activas
   const activeSections = sections.filter((sec) => {
     const match = cvSections.sections.find((c) => c.name === sec.name);
     return match?.enabled;
@@ -82,41 +80,38 @@ const AddSections: React.FC = () => {
 
   return (
     <div className="add-sections">
-      <div className="add-sections-inner">
+      <div className="as-list">
+        {sections.map((sec) => {
+          const data = cvSections.sections.find((s) => s.name === sec.name);
+          const enabled = data?.enabled ?? false;
 
-        <div className="as-header">
-          <h3><MdFormatListBulletedAdd /> Agregar Secciones</h3>
-          <span className="counter">
-            <TbNewSection /> {activeSections}/7
-          </span>
-        </div>
+          const finalTitle = data?.title || sec.label;
 
-        <div className="as-grid">
-          {sections.map((sec) => {
-            const data = cvSections.sections.find((s) => s.name === sec.name);
-            const enabled = data?.enabled ?? false;
+          return (
+            <div
+              key={sec.name}
+              className={`as-item ${enabled ? "enabled" : "disabled"}`}
+              onClick={() => toggleSection(sec.name, enabled)}
+            >
+              <div className="as-left">
+                <div className="as-icon-box">
+                  {sec.icon}
+                </div>
 
-            // tomar title desde el estado
-            let finalTitle = data?.title || "";
-
-            return (
-              <button
-                key={sec.name}
-                className={`sec-item ${enabled ? "enabled" : "disabled"}`}
-                onClick={() => toggleSection(sec.name, enabled)}
-              >
-                <span className="icon">{sec.icon}</span>
-
-                <span className="label">
-                  {finalTitle}
-                  <small className="state-text">
-                    {enabled ? "(Activa)" : "(Inactiva)"}
+                <div className="as-texts">
+                  <span className="as-title">{finalTitle}</span>
+                  <small className="as-state">
+                    {enabled ? "Sección activa" : "Inactiva"}
                   </small>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                </div>
+              </div>
+
+              <div className="as-toggle-indicator">
+                {enabled ? "✓" : "+"}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

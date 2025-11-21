@@ -8,11 +8,11 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 12px 0px;
+  padding: 10px 0px;
   
   padding-left: 110px;
   padding-right: 20px;
-  z-index: 50;
+  z-index: 20;
 }
 
 .toolbar-cv-main{
@@ -20,7 +20,7 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
-  max-width: 800px;
+  max-width: 700px;
 }
 
 .toolbar-cv-buttons {
@@ -180,7 +180,7 @@
   align-items: center;
   gap: 6px;
 
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #060a46;
   letter-spacing: -0.3px;
@@ -222,7 +222,6 @@
 
 .toolbar-cv-title-input.editing {
   opacity: 0.75;
-  border-bottom: 1px solid #bde7ff;
   width: fit-content;
 }
 

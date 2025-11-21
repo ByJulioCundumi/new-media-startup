@@ -1,62 +1,121 @@
 .section-progress {
   position: fixed;
   top: 5.5rem;
-  left: 7rem;
-  width: 280px;
-  height: calc(100vh - 6rem);
+  left: 6.5rem;
+  width: 320px;
+  height: calc(100vh - 7rem);
   display: flex;
   flex-direction: column;
+  background-color: white;
+  padding: 0.8rem;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.062);
+  border: 1px solid rgba(0, 0, 0, 0.089);
 
-  /* Botones flecha */
-  &__arrow-btn {
+  /* ────────────────────────────────────────────── */
+  /* CONTENEDORES DE LAS FLECHAS (texto + botón)   */
+  /* ────────────────────────────────────────────── */
+  &__eye{
+    font-size: 1.9rem;
+    background-color: #f5f5f5;
+    padding: 0rem 0.5rem;
+    border-radius: 5px;
+  }
+
+  &__arrow-box{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__arrow-container {
     width: 100%;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(6px);
     border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 0.4rem 0;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0.45rem 0.6rem;
     border-radius: 6px;
-    transition: 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 
-    svg {
-      font-size: 1.4rem;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+
+    
+  }
+
+  &__arrow-container--up {
+    margin-bottom: 0.6rem;
+  }
+
+  &__arrow-container--down {
+    margin-top: 0.6rem;
 
     &:hover {
       background: rgba(240, 240, 240, 0.9);
     }
   }
 
-  &__arrow-btn--up {
-    margin-bottom: 0.6rem;
+  /* Texto dentro de los contenedores */
+  &__arrow-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    padding: 0.4rem 0.2rem;
+
+    svg{
+      font-size: 1.1rem;
+      margin-bottom: -0.2rem;
+      margin-right: 0.5rem;
+    }
   }
 
-  &__arrow-btn--down {
-    margin-top: 0.6rem;
+  /* Botón solo para la flecha */
+  &__arrow-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .section-progress__arrow-icon {
+      font-size: 1.2rem;
+      color: #444;
+      transition: 0.15s ease;
+    }
+
+    &:hover .section-progress__arrow-icon {
+      transform: scale(1.1);
+    }
   }
 
-  /* Lista scrollable */
+  /* ────────────────────────────────────────────── */
+  /* CONTENEDOR SCROLLABLE                         */
+  /* ────────────────────────────────────────────── */
   &__list {
     display: flex;
     flex-direction: column;
     gap: 0rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-right: 0.5rem;
     height: 100%;
 
     /* Ocultar scrollbar */
     scrollbar-width: none;
     -ms-overflow-style: none;
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
-  /* Item */
+  /* ────────────────────────────────────────────── */
+  /* ITEM DE LA LISTA                               */
+  /* ────────────────────────────────────────────── */
   &__item {
     width: 100%;
     display: flex;
@@ -76,11 +135,15 @@
     }
   }
 
-  /* Contenedor principal del item */
+  /* Contenedor interno */
   &__item--box {
     display: flex;
     align-items: center;
     gap: 0.7rem;
+
+    &-first{
+      padding-left: 2rem;
+    }
   }
 
   /* Icono */
@@ -88,6 +151,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 0.7rem 0.8rem;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,38 +162,47 @@
     }
   }
 
-  /* Texto */
+  /* Etiqueta */
   &__label {
     color: rgb(255, 80, 80);
     background-color: rgba(255, 184, 184, 0.25);
     padding: 0.35rem 0.8rem;
     border-radius: 5px;
+
     font-size: 0.8rem;
     font-weight: 500;
+
     white-space: nowrap;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    svg{
-        font-size: 1rem;
+    svg {
+      font-size: 1rem;
     }
   }
 }
 
-.section-progress__arrow-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-
-  .section-progress__arrow-text {
-    font-size: 12px;
-    font-weight: 500;
-    color: #555;
-  }
-
-  .section-progress__arrow-icon {
-    font-size: 20px;
-  }
+/* Permite mover el componente */
+.section-progress {
+  position: absolute; // IMPORTANTE: antes estaba fixed
+  user-select: none; // Evita seleccionar texto mientras arrastras
+  cursor: default;
 }
+
+/* Área donde se agarra el componente */
+.section-progress__drag-area {
+  cursor: grab;
+}
+
+.section-progress__drag-area:active {
+  cursor: grabbing;
+}
+
+/* Estilo del ícono de arrastre */
+.section-progress__drag-icon {
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+
