@@ -1,0 +1,135 @@
+.section-progress {
+  position: fixed;
+  top: 5.5rem;
+  left: 7rem;
+  width: 280px;
+  height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+
+  /* Botones flecha */
+  &__arrow-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.4rem 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    transition: 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    svg {
+      font-size: 1.4rem;
+    }
+
+    &:hover {
+      background: rgba(240, 240, 240, 0.9);
+    }
+  }
+
+  &__arrow-btn--up {
+    margin-bottom: 0.6rem;
+  }
+
+  &__arrow-btn--down {
+    margin-top: 0.6rem;
+  }
+
+  /* Lista scrollable */
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    overflow-y: scroll;
+    padding-right: 0.5rem;
+    height: 100%;
+
+    /* Ocultar scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* Item */
+  &__item {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #ffffff;
+    border-radius: 10px;
+
+    transition: 0.2s ease;
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+
+    &:hover {
+      background: #fafafa;
+    }
+  }
+
+  /* Contenedor principal del item */
+  &__item--box {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  /* Icono */
+  &__icon {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+
+    svg {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Texto */
+  &__label {
+    color: rgb(255, 80, 80);
+    background-color: rgba(255, 184, 184, 0.25);
+    padding: 0.35rem 0.8rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg{
+        font-size: 1rem;
+    }
+  }
+}
+
+.section-progress__arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  .section-progress__arrow-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+  }
+
+  .section-progress__arrow-icon {
+    font-size: 20px;
+  }
+}

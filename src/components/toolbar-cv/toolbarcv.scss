@@ -3,10 +3,24 @@
   display: flex;
   justify-content: space-between;
   background: #ffffff;
-  padding: 12px 0px;
-  position: sticky;
+  align-items: center;
+  position: fixed;
   top: 0;
-  z-index: 30;
+  left: 0;
+  right: 0;
+  padding: 12px 0px;
+  
+  padding-left: 110px;
+  padding-right: 20px;
+  z-index: 50;
+}
+
+.toolbar-cv-main{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  max-width: 800px;
 }
 
 .toolbar-cv-buttons {
@@ -30,6 +44,10 @@
   font-weight: 600;
   color: #2e325a;
   transition: 0.25s ease;
+
+  &__back{
+    margin-right: 1rem;
+  }
 
   svg {
     font-size: 16px;
@@ -128,4 +146,138 @@
       transform: translateX(18px);
     }
   }
+}
+
+.toolbar-cv-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #2e325a;
+  margin-right: 1rem;
+
+  .logo-icon {
+    font-size: 24px;
+    color: #0073ff;
+  }
+
+  .logo-text {
+    white-space: nowrap;
+  }
+}
+
+
+.toolbar-cv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -1.1rem;
+}
+
+.toolbar-cv-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #060a46;
+  letter-spacing: -0.3px;
+
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    background: #f0f3ff;
+    color: #0073ff;
+    padding: 4px 12px;
+    border-radius: 8px;
+  }
+
+  svg {
+    opacity: 0.7;
+    font-size: 1.05rem;
+  }
+}
+
+/* Editable input */
+.toolbar-cv-title-input {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: #090c2b;
+  outline: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.toolbar-cv-title-input.editing {
+  opacity: 0.75;
+  border-bottom: 1px solid #bde7ff;
+  width: fit-content;
+}
+
+/* Edit button */
+.toolbar-cv-edit-btn {
+  background: transparent;
+  border: none;
+  color: #0073ff;
+  font-size: 22px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.2s ease;
+  cursor: pointer;
+  margin-bottom: -0.3em;
+  margin-right: -0.3rem;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+/* ================================
+   BARRA DE PROGRESO DEL CV
+================================ */
+.toolbar-cv-progress {
+  width: 100%;
+  padding: 6px 110px 0 110px;  /* alineado con tu wrapper */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.toolbar-cv-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: #e8eaf7;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.toolbar-cv-progress-fill {
+  height: 100%;
+  background: #0073ff;
+  width: 0%;
+  max-width: 100%;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.toolbar-cv-progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e325a;
+  min-width: 40px;
+  text-align: right;
 }

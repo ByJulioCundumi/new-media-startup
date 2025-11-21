@@ -10,11 +10,11 @@ import { BsEmojiSunglasses } from "react-icons/bs";
 import { RiEditFill, RiFileEditLine } from "react-icons/ri";
 
 const ProgressBar: React.FC = () => {
+  const [progress, setProgress] = useState(0);
+  const cvSections = useSelector((state: IState) => state.cvSections);
   const [title, setTitle] = useState("Mi CV Profesional");
   const [editing, setEditing] = useState(false);
-  const [progress, setProgress] = useState(0);
 
-  const cvSections = useSelector((state: IState) => state.cvSections);
 
   const handleEditTitle = () => setEditing(true);
 
@@ -82,8 +82,7 @@ const ProgressBar: React.FC = () => {
 
 
   return (
-    <div className="progressbar">
-      <div className="progress-bar-container">
+    <div className="progress-bar-container">
 
         <div className="progress-bar-header">
           {editing ? (
@@ -129,7 +128,6 @@ const ProgressBar: React.FC = () => {
           <span className="progress-bar-text"><div className={`progress-indicator ${progressColorClass}`}>{progress}%</div> {getProgressIcon()}</span>
         </div>
       </div>
-    </div>
   );
 };
 

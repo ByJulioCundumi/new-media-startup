@@ -33,6 +33,12 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import SortableSection from "./sortable-section/SortableSection";
 import type { ICvSectionsState } from "../../interfaces/ICvSections";
 import ColorFontPopup from "../../components/color-font-popup/ColorFontPopup";
+import { LuUserRoundCheck } from "react-icons/lu";
+import { PiIdentificationBadge, PiStudentLight } from "react-icons/pi";
+import { MdOutlineWorkOutline } from "react-icons/md";
+import { GrGrow } from "react-icons/gr";
+import { TbLayoutGridAdd } from "react-icons/tb";
+import SectionProgress from "../../components/section-progress/SectionProgress";
 
 function CreateCv() {
   const dispatch = useDispatch();
@@ -134,94 +140,13 @@ function CreateCv() {
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplate)
     ?.component;
 
-  /** Mapa de secciones */
-  const sectionMap: Record<string, React.FC<any>> = {
-    identitySection: IdentitySection,
-    contactSection: ContactSection,
-    profileSection: ProfileSection,
-    educationSection: EducationSection,
-    experienceSection: ExperienceSection,
-    skillSection: SkillsSection,
-    languageSection: LanguagesSection,
-    personalInfoSection: PersonalInfoSection,
-    linkSection: LinksSection,
-    courseSection: CoursesSection,
-    hobbieSection: HobbiesSection,
-    referenceSection: ReferencesSection,
-    awardSection: RelevantAwards,
-    customSection: CustomSection,
-  };
-
-  // DnD
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (!over) return;
-    if (active.id === over.id) return;
-
-    const oldIndex = order.indexOf(String(active.id));
-    const newIndex = order.indexOf(String(over.id));
-
-    if (oldIndex === -1 || newIndex === -1) return;
-
-    dispatch(reorderSections({ from: oldIndex, to: newIndex }));
-  }
-
   return (
-    <section className="create-cv">
-      <div className="create-cv__body">
-        <div className="create-cv__left">
-          <ProgressBar />
+    <div className="create-cv">
+        <ToolbarCV />
+        <SectionProgress/>
+        <div className="stars-layer"></div>
 
-          <div
-            className="create-cv__left--sections"
-            ref={sectionsContainerRef}
-          >
-            <DndContext
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={order}
-                strategy={verticalListSortingStrategy}
-              >
-                {order.map((sectionName) => {
-                  const sectionDef = sections.find(
-                    (s) => s.name === sectionName
-                  );
-                  if (!sectionDef) return null;
-
-                  if (!sectionDef.enabled && sectionName !== "identitySection")
-                    return null;
-
-                  const SectionComponent = sectionMap[sectionName];
-                  if (!SectionComponent) return null;
-
-                  return (
-                    <SortableSection key={sectionName} id={sectionName}>
-                      <div
-                        ref={(el) => {
-                          sectionRefs.current[sectionName] = el;
-                        }}
-                        data-id={sectionName}
-                      >
-                        <SectionComponent />
-                      </div>
-                    </SortableSection>
-                  );
-                })}
-              </SortableContext>
-            </DndContext>
-
-            <AddSections />
-          </div>
-        </div>
-
-        <div className="create-cv__right">
-          <div className="cv-preview-header">
-            <ToolbarCV />
-          </div>
-
-          <div className="cv-preview-body">
+          <div className="create-cv__template">
             {SelectedTemplate && (
               <SelectedTemplate
                 personalInfo={personalInfo}
@@ -243,12 +168,10 @@ function CreateCv() {
               />
             )}
           </div>
-        </div>
-      </div>
 
-      {/* === POPUP COLOR & FUENTE === */}
-      <ColorFontPopup/>
-    </section>
+          {/* === POPUP COLOR & FUENTE === */}
+          <ColorFontPopup/>
+        </div>
   );
 }
 
