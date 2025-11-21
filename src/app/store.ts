@@ -15,6 +15,7 @@ import profileSlice from "../reducers/profileSlice";
 import cvSectionsSlice from "../reducers/cvSectionsSlice";
 import identitySlice from "../reducers/identitySlice";
 import contactSlice from "../reducers/contactSlice";
+import colorFontSlice from "../reducers/colorFontSlice"
 
 export default configureStore({
     reducer: {
@@ -33,6 +34,7 @@ export default configureStore({
         profileSection: profileSlice,
         cvSections: cvSectionsSlice,
         identity: identitySlice,
-        contactEntries: contactSlice
+        contactEntries: contactSlice,
+        colorFont: colorFontSlice
     }
 })

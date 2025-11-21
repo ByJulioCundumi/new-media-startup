@@ -1,141 +1,219 @@
-import React, { useState, useEffect } from "react";
-import { FiX } from "react-icons/fi";
+import React, { useEffect, useCallback, useMemo, useState, useRef } from "react";
+import {
+  FiX,
+  FiRefreshCw,
+  FiType,
+  FiDroplet,
+  FiInfo,
+} from "react-icons/fi";
+import { IoColorPaletteSharp } from "react-icons/io5";
+
 import "./colorfontpopup.scss";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  selectedColor: string;
-  onColorChange: (color: string) => void;
-  selectedFont: string;
-  onFontChange: (font: string) => void;
-}
+import { useDispatch, useSelector } from "react-redux";
 
-const suggestedColors = [
-  "#1E88E5", "#E53935", "#43A047", "#FB8C00",
-  "#8E24AA", "#3949AB", "#00897B", "#6D4C41",
-];
+import {
+  closePopup,
+  setTitleColor,
+  setProfessionColor,
+  setSectionTitleColor,
+  setItemColor,
+  setQrColor,
+  setFont,
+  restoreDefaults,
+  loadTemplateDefaults,
+  loadStoredValues,
+  setPhotoBorderColor,
+} from "../../reducers/colorFontSlice";
+import type { IState } from "../../interfaces/IState";
+import { RiDraggable } from "react-icons/ri";
+
+const ColorFontPopup: React.FC = () => {
+  const dispatch = useDispatch();
+  const { isOpen, selected, defaults } = useSelector(
+    (state: IState) => state.colorFont
+  );
+  const DEFAULT_TEMPLATE = useSelector((state:IState)=>state.colorFont.defaults)
+
+  // 🖱 estado para mover el popup
+  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [dragging, setDragging] = useState(false);
+  const offsetRef = useRef({ x: 0, y: 0 });
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
 const fontOptions = [
+  "Poppins",
   "Roboto",
   "Montserrat",
   "Open Sans",
   "Lato",
-  "Poppins",
   "Merriweather",
   "Playfair Display",
   "Inter",
 ];
 
-const ColorFontPopup: React.FC<Props> = ({
-  isOpen,
-  onClose,
-  selectedColor,
-  onColorChange,
-  selectedFont,
-  onFontChange,
-}) => {
-  const [manualColor, setManualColor] = useState(selectedColor);
-  const [cssFontCode, setCssFontCode] = useState("");
+  // Iniciar drag
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setDragging(true);
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect) {
+      offsetRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    }
+  };
+
+  // Mover popup
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!dragging) return;
+    setPosition({
+      x: e.clientX - offsetRef.current.x,
+      y: e.clientY - offsetRef.current.y,
+    });
+  };
+
+  // Terminar drag
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
 
   useEffect(() => {
-    setManualColor(selectedColor);
-  }, [selectedColor]);
+    if (dragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    } else {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
 
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [dragging]);
+
+  /** LOAD DEFAULT TEMPLATE ON FIRST OPEN */
   useEffect(() => {
-    setCssFontCode(`font-family: '${selectedFont}', sans-serif;`);
-  }, [selectedFont]);
+    if (!isOpen) return;
+    dispatch(loadTemplateDefaults(DEFAULT_TEMPLATE));
+
+    const stored = localStorage.getItem("cv_color_config");
+    if (stored) dispatch(loadStoredValues(JSON.parse(stored)));
+  }, [isOpen, dispatch]);
+
+  /** SAVE AUTO */
+  useEffect(() => {
+    if (!isOpen) return;
+    localStorage.setItem("cv_color_config", JSON.stringify(selected));
+  }, [selected, isOpen]);
+
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) dispatch(closePopup());
+    },
+    [dispatch]
+  );
+
+  const hasChanges = useMemo(() => {
+    return JSON.stringify(selected) !== JSON.stringify(defaults);
+  }, [selected, defaults]);
 
   if (!isOpen) return null;
 
-  return (
-    <div className="cfp-overlay">
-      <div className="cfp-container">
+  const ColorBox = (label: string, value: string, setter: (v: string) => any) => (
+    <div className="cfp-box">
+      <div className="cfp-box-header">
+        <FiDroplet className="cfp-box-icon" />
+        <span>{label}</span>
+      </div>
 
-        <div className="cfp-header">
-          <h3>Personalizar Tu CV</h3>
-          <button className="cfp-close" onClick={onClose}>
+      <div className="cfp-inner-row">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setter(e.target.value)}
+          className="cfp-text-input"
+          placeholder="#000000"
+        />
+
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => setter(e.target.value)}
+          className="cfp-color-btn"
+        />
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="cfp-overlay" onMouseDown={handleOverlayClick}>
+      <div
+        ref={containerRef}
+        className="cfp-container"
+        style={{ top: position.y, left: position.x, position: "absolute" }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        {/* HEADER draggable */}
+        <div className="cfp-header" onMouseDown={handleMouseDown} style={{ cursor: "move" }}>
+          <h3> <RiDraggable /> Personaliza Tu CV</h3>
+          <button className="cfp-close" onClick={() => dispatch(closePopup())}>
             <FiX />
           </button>
         </div>
 
-        {/* Selector de color manual */}
-        <div className="cfp-section">
-          <label>Color manual</label>
-
-          <div className="cfp-color-manual-wrapper">
-            <input
-              type="text"
-              value={manualColor}
-              onChange={(e) => setManualColor(e.target.value)}
-              placeholder="#000000 o rgb(0,0,0)"
-              className="cfp-color-manual"
-            />
-            <button
-              className="cfp-apply-btn"
-              onClick={() => onColorChange(manualColor)}
-            >
-              Aplicar
-            </button>
-
-            <div
-              className="cfp-color-preview"
-              style={{ backgroundColor: manualColor }}
-            />
-          </div>
+        {/* resto del contenido... */}
+        <div className="cfp-subtitle">
+          <IoColorPaletteSharp />
+          <span>Colores</span>
         </div>
 
-        {/* Selector de color nativo */}
-        <div className="cfp-section">
-          <label>Selector de color</label>
-          <input
-            type="color"
-            value={selectedColor}
-            onChange={(e) => onColorChange(e.target.value)}
-            className="cfp-color-input"
-          />
+        <div className="cfp-grid">
+          {ColorBox("Foto", selected.photoBorderColor, (c) => dispatch(setPhotoBorderColor(c)))}
+          {ColorBox("Título", selected.titleColor, (c) => dispatch(setTitleColor(c)))}
+          {ColorBox("Profesión", selected.professionColor, (c) =>
+            dispatch(setProfessionColor(c))
+          )}
+          {ColorBox("Secciones", selected.sectionTitleColor, (c) =>
+            dispatch(setSectionTitleColor(c))
+          )}
+          {ColorBox("Ítems", selected.itemColor, (c) => dispatch(setItemColor(c)))}
+          {ColorBox("Código QR", selected.qrColor, (c) => dispatch(setQrColor(c)))}
         </div>
 
-        {/* Colores sugeridos */}
-        <div className="cfp-section">
-          <label>Colores sugeridos</label>
-          <div className="cfp-suggested-colors">
-            {suggestedColors.map((color) => (
-              <button
-                key={color}
-                className={`cfp-color-item ${
-                  selectedColor === color ? "active" : ""
-                }`}
-                style={{ backgroundColor: color }}
-                onClick={() => onColorChange(color)}
-              />
-            ))}
-          </div>
+        <div className="cfp-subtitle">
+          <FiType />
+          <span>Tipografía</span>
         </div>
 
-        {/* Selector de fuente */}
-        <div className="cfp-section">
-          <label>Tipo de fuente</label>
-
+        <div className="cfp-font-wrapper">
           <select
-            value={selectedFont}
-            onChange={(e) => onFontChange(e.target.value)}
+            value={selected.font}
+            onChange={(e) => dispatch(setFont(e.target.value))}
             className="cfp-font-select"
           >
-            {fontOptions.map((font) => (
-              <option key={font} value={font} style={{ fontFamily: font }}>
-                {font}
+            {fontOptions.map((f) => (
+              <option key={f} value={f}>
+                {f}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="cfp-footer">
-          <button className="cfp-accept" onClick={onClose}>
-            Listo
-          </button>
-        </div>
-
+        <button
+          className={`cfp-reset-btn ${!hasChanges ? "disabled" : ""}`}
+          disabled={!hasChanges}
+          onClick={() => hasChanges && dispatch(restoreDefaults())}
+        >
+          {hasChanges ? <FiRefreshCw /> : <FiInfo />}
+          <span>
+            {hasChanges
+              ? "Restaurar cambios"
+              : "Valores predeterminados de la plantilla"}
+          </span>
+        </button>
       </div>
     </div>
   );

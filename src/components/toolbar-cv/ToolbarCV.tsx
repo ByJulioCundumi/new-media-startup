@@ -9,14 +9,12 @@ import { GiBroom } from "react-icons/gi";
 import { LuEye, LuScanQrCode } from "react-icons/lu";
 import "./toolbarcv.scss";
 import ColorFontPopup from "../color-font-popup/ColorFontPopup";
+import { useDispatch } from "react-redux";
+import { openPopup } from "../../reducers/colorFontSlice";
 
 const ToolbarCV: React.FC = () => {
+  const dispatch = useDispatch()
   const [showQR, setShowQR] = useState(true);
-
-  // === POPUP ===
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [cvColor, setCvColor] = useState("#1E88E5");
-  const [cvFont, setCvFont] = useState("Roboto");
 
   return (
     <div className="toolbar-cv-wrapper">
@@ -25,9 +23,9 @@ const ToolbarCV: React.FC = () => {
         {/* === ABRIR POPUP === */}
         <button
           className="toolbar-cv-btn ghost"
-          onClick={() => setIsPopupOpen(true)}
+          onClick={()=> dispatch(dispatch(openPopup()))}
         >
-          <FaPalette />
+          <FaPalette/>
           Editar
         </button>
 
@@ -38,7 +36,7 @@ const ToolbarCV: React.FC = () => {
 
         <button className="toolbar-cv-btn ghost">
           <GiBroom />
-          Limpiar
+          
         </button>
       </div>
 
@@ -69,16 +67,6 @@ const ToolbarCV: React.FC = () => {
           <FaSave /> Guardar
         </button>
       </div>
-
-      {/* === POPUP COLOR & FUENTE === */}
-      <ColorFontPopup
-        isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-        selectedColor={cvColor}
-        onColorChange={setCvColor}
-        selectedFont={cvFont}
-        onFontChange={setCvFont}
-      />
     </div>
   );
 };

@@ -6,6 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { QRCodeSVG } from "qrcode.react";
 import type { IState } from "../../interfaces/IState";
+import { loadTemplateDefaults, resetToTemplateDefaults } from "../../reducers/colorFontSlice";
+
+export const cvTokyoDefaults = {
+  photoBorderColor: "#000000",
+  titleColor: "#051235",
+  professionColor: "#0A2A7A",
+  sectionTitleColor: "#1E1E1E",
+  itemColor: "#555555",
+  qrColor: "#000000",
+  font: "Poppins",
+};
 
 const CvTokyo: React.FC<ITemplateProps> = ({
   identitySection,
@@ -25,6 +36,19 @@ const CvTokyo: React.FC<ITemplateProps> = ({
   sectionsConfig,
   sectionsOrder,
 }) => {
+  const dispatch = useDispatch()
+  const {photoBorderColor, titleColor, professionColor, itemColor, qrColor, sectionTitleColor, font} = useSelector((state:IState)=> state.colorFont.selected)
+  // Objeto de estilos para usar fácilmente
+  const styles = {
+    photoBorder: photoBorderColor || cvTokyoDefaults.photoBorderColor,
+    title: titleColor || cvTokyoDefaults.titleColor,
+    profession: professionColor || cvTokyoDefaults.professionColor,
+    sectionTitle: sectionTitleColor || cvTokyoDefaults.sectionTitleColor,
+    text: itemColor || cvTokyoDefaults.itemColor,
+    qr: qrColor || cvTokyoDefaults.qrColor,
+    fontFamily: font || cvTokyoDefaults.font,
+  };
+  //
   const { photo, firstName, lastName, jobTitle, allowCvPhoto } = identitySection || {};
   const fullName = `${firstName || ""} ${lastName || ""}`.trim() || "";
   const occupation = jobTitle || "";
@@ -35,12 +59,20 @@ const CvTokyo: React.FC<ITemplateProps> = ({
   const hasLeftElements = allowCvPhoto && photo;
   const hasRightElements = allowCvQr && onlineCvUrl?.trim() !== "";; // cuando habilites el QR real
   const shouldSpace = hasLeftElements || hasRightElements;
-
   const sections = useSelector((state: IState) => state.cvSections.sections);
   const sectionByName = sections.reduce((acc: Record<string, any>, s: any) => {
     acc[s.name] = s;
     return acc;
   }, {});
+
+  useEffect(() => {
+    dispatch(loadTemplateDefaults(cvTokyoDefaults));
+
+    // ← SOLO se ejecuta cuando el componente se DESMONTA
+      return () => {
+        dispatch(resetToTemplateDefaults());
+      };
+  }, [dispatch]);
 
   // Funcion renderizadora de secciones dinamica
   const renderSection = (sectionName: string) => {
@@ -49,12 +81,12 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "contactSection":
       return contactSection.length > 0 && (
         <div key="contact" className="cv-tokyo__contactSection">
-          <h2 className="cv-tokyo__contactSection--title">
+          <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
           </h2>
               {contactSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__contactSection--item">
-                  <h3 className="cv-tokyo__contactSection--item-name">{item.type}</h3>
+                  <h3 className="cv-tokyo__contactSection--item-name" style={{ color: styles.text }}>{item.type}</h3>
                   <p className="cv-tokyo__contactSection--item-value">{item.value}</p>
                 </div>
               ))}
@@ -64,12 +96,12 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "personalInfoSection":
       return personalInfo.length > 0 && (
         <div key="personalInfo" className="cv-tokyo__personalInfoSection">
-          <h2 className="cv-tokyo__personalInfoSection--title">
+          <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
           </h2>
               {personalInfo.map((item) => (
                 <div key={item.id} className="cv-tokyo__personalInfoSection--item">
-                  <h3 className="cv-tokyo__personalInfoSection--item-name">{item.name}</h3>
+                  <h3 className="cv-tokyo__personalInfoSection--item-name" style={{ color: styles.text }}>{item.name}</h3>
                   <p className="cv-tokyo__personalInfoSection--item-value">{item.value}</p>
                 </div>
               ))}
@@ -79,7 +111,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "skillSection":
       return skillSection.length > 0 && (
         <div key="skills" className="cv-tokyo__skillSection">
-          <h2 className="cv-tokyo__skillSection--title">
+          <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
           </h2>
 
@@ -100,7 +132,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
                 return (
                   <div key={skill.id} className="cv-tokyo__skillSection--item">
                     <div className="cv-tokyo__skillSection--header">
-                      <h3 className="cv-tokyo__skillSection--item-name">{skill.name}</h3>
+                      <h3 className="cv-tokyo__skillSection--item-name" style={{ color: styles.text }}>{skill.name}</h3>
                       <p className="cv-tokyo__skillSection--item-level">{skill.level}</p>
                     </div>
 
@@ -120,7 +152,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "languageSection":
       return languageSection.length > 0 && (
         <div key="languages" className="cv-tokyo__languajeSection">
-          <h2 className="cv-tokyo__languajeSection--title">
+          <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
           </h2>
 
@@ -143,7 +175,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
                 return (
                   <div key={lang.id} className="cv-tokyo__languajeSection--item">
                     <div className="cv-tokyo__languajeSection--header">
-                      <h3 className="cv-tokyo__languajeSection--item-name">{lang.name}</h3>
+                      <h3 className="cv-tokyo__languajeSection--item-name" style={{ color: styles.text }}>{lang.name}</h3>
                       <p className="cv-tokyo__languajeSection--item-level">{lang.level}</p>
                     </div>
 
@@ -163,7 +195,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "linkSection":
       return linkSection.length > 0 && (
         <div key="links" className="cv-tokyo__linkSection">
-          <h2 className="cv-tokyo__linkSection--title">
+          <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
           </h2>
                 {linkSection.map((link) => (
@@ -191,6 +223,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cv-tokyo__linkSection--item-name"
+                        style={{ color: styles.text }}
                       >
                         {link.name}
                       </a>
@@ -203,7 +236,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "hobbieSection":
       return hobbieSection.length > 0 && (
         <div key="hobbies" className="cv-tokyo__hobbieSection">
-          <h2 className="cv-tokyo__hobbieSection--title">
+          <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
           </h2>
 
@@ -221,7 +254,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "profileSection":
       return profileSection.trim() && (
         <div key="profile" className="cv-tokyo__profileSection">
-          <h2 className="cv-tokyo__profileSection--title">
+          <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
           </h2>
           <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} />
@@ -231,13 +264,13 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "experienceSection":
       return experienceSection.length > 0 && (
         <div key="experience" className="cv-tokyo__experienceSection">
-          <h2 className="cv-tokyo__experienceSection--title">
+          <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
           </h2>
               {experienceSection.map((exp) => (
                 <div key={exp.id} className="cv-tokyo__experienceSection--item">
                   <div className="cv-tokyo__experienceSection--item-head">
-                    <h3 className="cv-tokyo__experienceSection--item-head-subtitle">
+                    <h3 className="cv-tokyo__experienceSection--item-head-subtitle" style={{ color: styles.text }}>
                       {exp.position},
                       <span className="cv-tokyo__experienceSection--item-head-employer">{exp.employer}</span>
                     </h3>
@@ -262,13 +295,13 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "educationSection":
       return educationSection.length > 0 && (
         <div key="education" className="cv-tokyo__educationSection">
-          <h2 className="cv-tokyo__educationSection--title">
+          <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
           </h2>
               {educationSection.map((edu) => (
                 <div key={edu.id} className="cv-tokyo__educationSection--item">
                   <div className="cv-tokyo__educationSection--item-head">
-                    <h3 className="cv-tokyo__educationSection--item-head-subtitle">
+                    <h3 className="cv-tokyo__educationSection--item-head-subtitle" style={{ color: styles.text }}>
                       {edu.title},
                       <span className="cv-tokyo__educationSection--item-head-employer">{edu.institution}</span>
                     </h3>
@@ -295,7 +328,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "courseSection":
       return courseSection.length > 0 && (
         <div key="courses" className="cv-tokyo__courseSection">
-          <h2 className="cv-tokyo__courseSection--title">
+          <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
           </h2>
               {courseSection.map((course) => (
@@ -331,7 +364,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "awardSection":
       return awardSection.length > 0 && (
         <div key="awards" className="cv-tokyo__awardSection">
-          <h2 className="cv-tokyo__awardSection--title">
+          <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
           </h2>
               {awardSection.map((award) => (
@@ -349,7 +382,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "referenceSection":
       return referenceSection.length > 0 && (
         <div key="references" className="cv-tokyo__referenceSection">
-          <h2 className="cv-tokyo__referenceSection--title">
+          <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
           </h2>
               {referenceSection.map((ref) => (
@@ -370,7 +403,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
     case "customSection":
       return customSection.length > 0 && (
         <div key="custom" className="cv-tokyo__customSection">
-          <h2 className="cv-tokyo__customSection--title">
+          <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
               </h2>
               {customSection.map((item) => (
@@ -386,7 +419,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
   // Fin de fundion de renderizado de secciones
 
   return (
-    <article className="cv-tokyo">
+    <article className="cv-tokyo" style={{ fontFamily: `"${styles.fontFamily}"` }}>
       {/* ==================== IDENTIDAD ==================== */}
       <div
         className={`cv-tokyo__identitySection ${shouldSpace ? "space" : "start"}`}
@@ -405,13 +438,14 @@ const CvTokyo: React.FC<ITemplateProps> = ({
                 src={photo}
                 alt={fullName}
                 className="cv-tokyo__identitySection--img"
+                style={{ borderColor: styles.photoBorder }}
               />
             )}
 
             {/* Texto */}
             <div className="cv-tokyo__identitySection--text">
-              <h1 className="cv-tokyo__identitySection--title">{fullName}</h1>
-              <p className="cv-tokyo__identitySection--occupation">{occupation}</p>
+              <h1 className="cv-tokyo__identitySection--title" style={{ color: styles.title }}>{fullName}</h1>
+              <p className="cv-tokyo__identitySection--occupation" style={{ color: styles.profession }}>{occupation}</p>
             </div>
 
             {/* QR (solo si existe) */}
@@ -422,6 +456,7 @@ const CvTokyo: React.FC<ITemplateProps> = ({
                   size={80}
                   level="Q"
                   bgColor="#ffffff"
+                  fgColor={styles.qr}
                 />
                 <p className="cv-tokyo__identitySection--qr-text">Ver En Línea</p>
               </div>

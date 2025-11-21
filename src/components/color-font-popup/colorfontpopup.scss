@@ -1,29 +1,21 @@
 .cfp-overlay {
   position: fixed;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 2000;
 }
 
 .cfp-container {
-  width: 380px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.25s ease-out;
-  margin-top: 40rem;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  width: fit-content;
+  max-height: 90vh;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+  position: absolute; // antes era relative/fixed
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
+/* HEADER */
 .cfp-header {
   display: flex;
   justify-content: space-between;
@@ -31,115 +23,160 @@
 
   h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
+    color: #222;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg{
+      background-color: #55555509;
+      padding: 0.3rem;
+      font-size: 1.8rem;
+      border-radius: 5px;
+    }
   }
 }
 
 .cfp-close {
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 1.45rem;
   cursor: pointer;
-  padding: 4px;
-}
+  transition: 0.2s;
 
-.cfp-section {
-  margin-top: 20px;
-
-  label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
+  &:hover {
+    color: #3867fa;
+    transform: scale(1.12);
   }
 }
 
-.cfp-color-manual-wrapper {
+/* SUBTITLE */
+.cfp-subtitle {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
+  gap: 8px;
+  color: #333;
+  font-weight: 600;
+  margin-top: 26px;
+  margin-bottom: 12px;
 
-.cfp-color-manual {
-  flex: 1;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.cfp-apply-btn {
-  padding: 7px 12px;
-  background: #1e88e5;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.cfp-color-preview {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.cfp-color-input {
-  width: 100%;
-  height: 45px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-.cfp-suggested-colors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.cfp-color-item {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  cursor: pointer;
-
-  &.active {
-    border-color: #000;
+  svg {
+    font-size: 1.1rem;
+    color: #3867fa;
   }
+}
+
+/* GRID */
+.cfp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.cfp-box {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid #e4e4e4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: 0.2s;
+  width: fit-content;
+
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
+.cfp-box-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.85rem;
+
+  .cfp-box-icon {
+    color: #3867fa;
+  }
+}
+
+.cfp-text-input {
+  padding: 7px;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  background: #fff;
+  width: 130px;
+}
+
+.cfp-color-btn {
+  width: 100%;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #d3d3d3;
+}
+
+/* TYPOGRAPHY */
+.cfp-font-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .cfp-font-select {
-  width: 100%;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #c8c8c8;
+  font-size: 0.95rem;
+  background: #fff;
 }
 
-.cfp-css-code {
-  margin-top: 12px;
-  background: #f7f7f7;
-  padding: 12px;
-  border-radius: 10px;
+/* RESET BUTTON */
+.cfp-reset-btn {
+  margin-top: 26px;
+  width: 100%;
+  padding: 13px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  background: #f5f5f5;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  transition: 0.25s;
 
-  code {
-    font-size: 0.85rem;
-    background: #e9e9e9;
-    padding: 4px 6px;
-    border-radius: 6px;
+  svg {
+    font-size: 1.15rem;
+  }
+
+  &:hover {
+    background: #eeeeee;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: default;
+
+    &:hover {
+      background: #f5f5f5;
+    }
   }
 }
 
-.cfp-footer {
-  margin-top: 25px;
-  text-align: right;
-}
-
-.cfp-accept {
-  background: #1e88e5;
-  color: #fff;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -32,6 +32,7 @@ import { templates } from "../../templates/templates";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import SortableSection from "./sortable-section/SortableSection";
 import type { ICvSectionsState } from "../../interfaces/ICvSections";
+import ColorFontPopup from "../../components/color-font-popup/ColorFontPopup";
 
 function CreateCv() {
   const dispatch = useDispatch();
@@ -244,6 +245,9 @@ function CreateCv() {
           </div>
         </div>
       </div>
+
+      {/* === POPUP COLOR & FUENTE === */}
+      <ColorFontPopup/>
     </section>
   );
 }

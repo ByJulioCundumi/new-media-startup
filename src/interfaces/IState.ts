@@ -1,4 +1,5 @@
 import type { IAwardEntry } from "./IAward";
+import type { IColorFontState } from "./IColorFont";
 import type { IContactEntry } from "./IContact";
 import type { ICourseEntry } from "./ICourses";
 import type { ICustomEntry } from "./ICustom";
@@ -30,5 +31,6 @@ export interface IState{
     profileSection: string, // cv sections
     cvSections: ICvSectionsState,
     identity: IIdentityData; // cv sections
-    contactEntries: IContactEntry[] // cv sections
+    contactEntries: IContactEntry[], // cv sections
+    colorFont: IColorFontState
 }
