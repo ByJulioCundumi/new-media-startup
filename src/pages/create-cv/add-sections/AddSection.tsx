@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import type { IState } from "../../../interfaces/IState";
@@ -14,10 +14,9 @@ import {
   PiMaskHappyFill,
 } from "react-icons/pi";
 import { FaLink, FaGraduationCap } from "react-icons/fa";
-import { MdFormatListBulletedAdd, MdRateReview } from "react-icons/md";
+import { MdRateReview } from "react-icons/md";
 import { BsAwardFill } from "react-icons/bs";
 import { BiEditAlt } from "react-icons/bi";
-import { TbNewSection } from "react-icons/tb";
 
 import "./addsection.scss";
 
@@ -73,18 +72,12 @@ const AddSections: React.FC = () => {
     }
   };
 
-  const activeSections = sections.filter((sec) => {
-    const match = cvSections.sections.find((c) => c.name === sec.name);
-    return match?.enabled;
-  }).length;
-
   return (
     <div className="add-sections">
       <div className="as-list">
         {sections.map((sec) => {
           const data = cvSections.sections.find((s) => s.name === sec.name);
           const enabled = data?.enabled ?? false;
-
           const finalTitle = data?.title || sec.label;
 
           return (

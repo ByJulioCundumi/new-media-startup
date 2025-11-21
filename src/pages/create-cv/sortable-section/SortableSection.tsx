@@ -10,6 +10,8 @@ import { BsGripVertical } from "react-icons/bs";
 import { RiDraggable } from "react-icons/ri";
 import { LuGrab } from "react-icons/lu";
 import "./sortablesection.scss"
+import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
+import { useDispatch } from "react-redux";
 
 interface Props {
   id: string;
@@ -23,7 +25,7 @@ interface Props {
  */
 const SortableSection: React.FC<Props> = ({ id, children, className = "" }) => {
   const disabled = id === "identitySection";
-
+  const dispatch = useDispatch()
   const params: UseSortableArguments = {
     id,
     animateLayoutChanges: (args) => defaultAnimateLayoutChanges({ ...args, wasDragging: true }),
@@ -59,7 +61,13 @@ const SortableSection: React.FC<Props> = ({ id, children, className = "" }) => {
           <div className="drag-handle disabled"> </div>
         )}
 
-        <div className="sortable-content">{children}</div>
+        <div className="sortable-content"
+          onClick={() => {
+            dispatch(toggleSectionEditor(id));
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

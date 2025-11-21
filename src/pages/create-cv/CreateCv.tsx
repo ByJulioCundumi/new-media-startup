@@ -1,5 +1,5 @@
 // pages/CreateCv.tsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./createcv.scss";
@@ -12,7 +12,7 @@ import { templates } from "../../templates/templates";
 import type { IState } from "../../interfaces/IState";
 import type { ICvSectionsState } from "../../interfaces/ICvSections";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import ExperienceSection from "./experience-section/ExperienceSection";
+import FloatingEditor from "../../components/floating-editor/FloatingEditor";
 
 function CreateCv() {
   const dispatch = useDispatch();
@@ -88,6 +88,9 @@ function CreateCv() {
           />
         )}
       </div>
+
+      {/* FLOATING EDITOR AUTOMÁTICO */}
+      <FloatingEditor />
 
       <ColorFontPopup />
     </div>

@@ -2,7 +2,7 @@
   width: 100%;
   background: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.056);
-  padding: 0.75rem;
+  padding: 1rem 0.5rem;
   /* NO ocultes el contenido */
   overflow: visible !important;
 }
@@ -25,6 +25,7 @@
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.023);
   transition: background 0.15s ease;
+  margin-top: 0.2rem;
 }
 
 .drag-handle:hover {

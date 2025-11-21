@@ -2,6 +2,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ICvSection, ICvSectionsState } from "../interfaces/ICvSections";
 
+// ---------------------- SECCIONES INICIALES ----------------------
 const initialSections: ICvSection[] = [
   {
     name: "identitySection",
@@ -9,6 +10,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -17,6 +19,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -25,6 +28,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -33,6 +37,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -41,6 +46,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -49,6 +55,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -57,6 +64,7 @@ const initialSections: ICvSection[] = [
     enabled: true,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -65,6 +73,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -73,6 +82,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -81,6 +91,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -89,6 +100,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "both",
   },
   {
@@ -97,6 +109,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -105,6 +118,7 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -113,19 +127,21 @@ const initialSections: ICvSection[] = [
     enabled: false,
     progress: 0,
     isOpen: false,
+    isEditorOpen: false,
     orientation: "horizontal",
   },
 ];
 
-// 🟢 ORDEN INICIAL CORREGIDO
-// identitySection siempre primero
+// Orden inicial basado en initialSections
 const initialOrder = initialSections.map((s) => s.name);
 
+// ---------------------- ESTADO GLOBAL ----------------------
 const initialState: ICvSectionsState = {
   sections: initialSections,
   order: initialOrder,
 };
 
+// ---------------------- SLICE ----------------------
 const cvSectionsSlice = createSlice({
   name: "cvSections",
   initialState,
@@ -150,21 +166,16 @@ const cvSectionsSlice = createSlice({
 
     updateSection: (
       state,
-      action: PayloadAction<{
-        name: string;
-        enabled?: boolean;
-        progress?: number;
-      }>
+      action: PayloadAction<{ name: string; enabled?: boolean; progress?: number }>
     ) => {
       const section = state.sections.find((s) => s.name === action.payload.name);
-      if (section) {
-        if (action.payload.enabled !== undefined) {
-          section.enabled = action.payload.enabled;
-        }
-        if (action.payload.progress !== undefined) {
-          section.progress = action.payload.progress;
-        }
-      }
+      if (!section) return;
+
+      if (action.payload.enabled !== undefined)
+        section.enabled = action.payload.enabled;
+
+      if (action.payload.progress !== undefined)
+        section.progress = action.payload.progress;
     },
 
     updateSectionTitle: (
@@ -177,16 +188,10 @@ const cvSectionsSlice = createSlice({
 
     toggleSectionOpen: (state, action: PayloadAction<string>) => {
       const target = action.payload;
-      const section = state.sections.find((s) => s.name === target);
-      if (!section) return;
 
-      if (section.isOpen) {
-        section.isOpen = false;
-      } else {
-        state.sections.forEach((s) => {
-          s.isOpen = s.name === target;
-        });
-      }
+      state.sections.forEach((s) => {
+        s.isOpen = s.name === target ? !s.isOpen : false;
+      });
     },
 
     setOnlySectionOpen: (state, action: PayloadAction<string>) => {
@@ -195,27 +200,15 @@ const cvSectionsSlice = createSlice({
       });
     },
 
-    reorderSections: (
-      state,
-      action: PayloadAction<{ from: number; to: number }>
-    ) => {
+    reorderSections: (state, action: PayloadAction<{ from: number; to: number }>) => {
       const { from, to } = action.payload;
       const current = [...state.order];
 
-      if (
-        from < 0 ||
-        from >= current.length ||
-        to < 0 ||
-        to >= current.length ||
-        from === to
-      ) {
-        return;
-      }
+      if (from < 0 || to < 0 || from >= current.length || to >= current.length) return;
+      if (from === to) return;
 
-      const movingName = current[from];
-
-      // identitySection bloqueado
-      if (movingName === "identitySection") return;
+      // impedir mover identitySection
+      if (current[from] === "identitySection") return;
       if (to === 0) return;
 
       const [removed] = current.splice(from, 1);
@@ -224,9 +217,9 @@ const cvSectionsSlice = createSlice({
     },
 
     setOrder: (state, action: PayloadAction<string[]>) => {
-      const incoming = [...action.payload];
+      let incoming = [...action.payload];
 
-      // identity siempre primero
+      // identitySection siempre primera
       const idx = incoming.indexOf("identitySection");
       if (idx > -1) {
         incoming.splice(idx, 1);
@@ -235,9 +228,23 @@ const cvSectionsSlice = createSlice({
 
       state.order = incoming;
     },
+
+    // ---------------------- EDITOR ----------------------
+    toggleSectionEditor: (state, action: PayloadAction<string>) => {
+      state.sections.forEach((s) => {
+        s.isEditorOpen = s.name === action.payload ? !s.isEditorOpen : false;
+      });
+    },
+
+    closeAllEditors: (state) => {
+      state.sections.forEach((s) => {
+        s.isEditorOpen = false;
+      });
+    },
   },
 });
 
+// ---------------------- EXPORTS ----------------------
 export const {
   enableSection,
   disableSection,
@@ -248,6 +255,8 @@ export const {
   reorderSections,
   setOrder,
   updateSectionTitle,
+  toggleSectionEditor,
+  closeAllEditors,
 } = cvSectionsSlice.actions;
 
 export default cvSectionsSlice.reducer;

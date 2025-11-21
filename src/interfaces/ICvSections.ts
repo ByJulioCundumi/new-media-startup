@@ -5,6 +5,7 @@ export interface ICvSection {
   isOpen: boolean;
   title: string;
   orientation: "horizontal" | "both" ;
+  isEditorOpen: boolean;
 }
 
 // Estado del slice (sections + order)
