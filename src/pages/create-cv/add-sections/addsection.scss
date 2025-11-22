@@ -1,6 +1,6 @@
 .add-sections {
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(255, 255, 255);
   backdrop-filter: blur(12px);
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   padding: 16px 20px;
@@ -9,7 +9,7 @@
   bottom: 0.4rem;
   right: -19.5rem;
   border-radius: 15px;
-  z-index: 10;
+  z-index: 50;
 }
 
 /* LISTA */
@@ -21,6 +21,7 @@
   overflow-y: auto;
   height: 95%;
   padding-right: 0.5rem;
+  background-color: white;
 }
 
 /* ITEM */
@@ -33,6 +34,7 @@
   border-radius: 12px;
   transition: 0.2s ease;
   cursor: pointer;
+  background-color: white;
 
   &.enabled {
     background: #f5f5f5;

@@ -43,7 +43,7 @@ const ColorFontPopup: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
 const fontOptions = [
-  "Poppins",
+  "Arial, Helvetica, sans-serif",
   "Roboto",
   "Montserrat",
   "Open Sans",

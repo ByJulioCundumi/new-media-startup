@@ -1,425 +1,308 @@
-.cv-tokyo *{
-  font-family: Arial, Helvetica, sans-serif;
-}
-.cv-tokyo h1,
-.cv-tokyo h2,
-.cv-tokyo h3,
-.cv-tokyo a {
-  word-break: break-word;
-  overflow: hidden;
-}
-.cv-tokyo a {
-  word-break: break-all;
-}
+
+/* ------------------------------
+   BASE GLOBAL
+------------------------------ */
 .cv-tokyo {
-  color: rgba(0, 0, 0, 0.61);
   width: 210mm;
   min-height: 297mm;
-  max-height: 297mm;
+  /* max-height: 297mm; ← Puedes dejarlo o quitarlo, no afecta */
   background: white;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  padding: 10mm 10mm 25mm;
+  box-sizing: border-box;
+  font-family: inherit;
+  position: relative;
+  overflow: visible !important;   /* ← CLAVE: permite que ::after se vea */
   hyphens: auto;
-  max-width: 100%;
-  zoom: 1;
-  padding: 10mm;
   border: 1px solid rgba(0, 0, 0, 0.096);
+  z-index: 1;
 
-  // ------------------------------
-  // General - Horizontal
-  // ------------------------------
-  &__contactSection, &__personalInfoSection, &__skillSection, &__languajeSection, &__linkSection,
-  &__hobbieSection, &__profileSection, &__experienceSection, &__educationSection, &__courseSection,
-  &__awardSection, &__referenceSection, &__customSection{
-
-    border: 1px solid rgba(0, 0, 0, 0);
-    padding: 0.5rem;
-    
-    &:hover{
-      border: 1px solid black;
-      cursor: grab;
-      border-radius: 15px;
-    }
-
-    &:active{
-      cursor: grabbing;
-    }
-
-    &--title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      position: relative;
-      display: inline-block; /* importante para que el borde mida solo el título */
-      padding-bottom: 4px;   /* espacio entre texto y borde */
-      margin-bottom: 0.5rem;
-      color: black;
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 40px;     /* <<--- el borde llega solo a la mitad */
-        height: 2px;
-        background: #000;
-      }
-    }
-
-    &--item-date{
-      font-size: 0.85rem;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    &--item-name{
-      color: rgba(0, 0, 0, 0.76);
-    }
-
-    &--item-head{
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-
-      &-employer, &-location{
-        color: rgba(0, 0, 0, 0.479);
-      }
-
-      p{
-        display: flex;
-        gap: 0.2rem;
-        font-size: 0.8rem;
-      }
-    }
+  /* Fuentes heredadas en todo el contenido */
+  h1, h2, h3, h4, h5, h6, p, span, a, div, li {
+    font-family: inherit !important;
   }
 
-   // ------------------------------
-  // General - Vertical
-  // ------------------------------
-  &__personalInfoSection, &__contactSection, &__skillSection, &__languajeSection, &__linkSection, &__hobbieSection{
-    &--item{
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
+  [dangerouslySetInnerHTML] * {
+    font-family: inherit !important;
   }
-  // ------------------------------
-  // IDENTIDAD
-  // ------------------------------
-  &__identitySection {
-    display: flex;
+
+  /* Reseteo de palabras largas */
+  h1, h2, h3, a {
+    word-break: break-word;
+    overflow: hidden;
+  }
+
+  a {
+    word-break: break-all;
+  }
+
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+/* ------------------------------
+   PÁGINA
+------------------------------ */
+.cv-tokyo__page {
+  width: 100%;
+  min-height: 297mm;
+  max-height: 297mm;
+  box-sizing: border-box;
+  page-break-after: always;
+  padding: 15mm;
+  padding-bottom: 25mm;
+  overflow: visible;
+}
+
+/* ------------------------------
+   SPLIT LAYOUT
+------------------------------ */
+.cv-tokyo__split {
+  display: flex;
+  gap: 0;
+  height: 100%;
+
+  &--vertical {
+    width: 35%;
+    flex-direction: column;
     gap: 2rem;
-    align-items: start;
-    border: 1px solid rgba(0, 0, 0, 0);
-    padding: 0.5rem;
+    padding: 1.5rem 1.5rem 0 0;
+    border-top: 1px solid rgba(0,0,0,0.11);
+  }
+
+  &--horizontal {
+    width: 65%;
+    flex-direction: column;
+    gap: 2rem;
+    border-left: 1px solid rgba(0,0,0,0.11);
+    border-top: 1px solid rgba(0,0,0,0.11);
+    padding: 0 2rem 0 0;
+  }
+
+  &--vertical > div,
+  &--horizontal > div {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* ------------------------------
+   SECCIONES GENERALES
+------------------------------ */
+.cv-tokyo__contactSection,
+.cv-tokyo__personalInfoSection,
+.cv-tokyo__skillSection,
+.cv-tokyo__languajeSection,
+.cv-tokyo__linkSection,
+.cv-tokyo__hobbieSection,
+.cv-tokyo__profileSection,
+.cv-tokyo__experienceSection,
+.cv-tokyo__educationSection,
+.cv-tokyo__courseSection,
+.cv-tokyo__awardSection,
+.cv-tokyo__referenceSection,
+.cv-tokyo__customSection {
+  border: 1px solid transparent;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border: 1px solid black;
+    cursor: grab;
     border-radius: 15px;
-    
-    &:hover{
-      border: 1px solid black;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &--title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+    margin-bottom: 0.5rem;
+    color: black;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: #000;
+    }
+  }
+
+  &--item-date {
+    font-size: 0.85rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  &--item-name {
+    color: rgba(0,0,0,0.76);
+  }
+
+  &--item-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &-employer,
+    &-location {
+      color: rgba(0,0,0,0.479);
     }
 
-    &.space {
-      justify-content: space-between;
-    }
-    &.start {
-      justify-content: flex-start;
-    }
-    //-------------------
-
-    &--qr-wrapper{
-      align-self: flex-start;
-    }
-
-    &--qr-text{
+    p {
+      display: flex;
+      gap: 0.2rem;
       font-size: 0.8rem;
     }
-
-    &--title{
-      color: black;
-    }
-
-    &--img {
-      width: 120px;
-      height: 120px;
-      border-radius: 100%;
-      object-fit: cover;
-      border: 3px solid black;
-    }
-
-    &--text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      line-height: 3.5rem;
-      margin: auto 0;
-    }
-
-    &--title {
-      font-size: 2.9rem;
-      font-weight: 700;
-      max-width: 400px;
-    }
-
-    &--occupation {
-      font-size: 1.8rem;
-      font-weight: 400;
-      padding-bottom: 2rem;
-    }
   }
+}
 
-  // ------------------------------
-  // SPLIT LAYOUT GENERAL
-  // ------------------------------
-  &__split {
+/* ------------------------------
+   SECCIONES VERTICALES ESPECÍFICAS
+------------------------------ */
+.cv-tokyo__personalInfoSection,
+.cv-tokyo__contactSection,
+.cv-tokyo__skillSection,
+.cv-tokyo__languajeSection,
+.cv-tokyo__linkSection,
+.cv-tokyo__hobbieSection {
+  &--item {
     display: flex;
-    gap: 0rem;
-    height: 100%;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}
 
-    &--vertical {
-      width: 35%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      padding: 1.5rem 0;
-      padding-right: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.11);
-    }
+/* ------------------------------
+   IDENTIDAD
+------------------------------ */
+.cv-tokyo__identitySection {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  border: 1px solid transparent;
+  padding: 0.5rem;
+  border-radius: 15px;
 
-    &--horizontal {
-      width: 65%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      border-left: 1px solid rgba(0, 0, 0, 0.11);
-      border-top: 1px solid rgba(0, 0, 0, 0.11);
-      padding: 1.5rem 2rem;
-      padding-top: 0;
-      padding-right: 0;
-    }
+  &:hover {
+    border: 1px solid black;
   }
 
-  // ------------------------------
-  // CONTACT SECTION
-  // ------------------------------
-  &__contactSection {
-    &--item {
-      margin-top: 0.7rem;
+  &.space { justify-content: space-between; }
+  &.start { justify-content: flex-start; }
 
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-value {
-        font-size: 0.9rem;
-      }
-
-      &-url {
-        font-size: 0.9rem;
-      }
-
-      &-text-url {
-        font-size: 0.85rem;
-        opacity: 0.7;
-      }
-    }
+  &--qr-wrapper { align-self: flex-start; }
+  &--qr-text { font-size: 0.8rem; }
+  &--img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid black;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.525);
   }
-
-  // ------------------------------
-  // PERSONAL INFO SECTION
-  // ------------------------------
-  &__personalInfoSection {
-    &--item {
-      margin-top: 0.7rem;
-
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-value {
-        font-size: 0.9rem;
-      }
-    }
+  &--text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    line-height: 3.5rem;
+    margin: auto 0;
   }
-
-  // ------------------------------
-  // SKILL SECTION
-  // ------------------------------
-  &__skillSection {
-    margin-top: 1rem;
-
-    &--item {
-      margin-top: 0.9rem;
-
-      &-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-      }
-
-      &-level {
-        font-size: 0.9rem;
-        opacity: 0.8;
-      }
-    }
-
-    /* Encabezado habilidad + nivel */
-    &--header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Contenedor de la barra */
-    &--progress {
-      margin-top: 0.35rem;
-      width: 100%;
-      height: 6px;
-      background-color: #dcdcdc; // gris claro
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* Barra interna */
-    &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
+  &--title {
+    font-size: 2.9rem;
+    font-weight: 700;
+    max-width: 400px;
+    color: black;
   }
-
-  // ------------------------------
-  // LANGUAGE SECTION
-  // ------------------------------
-  &__languajeSection {
-    margin-top: 1rem;
-
-    &--item {
-      margin-top: 0.9rem;
-
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-level {
-        font-size: 0.9rem;
-        opacity: 0.8;
-      }
-    }
-
-    /* Encabezado idioma + nivel */
-    &--header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Contenedor de la barra */
-    &--progress {
-      margin-top: 0.35rem;
-      width: 100%;
-      height: 6px;
-      background-color: #dcdcdc; // gris suave
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* Barra interna */
-    &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro sólido
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
+  &--occupation {
+    font-size: 1.8rem;
+    font-weight: 400;
+    padding-bottom: 2rem;
   }
+}
 
-  // ------------------------------
-  // LINK SECTION
-  // ------------------------------
-  &__linkSection {
-    margin-top: 1rem;
+/* ------------------------------
+   CONTACT INFO, PERSONAL INFO, SKILL, LANGUAGE, LINK, HOBBIES, PROFILE, EXPERIENCE, EDUCATION, COURSE, AWARD, REFERENCE, CUSTOM
+   (Detalles por sección)
+------------------------------ */
+/* Secciones de ejemplo: se mantienen tus estilos originales */
 
-    &--item {
-      margin-top: 0.7rem;
-
-      /* Nombre del enlace (clickeable) */
-      &-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #051235;
-        text-decoration: none;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-
-        &:hover {
-          opacity: 0.6;
-        }
-      }
-
-      /* URL en texto pequeño (solo si visible) */
-      &-url {
-        font-size: 0.8rem;
-        opacity: 0.7;
-        margin-top: 0.15rem;
-        word-break: break-all; // para URL largas en CV
-      }
-    }
+.cv-tokyo__contactSection {
+  &--item {
+    margin-top: 0.7rem;
+    &-name { font-weight: 600; font-size: 0.95rem; }
+    &-value { font-size: 0.9rem; }
+    &-url { font-size: 0.9rem; }
+    &-text-url { font-size: 0.85rem; opacity: 0.7; }
   }
+}
 
-  // ------------------------------
-  // HOBBIE SECTION
-  // ------------------------------
-  &__hobbieSection {
-    margin-top: 1rem;
-
-    &--title {
-      margin-bottom: 0.6rem;
-    }
-
-    /* Contenedor de los chips */
-    &--list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    /* Chip individual */
-    &--item {
-      display: inline-block;
-      padding: 0.35rem 0.65rem;
-
-      background-color: #ffffff;
-      border-radius: 6px;
-
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #000;
-
-      border: 1px solid #051235;
-      transition: background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
-    }
+.cv-tokyo__skillSection {
+  margin-top: 1rem;
+  &--item {
+    margin-top: 0.9rem;
+    &-name { font-size: 0.95rem; font-weight: 600; }
+    &-level { font-size: 0.9rem; opacity: 0.8; }
   }
+  &--header { display: flex; justify-content: space-between; align-items: center; }
+  &--progress { margin-top: 0.35rem; width: 100%; height: 6px; background-color: #dcdcdc; border-radius: 4px; overflow: hidden; }
+  &--progress-bar { height: 100%; background-color: #051235; border-radius: 4px; transition: width 0.4s ease; }
+}
 
-  // ------------------------------
-  // PROFILE SECTION
-  // ------------------------------
-  &__profileSection {
-    border-top: 1px solid rgba(0, 0, 0, 0.11);
-    padding-top: 1.5rem;
-
-    &--item {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      margin-top: 1rem;
-    }
+.cv-tokyo__languajeSection {
+  margin-top: 1rem;
+  &--item {
+    margin-top: 0.9rem;
+    &-name { font-weight: 600; font-size: 0.95rem; }
+    &-level { font-size: 0.9rem; opacity: 0.8; }
   }
+  &--header { display: flex; justify-content: space-between; align-items: center; }
+  &--progress { margin-top: 0.35rem; width: 100%; height: 6px; background-color: #dcdcdc; border-radius: 4px; overflow: hidden; }
+  &--progress-bar { height: 100%; background-color: #051235; border-radius: 4px; transition: width 0.4s ease; }
+}
 
-  // ------------------------------
-  // EXPERIENCE SECTION
-  // ------------------------------
+.cv-tokyo__linkSection {
+  margin-top: 1rem;
+  &--item { margin-top: 0.7rem;
+    &-name { font-size: 0.95rem; font-weight: 600; color: #051235; text-decoration: none; cursor: pointer; transition: opacity 0.2s ease; &:hover { opacity: 0.6; } }
+    &-url { font-size: 0.8rem; opacity: 0.7; margin-top: 0.15rem; word-break: break-all; }
+  }
+}
+
+.cv-tokyo__hobbieSection {
+  margin-top: 1rem;
+  &--title { margin-bottom: 0.6rem; }
+  &--list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  &--item {
+    display: inline-block;
+    padding: 0.35rem 0.65rem;
+    background-color: #fff;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #000;
+    border: 1px solid #051235;
+    transition: background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
+  }
+}
+
+/* PROFILE SECTION */
+.cv-tokyo__profileSection {
+  border-top: 1px solid rgba(0,0,0,0.11);
+  padding-top: 1.5rem;
+  &--item { font-size: 0.95rem; line-height: 1.4; margin-top: 1rem; }
+}
+
+.cv-tokyo{
   &__experienceSection {
     border-top: 1px solid rgba(0, 0, 0, 0.11);
     padding-top: 1.5rem;
@@ -616,4 +499,61 @@
   }
 }
 
+//
+// estilos para cambio de pagina
+
+.cv-tokyo {
+  width: 210mm;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.cv-tokyo__page {
+  width: 210mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  padding: 15mm;
+  box-sizing: border-box;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  border: 1px solid #eee;
+
+  &:last-child { page-break-after: avoid; }
+}
+
+.cv-tokyo__page-number {
+  position: absolute;
+  bottom: 10mm;
+  right: 15mm;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.cv-tokyo__split {
+  display: flex;
+  gap: 0;
+
+  &--vertical {
+    width: 35%;
+    padding-right: 1.5rem;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &--horizontal {
+    width: 65%;
+    padding-left: 2rem;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
 
