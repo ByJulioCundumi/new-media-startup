@@ -12,6 +12,7 @@ import type { ILanguageEntry } from "./ILanguages";
 import type { ILinkEntry } from "./ILinks";
 import type { IPersonalInfoEntry } from "./IPersonalInfo";
 import type { IReferenceEntry } from "./IReferences";
+import type { ISectionsState } from "./ISections";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
 
@@ -32,5 +33,6 @@ export interface IState{
     cvSections: ICvSectionsState,
     identity: IIdentityData; // cv sections
     contactEntries: IContactEntry[], // cv sections
-    colorFont: IColorFontState
+    colorFont: IColorFontState,
+    sections: ISectionsState
 }

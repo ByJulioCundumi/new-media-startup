@@ -6,31 +6,33 @@
 /* ─────────────────────────────────────────────── */
 
 .progress-indicator {
-  margin-left: auto;
-  margin-right: 14px;
-  font-size: 14px;
+  margin-left: 1.2rem;
+  font-size: 13px;
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 7px;
   transition: 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.137);
+  opacity: 0.9;
+  animation: cvtokyoPulse 1.9s infinite ease-in-out;
 }
 
 /* Rojo — progreso bajo */
 .progress-indicator.progress-red {
-  color: #ff8d8f;
-  background-color: #ffc3c448;
+  color: #ffffff;
+  background-color: #ff8d8f;
 }
 
 /* Amarillo/Naranja — progreso medio */
 .progress-indicator.progress-yellow {
-  color: #ffc13b;
-  background-color: #ffe96a48;
+  color: #ffffff;
+  background-color: #ffc13b;
 }
 
 /* Azul — progreso completo */
 .progress-indicator.progress-blue {
-  color: #11d493;
-  background-color: #c3ffe648;
+  color: #ffffff;
+  background-color: #11d493;
 }
 
 
@@ -123,5 +125,15 @@
 
   &:focus {
     background: #ffffff;
+  }
+}
+
+/* Animación suave */
+@keyframes cvtokyoPulse {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-2px);
   }
 }

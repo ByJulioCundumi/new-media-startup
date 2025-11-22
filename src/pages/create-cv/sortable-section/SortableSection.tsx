@@ -6,10 +6,8 @@ import {
   type UseSortableArguments,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BsGripVertical } from "react-icons/bs";
 import { RiDraggable } from "react-icons/ri";
-import { LuGrab } from "react-icons/lu";
-import "./sortablesection.scss"
+import "./sortablesection.scss";
 import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
 import { useDispatch } from "react-redux";
 
@@ -21,15 +19,17 @@ interface Props {
 
 /**
  * SortableSection envuelve cada sección para que sea arrastrable.
- * Si id === "identitySection" el item se marca como disabled (no arrastrable).
+ * identitySection es la única sección que no permite arrastre.
  */
 const SortableSection: React.FC<Props> = ({ id, children, className = "" }) => {
   const disabled = id === "identitySection";
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const params: UseSortableArguments = {
     id,
-    animateLayoutChanges: (args) => defaultAnimateLayoutChanges({ ...args, wasDragging: true }),
     disabled,
+    animateLayoutChanges: (args) =>
+      defaultAnimateLayoutChanges({ ...args, wasDragging: true }),
   };
 
   const {
@@ -49,25 +49,31 @@ const SortableSection: React.FC<Props> = ({ id, children, className = "" }) => {
   };
 
   return (
-    <div ref={setNodeRef} {...attributes} style={style} className={`sortable-section ${className}`}>
+    <div
+      ref={setNodeRef}
+      {...attributes}
+      style={style}
+      className={`sortable-section ${className}`}
+    >
       <div className="sortable-inner">
-        {/* handle: if not disabled, pass listeners to a handle icon/button. If you prefer whole card draggable,
-            you can spread listeners on the container instead. */}
+        
+        {/* Drag handle */}
         {!disabled ? (
           <div className="drag-handle" {...listeners}>
             <RiDraggable size={20} />
-            </div>
+          </div>
         ) : (
-          <div className="drag-handle disabled"> </div>
+          <div className="drag-handle disabled"></div>
         )}
 
-        <div className="sortable-content"
-          onClick={() => {
-            dispatch(toggleSectionEditor(id));
-          }}
+        {/* Contenido clickeable */}
+        <div
+          className="sortable-content"
+          onClick={() => dispatch(toggleSectionEditor(id))}
         >
           {children}
         </div>
+
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const FloatingEditor: React.FC = () => {
   // ---------------- HOOKS ----------------
   const sections = useSelector((state: IState) => state.cvSections.sections);
 
-  const [position, setPosition] = useState({ x: 180, y: 100 });
+  const [position, setPosition] = useState({ x: 1000, y: 100 });
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 

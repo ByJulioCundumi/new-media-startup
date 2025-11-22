@@ -129,18 +129,6 @@ function SectionProgress() {
               return (
                 <SortableSection key={sec.name} id={sec.name}>
                   <div className="section-progress__item">
-                    <div className="section-progress__item--box">
-                      <div
-                        className={`progress-indicator ${getProgressClass(
-                          sec.progress
-                        )}`}
-                      >
-                        {sec.progress}%
-                      </div>
-
-                      <span className="section-progress__label">{sec.title}</span>
-                    </div>
-
                     {/* 🔹 Íconos actualizados en base a isEditorOpen */}
                     {sec.isEditorOpen ? (
                       <IoEyeOutline
@@ -153,6 +141,20 @@ function SectionProgress() {
                         onClick={() => dispatch(toggleSectionOpen(sec.name))}
                       />
                     )}
+                    
+                    <div className="section-progress__item--box">
+                      <div
+                        className={`progress-indicator ${getProgressClass(
+                          sec.progress
+                        )}`}
+                      >
+                        {sec.progress}%
+                      </div>
+
+                      <span className="section-progress__label">{sec.title}</span>
+                    </div>
+
+                    
                   </div>
                 </SortableSection>
               );

@@ -16,6 +16,7 @@ import cvSectionsSlice from "../reducers/cvSectionsSlice";
 import identitySlice from "../reducers/identitySlice";
 import contactSlice from "../reducers/contactSlice";
 import colorFontSlice from "../reducers/colorFontSlice"
+import sectionsSlice from "../reducers/sectionsSlice"
 
 export default configureStore({
     reducer: {
@@ -35,6 +36,7 @@ export default configureStore({
         cvSections: cvSectionsSlice,
         identity: identitySlice,
         contactEntries: contactSlice,
-        colorFont: colorFontSlice
+        colorFont: colorFontSlice,
+        sections: sectionsSlice,
     }
 })
