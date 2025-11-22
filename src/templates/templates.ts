@@ -1,4 +1,4 @@
-import CvTemplate from "./cv-template/CvTemplate";
+import CvTemplate from "./cv-rio/CvRio";
 import CvTokyo from "./cv-tokyo/CvTokyo";
 
 /*
@@ -21,6 +21,6 @@ Contemporáneo
 */
 
 export const templates = [
-  { id: "test", label: "Minimalista", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
-  { id: "default", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
+  { id: "default", label: "Rio", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
+  { id: "fsad", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
 ];
