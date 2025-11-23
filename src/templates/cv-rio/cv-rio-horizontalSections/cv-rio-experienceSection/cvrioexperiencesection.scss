@@ -1,0 +1,87 @@
+/* ===============================
+   CV RIO – EXPERIENCE SECTION
+=============================== */
+
+.cv-rio__experienceSection {
+  padding: 0.5rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: #00ccff09;
+    border: 1px solid #00ccff13;
+    box-shadow: 0px 0px 2px #00ccff27;
+  }
+
+  /* ----- Título general ----- */
+  &--title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+    margin-bottom: 0.5rem;
+    color: black;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: #000;
+    }
+  }
+
+  /* ===== Items individuales ===== */
+  &--item {
+    margin-top: 1rem;
+
+    /* ---------- Encabezado: cargo + empresa + ubicación ---------- */
+    &-head {
+      display: flex;
+      flex-direction: column;
+
+      &-subtitle {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      &-employer {
+        margin-left: 0.5rem;
+        font-weight: 400;
+        opacity: 0.85;
+      }
+
+      &-location {
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+    }
+
+    /* ---------- Fechas ---------- */
+    &-date {
+      display: flex;
+      gap: 1rem;
+      margin: 0.5rem 0;
+
+      &-start,
+      &-end {
+        span {
+          display: inline-block;
+          margin-right: 0.2rem;
+        }
+      }
+    }
+
+    /* ---------- Descripción ---------- */
+    &-date-description {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-top: 0.3rem;
+      white-space: pre-wrap; /* permite texto editable con saltos */
+    }
+  }
+}

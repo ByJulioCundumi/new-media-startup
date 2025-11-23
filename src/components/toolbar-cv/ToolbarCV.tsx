@@ -4,6 +4,7 @@ import {
   FaSyncAlt,
   FaDownload,
   FaSave,
+  FaBackspace,
 } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
 import { LuEye, LuScanQrCode } from "react-icons/lu";
@@ -13,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { openPopup } from "../../reducers/colorFontSlice";
 import { TbEdit, TbFileCv, TbReportAnalytics, TbScan } from "react-icons/tb";
 import { RiArrowGoBackLine } from "react-icons/ri";
+import { IoChevronBackOutline } from "react-icons/io5";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -38,6 +40,9 @@ const ToolbarCV: React.FC = () => {
 
   return (
     <div className="toolbar-cv-wrapper">
+        <button className="toolbar-cv-btn ghost toolbar-cv-btn__back">
+          <IoChevronBackOutline />
+        </button>
       
       <div className="toolbar-cv-buttons">
 

@@ -22,5 +22,5 @@ Contemporáneo
 
 export const templates = [
   { id: "default", label: "Rio", category: ["limpio", "con foto", "elegante"], component: CvTemplate },
-  { id: "fsad", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
+  { id: "klm", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
 ];

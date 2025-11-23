@@ -5,7 +5,6 @@ import Sidebar from "../../components/sidebar/Sidebar"
 function LoggedSection() {
   return (
     <section className="logged-section">
-        <Sidebar/>
         <Outlet/>
     </section>
   )

@@ -8,14 +8,8 @@
 
   /* Mantener contenido encima */
   &__template {
-    width: fit-content;
-    position: relative;
-    z-index: 10;
-    
-  }
-
-  &__main{
-    display: grid;
-    grid-template-columns: 500px 1fr;
+    display: flex;
+    justify-content: center;
+    margin-left: 4.5rem;
   }
 }

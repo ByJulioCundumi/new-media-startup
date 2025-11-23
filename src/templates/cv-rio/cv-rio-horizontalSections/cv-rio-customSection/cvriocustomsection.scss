@@ -1,0 +1,45 @@
+/* ===============================
+   CV RIO – CUSTOM SECTION
+=============================== */
+
+.cv-rio__customSection {
+  padding: 0.5rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: #00ccff09;
+    border: 1px solid #00ccff13;
+    box-shadow: 0px 0px 2px #00ccff27;
+  }
+
+  /* ----- Título de sección ----- */
+  &--title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-bottom: 4px;
+    margin-bottom: 0.5rem;
+    color: black;
+    display: inline-block;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: #000;
+    }
+  }
+
+  /* ----- Items individuales ----- */
+  &--item {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    white-space: pre-wrap; /* permite edición con saltos de línea */
+  }
+}

@@ -1,4 +1,6 @@
-  /* ==================== DOCUMENTO BASE ==================== */
+/* ===========================================================
+   CV RIO — DOCUMENTO BASE (A4 PROFESIONAL)
+=========================================================== */
 .cv-rio {
   width: 210mm;
   height: 297mm;
@@ -10,43 +12,49 @@
   page-break-after: always;
   page-break-inside: avoid;
   position: relative;
-  
+
   border: 1px solid rgba(0, 0, 0, 0.096);
 
-  /* BONUS visual (muy bonito en pantalla) */
+  /* UI visual bonito en pantalla (no afecta impresión) */
   margin-bottom: 35px;
   border-radius: 4px;
 
   &:last-child {
     page-break-after: avoid;
-    margin-bottom: 0;               /* quita espacio extra al final */
+    margin-bottom: 0;
   }
 }
 
-/* ==================== IMPRESIÓN PERFECTA ==================== */
+/* ===========================================================
+   IMPRESIÓN PERFECTA
+=========================================================== */
 @media print {
   .cv-rio__page {
     height: 297mm !important;
     min-height: 297mm !important;
     page-break-after: always;
   }
-  
   .cv-rio__page:last-child {
     page-break-after: avoid;
   }
 }
 
-@page { size: A4; margin: 0; }
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* Evitar cortes dentro de secciones */
 .cv-rio section,
 .cv-rio [class*="section"],
 .cv-rio .cv-rio__section {
-  page-break-inside: avoid;   
+  page-break-inside: avoid;
   break-inside: avoid;
 }
 
-/* -----------------------------------------
-INDICADOR DE CONTINUACIÓN A LA SIGUIENTE PÁGINA
------------------------------------------- */
+/* ===========================================================
+   INDICADORES DE PÁGINA
+=========================================================== */
 .cv-rio__page-number {
   position: absolute;
   bottom: 10mm;
@@ -55,20 +63,21 @@ INDICADOR DE CONTINUACIÓN A LA SIGUIENTE PÁGINA
   color: #666;
 }
 
+/* Línea roja elegante indicando que continúa en la próxima página */
 .cv-rio__next-page {
   position: absolute;
   left: 2.8rem;
   right: 2.8rem;
-  bottom: -20px; /* apenas fuera para que no corte */
+  bottom: -20px;
   height: 2px;
-  background: #ff7d88; /* rojo elegante */
-  opacity: 0.85;
+  background: #ff7d88;
+  opacity: 0.9;
   z-index: 10;
   pointer-events: none;
   box-shadow: 0 0 12px rgba(255, 91, 104, 0.6);
-  opacity: 0.9;
 }
 
+/* Texto flotante “continúa en la siguiente página” */
 .cv-rio__next-page-text {
   position: absolute;
   left: 50%;
@@ -82,7 +91,7 @@ INDICADOR DE CONTINUACIÓN A LA SIGUIENTE PÁGINA
   border-radius: 8px;
   white-space: nowrap;
   pointer-events: none;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   opacity: 0.9;
   animation: cvtokyoPulse 1.9s infinite ease-in-out;
   z-index: 35;
@@ -90,38 +99,70 @@ INDICADOR DE CONTINUACIÓN A LA SIGUIENTE PÁGINA
 
 /* Animación suave */
 @keyframes cvtokyoPulse {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-2px); }
+}
+
+/* ===========================================================
+   SPLIT LAYOUT (Vertical / Horizontal)
+=========================================================== */
+.cv-rio__split {
+  display: flex;
+  height: auto;
+  overflow: visible !important;
+  margin-top: 0;
+  padding-top: 0;
+
+  &--vertical {
+    width: 35%;
+    padding: 1rem 1.5rem 0 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
   }
-  50% {
-    transform: translateX(-50%) translateY(-2px);
+
+  &--horizontal {
+    width: 65%;
+    padding: 1rem 1.5rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.11);
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
   }
 }
- 
- // ------------------------------
-  // estilos para los fondos de cada seccion
-  // ------------------------------
 
-.cv-rio__section-editor-active{
+/* Separadores internos */
+.cv-rio__split--horizontal > *:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+}
+
+.cv-rio__split--vertical > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+/* ===========================================================
+   ESTADO DE SECCIÓN (hover / activa)
+=========================================================== */
+.cv-rio__section-bg-active {
+  background-color: #00ccff09;
+  border: 1px solid #00ccff13;
+  box-shadow: 0 0 2px #00ccff27;
+  border-radius: 15px;
+}
+
+.cv-rio__section-bg {
+  border: 1px solid transparent;
+  border-radius: 15px;
+
+  &:hover {
     background-color: #00ccff09;
     border: 1px solid #00ccff13;
-    box-shadow: 0px 0px 2px #00ccff27;
-    border-radius: 15px;
+    box-shadow: 0 0 2px #00ccff27;
+  }
 }
-.cv-rio__section-editor{
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 15px;
 
-    &:hover{
-    background-color: #00ccff09;
-    border: 1px solid #00ccff13;
-    box-shadow: 0px 0px 2px #00ccff27;
-    }
-}
+/* Número flotante de sección */
 .cv-rio__section-number {
   position: absolute;
   left: -3rem;
-  right: 0px;
   top: 0;
   background: #ffa6ae;
   color: white;
@@ -135,549 +176,4 @@ INDICADOR DE CONTINUACIÓN A LA SIGUIENTE PÁGINA
   animation: cvtokyoPulse 1.9s infinite ease-in-out;
   z-index: 10;
   width: fit-content;
-}
-
-  /* ==================== SPLIT LAYOUT ==================== */
-.cv-rio__split {
-  display: flex;
-  height: auto;   /* 100% del alto de la página - altura del header */
-  overflow: visible !important;
-  margin-top: 0;
-  padding-top: 0;
-
-  &--vertical   { width: 35%;  padding: 1rem 1.5rem 0 0; border-top: 1px solid rgba(0,0,0,0.11); }
-  &--horizontal { width: 65%;  padding: 1rem 1.5rem;      border-left: 1px solid rgba(0,0,0,0.11); border-top: 1px solid rgba(0,0,0,0.11); }
-}
-
-  .cv-rio__split--horizontal > *:not(:first-child) {
-  border-top: 1px solid rgba(0, 0, 0, 0.11);
-  margin-top: 1rem;
-  padding-top: 1.5rem;
-}
-
-.cv-rio__split--vertical > *:not(:first-child) {
-  margin-top: 1rem;
-}
-
-.cv-rio{
-  &__contactSection, &__personalInfoSection, &__skillSection, &__languajeSection, &__linkSection,
-  &__hobbieSection, &__profileSection, &__experienceSection, &__educationSection, &__courseSection,
-  &__awardSection, &__referenceSection, &__customSection{
-    padding: 0.5rem;
-    cursor: pointer;
-
-    &--title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      position: relative;
-      display: inline-block; /* importante para que el borde mida solo el título */
-      padding-bottom: 4px;   /* espacio entre texto y borde */
-      margin-bottom: 0.5rem;
-      color: black;
-      position: relative;
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 40px;     /* <<--- el borde llega solo a la mitad */
-        height: 2px;
-        background: #000;
-      }
-    }
-
-    &--item-date{
-      font-size: 0.85rem;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    &--item-name{
-      color: rgba(0, 0, 0, 0.76);
-    }
-
-    &--item-head{
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-
-      &-employer, &-location{
-        color: rgba(0, 0, 0, 0.479);
-      }
-
-      p{
-        display: flex;
-        gap: 0.2rem;
-        font-size: 0.8rem;
-      }
-    }
-  }
-
-   // ------------------------------
-  // General - Vertical
-  // ------------------------------
-  &__personalInfoSection, &__contactSection, &__skillSection, &__languajeSection, &__linkSection, &__hobbieSection{
-    &--item{
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-  }
-  // ------------------------------
-  // IDENTIDAD
-  // ------------------------------
-  &__identitySection {
-    display: flex;
-    gap: 2rem;
-    align-items: start;
-    border: 1px solid rgba(0, 0, 0, 0);
-    padding: 0.5rem;
-    border-radius: 15px;
-    cursor: pointer;
-    
-    &:hover {
-      background-color: #00ccff09;
-      border: 1px solid #00ccff13;
-      box-shadow: 0px 0px 2px #00ccff27;
-      border-radius: 15px;
-    }
-
-    &.space {
-      justify-content: space-between;
-    }
-    &.start {
-      justify-content: flex-start;
-    }
-    //-------------------
-
-    &--qr-wrapper{
-      align-self: flex-start;
-    }
-
-    &--qr-text{
-      font-size: 0.8rem;
-    }
-
-    &--title{
-      color: black;
-    }
-
-    &--img {
-      width: 120px;
-      height: 120px;
-      border-radius: 100%;
-      object-fit: cover;
-      border: 1px solid black;
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.562);
-    }
-
-    &--text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      line-height: 3.5rem;
-      margin: auto 0;
-    }
-
-    &--title {
-      font-size: 2.9rem;
-      font-weight: 700;
-      max-width: 400px;
-    }
-
-    &--occupation {
-      font-size: 1.8rem;
-      font-weight: 400;
-      line-height: 2.2rem;
-      margin-bottom: 1.5rem;
-    }
-  }
-
-  // ------------------------------
-  // CONTACT SECTION
-  // ------------------------------
-  &__contactSection {
-    &--item {
-      margin-top: 0.7rem;
-
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-value {
-        font-size: 0.9rem;
-      }
-
-      &-url {
-        font-size: 0.9rem;
-      }
-
-      &-text-url {
-        font-size: 0.85rem;
-        opacity: 0.7;
-      }
-    }
-  }
-
-  // ------------------------------
-  // PERSONAL INFO SECTION
-  // ------------------------------
-  &__personalInfoSection {
-    &--item {
-      margin-top: 0.7rem;
-
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-value {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  // ------------------------------
-  // SKILL SECTION
-  // ------------------------------
-  &__skillSection {
-    &--item {
-      margin-top: 0.9rem;
-
-      &-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-      }
-
-      &-level {
-        font-size: 0.9rem;
-        opacity: 0.8;
-      }
-    }
-
-    /* Encabezado habilidad + nivel */
-    &--header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Contenedor de la barra */
-    &--progress {
-      margin-top: 0.35rem;
-      width: 100%;
-      height: 6px;
-      background-color: #dcdcdc; // gris claro
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* Barra interna */
-    &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
-  }
-
-  // ------------------------------
-  // LANGUAGE SECTION
-  // ------------------------------
-  &__languajeSection {
-    &--item {
-      margin-top: 0.9rem;
-
-      &-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      &-level {
-        font-size: 0.9rem;
-        opacity: 0.8;
-      }
-    }
-
-    /* Encabezado idioma + nivel */
-    &--header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Contenedor de la barra */
-    &--progress {
-      margin-top: 0.35rem;
-      width: 100%;
-      height: 6px;
-      background-color: #dcdcdc; // gris suave
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* Barra interna */
-    &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro sólido
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
-  }
-
-  // ------------------------------
-  // LINK SECTION
-  // ------------------------------
-  &__linkSection {
-    &--item {
-      margin-top: 0.7rem;
-
-      /* Nombre del enlace (clickeable) */
-      &-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #051235;
-        text-decoration: none;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-
-        &:hover {
-          opacity: 0.6;
-        }
-      }
-
-      /* URL en texto pequeño (solo si visible) */
-      &-url {
-        font-size: 0.8rem;
-        opacity: 0.7;
-        margin-top: 0.15rem;
-        word-break: break-all; // para URL largas en CV
-      }
-    }
-  }
-
-  // ------------------------------
-  // HOBBIE SECTION
-  // ------------------------------
-  &__hobbieSection {
-    &--title {
-      margin-bottom: 0.6rem;
-    }
-
-    /* Contenedor de los chips */
-    &--list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    /* Chip individual */
-    &--item {
-      display: inline-block;
-      padding: 0.35rem 0.65rem;
-
-      background-color: #ffffff;
-      border-radius: 6px;
-
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #000;
-
-      border: 1px solid #051235;
-      transition: background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
-    }
-  }
-
-  // ------------------------------
-  // PROFILE SECTION
-  // ------------------------------
-  &__profileSection {
-    &--item {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      margin-top: 1rem;
-    }
-  }
-
-  // ------------------------------
-  // EXPERIENCE SECTION
-  // ------------------------------
-  &__experienceSection {
-    &--item {
-      margin-top: 1rem;
-
-      &-head {
-        &-subtitle {
-          font-size: 1rem;
-          font-weight: 600;
-        }
-
-        &-employer {
-          margin-left: 0.5rem;
-          font-weight: 400;
-        }
-
-        &-location {
-          font-size: 0.9rem;
-        }
-      }
-
-      &-date {
-        display: flex;
-        gap: 1rem;
-        margin: 0.5rem 0;
-        
-
-        &-start,
-        &-end {
-          span {
-            display: inline-block;
-            margin-right: 0.2rem;
-          }
-        }
-      }
-
-      &-date-description {
-        font-size: 0.9rem;
-        line-height: 1.4;
-      }
-    }
-  }
-
-  // ------------------------------
-  // EDUCATION SECTION
-  // ------------------------------
-  &__educationSection {
-    &--item {
-      margin-top: 1rem;
-
-      &-head {
-        &-subtitle {
-          font-size: 1rem;
-          font-weight: 600;
-        }
-
-        &-employer {
-          margin-left: 0.5rem;
-        }
-
-        &-location {
-          font-size: 0.9rem;
-        }
-      }
-
-      &-date {
-        display: flex;
-        gap: 1rem;
-        margin: 0.5rem 0;
-
-        &-start, 
-        &-end {
-          span {
-            display: inline-block;
-            margin-right: 0.2rem;
-          }
-        }
-      }
-
-      &-date-description {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  // ------------------------------
-  // COURSE SECTION
-  // ------------------------------
-  &__courseSection {
-    &--item {
-      margin-top: 1rem;
-
-      &-head {
-        &-subtitle {
-          font-size: 1rem;
-          font-weight: 600;
-        }
-
-        &-employer {
-          margin-left: 0.5rem;
-        }
-
-        &-location {
-          font-size: 0.9rem;
-        }
-      }
-
-      &-date {
-        margin: 0.5rem 0;
-
-        &-all {
-          display: flex;
-          gap: 0.4rem;
-        }
-      }
-
-      &-date-description {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  // ------------------------------
-  // AWARD SECTION
-  // ------------------------------
-  &__awardSection {
-    &--item {
-      margin-top: 1rem;
-
-      &-subtitle {
-        font-size: 1rem;
-        font-weight: 600;
-      }
-
-      &-date {
-        font-size: 0.9rem;
-        margin: 0.3rem 0;
-      }
-
-      &-date-description {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  // ------------------------------
-  // REFERENCE SECTION
-  // ------------------------------
-  &__referenceSection {
-    &--item {
-      margin-top: 1rem;
-
-      &-head {
-        display: flex;
-        flex-direction: column;
-        font-size: 1rem;
-      }
-
-      &-phone {
-        font-size: 0.9rem;
-      }
-
-      &-email {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  // ------------------------------
-  // CUSTOM SECTION
-  // ------------------------------
-  &__customSection {
-    &--item {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-    }
-  }
 }

@@ -1,0 +1,62 @@
+/* ===============================
+   CV RIO – AWARD SECTION
+=============================== */
+
+.cv-rio__awardSection {
+  padding: 0.5rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: #00ccff09;
+    border: 1px solid #00ccff13;
+    box-shadow: 0px 0px 2px #00ccff27;
+  }
+
+  /* ----- Título de sección ----- */
+  &--title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+    margin-bottom: 0.5rem;
+    color: black;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: #000;
+    }
+  }
+
+  /* ========== Items individuales ========== */
+  &--item {
+    margin-top: 1rem;
+
+    /* Nombre del premio */
+    &-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* Fecha del premio */
+    &-date {
+      font-size: 0.9rem;
+      margin: 0.3rem 0;
+      opacity: 0.8;
+    }
+
+    /* Descripción */
+    &-date-description {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      white-space: pre-wrap; /* para texto editable */
+    }
+  }
+}

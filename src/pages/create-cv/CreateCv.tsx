@@ -63,10 +63,9 @@ function CreateCv() {
   return (
     <div className="create-cv">
       <ToolbarCV />
-      <SectionProgress />
+      <SectionProgress/>
 
-      <div className="create-cv__main">
-        <div></div>
+      <div className="create-cv__template">
         {SelectedTemplate && (
           <SelectedTemplate
             personalInfo={personalInfo}
