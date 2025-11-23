@@ -1,7 +1,6 @@
 import type { IState } from "./IState";
 
 export interface ITemplateProps {
-   onlySection?: string; // ← NUEVO
    
   personalInfo: IState["personalInfo"];
   profileSection: string;

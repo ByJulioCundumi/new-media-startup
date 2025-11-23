@@ -13,11 +13,13 @@ import type { IState } from "../../interfaces/IState";
 import type { ICvSectionsState } from "../../interfaces/ICvSections";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
+import PreviewPopup from "../../components/preview-popup/PreviewPopup";
 
 function CreateCv() {
   const dispatch = useDispatch();
 
   const [selectedTemplate, setSelectedTemplate] = useState<string>("default");
+  const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
 
   /** Selectores */
   const cvSectionsState = useSelector(
@@ -87,6 +89,29 @@ function CreateCv() {
           />
         )}
       </div>
+
+      {previewPopupOpen && SelectedTemplate && (
+        <PreviewPopup>
+          <SelectedTemplate
+            personalInfo={personalInfo}
+            profileSection={String(profile)}
+            educationSection={education}
+            experienceSection={experience}
+            skillSection={skills}
+            languageSection={languages}
+            linkSection={links}
+            courseSection={courses}
+            hobbieSection={hobbies}
+            referenceSection={references}
+            awardSection={awards}
+            customSection={customSection}
+            identitySection={identity}
+            contactSection={contact}
+            sectionsConfig={sections}
+            sectionsOrder={order}
+          />
+        </PreviewPopup>
+      )}
 
       {/* FLOATING EDITOR AUTOMÁTICO */}
       <FloatingEditor />

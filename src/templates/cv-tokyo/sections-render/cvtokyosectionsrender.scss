@@ -2,35 +2,22 @@
     background-color: #00ccff09;
     border: 1px solid #00ccff13;
     box-shadow: 0px 0px 2px #00ccff27;
-    border-radius: 15px;
+    border-radius: 0px;
+    
+    &:hover{
+      border-radius: 15px;
+    }
 }
 .cv-tokyo__section-editor{
     border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 15px;
-
+    border-radius: 0px;
+    
     &:hover{
+      border-radius: 15px;
     background-color: #00ccff09;
     border: 1px solid #00ccff13;
     box-shadow: 0px 0px 2px #00ccff27;
     }
-}
-.cv-tokyo__section-number {
-  position: absolute;
-  left: -3rem;
-  right: 0px;
-  top: 0;
- background: #ffa6ae;
-  color: white;
-  padding: 6px 8px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  border-radius: 8px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0.9;
-  animation: cvtokyoPulse 1.9s infinite ease-in-out;
-  z-index: 10;
-  width: fit-content;
 }
 
 .cv-tokyo{
@@ -43,12 +30,15 @@
     padding: 0.5rem;
     cursor: pointer;
 
+    word-break: break-word; // rompe palabras largas
+      overflow-wrap: break-word; // soporta compatibilidad
+
     &--title {
       font-size: 1.5rem;
       font-weight: 600;
       position: relative;
       display: inline-block; /* importante para que el borde mida solo el título */
-      padding-bottom: 4px;   /* espacio entre texto y borde */
+      padding-bottom: 15px;   /* espacio entre texto y borde */
       margin-bottom: 0.5rem;
       color: black;
       position: relative;
@@ -57,10 +47,11 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: 0rem;
         width: 40px;     /* <<--- el borde llega solo a la mitad */
-        height: 2px;
-        background: #000;
+        height: 4px;
+        border-radius: 100px;
+        background: #030b2e;
       }
     }
 
@@ -99,75 +90,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
-    }
-  }
-  // ------------------------------
-  // IDENTIDAD
-  // ------------------------------
-  &__identitySection {
-    display: flex;
-    gap: 2rem;
-    align-items: start;
-    border: 1px solid rgba(0, 0, 0, 0);
-    padding: 0.5rem;
-    border-radius: 15px;
-    cursor: pointer;
-    
-    &:hover {
-      background-color: #00ccff09;
-      border: 1px solid #00ccff13;
-      box-shadow: 0px 0px 2px #00ccff27;
-      border-radius: 15px;
-    }
-
-    &.space {
-      justify-content: space-between;
-    }
-    &.start {
-      justify-content: flex-start;
-    }
-    //-------------------
-
-    &--qr-wrapper{
-      align-self: flex-start;
-    }
-
-    &--qr-text{
-      font-size: 0.8rem;
-    }
-
-    &--title{
-      color: black;
-    }
-
-    &--img {
-      width: 120px;
-      height: 120px;
-      border-radius: 100%;
-      object-fit: cover;
-      border: 1px solid black;
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.562);
-    }
-
-    &--text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      line-height: 3.5rem;
-      margin: auto 0;
-    }
-
-    &--title {
-      font-size: 2.9rem;
-      font-weight: 700;
-      max-width: 400px;
-    }
-
-    &--occupation {
-      font-size: 1.8rem;
-      font-weight: 400;
-      line-height: 2.2rem;
-      margin-bottom: 1.5rem;
     }
   }
 

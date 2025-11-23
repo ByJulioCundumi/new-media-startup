@@ -1,6 +1,7 @@
 // templates/CvTokyo/components/Page.tsx
 import React from "react";
-import { Header } from "./Header";
+import { CvTokyoHeader } from "../cv-tokyo-header/CvTokyoHeader";
+import "./cvtokyolayout.scss"
 
 interface PageProps {
   pageIndex: number;
@@ -11,7 +12,7 @@ interface PageProps {
   rightContent: React.ReactNode[];
 }
 
-export const Page: React.FC<PageProps> = ({
+export const CvTokyoLayout: React.FC<PageProps> = ({
   pageIndex,
   totalPages,
   headerProps,
@@ -20,17 +21,17 @@ export const Page: React.FC<PageProps> = ({
   rightContent,
 }) => {
   return (
-    <div className="cv-tokyo__page">
-      <Header ref={headerRef} {...headerProps} />
+    <div className="cv-tokyo-layout__page">
+      <CvTokyoHeader ref={headerRef} {...headerProps} />
 
-      <div className="cv-tokyo__split">
-        <div className="cv-tokyo__split--vertical">
+      <div className="cv-tokyo-layout__split">
+        <div className="cv-tokyo-layout__split--vertical">
           {leftContent.map((el, i) => (
             <React.Fragment key={i}>{el}</React.Fragment>
           ))}
         </div>
 
-        <div className="cv-tokyo__split--horizontal">
+        <div className="cv-tokyo-layout__split--horizontal">
           {rightContent.map((el, i) => (
             <React.Fragment key={i}>{el}</React.Fragment>
           ))}
@@ -38,14 +39,14 @@ export const Page: React.FC<PageProps> = ({
       </div>
 
       {totalPages > 1 && (
-        <div className="cv-tokyo__page-number">
+        <div className="cv-tokyo-layout__page-number">
           Página {pageIndex + 1} de {totalPages}
         </div>
       )}
 
       {pageIndex < totalPages - 1 && (
-        <div className="cv-tokyo__next-page">
-          <span className="cv-tokyo__next-page-text">Página {pageIndex + 2}</span>
+        <div className="cv-tokyo-layout__next-page">
+          <span className="cv-tokyo-layout__next-page-text">Página {pageIndex + 2}</span>
         </div>
       )}
     </div>

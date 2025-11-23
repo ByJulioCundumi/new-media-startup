@@ -1,8 +1,10 @@
 // templates/components/CvTokyoSectionsRender.tsx
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
-import type { IState } from "../../interfaces/IState";
+import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
+import "./cvtokyosectionsrender.scss"
+import { TbArrowBadgeRight } from "react-icons/tb";
+import type { IState } from "../../../interfaces/IState";
 
 interface SectionRenderProps {
   sectionName: string;
@@ -54,10 +56,18 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   } = data;
 
   const dispatch = useDispatch();
+  const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
 
   const handleClick = () => {
     dispatch(toggleSectionEditor(sectionName));
   };
+
+  // Función helper al inicio del componente:
+const getProgressColorClass = (progress: number) => {
+  if (progress < 50) return "progress-red";
+  if (progress < 100) return "progress-yellow";
+  return "progress-blue";
+};
 
   const section = sectionByName[sectionName];
   const isOpen = section?.isEditorOpen ?? false;
@@ -82,9 +92,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="contact" className={`cv-tokyo__contactSection`}>
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {contactSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__contactSection--item">
@@ -100,9 +113,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="personalInfo" className="cv-tokyo__personalInfoSection">
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {personalInfo.map((item) => (
                 <div key={item.id} className="cv-tokyo__personalInfoSection--item">
@@ -118,9 +134,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="skills" className="cv-tokyo__skillSection">
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
 
               {skillSection.map((skill) => {
@@ -162,9 +181,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="languages" className="cv-tokyo__languajeSection">
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
 
               {languageSection.map((lang) => {
@@ -208,9 +230,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="links" className="cv-tokyo__linkSection">
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
                 {linkSection.map((link) => (
                   <div key={link.id} className="cv-tokyo__linkSection--item">
@@ -252,9 +277,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="hobbies" className="cv-tokyo__hobbieSection">
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
 
               <div className="cv-tokyo__hobbieSection--list">
@@ -273,9 +301,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="profile" className="cv-tokyo__profileSection">
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
           <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} />
         </div>, sectionName
@@ -286,9 +317,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="experience" className="cv-tokyo__experienceSection">
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {experienceSection.map((exp) => (
                 <div key={exp.id} className="cv-tokyo__experienceSection--item">
@@ -320,9 +354,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="education" className="cv-tokyo__educationSection">
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {educationSection.map((edu) => (
                 <div key={edu.id} className="cv-tokyo__educationSection--item">
@@ -356,9 +393,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="courses" className="cv-tokyo__courseSection">
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {courseSection.map((course) => (
                 <div key={course.id} className="cv-tokyo__courseSection--item">
@@ -395,9 +435,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="awards" className="cv-tokyo__awardSection">
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {awardSection.map((award) => (
                 <div key={award.id} className="cv-tokyo__awardSection--item">
@@ -416,9 +459,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="references" className="cv-tokyo__referenceSection">
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
-            <span className="cv-tokyo__section-number">
-              {section.progress}%
-            </span>
+            {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
           </h2>
               {referenceSection.map((ref) => (
                 <div key={ref.id} className="cv-tokyo__referenceSection--item">
@@ -440,9 +486,12 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
         <div key="custom" className="cv-tokyo__customSection">
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
-                <span className="cv-tokyo__section-number">
-                  {section.progress}%
-                </span>
+                {
+              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+                {section.progress}%
+                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              </span>
+            }
               </h2>
               {customSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} />

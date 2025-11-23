@@ -15,6 +15,7 @@ import type { IReferenceEntry } from "./IReferences";
 import type { ISectionsState } from "./ISections";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
+import type { IToolbarOption } from "./IToolbarOption";
 
 export interface IState{
     sidebar: ISidebar,
@@ -34,5 +35,6 @@ export interface IState{
     identity: IIdentityData; // cv sections
     contactEntries: IContactEntry[], // cv sections
     colorFont: IColorFontState,
-    sections: ISectionsState
+    sections: ISectionsState,
+    toolbarOption: IToolbarOption
 }

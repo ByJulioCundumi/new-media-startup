@@ -4,4 +4,6 @@ export interface IIdentityData {
   lastName?: string;
   jobTitle?: string;
   allowCvPhoto?: boolean;
+  allowQrCode: boolean,
+  qrCodeUrl: string
 }

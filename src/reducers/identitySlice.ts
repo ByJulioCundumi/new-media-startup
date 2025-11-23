@@ -6,7 +6,9 @@ const initialState: IIdentityData = {
   firstName: "",
   lastName: "",
   jobTitle: "",
-  allowCvPhoto: true
+  allowCvPhoto: true,
+  allowQrCode: false,
+  qrCodeUrl: "http://localhost:5173/"
 };
 
 const identitySlice = createSlice({
@@ -30,6 +32,9 @@ const identitySlice = createSlice({
     },
     setAllowCvPhoto(state, action: PayloadAction<boolean>){
       state.allowCvPhoto = action.payload
+    },
+    setAllowQrCode(state, action: PayloadAction<boolean>){
+      state.allowQrCode = action.payload
     }
   },
 });
@@ -40,7 +45,8 @@ export const {
   setFirstName,
   setLastName,
   setJobTitle,
-  setAllowCvPhoto
+  setAllowCvPhoto, 
+  setAllowQrCode
 } = identitySlice.actions;
 
 export default identitySlice.reducer;

@@ -27,11 +27,11 @@
 /* ========================================= */
 .section-progress__eye {
   font-size: 1.9rem;
-  background-color: #f5f5f5;
+  background-color: #fdfdfd;
   padding: 0rem 0.5rem;
   border-radius: 5px;
   position: absolute;
-  right: 0;
+  right: 0.3rem;
 }
 
 
@@ -189,8 +189,8 @@
 /* LABEL                                       */
 /* ========================================= */
 .section-progress__label {
-  color: #555;
-  padding: 0.35rem 0rem;
+  color: #696969;
+  padding: 0.35rem 0.5rem;
   border-radius: 5px;
 
   font-size: 0.9rem;
@@ -205,3 +205,9 @@
 .to-click {
   cursor: pointer;
 }
+
+
+/* Se reutilizan los colores */
+.section-progress-red { box-shadow : 0px 1px 2px  #ff8d8f75; }
+.section-progress-yellow { box-shadow : 0px 1px 2px  #ffd500da; }
+.section-progress-blue { box-shadow : 0px 1px 2px  #11d49367; }

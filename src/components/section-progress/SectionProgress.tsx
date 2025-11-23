@@ -94,9 +94,9 @@ function SectionProgress() {
   };
 
   const getProgressClass = (value: number) => {
-    if (value < 50) return "progress-red";
-    if (value < 100) return "progress-yellow";
-    return "progress-blue";
+    if (value < 50) return "section-progress-red";
+    if (value < 100) return "section-progress-yellow";
+    return "section-progress-blue";
   };
 
   return (
@@ -128,8 +128,8 @@ function SectionProgress() {
 
               return (
                 <SortableSection key={sec.name} id={sec.name}>
-                  <div className="section-progress__item">
-                    <span className="section-progress__label">{sec.title}</span>
+                  <div className={`section-progress__item ${getProgressClass(sec.progress)}`}>
+                    <span className={`section-progress__label`}>{sec.title}</span>
                     {/* 🔹 Íconos actualizados en base a isEditorOpen */}
                     {sec.isEditorOpen ? (
                       <IoEyeOutline
@@ -156,7 +156,7 @@ function SectionProgress() {
         onClick={() => setAddSections(!addSections)}
       >
         <span className="section-progress__arrow-text">
-          <MdFormatListBulletedAdd /> Agregar sección
+          <MdFormatListBulletedAdd /> Más Secciones
         </span>
 
         <span>{enabledOptionalCount}/7</span>

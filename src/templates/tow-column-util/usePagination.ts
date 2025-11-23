@@ -1,6 +1,6 @@
 // templates/CvTokyo/hooks/usePagination.ts
 import { useEffect, useRef, useState, useCallback } from "react";
-import { PAGE_HEIGHT_PX, SECTION_GAP } from "../constants";
+import { PAGE_HEIGHT_PX, SECTION_GAP } from "./constants";
 
 type Section = {
   name: string;

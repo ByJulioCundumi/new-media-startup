@@ -230,7 +230,7 @@
 .toolbar-cv-edit-btn {
   background: transparent;
   border: none;
-  color: #0073ff;
+  color: #0b305f;
   font-size: 22px;
   padding: 6px;
   border-radius: 8px;
@@ -266,7 +266,6 @@
 
 .toolbar-cv-progress-fill {
   height: 100%;
-  background: #0073ff;
   width: 0%;
   max-width: 100%;
   border-radius: 20px;
@@ -280,3 +279,40 @@
   min-width: 40px;
   text-align: right;
 }
+
+
+/* ─────────────────────────────────────────────── */
+/* COLORES DINÁMICOS PARA LA BARRA DE PROGRESO     */
+/* ─────────────────────────────────────────────── */
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease, background 0.3s ease;
+}
+
+/* Rojo — progreso bajo */
+.progress-bar-fill.progress-red {
+  background: #ff8d8f;
+}
+
+/* Amarillo/Naranja — progreso medio */
+.progress-bar-fill.progress-yellow {
+  background: #ffe878;
+}
+
+/* Verde/Azul — progreso completo */
+.progress-bar-fill.progress-blue {
+  background: #0ed3919d;
+}
+
+
+.progress-icon {
+  font-size: 22px;
+  margin-left: 8px;
+}
+
+/* Se reutilizan los colores */
+.progress-red { color: #ff8d8f; }
+.progress-yellow { color: #ffd500; }
+.progress-blue { color: #11d493; }

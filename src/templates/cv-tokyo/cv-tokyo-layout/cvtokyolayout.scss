@@ -1,0 +1,167 @@
+/* ==============================================
+   PAGE LAYOUT – TOKYO (Doble columna con paginación)
+   ============================================== */
+.cv-tokyo-layout {
+  width: 210mm;
+  background: transparent;
+  font-family: inherit;
+  overflow: visible !important;
+
+  * {
+    font-family: inherit !important;
+  }
+}
+
+/* --------------------- Medición oculta --------------------- */
+.cv-tokyo-layout__measure-wrapper {
+  &.left {
+    width: 35%;
+    padding: 1rem 1.5rem 0 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    box-sizing: border-box;
+  }
+
+  &.right {
+    width: 65%;
+    padding: 1rem 1.5rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.11);
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+    box-sizing: border-box;
+  }
+}
+
+/* --------------------- Página real --------------------- */
+.cv-tokyo-layout__page {
+  height: 297mm;
+  min-height: 297mm;
+  padding: 10mm 10mm 35mm 10mm;
+  box-sizing: border-box;
+  background: white;
+  position: relative;
+  page-break-after: always;
+  page-break-inside: avoid;
+  border: 1px solid rgba(0, 0, 0, 0.096);
+
+  /* Visual en pantalla (bonito) */
+  margin-bottom: 35px;
+  border-radius: 4px;
+
+  &:last-child {
+    page-break-after: avoid;
+    margin-bottom: 0;
+  }
+}
+
+/* Impresión perfecta */
+@media print {
+  .cv-tokyo-layout__page {
+    height: 297mm !important;
+    min-height: 297mm !important;
+    page-break-after: always;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .cv-tokyo-layout__page:last-child {
+    page-break-after: avoid;
+  }
+}
+
+/* --------------------- Split de columnas --------------------- */
+.cv-tokyo-layout__split {
+  display: flex;
+  height: auto;
+  margin-top: 0;
+  padding-top: 0;
+
+  &--vertical {
+    width: 35%;
+    padding: 1rem 1.5rem 0 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+  }
+
+  &--horizontal {
+    width: 65%;
+    padding: 1rem 1.5rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.11);
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
+  }
+}
+
+/* Separadores entre secciones (solo después de la primera) */
+.cv-tokyo-layout__split--vertical > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.cv-tokyo-layout__split--horizontal > *:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+}
+
+/* --------------------- Número de página --------------------- */
+.cv-tokyo-layout__page-number {
+  position: absolute;
+  bottom: 10mm;
+  right: 15mm;
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* --------------------- Indicador "continúa en la siguiente página" --------------------- */
+.cv-tokyo-layout__next-page {
+  position: absolute;
+  left: 2.8rem;
+  right: 2.8rem;
+  bottom: -20px;
+  height: 2px;
+  background: #ff7d88;
+  opacity: 0.85;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(255, 91, 104, 0.6);
+  z-index: 10;
+}
+
+.cv-tokyo-layout__next-page-text {
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  transform: translateX(-50%) translateY(60%);
+  background: #f34a58;
+  color: white;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.9;
+  animation: cvtokyoPulse 1.9s infinite ease-in-out;
+  z-index: 35;
+}
+
+@keyframes cvtokyoPulse {
+  0%, 100% {
+    transform: translateX(-50%) translateY(60%);
+  }
+  50% {
+    transform: translateX(-50%) translateY(58%);
+  }
+}
+
+/* Evita cortes feos al imprimir */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+.cv-tokyo-layout section,
+.cv-tokyo-layout [class*="section"],
+.cv-tokyo-layout .cv-tokyo-layout__section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

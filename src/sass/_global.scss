@@ -6,33 +6,47 @@
 /* ─────────────────────────────────────────────── */
 
 .progress-indicator {
-  margin-left: 1.2rem;
-  font-size: 13px;
+  position: absolute;
+  left: -3rem;
+  right: 0px;
+  top: -0.7rem;
+  padding: 6px 8px;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 7px;
-  transition: 0.25s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.137);
-  opacity: 0.9;
-  animation: cvtokyoPulse 1.9s infinite ease-in-out;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(60%);
+  animation: porgressPulse 1.9s infinite ease-in-out;
+  z-index: 10;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  background-color: white;
+
+  svg{
+    position: absolute;
+  right: -1rem;
+  color: #575757;
+  }
 }
 
 /* Rojo — progreso bajo */
 .progress-indicator.progress-red {
   color: #ffffff;
-  background-color: #ff8d8f;
+  background-color : #ff8d8fc2;
 }
 
 /* Amarillo/Naranja — progreso medio */
 .progress-indicator.progress-yellow {
   color: #ffffff;
-  background-color: #ffc13b;
+  background-color : #f5d41ccb;
 }
 
 /* Azul — progreso completo */
 .progress-indicator.progress-blue {
   color: #ffffff;
-  background-color: #11d493;
+  background-color : #11d493ce;
 }
 
 
@@ -129,11 +143,11 @@
 }
 
 /* Animación suave */
-@keyframes cvtokyoPulse {
+@keyframes porgressPulse {
   0%, 100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(60%);
   }
   50% {
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(58%);
   }
 }

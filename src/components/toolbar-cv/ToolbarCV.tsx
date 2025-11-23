@@ -1,33 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FaPalette,
   FaSyncAlt,
   FaDownload,
   FaSave,
   FaBackspace,
+  FaRegEyeSlash,
 } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
 import { LuEye, LuScanQrCode } from "react-icons/lu";
 import "./toolbarcv.scss";
 import ColorFontPopup from "../color-font-popup/ColorFontPopup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openPopup } from "../../reducers/colorFontSlice";
 import { TbEdit, TbFileCv, TbReportAnalytics, TbScan } from "react-icons/tb";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoChevronBackOutline } from "react-icons/io5";
+import type { IState } from "../../interfaces/IState";
+import { setAllowQrCode } from "../../reducers/identitySlice";
+import { FaRegFaceFrown, FaRegFaceGrimace, FaRegFaceMeh, FaRegFaceRollingEyes, FaRegFaceSmileBeam, FaRegFaceSurprise } from "react-icons/fa6";
+import { BsEmojiSunglasses } from "react-icons/bs";
+import { BiEditAlt } from "react-icons/bi";
+import { togglePreviewPopup, toggleTemplatePopup } from "../../reducers/toolbarOptionSlice";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
+  const {allowQrCode} = useSelector((state:IState)=>state.identity)
+  const [progress, setProgress] = useState(0);
+  const cvSections = useSelector((state: IState) => state.cvSections);
+  const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
 
-  const [showQR, setShowQR] = useState(true);
   const [title, setTitle] = useState("Mi CV Profesional");
   const [editing, setEditing] = useState(false);
 
-  // 🔥 Porcentaje del progreso (puede venir de props o store)
-  const [progress] = useState(64);
-
   const handleEditTitle = () => setEditing(true);
-
   const handleSaveTitle = () => {
     if (!title.trim()) setTitle("Mi CV Profesional");
     setEditing(false);
@@ -37,6 +43,34 @@ const ToolbarCV: React.FC = () => {
     if (!title.trim()) setTitle("Mi CV Profesional");
     setEditing(false);
   };
+
+  // Calcular progreso
+useEffect(() => {
+  const enabledSections = cvSections.sections.filter((s) => s.enabled);
+  if (enabledSections.length === 0) {
+    setProgress(0);
+    return;
+  }
+  const total = enabledSections.reduce((acc, s) => acc + s.progress, 0);
+  setProgress(Math.round(total / enabledSections.length));
+}, [cvSections]);
+
+// Clase de color unificada
+const progressColorClass = useMemo(() => {
+  if (progress < 50) return "progress-red";
+  if (progress < 100) return "progress-yellow";
+  return "progress-blue"; // 100%
+}, [progress]);
+
+const getProgressIcon = () => {
+  if (progress < 17) return <FaRegFaceFrown className={`progress-icon ${progressColorClass}`} />;
+  if (progress < 34) return <FaRegFaceGrimace className={`progress-icon ${progressColorClass}`} />;
+  if (progress < 50) return <FaRegFaceRollingEyes className={`progress-icon ${progressColorClass}`} />;
+  if (progress < 67) return <FaRegFaceMeh className={`progress-icon ${progressColorClass}`} />;
+  if (progress < 84) return <FaRegFaceSurprise className={`progress-icon ${progressColorClass}`} />;
+  if (progress < 99) return <FaRegFaceSmileBeam className={`progress-icon ${progressColorClass}`} />;
+  return <BsEmojiSunglasses className={`progress-icon ${progressColorClass}`} />;
+};
 
   return (
     <div className="toolbar-cv-wrapper">
@@ -54,7 +88,7 @@ const ToolbarCV: React.FC = () => {
           Estilos
         </button>
 
-        <button className="toolbar-cv-btn ghost">
+        <button onClick={()=> dispatch(toggleTemplatePopup())} className="toolbar-cv-btn ghost">
           <FaSyncAlt />
           Plantillas
         </button>
@@ -96,22 +130,21 @@ const ToolbarCV: React.FC = () => {
             onClick={handleEditTitle}
             title="Editar título"
           >
-            <TbEdit />
+            <BiEditAlt />
           </button>
         )}
       </div>
 
-      {/* ===== NUEVA BARRA DE PROGRESO ===== */}
-      <div className="toolbar-cv-progress">
-        <div className="toolbar-cv-progress-bar">
-          <div
-            className="toolbar-cv-progress-fill"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="toolbar-cv-progress">
+            {getProgressIcon()}
+          <div className="toolbar-cv-progress-bar">
+            <div
+              className={`progress-bar-fill ${progressColorClass}`}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <span className="toolbar-cv-progress-label">{progress}%</span>
         </div>
-
-        <span className="toolbar-cv-progress-label">{progress}%</span>
-      </div>
       </div>
 
       {/* ===== BOTONES DERECHA ===== */}
@@ -125,15 +158,15 @@ const ToolbarCV: React.FC = () => {
             <LuScanQrCode />
             <input
               type="checkbox"
-              checked={showQR}
-              onChange={() => setShowQR(!showQR)}
+              checked={allowQrCode}
+              onChange={() => dispatch(setAllowQrCode(!allowQrCode))}
             />
             <span className="toolbar-cv-slider" />
           </label>
         </button>
 
-        <button className="toolbar-cv-btn icon-btn" title="Vista previa">
-          <LuEye />
+        <button onClick={()=> dispatch(togglePreviewPopup())} className="toolbar-cv-btn icon-btn" title="Vista previa">
+          {previewPopupOpen ? <FaRegEyeSlash /> : <LuEye />} 
         </button>
 
         <button className="toolbar-cv-btn icon-btn success" title="Descargar PDF">
