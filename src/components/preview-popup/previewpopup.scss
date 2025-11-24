@@ -127,3 +127,23 @@
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+
+/* Evitar que el popup entero se imprima */
+@media print {
+  .preview-popup-overlay,
+  .preview-popup,
+  .preview-popup-header {
+    display: none !important;
+  }
+
+  /* Solo la plantilla (children) se imprime */
+  .print-area {
+    display: block !important;
+  }
+}
+
+.print-area {
+  width: 100%;
+  display: block;
+}

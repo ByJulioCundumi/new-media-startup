@@ -1,62 +1,38 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import { FaDownload, FaTimes } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { togglePreviewPopup } from "../../reducers/toolbarOptionSlice";
-import type { ReactNode } from "react";
 import "./previewpopup.scss";
 
-interface PreviewPopupProps {
-  children: ReactNode; // Aquí se renderiza la plantilla
-}
+export default function PreviewPopup({ children }) {
+  const printRef = useRef<HTMLDivElement>(null);
 
-const PreviewPopup: React.FC<PreviewPopupProps> = ({ children }) => {
-  const dispatch = useDispatch();
-  const popupRef = useRef<HTMLDivElement>(null);
-
-  const handleClose = () => {
-    dispatch(togglePreviewPopup());
-  };
-
-  const handleDownload = () => {
-    // Lógica de descarga PDF (html2canvas / jsPDF)
-    console.log("Descargar PDF");
-  };
-
-  // Cerrar popup al hacer clic fuera
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
-        handleClose();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const handleDownload = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: "preview",
+  });
 
   return (
     <div className="preview-popup-overlay">
-      <div className="preview-popup" ref={popupRef}>
-        <div className="preview-popup-header">
-          {/* Logo + nombre app */}
-          <div className="popup-header-left">
-            <span className="popup-app-name">Mi CV App</span>
-          </div>
+      <div className="preview-popup">
 
-          {/* Botones a la derecha */}
-          <div className="popup-header-right">
-            <button className="popup-btn download" onClick={handleDownload}>
-              <FaDownload /> Descargar
-            </button>
-            <button className="popup-btn close" onClick={handleClose}>
-              <FaTimes />
-            </button>
-          </div>
+        <div className="preview-popup-header">
+          <button className="popup-btn download" onClick={handleDownload}>
+            <FaDownload />
+            Descargar
+          </button>
+
+          <button className="popup-btn close">
+            <FaTimes />
+            Cerrar
+          </button>
         </div>
 
-        <div className="preview-popup-content">{children}</div>
+        {/* 🔥 Esta es la zona imprimible */}
+        <div ref={printRef} className="preview-popup-content print-area">
+          {children}
+        </div>
+
       </div>
     </div>
   );
-};
-
-export default PreviewPopup;
+}
