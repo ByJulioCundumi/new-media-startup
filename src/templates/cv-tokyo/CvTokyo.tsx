@@ -1,5 +1,4 @@
-// templates/CvTokyo/CvTokyo.tsx
-import "./cv-tokyo-layout/cvtokyolayout.scss"
+import "./cv-tokyo-layout/cvtokyolayout.scss";
 import React from "react";
 import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import type { IState } from "../../interfaces/IState";
 import { useTemplateColors } from "../tow-column-util/useTemplateColors";
 import { useHeaderHeight } from "../tow-column-util/useHeaderHeight";
 import { usePagination } from "../tow-column-util/usePagination";
+
 import { CvTokyoHeader } from "./cv-tokyo-header/CvTokyoHeader";
 import { CvTokyoLayout } from "./cv-tokyo-layout/CvTokyoLayout";
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
@@ -45,9 +45,13 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     sectionsOrder,
   } = props;
 
+  // ---------------- COLORS ----------------
   const styles = useTemplateColors(cvTokyoDefaults);
+
+  // ---------------- HEADER HEIGHT ----------------
   const { headerRef, headerHeight } = useHeaderHeight([identitySection]);
 
+  // ---------------- SECTIONS CONFIG ----------------
   const sections = useSelector((state: IState) => state.cvSections.sections || []);
   const sectionByName = Object.fromEntries(sections.map(s => [s.name, s]));
 
@@ -55,15 +59,36 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   const fullName = `${firstName || ""} ${lastName || ""}`.trim();
   const occupation = jobTitle || "";
 
+  // ---------------- RENDER SECTIONS ----------------
   const renderSection = (name: string) => (
     <CvTokyoSectionsRender
       sectionName={name}
-      data={{ contactSection, personalInfo, profileSection, experienceSection, educationSection, skillSection, languageSection, linkSection, hobbieSection, courseSection, awardSection, referenceSection, customSection, sectionsConfig }}
-      styles={{ sectionTitle: styles.sectionTitle, text: styles.text, qr: styles.qr }}
+      data={{
+        contactSection,
+        personalInfo,
+        profileSection,
+        experienceSection,
+        educationSection,
+        skillSection,
+        languageSection,
+        linkSection,
+        hobbieSection,
+        courseSection,
+        awardSection,
+        referenceSection,
+        customSection,
+        sectionsConfig,
+      }}
+      styles={{
+        sectionTitle: styles.sectionTitle,
+        text: styles.text,
+        qr: styles.qr,
+      }}
       sectionByName={sectionByName}
     />
   );
 
+  // ---------------- ACTIVE SECTIONS ----------------
   const activeSections = sectionsOrder
     .filter(name => sectionByName[name]?.enabled)
     .map(name => ({
@@ -72,13 +97,25 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
       orientation: sectionByName[name]?.orientation || "both",
     }));
 
+  // ---------------- PAGINATION ----------------
   const { pages, getMeasureRef, measuredKeys } = usePagination(activeSections, headerHeight, [
-    // cualquier cambio de contenido que afecte altura
-    identitySection, contactSection, personalInfo, profileSection, experienceSection,
-    educationSection, skillSection, languageSection, linkSection, courseSection,
-    hobbieSection, referenceSection, awardSection, customSection,
+    identitySection,
+    contactSection,
+    personalInfo,
+    profileSection,
+    experienceSection,
+    educationSection,
+    skillSection,
+    languageSection,
+    linkSection,
+    courseSection,
+    hobbieSection,
+    referenceSection,
+    awardSection,
+    customSection,
   ]);
 
+  // ---------------- HEADER PROPS ----------------
   const headerProps = {
     fullName,
     occupation,
@@ -94,10 +131,20 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     },
   };
 
+  // ---------------- RENDER ----------------
   return (
     <article className="cv-tokyo-layout" style={{ fontFamily: styles.fontFamily }}>
-      {/* Medición oculta */}
-      <div style={{ position: "absolute", left: -9999, top: 0, visibility: "hidden", width: "210mm" }} aria-hidden>
+      {/* Medición oculta para calcular altura exacta */}
+      <div
+        style={{
+          position: "absolute",
+          left: -9999,
+          top: 0,
+          visibility: "hidden",
+          width: "210mm",
+        }}
+        aria-hidden
+      >
         <div style={{ padding: "10mm" }}>
           <CvTokyoHeader {...headerProps} />
           {activeSections.map((s, i) => {
@@ -116,18 +163,20 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
         </div>
       </div>
 
-      {/* Páginas reales */}
-      {pages.map((page, i) => (
-        <CvTokyoLayout
-          key={i}
-          pageIndex={i}
-          totalPages={pages.length}
-          headerProps={headerProps}
-          headerRef={i === 0 ? headerRef : undefined}
-          leftContent={page.left}
-          rightContent={page.right}
-        />
-      ))}
+      {/* Páginas reales sin vacías */}
+      {pages
+        .filter(p => p.left.length > 0 || p.right.length > 0)
+        .map((page, i) => (
+          <CvTokyoLayout
+            key={i}
+            pageIndex={i}
+            totalPages={pages.length}
+            headerProps={headerProps}
+            headerRef={i === 0 ? headerRef : undefined} // solo primera página
+            leftContent={page.left}
+            rightContent={page.right}
+          />
+        ))}
     </article>
   );
 };

@@ -1,4 +1,3 @@
-// templates/CvTokyo/hooks/usePagination.ts
 import { useEffect, useRef, useState, useCallback } from "react";
 import { PAGE_HEIGHT_PX, SECTION_GAP } from "./constants";
 
@@ -16,75 +15,72 @@ export const usePagination = (
   dependencies: any[]
 ) => {
   const measureRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [pages, setPages] = useState<Page[]>([{ left: [], right: [] }]);
+  const [pages, setPages] = useState<Page[]>([]);
 
-  // Generamos claves únicas
   const measuredKeys = activeSections.map((s, i) => `${s.name}__${i}`);
 
-  // Esta es la clave: función que devuelve un callback ref válido para React
   const getMeasureRef = useCallback((key: string) => {
     return (node: HTMLDivElement | null) => {
       measureRefs.current[key] = node;
     };
   }, []);
 
-  // Función pura que construye las páginas
   const buildPages = (): Page[] => {
-    const pages: Page[] = [];
+    const result: Page[] = [];
     let current: Page = { left: [], right: [] };
     let leftH = headerHeight;
     let rightH = headerHeight;
 
+    const addSection = (sec: Section, height: number, isLeft: boolean) => {
+      if (isLeft) {
+        current.left.push(sec.element);
+        leftH += height + (current.left.length > 1 ? SECTION_GAP : 0);
+      } else {
+        current.right.push(sec.element);
+        rightH += height + (current.right.length > 1 ? SECTION_GAP : 0);
+      }
+    };
+
     activeSections.forEach((sec, i) => {
       const key = measuredKeys[i];
       const node = measureRefs.current[key];
-      const height = node?.getBoundingClientRect().height ?? 200;
+      const height = node?.getBoundingClientRect().height ?? 0;
 
-      const isVertical = sec.orientation === "both";
-      const canLeft = isVertical;
-      const canRight = sec.orientation === "horizontal";
+      const isLeft = sec.orientation === "both";
+      const isRight = sec.orientation === "horizontal";
 
-      let placed = false;
+      let fitsLeft = isLeft && (leftH + height + (current.left.length ? SECTION_GAP : 0) <= PAGE_HEIGHT_PX);
+      let fitsRight = isRight && (rightH + height + (current.right.length ? SECTION_GAP : 0) <= PAGE_HEIGHT_PX);
 
-      // Intenta izquierda
-      if (canLeft) {
-        const gap = current.left.length > 0 ? SECTION_GAP : 0;
-        if (leftH + height + gap <= PAGE_HEIGHT_PX) {
-          current.left.push(sec.element);
-          leftH += height + gap;
-          placed = true;
+      // --- Coloca donde quepa ---
+      if (fitsLeft) {
+        addSection(sec, height, true);
+      } else if (fitsRight) {
+        addSection(sec, height, false);
+      } else {
+        // --- No cabe → nueva página ---
+        if (current.left.length || current.right.length) {
+          result.push(current);
         }
-      }
-
-      // Intenta derecha
-      if (!placed && canRight) {
-        const gap = current.right.length > 0 ? SECTION_GAP : 0;
-        if (rightH + height + gap <= PAGE_HEIGHT_PX) {
-          current.right.push(sec.element);
-          rightH += height + gap;
-          placed = true;
-        }
-      }
-
-      // Nueva página si no cabe
-      if (!placed) {
-        pages.push(current);
         current = { left: [], right: [] };
         leftH = headerHeight;
         rightH = headerHeight;
 
-        if (canLeft) {
-          current.left.push(sec.element);
-          leftH += height;
+        // Colocar sección en nueva página
+        if (isLeft) {
+          addSection(sec, height, true);
         } else {
-          current.right.push(sec.element);
-          rightH += height;
+          addSection(sec, height, false);
         }
       }
     });
 
-    pages.push(current);
-    return pages;
+    // Agregar última página
+    if (current.left.length || current.right.length) {
+      result.push(current);
+    }
+
+    return result;
   };
 
   useEffect(() => {
@@ -93,17 +89,7 @@ export const usePagination = (
 
     const measure = () => {
       raf2 = requestAnimationFrame(() => {
-        try {
-          setPages(buildPages());
-        } catch (err) {
-          console.error("Error en paginación:", err);
-          setPages([
-            {
-              left: activeSections.filter(s => s.orientation === "both").map(s => s.element),
-              right: activeSections.filter(s => s.orientation === "horizontal").map(s => s.element),
-            },
-          ]);
-        }
+        setPages(buildPages());
       });
     };
 
@@ -119,7 +105,7 @@ export const usePagination = (
 
   return {
     pages,
-    getMeasureRef,     // ← Ahora sí, 100% compatible con ref={getMeasureRef(key)}
+    getMeasureRef,
     measuredKeys,
   };
 };
