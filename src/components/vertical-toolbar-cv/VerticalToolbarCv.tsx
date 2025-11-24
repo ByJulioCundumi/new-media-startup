@@ -37,7 +37,16 @@ const VerticalToolbarCV: React.FC = () => {
         {previewPopupOpen ? <LuNewspaper /> : <LuEye />}
       </button>
 
-      <button className="vertical-toolbar-btn download-btn" title="Descargar PDF">
+      <button
+        className="vertical-toolbar-btn download-btn"
+        title="Descargar PDF"
+        onClick={() => {
+          dispatch(togglePreviewPopup());   // Abrir preview
+          setTimeout(() => {
+            dispatch({ type: "toolbarOption/setStartPrint", payload: true });
+          }, 50); // Delay suave para esperar a que renderice
+        }}
+      >
         <FaDownload />
       </button>
 

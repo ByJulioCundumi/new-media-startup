@@ -8,6 +8,7 @@ import type { IToolbarOption } from "../interfaces/IToolbarOption";
 const initialState: IToolbarOption = {
 previewPopupOpen: false,
 templatesPopupOpen: false,
+startPrint: false
 };
 
 const toolbarOptionSlice = createSlice({
@@ -26,6 +27,10 @@ state.templatesPopupOpen = action.payload;
 toggleTemplatePopup(state) {
 state.templatesPopupOpen = !state.templatesPopupOpen;
 },
+setStartPrint: (state, action) => {
+  state.startPrint = action.payload;
+}
+
 },
 });
 
