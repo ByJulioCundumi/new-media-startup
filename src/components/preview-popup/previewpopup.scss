@@ -1,149 +1,66 @@
-.preview-popup-overlay {
+.preview-popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding: 40px 0;
+  padding-top: 20px;
   z-index: 9999;
-  animation: fadeIn 0.25s ease;
-}
-
-.preview-popup {
-  background: #ffffff;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 1000px;
-  max-height: 95%;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  animation: scaleIn 0.25s ease;
+}
+
+.preview-popup__inner {
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.preview-popup__header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding-bottom: 1rem;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px;
+  position: fixed;
+  top: 0.5rem;
+  right: 1rem;
 }
 
-.preview-popup-header {
-  display: flex;
-  justify-content: space-between; /* izquierda y derecha separados */
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #fdfdfd;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  width: 100%;
+.preview-popup__close,
+.preview-popup__download {
+  background: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-/* Logo y nombre app */
-.popup-header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  .popup-logo {
-    height: 36px;
-    width: 36px;
-    object-fit: contain;
-  }
-
-  .popup-app-name {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #333;
-  }
+.preview-popup__content {
+  background: white;
+  padding: 0;
 }
 
-/* Botones */
-.popup-header-right {
-  display: flex;
-  gap: 0.5rem;
-
-  .popup-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.5rem 0.9rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.95rem;
-
-    &.close {
-      background: #d9534f;
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      &:hover {
-        background: #c9302c;
-      }
-    }
-
-    &.download {
-      background: #0275d8;
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      &:hover {
-        background: #025aa5;
-      }
-    }
-  }
-}
-
-.preview-popup-content {
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 0 0 16px 16px;
-  width: 100%;
-  display: flex;
-  justify-content: center; /* centra la plantilla horizontalmente */
-  overflow-x: auto;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.2);
-    border-radius: 4px;
-  }
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-
-/* Evitar que el popup entero se imprima */
+/* Evitar páginas en blanco */
 @media print {
-  .preview-popup-overlay,
-  .preview-popup,
-  .preview-popup-header {
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .preview-popup {
+    position: static !important;
+    background: none !important;
+    overflow: visible !important;
+  }
+
+  .preview-popup__header {
     display: none !important;
   }
 
-  /* Solo la plantilla (children) se imprime */
-  .print-area {
-    display: block !important;
+  .preview-popup__content {
+    margin: 0 !important;
+    padding: 0 !important;
   }
-}
-
-.print-area {
-  width: 100%;
-  display: block;
 }

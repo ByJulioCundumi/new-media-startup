@@ -2,6 +2,9 @@
 import React from "react";
 import { CvTokyoHeader } from "../cv-tokyo-header/CvTokyoHeader";
 import "./cvtokyolayout.scss"
+import { useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import { PreviewPopup } from "../../../components/preview-popup/PreviewPopup";
 
 interface PageProps {
   pageIndex: number;
@@ -20,6 +23,8 @@ export const CvTokyoLayout: React.FC<PageProps> = ({
   leftContent,
   rightContent,
 }) => {
+  const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+
   return (
     <div className="cv-tokyo-layout__page">
       <CvTokyoHeader ref={headerRef} {...headerProps} />
@@ -44,7 +49,7 @@ export const CvTokyoLayout: React.FC<PageProps> = ({
         </div>
       )}
 
-      {pageIndex < totalPages - 1 && (
+      {pageIndex < totalPages - 1 && previewPopupOpen === false && (
         <div className="cv-tokyo-layout__next-page">
           <span className="cv-tokyo-layout__next-page-text">Página {pageIndex + 2}</span>
         </div>

@@ -13,9 +13,8 @@ import type { IState } from "../../interfaces/IState";
 import type { ICvSectionsState } from "../../interfaces/ICvSections";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
-import PreviewPopup from "../../components/preview-popup/PreviewPopup";
-import QrToggleButton from "../../components/qr-toggle-button/QrToggleButton";
 import VerticalToolbarCV from "../../components/vertical-toolbar-cv/VerticalToolbarCv";
+import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
 
 function CreateCv() {
   const dispatch = useDispatch();

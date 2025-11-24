@@ -1,37 +1,49 @@
-import React, { useRef } from "react";
-import { useReactToPrint } from "react-to-print";
+// components/preview-popup/PreviewPopup.tsx
+import React, { useRef, type ReactNode } from "react";
+import { useDispatch } from "react-redux";
 import { FaDownload, FaTimes } from "react-icons/fa";
+import { togglePreviewPopup } from "../../reducers/toolbarOptionSlice";
+import { useReactToPrint } from "react-to-print";
+
 import "./previewpopup.scss";
 
-export default function PreviewPopup({ children }) {
+interface PreviewPopupProps {
+  children: ReactNode;
+}
+
+export const PreviewPopup: React.FC<PreviewPopupProps> = ({ children }) => {
+  const dispatch = useDispatch();
   const printRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = useReactToPrint({
+  const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: "preview",
+    documentTitle: "Mi-CV",
   });
 
-  return (
-    <div className="preview-popup-overlay">
-      <div className="preview-popup">
+  const closePopup = () => dispatch(togglePreviewPopup());
 
-        <div className="preview-popup-header">
-          <button className="popup-btn download" onClick={handleDownload}>
-            <FaDownload />
-            Descargar
+  return (
+    <div className="preview-popup" onClick={closePopup}>
+      
+      {/* Este wrapper evita cerrar cuando haces clic dentro del contenido */}
+      <div
+        className="preview-popup__shield"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="preview-popup__header">
+          <button className="preview-popup__close" onClick={closePopup}>
+            <FaTimes />
           </button>
 
-          <button className="popup-btn close">
-            <FaTimes />
-            Cerrar
+          <button className="preview-popup__download" onClick={handlePrint}>
+            <FaDownload />
           </button>
         </div>
 
-        {/* 🔥 Esta es la zona imprimible */}
-        <div ref={printRef} className="preview-popup-content print-area">
+        {/* Contenido imprimible */}
+        <div ref={printRef} className="preview-popup__content">
           {children}
         </div>
-
       </div>
     </div>
   );
