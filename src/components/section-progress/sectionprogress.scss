@@ -18,6 +18,10 @@
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.062);
   border: 1px solid rgba(0, 0, 0, 0.089);
   z-index: 50;
+
+  &__count{
+    font-size: 0.8rem;
+  }
 }
 
 
@@ -47,9 +51,6 @@
 
 .section-progress__arrow-container {
   width: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
 
   padding: 0.45rem 0.6rem;
   border-radius: 6px;
@@ -70,7 +71,7 @@
   margin-top: 0.6rem;
 
   &:hover {
-    background: rgba(240, 240, 240, 0.9);
+    scale: 1.02;
   }
 }
 
@@ -189,7 +190,7 @@
 /* LABEL                                       */
 /* ========================================= */
 .section-progress__label {
-  color: #696969;
+  color: #070b51;
   padding: 0.35rem 0.5rem;
   border-radius: 5px;
 
@@ -206,8 +207,80 @@
   cursor: pointer;
 }
 
-
 /* Se reutilizan los colores */
-.section-progress-red { box-shadow : 0px 1px 2px  #ff8d8f75; }
-.section-progress-yellow { box-shadow : 0px 1px 2px  #ffd500da; }
-.section-progress-blue { box-shadow : 0px 1px 2px  #11d49367; }
+.section-progress-red { background-color :  #ff8d8f29; border: 1px solid #ff000411; box-shadow: 0px 2px 5px #ff000413;}
+.section-progress-yellow { background-color :  #ffd50022; border: 1px solid #ffd50022; box-shadow: 0px 2px 5px #ffd50022;}
+.section-progress-blue { background-color :  #11d49328; border: 1px solid #00ff9928; box-shadow: 0px 2px 5px #01ffaa28;}
+
+.section-progress__header {
+  display: flex;
+  flex-direction: column; /* texto arriba, barra abajo */
+  justify-content: space-between;
+  gap: 6px; /* espacio entre texto y barra */
+  margin-bottom: 12px;
+
+  &--box {
+    display: flex;
+    justify-content: space-between; /* texto izquierda/derecha */
+    width: 100%;
+  }
+}
+
+.section-progress-bar {
+  width: 95%;
+  height: 6px;
+  background: #e8eaf7;
+  border-radius: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar-fill.progress-red { background: #ff8d8f; }
+.progress-bar-fill.progress-yellow { background: #ffe878; }
+.progress-bar-fill.progress-blue { background: #0ed3919d; }
+
+
+.section-progress__label {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: right;
+  color: #2e3b4e;
+}
+
+
+.section-progress__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  height: 100%;
+
+  /* Scroll visible pero sutil */
+  scrollbar-width: thin;          
+  scrollbar-color: rgba(0,0,0,0.08) transparent;  
+
+  &::-webkit-scrollbar {
+    width: 3px;                   
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;      
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.06); /* color normal muy sutil */
+    border-radius: 3px;           
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.10); /* hover suave */
+  }
+}

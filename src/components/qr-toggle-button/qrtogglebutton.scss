@@ -1,0 +1,82 @@
+/* ============================= */
+/* QR TOGGLE BUTTON              */
+/* ============================= */
+.qr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: transparent;
+  cursor: pointer;
+  transition: 0.25s ease;
+  background-color: white;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.038);
+
+  svg {
+    font-size: 18px;
+    margin-right: 4px;
+    color: #0073ff;
+    transition: 0.25s ease;
+  }
+
+  &:hover {
+    color: #0073ff;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* SWITCH (TOGGLE) */
+.toolbar-cv-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  .toolbar-cv-slider {
+    width: 36px;
+    height: 18px;
+    background: #d1d3e0;
+    border-radius: 20px;
+    position: relative;
+    transition: 0.25s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      top: 2px;
+      left: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.25s ease;
+      box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    }
+  }
+
+  input:checked + .toolbar-cv-slider {
+    background: #0073ff;
+
+    &::before {
+      transform: translateX(18px);
+    }
+  }
+}
+
+/* Opcional: centrado del icono dentro del switch */
+.toolbar-cv-switch svg {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0073ff;
+}

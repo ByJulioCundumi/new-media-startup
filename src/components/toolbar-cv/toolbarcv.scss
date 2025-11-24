@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 10px 0px;
+  padding: 15px 0px;
   box-shadow: 0px 2px 2px rgba(138, 138, 138, 0.053);
   
   padding-left: 110px;
@@ -102,79 +102,12 @@
   gap: 0.5rem;
 }
 
-/* SWITCH */
-.toolbar-cv-switch {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-
-  input {
-    display: none;
-  }
-
-  .toolbar-cv-switch-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #2e325a;
-  }
-
-  .toolbar-cv-slider {
-    width: 36px;
-    height: 18px;
-    background: #d1d3e0;
-    border-radius: 20px;
-    position: relative;
-    transition: 0.25s ease;
-
-    &::before {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      top: 2px;
-      left: 2px;
-      background: white;
-      border-radius: 50%;
-      transition: 0.25s ease;
-      box-shadow: 0 0 4px rgba(0,0,0,0.2);
-    }
-  }
-
-  input:checked + .toolbar-cv-slider {
-    background: #0073ff;
-
-    &::before {
-      transform: translateX(18px);
-    }
-  }
-}
-
-.toolbar-cv-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 18px;
-  color: #2e325a;
-  margin-right: 1rem;
-
-  .logo-icon {
-    font-size: 24px;
-    color: #0073ff;
-  }
-
-  .logo-text {
-    white-space: nowrap;
-  }
-}
-
-
 .toolbar-cv-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -1.1rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .toolbar-cv-title {
@@ -202,7 +135,6 @@
 
   svg {
     opacity: 0.7;
-    font-size: 1.05rem;
   }
 }
 
@@ -238,10 +170,6 @@
   cursor: pointer;
   margin-bottom: -0.3em;
   margin-right: -0.3rem;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 }
 
 /* ================================
@@ -262,14 +190,6 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-}
-
-.toolbar-cv-progress-fill {
-  height: 100%;
-  width: 0%;
-  max-width: 100%;
-  border-radius: 20px;
-  transition: width 0.4s ease;
 }
 
 .toolbar-cv-progress-label {
@@ -316,3 +236,62 @@
 .progress-red { color: #ff8d8f; }
 .progress-yellow { color: #ffd500; }
 .progress-blue { color: #11d493; }
+
+
+/* ============================
+   PERFIL + ESTADO VIP
+============================ */
+.toolbar-cv-profile {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-cv-profile-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover .toolbar-cv-vip-icon {
+    transform: scale(1.12);
+  }
+}
+
+.toolbar-cv-profile-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eaeaea;
+}
+
+.toolbar-cv-vip-icon {
+  position: absolute;
+  bottom: -3px;
+  right: -4px;
+
+  background: #fff;
+  border-radius: 50%;
+  padding: 3px;
+  font-size: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.1);
+
+  &.vip {
+    color: #0073ff; /* Diamante azul */
+  }
+
+  &.novip {
+    color: #ff8d00; /* Icono de obtener VIP */
+  }
+}

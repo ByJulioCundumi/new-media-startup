@@ -1,0 +1,43 @@
+.vertical-toolbar-cv {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 50;
+}
+
+.vertical-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 110, 255, 0.15);
+  background: #ffffff;
+  cursor: pointer;
+  transition: 0.25s ease;
+  font-size: 20px;
+  color: #2e325a;
+
+  &:hover {
+    border-color: rgba(66, 76, 255, 0.3);
+    color: #0073ff;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.vertical-toolbar-btn svg {
+  pointer-events: none;
+}

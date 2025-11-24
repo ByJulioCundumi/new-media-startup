@@ -1,0 +1,48 @@
+.remote-info-bubble {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.info-icon {
+  font-size: 30px;
+  color: #4a5cff;
+  background: #f5f6ff;
+  padding: 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+}
+
+.info-text {
+  font-size: 15px;
+  color: #2e325a;
+  white-space: nowrap;
+}
+
+/* Botón de cerrar */
+.close-icon {
+  font-size: 20px;
+  color: #70738c;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.close-icon:hover {
+  color: #ff4f4f;
+  transform: scale(1.15);
+}

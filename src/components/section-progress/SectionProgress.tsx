@@ -1,10 +1,10 @@
 // components/section-progress/SectionProgress.tsx
 import "./sectionprogress.scss";
 import { GrGrow } from "react-icons/gr";
-import { MdFormatListBulletedAdd, MdOutlineWorkOutline } from "react-icons/md";
+import { MdFormatListBulletedAdd, MdOutlineWorkOutline, MdPendingActions } from "react-icons/md";
 import { PiIdentificationBadge, PiStudentLight } from "react-icons/pi";
 import { IoChevronUp, IoChevronDown, IoEyeOutline } from "react-icons/io5";
-import { LuEyeClosed } from "react-icons/lu";
+import { LuCheck, LuEyeClosed } from "react-icons/lu";
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +19,7 @@ import AddSections from "../../pages/create-cv/add-sections/AddSection";
 import SortableSection from "../../pages/create-cv/sortable-section/SortableSection";
 import type { IState } from "../../interfaces/IState";
 import { reorderSections, toggleSectionOpen } from "../../reducers/cvSectionsSlice";
+import { BiEditAlt } from "react-icons/bi";
 
 function SectionProgress() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -99,24 +100,35 @@ function SectionProgress() {
     return "section-progress-blue";
   };
 
+  const totalEnabledSections = sections.filter(s => s.enabled);
+const overallProgress = totalEnabledSections.length
+  ? Math.round(totalEnabledSections.reduce((acc, s) => acc + s.progress, 0) / totalEnabledSections.length)
+  : 0;
+
+const progressColorClass = useMemo(() => {
+  if (overallProgress < 50) return "progress-red";
+  if (overallProgress < 100) return "progress-yellow";
+  return "progress-blue";
+}, [overallProgress]);
+
+
   return (
     <div ref={mainRef} className="section-progress">
-      {/* ⭐ HEADER — total de secciones habilitadas */}
-      <div className="section-progress__arrow-container section-progress__arrow-container--up">
-        <span className="section-progress__arrow-text">
-          {enabledSectionsCount} Secciones
-        </span>
+      
+      <div className="section-progress__header">
+  <div className="section-progress__header--box">
+    <span className="section-progress__label">Mi CV</span>
+    <span className="section-progress__label">{overallProgress}%</span>
+  </div>
+  <div className="section-progress-bar">
+    <div
+      className={`progress-bar-fill ${progressColorClass}`}
+      style={{ width: `${overallProgress}%` }}
+    />
+  </div>
+</div>
 
-        <div className="section-progress__arrow-box">
-          <button className="section-progress__arrow-btn" onClick={scrollUp}>
-            <IoChevronUp className="section-progress__arrow-icon" />
-          </button>
 
-          <button className="section-progress__arrow-btn" onClick={scrollDown}>
-            <IoChevronDown className="section-progress__arrow-icon" />
-          </button>
-        </div>
-      </div>
 
       {/* LISTA DE SECCIONES */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -131,17 +143,21 @@ function SectionProgress() {
                   <div className={`section-progress__item ${getProgressClass(sec.progress)}`}>
                     <span className={`section-progress__label`}>{sec.title}</span>
                     {/* 🔹 Íconos actualizados en base a isEditorOpen */}
-                    {sec.isEditorOpen ? (
-                      <IoEyeOutline
-                        className="section-progress__eye"
-                        onClick={() => dispatch(toggleSectionOpen(sec.name))}
-                      />
-                    ) : (
-                      <LuEyeClosed
-                        className="section-progress__eye"
-                        onClick={() => dispatch(toggleSectionOpen(sec.name))}
-                      />
-                    )}
+                    {
+                      sec.progress === 100 ? (
+                        <LuCheck className="section-progress__eye" />
+                      ) : sec.isEditorOpen ? (
+                        <BiEditAlt
+                          className="section-progress__eye"
+                          onClick={() => dispatch(toggleSectionOpen(sec.name))}
+                        />
+                      ) : (
+                        <LuEyeClosed
+                          className="section-progress__eye"
+                          onClick={() => dispatch(toggleSectionOpen(sec.name))}
+                        />
+                      )
+                    }                   
                   </div>
                 </SortableSection>
               );
@@ -159,7 +175,7 @@ function SectionProgress() {
           <MdFormatListBulletedAdd /> Más Secciones
         </span>
 
-        <span>{enabledOptionalCount}/7</span>
+        <span className="section-progress__count">{enabledOptionalCount}/7</span>
       </div>
 
       {addSections && <AddSections />}

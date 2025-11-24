@@ -9,6 +9,7 @@ import TemplatesPage from './pages/templates-page/TemplatesPage'
 import JobPage from './pages/job-page/JobPage'
 import AccountPage from './pages/account-page/AccountPage'
 import CreateCv from './pages/create-cv/CreateCv'
+import RemoteInfoBubble from './components/remote-info-bubble/RemoteInfoBubble'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
     <BrowserRouter>
       <section className="app">
+        <RemoteInfoBubble/>
 
         {/* Rutas */}
         <Routes>
