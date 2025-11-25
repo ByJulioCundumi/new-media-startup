@@ -29,26 +29,35 @@
   height: auto;
   margin-top: 0;
   padding-top: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.11);
+  border-top: 1px solid rgba(0, 0, 0, 0.068);
 
   &--vertical {
-    width: 450px;
+    width: 400px;
     padding-top: 35px;
-    padding-right: 40px;
+    padding-right: 35px;
   }
 
   &--horizontal {
     width: 100%;
     padding: 35px 40px;
     padding-right: 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.11);
+    border-left: 1px solid rgba(0, 0, 0, 0.068);
   }
 }
 
-.cv-tokyo__horizontal--section > *:first-child {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+// -------------------------------------------------------
+.cv-tokyo__section-wrapper {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: block;
+}
+
+// Asegura que nada se corte al imprimir
+.cv-tokyo section,
+.cv-tokyo [class*="section"],
+.cv-tokyo .cv-tokyo__section-wrapper {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
 }
 
 /* Impresión perfecta */
@@ -124,11 +133,4 @@
 @page {
   size: A4;
   margin: 0;
-}
-
-.cv-tokyo section,
-.cv-tokyo [class*="section"],
-.cv-tokyo .cv-tokyo__section {
-  page-break-inside: avoid;
-  break-inside: avoid;
 }

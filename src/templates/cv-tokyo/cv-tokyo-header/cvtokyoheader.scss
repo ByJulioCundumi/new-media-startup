@@ -11,7 +11,7 @@
     display: flex;
     gap: 2rem;
     align-items: start;
-    padding: 10px 50px;
+    padding: 20px 10px;
     border: 1px solid transparent;
     border-radius: 15px;
     cursor: pointer;
@@ -32,12 +32,11 @@
     }
 
     &--img {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       border-radius: 100%;
       object-fit: cover;
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.562);
-      margin-top: 1rem;
     }
 
     &--text {
@@ -53,7 +52,7 @@
     &--title {
       font-size: 2.9rem;
       font-weight: 700;
-      max-width: 340px;
+      max-width: 380px;
       color: black; // será sobrescrito por style={{ color: styles.title }}
     }
 

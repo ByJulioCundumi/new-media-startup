@@ -8,16 +8,17 @@
       border-radius: 15px;
     }
 }
-.cv-tokyo__section-editor{
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 0px;
-    
-    &:hover{
-      border-radius: 15px;
+.cv-tokyo__section-editor {
+  border: 1px solid transparent;
+  border-radius: 0px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-radius: 15px;
     background-color: #00ccff09;
     border: 1px solid #00ccff13;
     box-shadow: 0px 0px 2px #00ccff27;
-    }
+  }
 }
 
 .cv-tokyo{
