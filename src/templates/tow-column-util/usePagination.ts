@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { PAGE_HEIGHT_PX, SECTION_GAP } from "./constants";
 
 type Section = {
   name: string;
@@ -34,10 +33,10 @@ export const usePagination = (
     const addSection = (sec: Section, height: number, isLeft: boolean) => {
       if (isLeft) {
         current.left.push(sec.element);
-        leftH += height + (current.left.length > 1 ? SECTION_GAP : 0);
+        leftH += height;
       } else {
         current.right.push(sec.element);
-        rightH += height + (current.right.length > 1 ? SECTION_GAP : 0);
+        rightH += height;
       }
     };
 
@@ -49,8 +48,8 @@ export const usePagination = (
       const isLeft = sec.orientation === "both";
       const isRight = sec.orientation === "horizontal";
 
-      let fitsLeft = isLeft && (leftH + height + (current.left.length ? SECTION_GAP : 0) <= PAGE_HEIGHT_PX);
-      let fitsRight = isRight && (rightH + height + (current.right.length ? SECTION_GAP : 0) <= PAGE_HEIGHT_PX);
+      let fitsLeft = isLeft && (leftH + height + 1122); // width a4
+      let fitsRight = isRight && (rightH + height + 1122); // width a4
 
       // --- Coloca donde quepa ---
       if (fitsLeft) {

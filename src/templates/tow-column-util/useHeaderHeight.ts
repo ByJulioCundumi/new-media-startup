@@ -1,10 +1,9 @@
 // templates/CvTokyo/hooks/useHeaderHeight.ts
 import { useEffect, useRef, useState } from "react";
-import { HEADER_HEIGHT_INITIAL } from "./constants";
 
 export const useHeaderHeight = (deps: any[] = []) => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = useState(HEADER_HEIGHT_INITIAL);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     if (headerRef.current) {

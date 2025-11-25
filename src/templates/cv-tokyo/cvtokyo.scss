@@ -1,0 +1,134 @@
+/* ==============================================
+   PAGE LAYOUT – TOKYO (Doble columna con paginación)
+   ============================================== */
+.cv-tokyo {
+  width: 794px;
+  min-height: 1122px;
+  max-height: 1122px;
+  padding: 40px;
+  box-sizing: border-box;
+  background: white;
+  position: relative;
+  page-break-after: always;
+  page-break-inside: avoid;
+  border: 1px solid rgba(0, 0, 0, 0.096);
+
+  &:last-child {
+    page-break-after: avoid;
+    margin-bottom: 0;
+  }
+
+  * {
+    font-family: inherit !important;
+  }
+}
+
+/* --------------------- Split de columnas --------------------- */
+.cv-tokyo__split {
+  display: flex;
+  height: auto;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
+
+  &--vertical {
+    width: 450px;
+    padding-top: 35px;
+    padding-right: 40px;
+  }
+
+  &--horizontal {
+    width: 100%;
+    padding: 35px 40px;
+    padding-right: 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.11);
+  }
+}
+
+.cv-tokyo__horizontal--section > *:first-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+/* Impresión perfecta */
+@media print {
+  .cv-tokyo {
+    min-height: 1122px;
+    max-height: 1122px;
+    page-break-after: always;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .cv-tokyo:last-child {
+    page-break-after: avoid;
+  }
+}
+
+/* --------------------- Número de página --------------------- */
+.cv-tokyo__number {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* --------------------- Indicador "continúa en la siguiente página" --------------------- */
+.cv-tokyo__next-page {
+  position: absolute;
+  left: 2.8rem;
+  right: 2.8rem;
+  bottom: -20px;
+  height: 2px;
+  background: #ff7d88;
+  opacity: 0.85;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(255, 91, 104, 0.6);
+  z-index: 10;
+}
+
+.cv-tokyo__next-page-text {
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  transform: translateX(-50%) translateY(60%);
+  background: #f34a58;
+  color: white;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.9;
+  animation: cvtokyoPulse 1.9s infinite ease-in-out;
+  z-index: 35;
+}
+
+@keyframes cvtokyoPulse {
+  0%, 100% {
+    transform: translateX(-50%) translateY(60%);
+  }
+  50% {
+    transform: translateX(-50%) translateY(58%);
+  }
+}
+
+/* Evita cortes feos al imprimir */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+.cv-tokyo section,
+.cv-tokyo [class*="section"],
+.cv-tokyo .cv-tokyo__section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

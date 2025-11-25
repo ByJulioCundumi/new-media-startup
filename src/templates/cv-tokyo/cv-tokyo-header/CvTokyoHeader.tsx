@@ -12,15 +12,12 @@ interface HeaderProps {
   occupation: string;
   photo?: string | null;
   allowCvPhoto: boolean;
-  onlineCvUrl: string;
-  allowCvQr: boolean;
   styles: {
     photoBorder: string;
     title: string;
     profession: string;
     qr: string;
   };
-  headerRef?: React.Ref<HTMLDivElement>;
 }
 
 export const CvTokyoHeader = React.forwardRef<HTMLDivElement, HeaderProps>((props, ref) => {
