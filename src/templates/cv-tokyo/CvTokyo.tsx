@@ -36,6 +36,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   const styles = useTemplateColors(cvTokyoDefaults);
 
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
+  const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
   const sectionInfo = useMemo(
     () => Object.fromEntries(cvSections.map((s) => [s.name, s])),
     [cvSections]
@@ -245,8 +246,27 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
 
     finalPages.push(current);
 
-    // Guardar páginas nuevas y marcar medición completada
-    setPages(finalPages);
+    // Filtrar páginas vacías (sin contenido en ninguna columna)
+    // ------------------------------------------------------------------
+// ELIMINAR PÁGINAS VACÍAS REALES
+// ------------------------------------------------------------------
+    const REAL_CONTENT_THRESHOLD = 40; // evita headers falsos o paddings
+
+    const pageHasRealContent = (page: { left: SectionMeasured[]; right: SectionMeasured[] }) => {
+      const leftHas = page.left.some((s) => s.height > REAL_CONTENT_THRESHOLD);
+      const rightHas = page.right.some((s) => s.height > REAL_CONTENT_THRESHOLD);
+      return leftHas || rightHas;
+    };
+
+    const cleanedPages = finalPages.filter(pageHasRealContent);
+
+    // si no queda ninguna pero había contenido antes, dejar vacío (no crear página falsa)
+    setPages(cleanedPages);
+
+    // Si por alguna razón todas quedaron vacías, dejamos al menos una página con header,
+    // pero esto rara vez pasa porque siempre tienes al menos una sección editable.
+    setPages(cleanedPages.length > 0 ? cleanedPages : []);
+
     setMeasuring(false);
   }, [sectionsList]);
 
@@ -405,6 +425,16 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
                 ))}
               </div>
             </div>
+
+            {/* Indicador de continuidad a la siguiente página */}
+            {i < pages.length - 1 && previewPopupOpen === false && (
+              <>
+                <div className="cv-tokyo__next-page"></div>
+                <div className="cv-tokyo__next-page-text">
+                  Página {pages.length}
+                </div>
+              </>
+            )}
 
             <div className="cv-tokyo__number">
               Página {i + 1} de {pages.length}

@@ -77,6 +77,13 @@
   }
 }
 
+/* Evita cortes feos al imprimir */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+
 /* --------------------- Número de página --------------------- */
 .cv-tokyo__number {
   position: absolute;
@@ -92,7 +99,7 @@
   position: absolute;
   left: 2.8rem;
   right: 2.8rem;
-  bottom: -20px;
+  bottom: -2px;
   height: 2px;
   background: #ff7d88;
   opacity: 0.85;
@@ -104,11 +111,11 @@
 .cv-tokyo__next-page-text {
   position: absolute;
   left: 50%;
-  bottom: -20px;
+  bottom: -23px;
   transform: translateX(-50%) translateY(60%);
   background: #f34a58;
   color: white;
-  padding: 6px 16px;
+  padding: 5px 16px;
   font-size: 0.85rem;
   font-weight: 700;
   border-radius: 8px;
@@ -129,8 +136,3 @@
   }
 }
 
-/* Evita cortes feos al imprimir */
-@page {
-  size: A4;
-  margin: 0;
-}

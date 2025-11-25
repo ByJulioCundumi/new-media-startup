@@ -44,11 +44,13 @@ export const CvTokyoHeader = React.forwardRef<HTMLDivElement, HeaderProps>(
 
     const hasPhotoOrQr = (allowCvPhoto && photo) || allowQrCode;
 
+    const isOpen = section?.isEditorOpen ?? false;
+
     return (
       <div
         ref={ref}
         onClick={() => dispatch(toggleSectionEditor("identitySection"))}
-        className={`cv-tokyo-header__identitySection ${
+        className={`cv-tokyo-header__identitySection ${isOpen && "cv-tokyo-header__identitySection--active"} ${
           hasPhotoOrQr ? "space" : "start"
         }`}
       >
