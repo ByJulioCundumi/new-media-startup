@@ -14,7 +14,6 @@ interface UsePaginationProps {
   deps: any[]; // cambios que deben disparar re-medición (Redux, props, etc.)
   pageHeight?: number;
   verticalMargin?: number;
-  extraGap?: number;
 }
 
 export const useTwoColumnPagination = ({
@@ -22,8 +21,7 @@ export const useTwoColumnPagination = ({
   header,
   deps,
   pageHeight = 1122,
-  verticalMargin = 40,
-  extraGap = 20,
+  verticalMargin = 40, // cv-tokyo.scss / padding: 40px;
 }: UsePaginationProps) => {
   const measureWrapperRef = useRef<HTMLDivElement | null>(null);
   const headerMeasureRef = useRef<HTMLDivElement | null>(null);
@@ -44,7 +42,7 @@ export const useTwoColumnPagination = ({
     if (!headerMeasureRef.current) return;
 
     const HEADER_HEIGHT = headerMeasureRef.current.offsetHeight || 0;
-    const MAX_HEIGHT = pageHeight - verticalMargin - HEADER_HEIGHT - extraGap;
+    const MAX_HEIGHT = pageHeight - verticalMargin - HEADER_HEIGHT;
 
     const measured: SectionMeasured[] = measureElements.map((s) => {
       const el = sectionRefs.current.get(s.name);
@@ -53,7 +51,7 @@ export const useTwoColumnPagination = ({
       return {
         name: s.name,
         orientation: s.orientation,
-        height: h + 24,
+        height: h + 24 + 20,
         element: s.render,
       };
     });
@@ -118,7 +116,7 @@ export const useTwoColumnPagination = ({
 
     setPages(cleaned.length ? cleaned : []);
     setMeasuring(false);
-  }, [measureElements, pageHeight, verticalMargin, extraGap]);
+  }, [measureElements, pageHeight, verticalMargin]);
 
   useEffect(() => {
     inputsVersion.current += 1;

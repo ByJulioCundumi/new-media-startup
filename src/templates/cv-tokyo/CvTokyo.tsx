@@ -11,7 +11,6 @@ import { useTemplateColors } from "../tow-column-util/useTemplateColors";
 import { CvTokyoHeader } from "./cv-tokyo-header/CvTokyoHeader";
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
 import type { SectionInput } from "../tow-column-util/twoColumnTypes";
-import { useTwoColumnPagination } from "../tow-column-util/useTwoColumnPagination";
 
 export const cvTokyoDefaults = {
   photoBorderColor: "#000000",
@@ -27,9 +26,6 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   const styles = useTemplateColors(cvTokyoDefaults);
 
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
-  const { previewPopupOpen } = useSelector(
-    (state: IState) => state.toolbarOption
-  );
 
   const sectionInfo = React.useMemo(
     () => Object.fromEntries(cvSections.map((s) => [s.name, s])),
@@ -58,17 +54,10 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     sectionsOrder,
   } = props;
 
-  const {
-    photo,
-    firstName,
-    lastName,
-    jobTitle,
-    allowCvPhoto = true,
-  } = identitySection || {};
+  // HEADER
+  const { photo, firstName, lastName, jobTitle, allowCvPhoto = true } =
+    identitySection || {};
 
-  // ---------------------------------------------------------------------------
-  // HEADER PROPS
-  // ---------------------------------------------------------------------------
   const headerProps = {
     fullName: `${firstName || ""} ${lastName || ""}`.trim(),
     occupation: jobTitle || "",
@@ -82,10 +71,8 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     },
   };
 
-  const headerElement = <CvTokyoHeader {...headerProps} />;
-
   // ---------------------------------------------------------------------------
-  // PREPARAR SECCIONES PARA EL HOOK (SE REUTILIZA EN TODAS LAS PLANTILLAS)
+  // PREPARACIÓN DE SECCIONES (solo para renderizar)
   // ---------------------------------------------------------------------------
   const tokyoSections: SectionInput[] = React.useMemo(() => {
     return sectionsOrder
@@ -146,120 +133,39 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   ]);
 
   // ---------------------------------------------------------------------------
-  // HOOK PRINCIPAL: usa TODA la lógica reutilizable
+  // DIVIDIR EN VERTICAL Y HORIZONTAL
   // ---------------------------------------------------------------------------
-  const {
-    pages,
-    measuring,
-    measureWrapperRef,
-    headerMeasureRef,
-    sectionRefs,
-    measureElements,
-  } = useTwoColumnPagination({
-    sections: tokyoSections,
-    header: headerElement,
-    deps: [
-      cvSections,
-      contactSection,
-      personalInfo,
-      profileSection,
-      experienceSection,
-      educationSection,
-      skillSection,
-      languageSection,
-      linkSection,
-      courseSection,
-      hobbieSection,
-      referenceSection,
-      awardSection,
-      customSection,
-      sectionsConfig,
-      sectionsOrder,
-    ],
-  });
+  const verticalSections = tokyoSections.filter(
+    (s) => s.orientation === "vertical"
+  );
+  const horizontalSections = tokyoSections.filter(
+    (s) => s.orientation === "horizontal"
+  );
 
-  const hasPages = pages && pages.length > 0;
-
+  // ---------------------------------------------------------------------------
+  // RENDER FINAL SIN PAGINACIÓN
+  // ---------------------------------------------------------------------------
   return (
-    <div style={{ fontFamily: styles.fontFamily }}>
-      {/* -----------------------------------------------------------------------
-         MEDICIÓN INVISIBLE (solo cuando measuring=true o no hay pages)
-      ------------------------------------------------------------------------*/}
-      {(measuring || !hasPages) && (
-        <div
-          ref={measureWrapperRef}
-          style={{
-            position: "absolute",
-            visibility: "hidden",
-            pointerEvents: "none",
-            zIndex: -10,
-            width: "210mm",
-            boxSizing: "border-box",
-          }}
-        >
-          <div ref={headerMeasureRef}>{headerElement}</div>
+    <div className="cv-tokyo" style={{ fontFamily: styles.fontFamily }}>
+      <CvTokyoHeader {...headerProps} />
 
-          {measureElements.map((s) => (
-            <div
-              key={`measure-${s.name}`}
-              ref={(el) => {
-                sectionRefs.current.set(s.name, el);
-              }}
-              className="cv-tokyo__section-wrapper"
-            >
+      <div className="cv-tokyo__split">
+        <div className="cv-tokyo__split--vertical">
+          {verticalSections.map((s) => (
+            <>
               {s.render}
-            </div>
+            </>
           ))}
         </div>
-      )}
 
-      {/* -----------------------------------------------------------------------
-         RENDER VISIBLE FINAL
-      ------------------------------------------------------------------------*/}
-      {hasPages ? (
-        pages.map((page, i) => (
-          <article key={i} className="cv-tokyo">
-            <CvTokyoHeader {...headerProps} />
-
-            {/* Separador */}
-            <div style={{ height: 20 }} />
-
-            <div className="cv-tokyo__split">
-              <div className="cv-tokyo__split--vertical">
-                {page.left.map((s) => (
-                  <>
-                    {s.element}
-                  </>
-                ))}
-              </div>
-
-              <div className="cv-tokyo__split--horizontal">
-                {page.right.map((s) => (
-                  <>
-                    {s.element}
-                  </>
-                ))}
-              </div>
-            </div>
-
-            {/* Indicador de siguiente página (SOLO si no está en preview popup) */}
-            {i < pages.length - 1 && previewPopupOpen === false && (
-              <>
-                <div className="cv-tokyo__next-page"></div>
-                <div className="cv-tokyo__next-page-text">
-                  Página {pages.length}
-                </div>
-              </>
-            )}
-
-            <div className="cv-tokyo__number">
-              Página {i + 1} de {pages.length}
-            </div>
-          </article>
-        ))
-      ) : (
-        <div aria-hidden style={{ height: 0, overflow: "hidden" }} />
-      )}
+        <div className="cv-tokyo__split--horizontal">
+          {horizontalSections.map((s) => (
+            <>
+              {s.render}
+            </>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

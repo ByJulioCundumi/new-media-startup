@@ -1,10 +1,15 @@
 /* ==============================================
    PAGE LAYOUT – TOKYO (Doble columna con paginación)
    ============================================== */
+.cv-tokyo-measure{
+  position: "absolute";
+  visibility: "hidden";
+  pointer-events: "none";
+  z-index: -10;
+}
 .cv-tokyo {
   width: 794px;
   min-height: 1122px;
-  max-height: 1122px;
   padding: 40px;
   box-sizing: border-box;
   background: white;
@@ -35,6 +40,12 @@
     width: 400px;
     padding-top: 35px;
     padding-right: 35px;
+
+    &>:not(:first-child){
+      border-radius: 0px;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
   }
 
   &--horizontal {
@@ -46,6 +57,8 @@
     &>:not(:first-child){
       border-top: 1px solid black;
       border-radius: 0px;
+      margin-top: 20px;
+      padding-top: 20px;
     }
   }
 }
