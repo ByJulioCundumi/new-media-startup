@@ -67,7 +67,7 @@ export const useTwoColumnPagination = ({
     measured.forEach((sec) => {
       const h = sec.height;
 
-      if (sec.orientation === "both") {
+      if (sec.orientation === "vertical") {
         if (leftH + h <= MAX_HEIGHT) {
           current.left.push(sec);
           leftH += h;
@@ -105,11 +105,16 @@ export const useTwoColumnPagination = ({
 
     const CLEAN_THRESHOLD = 40;
 
-    const cleaned = result.filter(
-      (p) =>
+    const cleaned = result.filter((p, index) => {
+      // PRIMERA PÁGINA — SIEMPRE se muestra
+      if (index === 0) return true;
+
+      // DEMÁS PÁGINAS — Se eliminan si están vacías
+      return (
         p.left.some((s) => s.height > CLEAN_THRESHOLD) ||
         p.right.some((s) => s.height > CLEAN_THRESHOLD)
-    );
+      );
+    });
 
     setPages(cleaned.length ? cleaned : []);
     setMeasuring(false);

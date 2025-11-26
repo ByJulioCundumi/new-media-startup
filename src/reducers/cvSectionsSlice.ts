@@ -20,7 +20,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "profileSection",
@@ -56,7 +56,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "languageSection",
@@ -65,7 +65,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "personalInfoSection",
@@ -74,7 +74,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "linkSection",
@@ -83,7 +83,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "courseSection",
@@ -101,7 +101,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "both",
+    orientation: "vertical",
   },
   {
     name: "referenceSection",

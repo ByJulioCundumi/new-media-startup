@@ -93,7 +93,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
       .map((name) => ({
         name,
         orientation: (sectionInfo[name]?.orientation ||
-          "both") as "both" | "horizontal",
+          "vertical") as "vertical" | "horizontal",
         render: (
           <CvTokyoSectionsRender
             key={name}

@@ -1,12 +1,12 @@
 export interface SectionInput {
   name: string;
-  orientation: "both" | "horizontal";
+  orientation: "vertical" | "horizontal";
   render: React.ReactNode;
 }
 
 export interface SectionMeasured {
   name: string;
-  orientation: "both" | "horizontal";
+  orientation: "vertical" | "horizontal";
   height: number;
   element: React.ReactNode;
 }

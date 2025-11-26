@@ -4,7 +4,7 @@ export interface ICvSection {
   progress: number;
   isOpen: boolean;
   title: string;
-  orientation: "horizontal" | "both" ;
+  orientation: "vertical" | "horizontal" ;
   isEditorOpen: boolean;
 }
 

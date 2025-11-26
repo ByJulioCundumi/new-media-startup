@@ -72,24 +72,11 @@ const getProgressColorClass = (progress: number) => {
   const section = sectionByName[sectionName];
   const isOpen = section?.isEditorOpen ?? false;
 
-  // reutilizamos esta función para envolver cada sección
-  const wrap = (content: React.ReactNode, sectionName: string) => {
-  return (
-    <div
-      onClick={handleClick}
-      style={{ cursor: "pointer" }}
-      className={isOpen ? "cv-tokyo__section-editor cv-tokyo__section-editor-active" : "cv-tokyo__section-editor"}
-    >
-      {content}
-    </div>
-  );
-};
-
   switch (sectionName) {
     // ==================== LADO IZQUIERDO (vertical / both) ====================
     case "contactSection":
-      return contactSection.length > 0 && wrap(
-        <div key="contact" className={`cv-tokyo__contactSection cv-tokyo-section-left`}>
+      return contactSection.length > 0 && (
+        <div className={`cv-tokyo__contactSection cv-tokyo__section cv-tokyo__section-vertical`}>
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
             {
@@ -105,12 +92,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__contactSection--item-value">{item.value}</p>
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "personalInfoSection":
-      return personalInfo.length > 0 && wrap(
-        <div key="personalInfo" className="cv-tokyo__personalInfoSection cv-tokyo-section-left">
+      return personalInfo.length > 0 && (
+        <div className="cv-tokyo__personalInfoSection cv-tokyo__section cv-tokyo__section-vertical">
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
             {
@@ -126,12 +113,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__personalInfoSection--item-value">{item.value}</p>
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "skillSection":
-      return skillSection.length > 0 && wrap(
-        <div key="skills" className="cv-tokyo__skillSection cv-tokyo-section-left">
+      return skillSection.length > 0 && (
+        <div className="cv-tokyo__skillSection cv-tokyo__section cv-tokyo__section-vertical">
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
@@ -173,12 +160,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                 );
               })}
-        </div>, sectionName
+        </div>
       );
 
     case "languageSection":
-      return languageSection.length > 0 && wrap(
-        <div key="languages" className="cv-tokyo__languajeSection cv-tokyo-section-left">
+      return languageSection.length > 0 && (
+        <div className="cv-tokyo__languajeSection cv-tokyo__section cv-tokyo__section-vertical">
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
@@ -222,12 +209,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                 );
               })}
-        </div>, sectionName
+        </div>
       );
 
     case "linkSection":
-      return linkSection.length > 0 && wrap(
-        <div key="links" className="cv-tokyo__linkSection cv-tokyo-section-left">
+      return linkSection.length > 0 && (
+        <div className="cv-tokyo__linkSection cv-tokyo__section cv-tokyo__section-vertical">
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
@@ -269,12 +256,12 @@ const getProgressColorClass = (progress: number) => {
                     )}
                   </div>
                 ))}
-        </div>, sectionName
+        </div>
       );
 
     case "hobbieSection":
-      return hobbieSection.length > 0 && wrap(
-        <div key="hobbies" className="cv-tokyo__hobbieSection cv-tokyo-section-left">
+      return hobbieSection.length > 0 && (
+        <div className="cv-tokyo__hobbieSection cv-tokyo__section cv-tokyo__section-vertical">
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
@@ -292,13 +279,13 @@ const getProgressColorClass = (progress: number) => {
                   </span>
                 ))}
               </div>
-        </div>, sectionName
+        </div>
       );
 
     // ==================== LADO DERECHO (horizontal / both) ====================
     case "profileSection":
-      return profileSection.trim() && wrap(
-        <div key="profile" className="cv-tokyo__profileSection cv-tokyo-section-right">
+      return profileSection.trim() && (
+        <div className="cv-tokyo__profileSection">
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
@@ -309,12 +296,12 @@ const getProgressColorClass = (progress: number) => {
             }
           </h2>
           <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} />
-        </div>, sectionName
+        </div>
       );
 
     case "experienceSection":
-      return experienceSection.length > 0 && wrap(
-        <div key="experience" className="cv-tokyo__experienceSection cv-tokyo-section-right">
+      return experienceSection.length > 0 && (
+        <div className="cv-tokyo__experienceSection">
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
@@ -346,12 +333,12 @@ const getProgressColorClass = (progress: number) => {
                   <div className="cv-tokyo__experienceSection--item-date-description">{exp.description}</div>
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "educationSection":
-      return educationSection.length > 0 && wrap(
-        <div key="education" className="cv-tokyo__educationSection cv-tokyo-section-right">
+      return educationSection.length > 0 && (
+        <div className="cv-tokyo__educationSection">
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
@@ -385,12 +372,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "courseSection":
-      return courseSection.length > 0 && wrap(
-        <div key="courses" className="cv-tokyo__courseSection cv-tokyo-section-right">
+      return courseSection.length > 0 && (
+        <div className="cv-tokyo__courseSection">
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
@@ -427,12 +414,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "awardSection":
-      return awardSection.length > 0 && wrap(
-        <div key="awards" className="cv-tokyo__awardSection cv-tokyo-section-right">
+      return awardSection.length > 0 && (
+        <div className="cv-tokyo__awardSection">
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
@@ -451,12 +438,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "referenceSection":
-      return referenceSection.length > 0 && wrap(
-        <div key="references" className="cv-tokyo__referenceSection cv-tokyo-section-right">
+      return referenceSection.length > 0 && (
+        <div className="cv-tokyo__referenceSection">
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
@@ -478,12 +465,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__referenceSection--item-email">{ref.email}</p>
                 </div>
               ))}
-        </div>, sectionName
+        </div>
       );
 
     case "customSection":
-      return customSection.length > 0 && wrap(
-        <div key="custom" className="cv-tokyo__customSection cv-tokyo-section-right">
+      return customSection.length > 0 && (
+        <div className="cv-tokyo__customSection">
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
@@ -496,7 +483,7 @@ const getProgressColorClass = (progress: number) => {
               {customSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} />
               ))}
-        </div>, sectionName
+        </div>
       );
 
     default:
