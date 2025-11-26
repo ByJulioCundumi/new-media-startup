@@ -227,17 +227,17 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
             <div className="cv-tokyo__split">
               <div className="cv-tokyo__split--vertical">
                 {page.left.map((s) => (
-                  <div key={s.name} className={`cv-tokyo__section-wrapper cv-tokyo__section ${s.orientation === 'horizontal' ? 'cv-tokyo__section-horizontal' : 'cv-tokyo__section-vertical'}`}>
+                  <>
                     {s.element}
-                  </div>
+                  </>
                 ))}
               </div>
 
               <div className="cv-tokyo__split--horizontal">
                 {page.right.map((s) => (
-                  <div key={s.name} className={`cv-tokyo__section-wrapper cv-tokyo__section ${s.orientation === 'horizontal' ? 'cv-tokyo__section-horizontal' : 'cv-tokyo__section-vertical'}`}>
+                  <>
                     {s.element}
-                  </div>
+                  </>
                 ))}
               </div>
             </div>

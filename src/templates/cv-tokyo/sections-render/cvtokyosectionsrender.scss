@@ -3,7 +3,12 @@
     border: 1px solid #00ccff00;
 
     &:hover {
-      border-radius: 15px;
+      background-color: #00ccff09;
+      border: 1px solid #00ccff13;
+      box-shadow: 0px 0px 2px #00ccff27;
+    }
+
+    &--active{
       background-color: #00ccff09;
       border: 1px solid #00ccff13;
       box-shadow: 0px 0px 2px #00ccff27;

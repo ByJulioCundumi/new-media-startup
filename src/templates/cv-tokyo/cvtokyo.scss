@@ -42,6 +42,11 @@
     padding: 35px 40px;
     padding-right: 0;
     border-left: 1px solid rgba(0, 0, 0, 0.068);
+    
+    &>:not(:first-child){
+      border-top: 1px solid black;
+      border-radius: 0px;
+    }
   }
 }
 
