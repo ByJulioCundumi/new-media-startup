@@ -13,6 +13,7 @@ import type { ILinkEntry } from "./ILinks";
 import type { IPersonalInfoEntry } from "./IPersonalInfo";
 import type { IReferenceEntry } from "./IReferences";
 import type { ISectionsState } from "./ISections";
+import type { ILayoutMeasureState } from "./ISectionsMeasure";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
 import type { IToolbarOption } from "./IToolbarOption";
@@ -36,5 +37,6 @@ export interface IState{
     contactEntries: IContactEntry[], // cv sections
     colorFont: IColorFontState,
     sections: ISectionsState,
-    toolbarOption: IToolbarOption
+    toolbarOption: IToolbarOption,
+    sectionsMeasure: ILayoutMeasureState
 }

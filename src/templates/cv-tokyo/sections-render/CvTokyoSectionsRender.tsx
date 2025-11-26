@@ -5,10 +5,15 @@ import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
 import "./cvtokyosectionsrender.scss"
 import { TbArrowBadgeRight } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
+import { useTemplateColors } from "../../tow-column-util/useTemplateColors";
+import { cvTokyoDefaults } from "../CvTokyo";
+import { QRCodeSVG } from "qrcode.react";
+import { useMeasureSection } from "../../tow-column-util/useMeasureSection";
 
 interface SectionRenderProps {
   sectionName: string;
   data: {
+    identitySection?: any;
     contactSection?: any[];
     personalInfo?: any[];
     profileSection?: string;
@@ -24,21 +29,16 @@ interface SectionRenderProps {
     customSection?: any[];
     sectionsConfig?: any[];
   };
-  styles: {
-    sectionTitle: string;
-    text: string;
-    qr: string;
-  };
   sectionByName: Record<string, any>;
 }
 
 export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   sectionName,
   data,
-  styles,
   sectionByName,
 }) => {
   const {
+    identitySection = [],
     contactSection = [],
     personalInfo = [],
     profileSection = "",
@@ -56,11 +56,19 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   } = data;
 
   const dispatch = useDispatch();
+  const styles = useTemplateColors(cvTokyoDefaults);
   const section = sectionByName[sectionName];
   const isOpen = section?.isEditorOpen ?? false;
   const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
-  const sectionRef = React.useRef<HTMLDivElement>(null);
-
+  
+  const { qrCodeUrl, allowQrCode, allowCvPhoto, photo, firstName, lastName, jobTitle } = useSelector(
+    (state: IState) => state.identity
+  );
+  
+  const fullName = `${firstName || ""} ${lastName || ""}`.trim();
+  const occupation = jobTitle || "";
+  
+  const sectionRef = useMeasureSection(sectionName, section?.enabled);
 
   const handleClick = () => {
     dispatch(toggleSectionEditor(sectionName));
@@ -73,57 +81,68 @@ const getProgressColorClass = (progress: number) => {
   return "progress-blue";
 };
 
-useLayoutEffect(() => {
-  if (!sectionRef.current) return;
-
-  const el = sectionRef.current;
-
-  // Tamaño real del box (sin márgenes)
-  const rect = el.getBoundingClientRect();
-
-  // Estilos computados por CSS
-  const styles = window.getComputedStyle(el);
-  const marginTop = parseFloat(styles.marginTop);
-  const marginBottom = parseFloat(styles.marginBottom);
-  const marginLeft = parseFloat(styles.marginLeft);
-  const marginRight = parseFloat(styles.marginRight);
-
-  const paddingTop = parseFloat(styles.paddingTop);
-  const paddingBottom = parseFloat(styles.paddingBottom);
-
-  const borderTop = parseFloat(styles.borderTopWidth);
-  const borderBottom = parseFloat(styles.borderBottomWidth);
-
-  // Altura total incluyendo márgenes fuera del box
-  const totalHeight = rect.height + marginTop + marginBottom;
-  const totalWidth = rect.width + marginLeft + marginRight;
-
-  const sectionSize = {
-    sectionName,
-    width: rect.width,
-    height: rect.height,
-    totalWidth,
-    totalHeight,
-    paddingTop,
-    paddingBottom,
-    borderTop,
-    borderBottom,
-    marginTop,
-    marginBottom,
-    rect,
-  };
-
-  // ⬇️ Aquí envías esta info a Redux o al paginador
-  onMeasure?.(sectionSize);
-
-}, [data, styles, previewPopupOpen, sectionName]);
-
-
-
   switch (sectionName) {
-    // ==================== LADO IZQUIERDO (vertical / both) ====================
+    // ==================== header (top) ====================
+    case "identitySection":
+      return (
+        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__identitySection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+
+        <div className="cv-tokyo__itentitySection--main">
+          {!previewPopupOpen &&
+          typeof section?.progress === "number" && (
+            <span
+              className={`progress-indicator cv-tokyo__identitySection--progress-indicator ${getProgressColorClass(
+                section.progress
+              )}`}
+            >
+              {section.progress}%
+              <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+            </span>
+          )}
+
+          {allowCvPhoto && photo && (
+            <img
+              src={photo}
+              className="cv-tokyo__identitySection--img"
+              style={{ borderColor: styles.photoBorder }}
+            />
+          )}
+
+          <div className="cv-tokyo__identitySection--text">
+            <h1
+              className="cv-tokyo__identitySection--title"
+              style={{ color: styles.title }}
+            >
+              {fullName.length > 0 ? fullName : "Sobre Mi"}
+            </h1>
+            <p
+              className="cv-tokyo__identitySection--occupation"
+              style={{ color: styles.profession }}
+            >
+              {occupation}
+            </p>
+          </div>
+        </div>
+
+        {allowQrCode && (
+          <div className="cv-tokyo__identitySection--qr-wrapper">
+            <QRCodeSVG
+              value={qrCodeUrl}
+              size={80}
+              level="Q"
+              bgColor="#ffffff"
+              fgColor={styles.qr}
+            />
+            <p className="cv-tokyo__identitySection--qr-text">
+              Ver CV Online
+            </p>
+          </div>
+        )}
+        </div>
+      );
+    // ==================== LADO IZQUIERDO ====================
     case "contactSection":
-      return contactSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__contactSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
@@ -144,7 +163,7 @@ useLayoutEffect(() => {
       );
 
     case "personalInfoSection":
-      return personalInfo.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__personalInfoSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
@@ -165,7 +184,7 @@ useLayoutEffect(() => {
       );
 
     case "skillSection":
-      return skillSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__skillSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
@@ -212,7 +231,7 @@ useLayoutEffect(() => {
       );
 
     case "languageSection":
-      return languageSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__languajeSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
@@ -261,7 +280,7 @@ useLayoutEffect(() => {
       );
 
     case "linkSection":
-      return linkSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__linkSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
@@ -308,7 +327,7 @@ useLayoutEffect(() => {
       );
 
     case "hobbieSection":
-      return hobbieSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__hobbieSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
@@ -330,9 +349,9 @@ useLayoutEffect(() => {
         </div>
       );
 
-    // ==================== LADO DERECHO (horizontal / both) ====================
+    // ==================== LADO DERECHO ====================
     case "profileSection":
-      return profileSection.trim() && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__profileSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
@@ -348,7 +367,7 @@ useLayoutEffect(() => {
       );
 
     case "experienceSection":
-      return experienceSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__experienceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
@@ -385,7 +404,7 @@ useLayoutEffect(() => {
       );
 
     case "educationSection":
-      return educationSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__educationSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
@@ -424,7 +443,7 @@ useLayoutEffect(() => {
       );
 
     case "courseSection":
-      return courseSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__courseSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
@@ -466,7 +485,7 @@ useLayoutEffect(() => {
       );
 
     case "awardSection":
-      return awardSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__awardSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
@@ -490,7 +509,7 @@ useLayoutEffect(() => {
       );
 
     case "referenceSection":
-      return referenceSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__referenceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
@@ -517,7 +536,7 @@ useLayoutEffect(() => {
       );
 
     case "customSection":
-      return customSection.length > 0 && (
+      return (
         <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__customSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
