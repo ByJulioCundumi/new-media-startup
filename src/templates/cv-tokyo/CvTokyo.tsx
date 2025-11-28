@@ -1,5 +1,5 @@
 // templates/CvTokyo/CvTokyo.tsx
-import React, { useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import "./cvtokyo.scss";
 
 import type { ITemplateProps } from "../../interfaces/ITemplateProps";
@@ -8,8 +8,7 @@ import type { IState } from "../../interfaces/IState";
 
 import { useTemplateColors } from "../tow-column-util/useTemplateColors";
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
-import { useMeasureContainer } from "../tow-column-util/useMeasureContainer";
-import { updateLayoutMeasure } from "../../reducers/sectionsMeasureSlice";
+import { measureBoxOnly, measureCvTokyo } from "../tow-column-util/measureBox";
 
 export const cvTokyoDefaults = {
   photoBorderColor: "#000000",
@@ -22,41 +21,16 @@ export const cvTokyoDefaults = {
 };
 
 export const CvTokyo: React.FC<ITemplateProps> = (props) => {
-  const dispatch = useDispatch();
   const styles = useTemplateColors(cvTokyoDefaults);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // ---------------------------------------------------------------------------
-  // CALLBACKS para medición (evitan loops)
-  // ---------------------------------------------------------------------------
-  const onMeasurePage = useCallback(
-    (size:any) => dispatch(updateLayoutMeasure({ target: "page", size })),
-    [dispatch]
-  );
 
-  const onMeasureSplit = useCallback(
-    (size:any) => dispatch(updateLayoutMeasure({ target: "split", size })),
-    [dispatch]
-  );
-
-  const onMeasureVertical = useCallback(
-    (size:any) => dispatch(updateLayoutMeasure({ target: "vertical", size })),
-    [dispatch]
-  );
-
-  const onMeasureHorizontal = useCallback(
-    (size:any) => dispatch(updateLayoutMeasure({ target: "horizontal", size })),
-    [dispatch]
-  );
-
-  // ---------------------------------------------------------------------------
-  // HOOKS de medición
-  // ---------------------------------------------------------------------------
-  const pageRef = useMeasureContainer(onMeasurePage);
-  const splitRef = useMeasureContainer(onMeasureSplit);
-  const verticalRef = useMeasureContainer(onMeasureVertical);
-  const horizontalRef = useMeasureContainer(onMeasureHorizontal);
-
+  useEffect(() => {
+  if (rootRef.current) {
+    const result = measureCvTokyo(rootRef.current);
+  }
+}, [props]);
   // ---------------------------------------------------------------------------
   // MAPA de secciones
   // ---------------------------------------------------------------------------
@@ -152,7 +126,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-tokyo" style={{ fontFamily: styles.fontFamily }} ref={pageRef}>
+    <div ref={rootRef} className="cv-tokyo" style={{ fontFamily: styles.fontFamily, backgroundColor: "white" }}>
       {identityEnabled && (
         <CvTokyoSectionsRender
           key="identitySection"
@@ -164,20 +138,24 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
         />
       )}
 
-      <div className="cv-tokyo__split" ref={splitRef}>
-        <div className="cv-tokyo__split--vertical" ref={verticalRef}>
+      <div className="cv-tokyo__split">
+        <div className="cv-tokyo__split--vertical">
           {verticalSections
             .filter((s) => s.name !== "identitySection")
             .map((s) => (
-              <React.Fragment key={s.name}>{s.render}</React.Fragment>
+              <>
+                {s.render}
+              </>
             ))}
         </div>
 
-        <div className="cv-tokyo__split--horizontal" ref={horizontalRef}>
+        <div className="cv-tokyo__split--horizontal">
           {horizontalSections
             .filter((s) => s.name !== "identitySection")
             .map((s) => (
-              <React.Fragment key={s.name}>{s.render}</React.Fragment>
+              <>
+                {s.render}
+              </>
             ))}
         </div>
       </div>

@@ -8,7 +8,6 @@ import type { IState } from "../../../interfaces/IState";
 import { useTemplateColors } from "../../tow-column-util/useTemplateColors";
 import { cvTokyoDefaults } from "../CvTokyo";
 import { QRCodeSVG } from "qrcode.react";
-import { useMeasureSection } from "../../tow-column-util/useMeasureSection";
 
 interface SectionRenderProps {
   sectionName: string;
@@ -67,8 +66,7 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   
   const fullName = `${firstName || ""} ${lastName || ""}`.trim();
   const occupation = jobTitle || "";
-  
-  const sectionRef = useMeasureSection(sectionName, section?.enabled);
+
 
   const handleClick = () => {
     dispatch(toggleSectionEditor(sectionName));
@@ -85,7 +83,7 @@ const getProgressColorClass = (progress: number) => {
     // ==================== header (top) ====================
     case "identitySection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__identitySection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="identitySection" onClick={handleClick} className={`cv-tokyo__identitySection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
 
         <div className="cv-tokyo__itentitySection--main">
           {!previewPopupOpen &&
@@ -143,7 +141,7 @@ const getProgressColorClass = (progress: number) => {
     // ==================== LADO IZQUIERDO ====================
     case "contactSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__contactSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="contactSection" onClick={handleClick} className={`cv-tokyo__contactSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
             {
@@ -164,7 +162,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "personalInfoSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__personalInfoSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="personalInfoSection" onClick={handleClick} className={`cv-tokyo__personalInfoSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
             {
@@ -185,7 +183,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "skillSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__skillSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="skillSection" onClick={handleClick} className={`cv-tokyo__skillSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
@@ -232,7 +230,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "languageSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__languajeSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="languageSection" onClick={handleClick} className={`cv-tokyo__languajeSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
@@ -281,7 +279,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "linkSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__linkSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="linkSection" onClick={handleClick} className={`cv-tokyo__linkSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
@@ -328,7 +326,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "hobbieSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__hobbieSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <div data-section="hobbieSection" onClick={handleClick} className={`cv-tokyo__hobbieSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
@@ -352,7 +350,7 @@ const getProgressColorClass = (progress: number) => {
     // ==================== LADO DERECHO ====================
     case "profileSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__profileSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="profileSection" onClick={handleClick} className={`cv-tokyo__profileSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
@@ -368,7 +366,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "experienceSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__experienceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="experienceSection" onClick={handleClick} className={`cv-tokyo__experienceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
@@ -405,7 +403,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "educationSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__educationSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="educationSection" onClick={handleClick} className={`cv-tokyo__educationSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
@@ -444,7 +442,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "courseSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__courseSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="courseSection" onClick={handleClick} className={`cv-tokyo__courseSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
@@ -486,7 +484,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "awardSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__awardSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="awardSection" onClick={handleClick} className={`cv-tokyo__awardSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
@@ -510,7 +508,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "referenceSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__referenceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="referenceSection" onClick={handleClick} className={`cv-tokyo__referenceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
@@ -537,7 +535,7 @@ const getProgressColorClass = (progress: number) => {
 
     case "customSection":
       return (
-        <div ref={sectionRef} onClick={handleClick} className={`cv-tokyo__customSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <div data-section="customSection" onClick={handleClick} className={`cv-tokyo__customSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
