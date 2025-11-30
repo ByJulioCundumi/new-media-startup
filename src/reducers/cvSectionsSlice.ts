@@ -11,7 +11,7 @@ const initialSections: ICvSection[] = [
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
-    orientation: "horizontal",
+    orientation: "header",
   },
   {
     name: "contactSection",

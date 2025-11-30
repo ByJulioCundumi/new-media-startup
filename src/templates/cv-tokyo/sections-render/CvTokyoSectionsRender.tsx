@@ -54,10 +54,8 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
     sectionsConfig = [],
   } = data;
 
-  const dispatch = useDispatch();
   const styles = useTemplateColors(cvTokyoDefaults);
   const section = sectionByName[sectionName];
-  const isOpen = section?.isEditorOpen ?? false;
   const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
   
   const { qrCodeUrl, allowQrCode, allowCvPhoto, photo, firstName, lastName, jobTitle } = useSelector(
@@ -66,11 +64,6 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   
   const fullName = `${firstName || ""} ${lastName || ""}`.trim();
   const occupation = jobTitle || "";
-
-
-  const handleClick = () => {
-    dispatch(toggleSectionEditor(sectionName));
-  };
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {
@@ -83,9 +76,8 @@ const getProgressColorClass = (progress: number) => {
     // ==================== header (top) ====================
     case "identitySection":
       return (
-        <div data-section="identitySection" onClick={handleClick} className={`cv-tokyo__identitySection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
-
-        <div className="cv-tokyo__itentitySection--main">
+        <>
+          <div className="cv-tokyo__identitySection--main">
           {!previewPopupOpen &&
           typeof section?.progress === "number" && (
             <span
@@ -136,12 +128,12 @@ const getProgressColorClass = (progress: number) => {
             </p>
           </div>
         )}
-        </div>
+        </>
       );
     // ==================== LADO IZQUIERDO ====================
     case "contactSection":
       return (
-        <div data-section="contactSection" onClick={handleClick} className={`cv-tokyo__contactSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Contacto"}
             {
@@ -157,12 +149,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__contactSection--item-value">{item.value}</p>
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "personalInfoSection":
       return (
-        <div data-section="personalInfoSection" onClick={handleClick} className={`cv-tokyo__personalInfoSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Detalles"}
             {
@@ -178,12 +170,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__personalInfoSection--item-value">{item.value}</p>
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "skillSection":
       return (
-        <div data-section="skillSection" onClick={handleClick} className={`cv-tokyo__skillSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
@@ -225,12 +217,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                 );
               })}
-        </div>
+        </>
       );
 
     case "languageSection":
       return (
-        <div data-section="languageSection" onClick={handleClick} className={`cv-tokyo__languajeSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
@@ -274,12 +266,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                 );
               })}
-        </div>
+        </>
       );
 
     case "linkSection":
       return (
-        <div data-section="linkSection" onClick={handleClick} className={`cv-tokyo__linkSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
@@ -321,12 +313,12 @@ const getProgressColorClass = (progress: number) => {
                     )}
                   </div>
                 ))}
-        </div>
+        </>
       );
 
     case "hobbieSection":
       return (
-        <div data-section="hobbieSection" onClick={handleClick} className={`cv-tokyo__hobbieSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--vertical`}>
+        <>
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
@@ -344,13 +336,13 @@ const getProgressColorClass = (progress: number) => {
                   </span>
                 ))}
               </div>
-        </div>
+        </>
       );
 
     // ==================== LADO DERECHO ====================
     case "profileSection":
       return (
-        <div data-section="profileSection" onClick={handleClick} className={`cv-tokyo__profileSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
@@ -361,12 +353,12 @@ const getProgressColorClass = (progress: number) => {
             }
           </h2>
           <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} />
-        </div>
+        </>
       );
 
     case "experienceSection":
       return (
-        <div data-section="experienceSection" onClick={handleClick} className={`cv-tokyo__experienceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
@@ -398,12 +390,12 @@ const getProgressColorClass = (progress: number) => {
                   <div className="cv-tokyo__experienceSection--item-date-description">{exp.description}</div>
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "educationSection":
       return (
-        <div data-section="educationSection" onClick={handleClick} className={`cv-tokyo__educationSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
@@ -437,12 +429,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "courseSection":
       return (
-        <div data-section="courseSection" onClick={handleClick} className={`cv-tokyo__courseSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
@@ -479,12 +471,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "awardSection":
       return (
-        <div data-section="awardSection" onClick={handleClick} className={`cv-tokyo__awardSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
@@ -503,12 +495,12 @@ const getProgressColorClass = (progress: number) => {
                   )}
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "referenceSection":
       return (
-        <div data-section="referenceSection" onClick={handleClick} className={`cv-tokyo__referenceSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
@@ -530,12 +522,12 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-tokyo__referenceSection--item-email">{ref.email}</p>
                 </div>
               ))}
-        </div>
+        </>
       );
 
     case "customSection":
       return (
-        <div data-section="customSection" onClick={handleClick} className={`cv-tokyo__customSection ${isOpen ? "cv-tokyo__section--active" : "cv-tokyo__section"} cv-tokyo__section--horizontal`}>
+        <>
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
@@ -548,7 +540,7 @@ const getProgressColorClass = (progress: number) => {
               {customSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} />
               ))}
-        </div>
+        </>
       );
 
     default:

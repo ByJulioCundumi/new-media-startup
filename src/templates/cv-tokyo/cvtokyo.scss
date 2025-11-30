@@ -1,31 +1,102 @@
 /* ==============================================
    PAGE LAYOUT – TOKYO (Doble columna con paginación)
    ============================================== */
-.cv-tokyo-measure{
-  position: "absolute";
-  visibility: "hidden";
-  pointer-events: "none";
-  z-index: -10;
-}
 .cv-tokyo {
-  width: 794px;
-  min-height: 1122px;
-  padding: 40px;
-  box-sizing: border-box;
-  background: white;
   position: relative;
-  page-break-after: always;
-  page-break-inside: avoid;
-  border: 1px solid rgba(0, 0, 0, 0.096);
+}
+.cv-tokyo__limit-line{
+  position: absolute;
+  top: 1082px; // 1122px - 40px padding bottom
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  width: 100%;
+  height: 0;
+  border-top: 1.5px dashed rgba(0, 110, 255, 0.25);
+}
+.cv-tokyo__limit-line-text {
+  position: absolute;
+  left: 50%;
+  top: -12px;
+  transform: translateX(-50%);
+  background: white;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  color: #444;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: cvtokyoPulse 1.9s infinite ease-in-out;
+}
+.cv-tokyo__limit-line-overflowed{
+  position: absolute;
+  top: 2244px; // 1122px - 40px padding bottom
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  width: 100%;
+  height: 0;
+  border-top: 1.5px dashed rgba(255, 0, 0, 0.25);
+}
 
-  &:last-child {
-    page-break-after: avoid;
-    margin-bottom: 0;
+/* Etiqueta elegante */
+.cv-tokyo__limit-line-overflowed-text {
+  position: absolute;
+  left: 50%;
+  top: -12px;
+  transform: translateX(-50%);
+  background: white;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  color: #444;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  pointer-events: none;
+}
+@keyframes cvtokyoPulse {
+  0%, 100% {
+    transform: translateX(-50%) translateY(60%);
   }
+  50% {
+    transform: translateX(-50%) translateY(58%);
+  }
+}
 
-  * {
-    font-family: inherit !important;
-  }
+.cv-tokyo__hidden--vertical{
+  min-height: 1122px;
+  width: 794px;
+  padding: 40px 40px;
+  background-color: white;
+  //position: relative;
+  position: absolute;
+  top: 0;
+  left: -999999px;
+}
+.cv-tokyo__hidden--horizontal{
+  min-height: 1122px;
+  width: 794px;
+  padding: 40px 40px;
+  background-color: white;
+  //position: relative;
+  position: absolute;
+  top: 0;
+  right: -999999px;
+}
+.cv-tokyo__page{
+  min-height: 1122px;
+  width: 794px;
+  padding: 40px 40px;
+  background-color: white;
 }
 
 /* --------------------- Split de columnas --------------------- */
@@ -37,7 +108,7 @@
   border-top: 1px solid rgba(0, 0, 0, 0.068);
 
   &--vertical {
-    width: 400px;
+    width: 40%;
     padding-top: 35px;
     padding-right: 35px;
 
@@ -49,7 +120,7 @@
   }
 
   &--horizontal {
-    width: 100%;
+    width: 60%;
     padding: 35px 40px;
     padding-right: 0;
     border-left: 1px solid rgba(0, 0, 0, 0.068);
@@ -66,95 +137,44 @@
   }
 }
 
-
-// -------------------------------------------------------
-.cv-tokyo__section-wrapper {
-  break-inside: avoid;
-  page-break-inside: avoid;
-  display: block;
-}
-
-// Asegura que nada se corte al imprimir
-.cv-tokyo section,
-.cv-tokyo [class*="section"],
-.cv-tokyo .cv-tokyo__section-wrapper {
-  break-inside: avoid !important;
-  page-break-inside: avoid !important;
-}
-
-/* Impresión perfecta */
+/* ========================
+    IMPRESIÓN A4 PERFECTA
+   ======================== */
 @media print {
-  .cv-tokyo {
-    min-height: 1122px;
-    max-height: 1122px;
+
+  /* Quitar márgenes automáticos del navegador */
+  @page {
+    size: A4 portrait;
+    margin: 0;         // MUY IMPORTANTE
+  }
+
+  /* Cada página debe ocupar exactamente A4 */
+  .cv-tokyo__page {
+    height: 1122px !important;
+    width: 794px !important;
+    padding: 40px 40px !important;
+    box-sizing: border-box;
+    background: white !important;
     page-break-after: always;
-    margin: 0 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    overflow: hidden !important;
   }
 
-  .cv-tokyo:last-child {
-    page-break-after: avoid;
+  /* Ocultar contenedores de medición */
+  .cv-tokyo__hidden--vertical,
+  .cv-tokyo__hidden--horizontal,
+  .cv-tokyo__limit-line,
+  .cv-tokyo__limit-line-overflowed {
+    display: none !important;
+  }
+
+  /* Evitar saltos a mitad de sección */
+  .cv-tokyo__section {
+    page-break-inside: avoid !important;
+  }
+
+  /* Ajustar escala automática */
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
-
-/* Evita cortes feos al imprimir */
-@page {
-  size: A4;
-  margin: 0;
-}
-
-
-/* --------------------- Número de página --------------------- */
-.cv-tokyo__number {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  font-size: 0.8rem;
-  color: #666;
-  font-weight: 500;
-}
-
-/* --------------------- Indicador "continúa en la siguiente página" --------------------- */
-.cv-tokyo__next-page {
-  position: absolute;
-  left: 2.8rem;
-  right: 2.8rem;
-  bottom: -2px;
-  height: 2px;
-  background: #ff7d88;
-  opacity: 0.85;
-  pointer-events: none;
-  box-shadow: 0 0 12px rgba(255, 91, 104, 0.6);
-  z-index: 10;
-}
-
-.cv-tokyo__next-page-text {
-  position: absolute;
-  left: 50%;
-  bottom: -23px;
-  transform: translateX(-50%) translateY(60%);
-  background: #f34a58;
-  color: white;
-  padding: 5px 16px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  border-radius: 8px;
-  white-space: nowrap;
-  pointer-events: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  opacity: 0.9;
-  animation: cvtokyoPulse 1.9s infinite ease-in-out;
-  z-index: 35;
-}
-
-@keyframes cvtokyoPulse {
-  0%, 100% {
-    transform: translateX(-50%) translateY(60%);
-  }
-  50% {
-    transform: translateX(-50%) translateY(58%);
-  }
-}
-
