@@ -9,6 +9,7 @@ import type { IState } from "../../interfaces/IState";
 import { useTemplateColors } from "../tow-column-util/useTemplateColors";
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
 import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
+import { LuTriangleAlert } from "react-icons/lu";
 
 export const cvTokyoDefaults = {
   photoBorderColor: "#000000",
@@ -114,9 +115,6 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
 const [page1Horizontal, setPage1Horizontal] = React.useState<string[]>([]);
 const [page2Horizontal, setPage2Horizontal] = React.useState<string[]>([]);
 
-const [page3Vertical, setPage3Vertical] = React.useState<string[]>([]);
-const [page3Horizontal, setPage3Horizontal] = React.useState<string[]>([]);
-
 
     // ---------------------------------------------------------------------------
   // DETECTAR OVERFLOW SOLO EN LA COLUMNA VERTICAL
@@ -131,11 +129,10 @@ const [page3Horizontal, setPage3Horizontal] = React.useState<string[]>([]);
     const containerRect = container.getBoundingClientRect();
 
     const LIMIT_1 = 1122 - 40;   // Page 1
-    const LIMIT_2 = 2204;   // Page 2
+    const LIMIT_2 = LIMIT_1 * 2;   // Page 2
 
     const p1: string[] = [];
     const p2: string[] = [];
-    const p3: string[] = [];
 
     const nodes = Array.from(
       container.querySelectorAll(".cv-tokyo__split--vertical > div")
@@ -152,18 +149,14 @@ const [page3Horizontal, setPage3Horizontal] = React.useState<string[]>([]);
         p1.push(sectionName);
       } else if (relativeBottom < LIMIT_2) {
         p2.push(sectionName);
-      } else {
-        p3.push(sectionName);
-      }
+      } 
     });
 
     setPage1Vertical(p1);
     setPage2Vertical(p2);
-    setPage3Vertical(p3);
 
     console.log("VERTICAL → page1:", p1);
     console.log("VERTICAL → page2:", p2);
-    console.log("VERTICAL → page3:", p3);
   };
 
   requestAnimationFrame(measure);
@@ -196,11 +189,10 @@ useEffect(() => {
     const containerRect = container.getBoundingClientRect();
 
     const LIMIT_1 = 1122 - 40;   // Page 1
-    const LIMIT_2 = 2204;   // Page 2
+    const LIMIT_2 = LIMIT_1 * 2;   // Page 2
 
     const p1: string[] = [];
     const p2: string[] = [];
-    const p3: string[] = [];
 
     const nodes = Array.from(
       container.querySelectorAll(".cv-tokyo__split--horizontal > div")
@@ -217,18 +209,14 @@ useEffect(() => {
         p1.push(sectionName);
       } else if (relativeBottom < LIMIT_2) {
         p2.push(sectionName);
-      } else {
-        p3.push(sectionName);
-      }
+      } 
     });
 
     setPage1Horizontal(p1);
     setPage2Horizontal(p2);
-    setPage3Horizontal(p3);
 
     console.log("HORIZONTAL → page1:", p1);
     console.log("HORIZONTAL → page2:", p2);
-    console.log("HORIZONTAL → page3:", p3);
   };
 
   requestAnimationFrame(measure);
@@ -311,8 +299,6 @@ useEffect(() => {
 
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
-        <div className="cv-tokyo__limit-line"><p className="cv-tokyo__limit-line-text">Pagina 2</p></div>
-        <div className="cv-tokyo__limit-line-overflowed"><p className="cv-tokyo__limit-line-overflowed-text">Limite superado</p></div>
         {/* HEADER */}
         {headerSection.map((s) => (
           <div
@@ -368,25 +354,20 @@ useEffect(() => {
           </div>
 
         </div>
+
+        <p className="cv-tokyo__page--number">Pagina 1</p>
+
+        {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
+        <>
+          <div className="cv-tokyo__limit-page"><p className="cv-tokyo__limit-page-text">Pagina 2</p></div>
+         </>
+      ) }
       </div>
 
       {/* PAGE 2 */}
       {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
         <div className="cv-tokyo__page">
-          {/* HEADER */}
-          {headerSection.map((s) => (
-            <div
-              onClick={() => handleClick(s.name)}
-              className={`cv-tokyo__${s.name} ${
-                isEditorOpen(s.name)
-                  ? "cv-tokyo__section--active"
-                  : "cv-tokyo__section"
-              } cv-tokyo__section--header`}
-            >
-              {s.render}
-            </div>
-          ))}
-
+          <div className="cv-tokyo__limit-line-overflowed"><p className="cv-tokyo__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p></div>
           <div className="cv-tokyo__split">
             <div className="cv-tokyo__split--vertical">
               {page2Vertical.map((name) => {
@@ -429,6 +410,7 @@ useEffect(() => {
             </div>
 
           </div>
+          <p className="cv-tokyo__page--number">Pagina 2</p>
         </div>
       )}
 
