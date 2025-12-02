@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LuScanQrCode, LuEye, LuNewspaper } from "react-icons/lu";
-import { FaRegEyeSlash, FaDownload } from "react-icons/fa";
+import { FaRegEyeSlash, FaDownload, FaPalette } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
 
 import { setAllowQrCode } from "../../reducers/identitySlice";
@@ -11,6 +11,7 @@ import type { IState } from "../../interfaces/IState";
 
 import "./verticaltoolbarcv.scss";
 import { TbWorldCode } from "react-icons/tb";
+import { openPopup } from "../../reducers/colorFontSlice";
 
 const VerticalToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,12 +22,8 @@ const VerticalToolbarCV: React.FC = () => {
   return (
     <div className="vertical-toolbar-cv">
 
-      <button
-        className="vertical-toolbar-btn"
-        title="Mostrar QR"
-        onClick={() => dispatch(setAllowQrCode(!allowQrCode))}
-      >
-        <TbWorldCode />
+      <button onClick={() => dispatch(openPopup())} className="vertical-toolbar-btn clear-btn" title="estilos">
+        <FaPalette />
       </button>
 
       <button

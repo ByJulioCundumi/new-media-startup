@@ -102,7 +102,7 @@ const getProgressColorClass = (progress: number) => {
               className="cv-tokyo__identitySection--title"
               style={{ color: styles.nameColor }}
             >
-              {fullName.length > 0 ? <>{firstName} <br />{lastName} </> : "Sobre Mi"}
+              {fullName.length > 0 ? <>{firstName} <br />{lastName} </> : "Mi CV"}
             </h1>
             <p
               className="cv-tokyo__identitySection--occupation"
@@ -538,7 +538,7 @@ const getProgressColorClass = (progress: number) => {
             }
               </h2>
               {customSection.map((item) => (
-                <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} style={{ color: styles.textColor }}/>
+                <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} style={{ color: styles.textColor, opacity: "60%" }}/>
               ))}
         </>
       );

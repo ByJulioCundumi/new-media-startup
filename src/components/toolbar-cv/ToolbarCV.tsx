@@ -8,7 +8,7 @@ import { LuEye, LuScanQrCode, LuShoppingBasket } from "react-icons/lu";
 import "./toolbarcv.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { openPopup } from "../../reducers/colorFontSlice";
-import { TbEdit, TbFileCv, TbReportAnalytics, TbScan } from "react-icons/tb";
+import { TbEdit, TbFileCv, TbReportAnalytics, TbScan, TbWorldCode, TbWorldOff } from "react-icons/tb";
 import { RiArrowGoBackLine, RiShoppingBagLine, RiVipLine } from "react-icons/ri";
 import { IoChevronBackOutline, IoDiamond } from "react-icons/io5";
 import type { IState } from "../../interfaces/IState";
@@ -28,6 +28,9 @@ import {
 } from "../../reducers/toolbarOptionSlice";
 import { HiShoppingCart } from "react-icons/hi2";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
+import QrToggleButton from "../qr-toggle-button/QrToggleButton";
+import { MdOutlinePublicOff, MdPublic } from "react-icons/md";
+import { setAllowQrCode } from "../../reducers/identitySlice";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -115,14 +118,6 @@ const ToolbarCV: React.FC = () => {
       {/* ===== BOTONES IZQUIERDA ===== */}
       <div className="toolbar-cv-buttons">
         <button
-          className="toolbar-cv-btn ghost"
-          onClick={() => dispatch(openPopup())}
-        >
-          <FaPalette />
-          Estilos
-        </button>
-
-        <button
           onClick={() => dispatch(toggleTemplatePopup())}
           className="toolbar-cv-btn ghost"
         >
@@ -133,6 +128,10 @@ const ToolbarCV: React.FC = () => {
         <button className="toolbar-cv-btn ghost">
           <TbScan />
           IA
+        </button>
+
+        <button className="toolbar-cv-btn ghost" onClick={() => dispatch(setAllowQrCode(!allowQrCode))}>
+          {allowQrCode === true ? <><TbWorldCode /> Online</> : <><TbWorldOff /> Privado</>} 
         </button>
       </div>
 
@@ -152,7 +151,11 @@ const ToolbarCV: React.FC = () => {
         </div>
       </div>
 
-      {/* ===== TÍTULO DEL CV ===== */}
+      
+
+      {/* ===== PERFIL + VIP ===== */}
+      <div className="toolbar-cv-end">
+        {/* ===== TÍTULO DEL CV ===== */}
       <div className="toolbar-cv-header">
         {editing ? (
           <input
@@ -190,8 +193,6 @@ const ToolbarCV: React.FC = () => {
         )}
       </div>
 
-      {/* ===== PERFIL + VIP ===== */}
-      <div className="toolbar-cv-end">
         <ProfileAvatar />
       </div>
     </div>

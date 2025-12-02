@@ -1,30 +1,43 @@
-// templates/util/useTemplateColors.ts
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../interfaces/IState";
-import { loadTemplateDefaults, resetToTemplateDefaults } from "../reducers/colorFontSlice";
+import { loadTemplateDefaults } from "../reducers/colorFontSlice";
 
 export const useTemplateColors = (defaults: any) => {
   const dispatch = useDispatch();
   const selected = useSelector((state: IState) => state.colorFont.selected);
 
+  // 🔍 Detecta si selected está vacío comparando CADA propiedad
+  const isSelectedEmpty =
+    !selected ||
+    Object.values({
+      textColor: selected?.textColor,
+      nameColor: selected?.nameColor,
+      professionColor: selected?.professionColor,
+      sectionTitleColor: selected?.sectionTitleColor,
+      itemColor: selected?.itemColor,
+      qrColor: selected?.qrColor,
+      font: selected?.font,
+    }).every((value) => value === undefined || value === null || value === "");
+
   useEffect(() => {
-    // Cargar defaults al montar plantilla
-    dispatch(loadTemplateDefaults(defaults));
+    if (isSelectedEmpty) {
+      dispatch(loadTemplateDefaults(defaults));
+    }
+  }, []); // solo en primer render
 
-    // Reset al desmontar
-    return () => {
-      dispatch(resetToTemplateDefaults());
+  // 🧪 Mezcla estable: si selected tiene un valor lo usa, si no usa default
+  const colors = useMemo(() => {
+    return {
+      textColor: selected?.textColor || defaults.textColor,
+      nameColor: selected?.nameColor || defaults.nameColor,
+      professionColor: selected?.professionColor || defaults.professionColor,
+      sectionTitleColor: selected?.sectionTitleColor || defaults.sectionTitleColor,
+      itemColor: selected?.itemColor || defaults.itemColor,
+      qrColor: selected?.qrColor || defaults.qrColor,
+      fontFamily: selected?.font || defaults.font,
     };
-  }, [dispatch, defaults]);
+  }, [selected, defaults]);
 
-  return {
-    textColor: selected.textColor || defaults.textColor,
-    nameColor: selected.nameColor || defaults.nameColor,
-    professionColor: selected.professionColor || defaults.professionColor,
-    sectionTitleColor: selected.sectionTitleColor || defaults.sectionTitleColor,
-    itemColor: selected.itemColor || defaults.itemColor,
-    qrColor: selected.qrColor || defaults.qrColor,
-    fontFamily: selected.font || defaults.font,
-  };
+  return colors;
 };

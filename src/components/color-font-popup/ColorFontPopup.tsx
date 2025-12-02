@@ -94,15 +94,6 @@ const fontOptions = [
     };
   }, [dragging]);
 
-  /** LOAD DEFAULT TEMPLATE ON FIRST OPEN */
-  useEffect(() => {
-    if (!isOpen) return;
-    dispatch(loadTemplateDefaults(DEFAULT_TEMPLATE));
-
-    const stored = localStorage.getItem("cv_color_config");
-    if (stored) dispatch(loadStoredValues(JSON.parse(stored)));
-  }, [isOpen, dispatch]);
-
   /** SAVE AUTO */
   useEffect(() => {
     if (!isOpen) return;

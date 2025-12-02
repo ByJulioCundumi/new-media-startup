@@ -12,11 +12,11 @@ import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 
 export const cvTokyoDefaults = {
-  textColor: "#9a9a9aff",
-  nameColor: "#0a0f1bff",
-  professionColor: "#5f5f5f",
-  sectionTitleColor: "#2b2b2bff",
-  itemColor: "#535353ff",
+  textColor: "#000000",
+  nameColor: "#0d0c0c",
+  professionColor: "#808080",
+  sectionTitleColor: "#323234",
+  itemColor: "#635f5f",
   qrColor: "#000000",
   font: "Arial, Helvetica, sans-serif",
 };
@@ -48,6 +48,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   } = props;
   
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
+  const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
    // MAPA de secciones
   // ---------------------------------------------------------------------------
   const sectionInfo = React.useMemo(
@@ -299,6 +300,13 @@ useEffect(() => {
 
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
+        {/* MARCA DE AGUA */}
+        {true && (
+          <div className="cv-tokyo__watermark">
+            <p>CREADO CON TUAPP.COM</p>
+          </div>
+        )}
+
         {/* HEADER */}
         {headerSection.map((s) => (
           <div
@@ -355,11 +363,11 @@ useEffect(() => {
 
         </div>
 
-        <p className="cv-tokyo__page--number">Pagina 1</p>
 
         {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
-        <>
-          <div className="cv-tokyo__limit-page"><p className="cv-tokyo__limit-page-text">Pagina 2</p></div>
+          <>
+          <p className="cv-tokyo__page--number">Pagina 1</p>
+          <div className="cv-tokyo__limit-page">{previewPopupOpen === false && <p className="cv-tokyo__limit-page-text">Pagina 2</p>} </div>
          </>
       ) }
       </div>
@@ -367,7 +375,16 @@ useEffect(() => {
       {/* PAGE 2 */}
       {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
         <div className="cv-tokyo__page">
-          <div className="cv-tokyo__limit-line-overflowed"><p className="cv-tokyo__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p></div>
+          {/* MARCA DE AGUA */}
+        {true && (
+          <div className="cv-tokyo__watermark">
+            <p>CREADO CON TUAPP.COM</p>
+          </div>
+        )}
+
+          <div className="cv-tokyo__limit-line-overflowed">
+            {previewPopupOpen === false && <p className="cv-tokyo__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
+          </div>
           <div className="cv-tokyo__split">
             <div className="cv-tokyo__split--vertical">
               {page2Vertical.map((name) => {
