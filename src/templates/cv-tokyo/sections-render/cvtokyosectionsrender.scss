@@ -370,6 +370,11 @@
   // EXPERIENCE SECTION
   // ------------------------------
   &__experienceSection {
+
+    &--item-box{
+      display: flex;
+      justify-content: space-between;
+    }
     &--item {
       margin-top: 1rem;
       color: #919191;
@@ -438,6 +443,7 @@
         display: flex;
         justify-content: space-between;
         gap: 2rem;
+        position: relative;
 
         &-subtitle {
           font-size: 1.1rem;
@@ -454,6 +460,7 @@
           font-size: 0.92rem;
           max-width: 100px;
           text-align: end;
+          position: absolute;
           top: 0;
           right: 0;
         }
@@ -490,12 +497,13 @@
   &__courseSection {
     &--item {
       margin-top: 1rem;
-      color: #3c3c3c;
+      color: #919191;
 
       &-head {
         display: flex;
         justify-content: space-between;
         gap: 2rem;
+        position: relative;
 
         &-subtitle {
           font-size: 1.1rem;
@@ -512,6 +520,7 @@
           font-size: 0.92rem;
           max-width: 100px;
           text-align: end;
+          position: absolute;
           top: 0;
           right: 0;
         }
@@ -529,14 +538,15 @@
           span, p {
             display: inline-block;
             margin-right: 0.2rem;
-            padding-left: 500;
+            font-weight: 500;
           }
         }
       }
 
       &-date-description {
         line-height: 1.4;
-        color: #949494;
+        color: #a0a0a0;
+        padding-left: 2rem;
       }
     }
   }

@@ -5,9 +5,9 @@ import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
 import "./cvtokyosectionsrender.scss"
 import { TbArrowBadgeRight } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
-import { useTemplateColors } from "../../tow-column-util/useTemplateColors";
 import { cvTokyoDefaults } from "../CvTokyo";
 import { QRCodeSVG } from "qrcode.react";
+import { useTemplateColors } from "../../useTemplateColors";
 
 interface SectionRenderProps {
   sectionName: string;

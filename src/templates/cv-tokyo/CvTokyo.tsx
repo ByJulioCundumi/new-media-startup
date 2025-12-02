@@ -6,10 +6,10 @@ import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 
-import { useTemplateColors } from "../tow-column-util/useTemplateColors";
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
 import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
+import { useTemplateColors } from "../useTemplateColors";
 
 export const cvTokyoDefaults = {
   photoBorderColor: "#000000",

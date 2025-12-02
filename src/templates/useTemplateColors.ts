@@ -1,8 +1,8 @@
 // templates/util/useTemplateColors.ts
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { IState } from "../../interfaces/IState";
-import { loadTemplateDefaults, resetToTemplateDefaults } from "../../reducers/colorFontSlice";
+import type { IState } from "../interfaces/IState";
+import { loadTemplateDefaults, resetToTemplateDefaults } from "../reducers/colorFontSlice";
 
 export const useTemplateColors = (defaults: any) => {
   const dispatch = useDispatch();
