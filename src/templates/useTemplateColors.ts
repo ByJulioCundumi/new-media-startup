@@ -19,12 +19,12 @@ export const useTemplateColors = (defaults: any) => {
   }, [dispatch, defaults]);
 
   return {
-    photoBorder: selected.photoBorderColor || defaults.photoBorderColor,
-    title: selected.titleColor || defaults.titleColor,
-    profession: selected.professionColor || defaults.professionColor,
-    sectionTitle: selected.sectionTitleColor || defaults.sectionTitleColor,
-    text: selected.itemColor || defaults.itemColor,
-    qr: selected.qrColor || defaults.qrColor,
+    textColor: selected.textColor || defaults.textColor,
+    nameColor: selected.nameColor || defaults.nameColor,
+    professionColor: selected.professionColor || defaults.professionColor,
+    sectionTitleColor: selected.sectionTitleColor || defaults.sectionTitleColor,
+    itemColor: selected.itemColor || defaults.itemColor,
+    qrColor: selected.qrColor || defaults.qrColor,
     fontFamily: selected.font || defaults.font,
   };
 };

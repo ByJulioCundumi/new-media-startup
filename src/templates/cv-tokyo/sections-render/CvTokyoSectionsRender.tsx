@@ -94,20 +94,19 @@ const getProgressColorClass = (progress: number) => {
             <img
               src={photo}
               className="cv-tokyo__identitySection--img"
-              style={{ borderColor: styles.photoBorder }}
             />
           )}
 
           <div className="cv-tokyo__identitySection--text">
             <h1
               className="cv-tokyo__identitySection--title"
-              style={{ color: styles.title }}
+              style={{ color: styles.nameColor }}
             >
               {fullName.length > 0 ? <>{firstName} <br />{lastName} </> : "Sobre Mi"}
             </h1>
             <p
               className="cv-tokyo__identitySection--occupation"
-              style={{ color: styles.profession }}
+              style={{ color: styles.professionColor }}
             >
               {occupation}
             </p>
@@ -121,7 +120,7 @@ const getProgressColorClass = (progress: number) => {
               size={80}
               level="Q"
               bgColor="#ffffff"
-              fgColor={styles.qr}
+              fgColor={styles.qrColor}
             />
             <p className="cv-tokyo__identitySection--qr-text">
               Ver CV Online
@@ -134,7 +133,7 @@ const getProgressColorClass = (progress: number) => {
     case "contactSection":
       return (
         <>
-          <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Contacto"}
             {
               !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -145,8 +144,8 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {contactSection.map((item) => (
                 <div key={item.id} className="cv-tokyo__contactSection--item">
-                  <h3 className="cv-tokyo__contactSection--item-name" style={{ color: styles.text }}>{item.type}</h3>
-                  <p className="cv-tokyo__contactSection--item-value">{item.value}</p>
+                  <h3 className="cv-tokyo__contactSection--item-name" style={{ color: styles.itemColor }}>{item.type}</h3>
+                  <p className="cv-tokyo__contactSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value}</p>
                 </div>
               ))}
         </>
@@ -155,7 +154,7 @@ const getProgressColorClass = (progress: number) => {
     case "personalInfoSection":
       return (
         <>
-          <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Detalles"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -166,8 +165,8 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {personalInfo.map((item) => (
                 <div key={item.id} className="cv-tokyo__personalInfoSection--item">
-                  <h3 className="cv-tokyo__personalInfoSection--item-name" style={{ color: styles.text }}>{item.name}</h3>
-                  <p className="cv-tokyo__personalInfoSection--item-value">{item.value}</p>
+                  <h3 className="cv-tokyo__personalInfoSection--item-name" style={{ color: styles.itemColor }}>{item.name}</h3>
+                  <p className="cv-tokyo__personalInfoSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value}</p>
                 </div>
               ))}
         </>
@@ -176,7 +175,7 @@ const getProgressColorClass = (progress: number) => {
     case "skillSection":
       return (
         <>
-          <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -203,8 +202,8 @@ const getProgressColorClass = (progress: number) => {
                 return (
                   <div key={skill.id} className="cv-tokyo__skillSection--item">
                     <div className="cv-tokyo__skillSection--header">
-                      <h3 className="cv-tokyo__skillSection--item-name" style={{ color: styles.text }}>{skill.name}</h3>
-                      <p className="cv-tokyo__skillSection--item-level">{skill.level}</p>
+                      <h3 className="cv-tokyo__skillSection--item-name" style={{ color: styles.itemColor }}>{skill.name}</h3>
+                      <p className="cv-tokyo__skillSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{skill.level}</p>
                     </div>
 
                     {/* Barra de progreso */}
@@ -223,7 +222,7 @@ const getProgressColorClass = (progress: number) => {
     case "languageSection":
       return (
         <>
-          <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -252,8 +251,8 @@ const getProgressColorClass = (progress: number) => {
                 return (
                   <div key={lang.id} className="cv-tokyo__languajeSection--item">
                     <div className="cv-tokyo__languajeSection--header">
-                      <h3 className="cv-tokyo__languajeSection--item-name" style={{ color: styles.text }}>{lang.name}</h3>
-                      <p className="cv-tokyo__languajeSection--item-level">{lang.level}</p>
+                      <h3 className="cv-tokyo__languajeSection--item-name" style={{ color: styles.itemColor }}>{lang.name}</h3>
+                      <p className="cv-tokyo__languajeSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{lang.level}</p>
                     </div>
 
                     {/* Barra de progreso */}
@@ -272,7 +271,7 @@ const getProgressColorClass = (progress: number) => {
     case "linkSection":
       return (
         <>
-          <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -291,12 +290,12 @@ const getProgressColorClass = (progress: number) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="cv-tokyo__linkSection--item-name"
-                          style={{ color: styles.text }}
+                          style={{ color: styles.itemColor }}
                         >
                           {link.name}
                         </a>
 
-                        <p className="cv-tokyo__linkSection--item-url">
+                        <p className="cv-tokyo__linkSection--item-url" style={{ color: styles.textColor, opacity: "60%" }}>
                           {link.url}
                         </p>
                       </>
@@ -307,7 +306,7 @@ const getProgressColorClass = (progress: number) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cv-tokyo__linkSection--item-name"
-                        style={{ color: styles.text }}
+                        style={{ color: styles.itemColor }}
                       >
                         {link.name}
                       </a>
@@ -320,7 +319,7 @@ const getProgressColorClass = (progress: number) => {
     case "hobbieSection":
       return (
         <>
-          <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -332,7 +331,7 @@ const getProgressColorClass = (progress: number) => {
 
               <div className="cv-tokyo__hobbieSection--list">
                 {hobbieSection.map((hobby) => (
-                  <span key={hobby.id} className="cv-tokyo__hobbieSection--item" style={{ borderColor: styles.text }}>
+                  <span key={hobby.id} className="cv-tokyo__hobbieSection--item" style={{ borderColor: styles.itemColor, color: styles.textColor }}>
                     {hobby.name}
                   </span>
                 ))}
@@ -344,7 +343,7 @@ const getProgressColorClass = (progress: number) => {
     case "profileSection":
       return (
         <>
-          <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -353,14 +352,14 @@ const getProgressColorClass = (progress: number) => {
               </span>
             }
           </h2>
-          <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} />
+          <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} style={{ color: styles.textColor, opacity: "60%" }}/>
         </>
       );
 
     case "experienceSection":
       return (
         <>
-          <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -372,13 +371,13 @@ const getProgressColorClass = (progress: number) => {
               {experienceSection.map((exp) => (
                 <div key={exp.id} className="cv-tokyo__experienceSection--item">
                   <div className="cv-tokyo__experienceSection--item-head">
-                    <h3 className="cv-tokyo__experienceSection--item-head-subtitle" style={{ color: styles.text }}>
+                    <h3 className="cv-tokyo__experienceSection--item-head-subtitle" style={{ color: styles.itemColor }}>
                       {exp.position},
                       <span className="cv-tokyo__experienceSection--item-head-employer">{exp.employer}</span>
                     </h3>
-                    <p className="cv-tokyo__experienceSection--item-head-location">{exp.location}</p>
+                    <p className="cv-tokyo__experienceSection--item-head-location" style={{ color: styles.textColor, opacity: "60%" }}>{exp.location}</p>
                   </div>
-                  <div className="cv-tokyo__experienceSection--item-date">
+                  <div className="cv-tokyo__experienceSection--item-date" style={{ color: styles.textColor, opacity: "90%" }}>
                     <p className="cv-tokyo__experienceSection--item-date-start">
                       <span>{exp.startMonth.slice(0, 3)}</span>
                       <span>{exp.startYear}</span>
@@ -388,7 +387,7 @@ const getProgressColorClass = (progress: number) => {
                       <span>{exp.present ? "Actualidad" : `${exp.endMonth.slice(0, 3)} ${exp.endYear}`}</span>
                     </p>
                   </div>
-                  <div className="cv-tokyo__experienceSection--item-date-description">{exp.description}</div>
+                  <div className="cv-tokyo__experienceSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{exp.description}</div>
                 </div>
               ))}
         </>
@@ -397,7 +396,7 @@ const getProgressColorClass = (progress: number) => {
     case "educationSection":
       return (
         <>
-          <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -409,13 +408,13 @@ const getProgressColorClass = (progress: number) => {
               {educationSection.map((edu) => (
                 <div key={edu.id} className="cv-tokyo__educationSection--item">
                   <div className="cv-tokyo__educationSection--item-head">
-                    <h3 className="cv-tokyo__educationSection--item-head-subtitle" style={{ color: styles.text }}>
+                    <h3 className="cv-tokyo__educationSection--item-head-subtitle" style={{ color: styles.itemColor }}>
                       {edu.title},
                       <span className="cv-tokyo__educationSection--item-head-employer">{edu.institution}</span>
                     </h3>
-                    <p className="cv-tokyo__educationSection--item-head-location">{edu.location}</p>
+                    <p className="cv-tokyo__educationSection--item-head-location" style={{ color: styles.textColor, opacity: "60%" }}>{edu.location}</p>
                   </div>
-                  <div className="cv-tokyo__educationSection--item-date">
+                  <div className="cv-tokyo__educationSection--item-date" style={{ color: styles.textColor, opacity: "90%" }}>
                     <p className="cv-tokyo__educationSection--item-date-start">
                       <span>{edu.startMonth.slice(0, 3)}</span>
                       <span>{edu.startYear}</span>
@@ -426,7 +425,7 @@ const getProgressColorClass = (progress: number) => {
                     </p>
                   </div>
                   {edu.showExtraInfo && edu.description && (
-                    <div className="cv-tokyo__educationSection--item-date-description">{edu.description}</div>
+                    <div className="cv-tokyo__educationSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{edu.description}</div>
                   )}
                 </div>
               ))}
@@ -436,7 +435,7 @@ const getProgressColorClass = (progress: number) => {
     case "courseSection":
       return (
         <>
-          <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -448,17 +447,17 @@ const getProgressColorClass = (progress: number) => {
               {courseSection.map((course) => (
                 <div key={course.id} className="cv-tokyo__courseSection--item">
                   <div className="cv-tokyo__courseSection--item-head">
-                    <h3 className="cv-tokyo__courseSection--item-head-subtitle" style={{ color: styles.text }}>
+                    <h3 className="cv-tokyo__courseSection--item-head-subtitle" style={{ color: styles.itemColor }}>
                       {course.name},
                       <span className="cv-tokyo__courseSection--item-head-employer">{course.institution}</span>
                     </h3>
                     {(course.city || course.country) && (
-                      <p className="cv-tokyo__courseSection--item-head-location">
+                      <p className="cv-tokyo__courseSection--item-head-location" style={{ color: styles.textColor, opacity:"60%" }}>
                         {course.city}, {course.country}
                       </p>
                     )}
                   </div>
-                  <div className="cv-tokyo__courseSection--item-date">
+                  <div className="cv-tokyo__courseSection--item-date" style={{ color: styles.textColor, opacity:"90%" }}>
                     <p className="cv-tokyo__courseSection--item-date-start">
                       <span>{course.startDate}</span>
                     </p>
@@ -468,7 +467,7 @@ const getProgressColorClass = (progress: number) => {
                     </p>
                   </div>
                   {course.description && (
-                    <div className="cv-tokyo__courseSection--item-date-description">{course.description}</div>
+                    <div className="cv-tokyo__courseSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{course.description}</div>
                   )}
                 </div>
               ))}
@@ -478,7 +477,7 @@ const getProgressColorClass = (progress: number) => {
     case "awardSection":
       return (
         <>
-          <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -489,10 +488,10 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {awardSection.map((award) => (
                 <div key={award.id} className="cv-tokyo__awardSection--item">
-                  <h3 className="cv-tokyo__awardSection--item-subtitle" style={{ color: styles.text }}>{award.name}</h3>
-                  <p className="cv-tokyo__awardSection--item-date">{award.date}</p>
+                  <h3 className="cv-tokyo__awardSection--item-subtitle" style={{ color: styles.itemColor }}>{award.name}</h3>
+                  <p className="cv-tokyo__awardSection--item-date" style={{ color: styles.textColor, opacity: "90%" }}>{award.date}</p>
                   {award.description && (
-                    <div className="cv-tokyo__awardSection--item-date-description">{award.description}</div>
+                    <div className="cv-tokyo__awardSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{award.description}</div>
                   )}
                 </div>
               ))}
@@ -502,7 +501,7 @@ const getProgressColorClass = (progress: number) => {
     case "referenceSection":
       return (
         <>
-          <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -515,12 +514,12 @@ const getProgressColorClass = (progress: number) => {
                 <div key={ref.id} className="cv-tokyo__referenceSection--item">
                   <div className="cv-tokyo__referenceSection--item-head">
                     <p>
-                      <span style={{ color: styles.text }}>{ref.name}</span>,
-                      <span style={{ color: styles.text }}>{ref.company}</span>
+                      <span style={{ color: styles.itemColor }}>{ref.name}</span>,
+                      <span style={{ color: styles.itemColor }}>{ref.company}</span>
                     </p>
                   </div>
-                  <p className="cv-tokyo__referenceSection--item-phone">{ref.phone}</p>
-                  <p className="cv-tokyo__referenceSection--item-email">{ref.email}</p>
+                  <p className="cv-tokyo__referenceSection--item-phone" style={{ color: styles.textColor, opacity: "60%" }}>{ref.phone}</p>
+                  <p className="cv-tokyo__referenceSection--item-email" style={{ color: styles.textColor, opacity: "60%" }}>{ref.email}</p>
                 </div>
               ))}
         </>
@@ -529,7 +528,7 @@ const getProgressColorClass = (progress: number) => {
     case "customSection":
       return (
         <>
-          <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitle }}>
+          <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitleColor }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -539,7 +538,7 @@ const getProgressColorClass = (progress: number) => {
             }
               </h2>
               {customSection.map((item) => (
-                <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} />
+                <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} style={{ color: styles.textColor }}/>
               ))}
         </>
       );

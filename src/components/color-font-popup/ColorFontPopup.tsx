@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   closePopup,
-  setTitleColor,
   setProfessionColor,
   setSectionTitleColor,
   setItemColor,
@@ -23,7 +22,8 @@ import {
   restoreDefaults,
   loadTemplateDefaults,
   loadStoredValues,
-  setPhotoBorderColor,
+  setNameColor,
+  setTextColor,
 } from "../../reducers/colorFontSlice";
 import type { IState } from "../../interfaces/IState";
 import { RiDraggable } from "react-icons/ri";
@@ -171,8 +171,8 @@ const fontOptions = [
         </div>
 
         <div className="cfp-grid">
-          {ColorBox("Foto", selected.photoBorderColor, (c) => dispatch(setPhotoBorderColor(c)))}
-          {ColorBox("Título", selected.titleColor, (c) => dispatch(setTitleColor(c)))}
+          {ColorBox("Texto", selected.textColor, (c) => dispatch(setTextColor(c)))}
+          {ColorBox("Título", selected.nameColor, (c) => dispatch(setNameColor(c)))}
           {ColorBox("Profesión", selected.professionColor, (c) =>
             dispatch(setProfessionColor(c))
           )}
