@@ -291,6 +291,7 @@ const getProgressColorClass = (progress: number) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="cv-tokyo__linkSection--item-name"
+                          style={{ color: styles.text }}
                         >
                           {link.name}
                         </a>
@@ -331,7 +332,7 @@ const getProgressColorClass = (progress: number) => {
 
               <div className="cv-tokyo__hobbieSection--list">
                 {hobbieSection.map((hobby) => (
-                  <span key={hobby.id} className="cv-tokyo__hobbieSection--item">
+                  <span key={hobby.id} className="cv-tokyo__hobbieSection--item" style={{ borderColor: styles.text }}>
                     {hobby.name}
                   </span>
                 ))}
@@ -447,7 +448,7 @@ const getProgressColorClass = (progress: number) => {
               {courseSection.map((course) => (
                 <div key={course.id} className="cv-tokyo__courseSection--item">
                   <div className="cv-tokyo__courseSection--item-head">
-                    <h3 className="cv-tokyo__courseSection--item-head-subtitle">
+                    <h3 className="cv-tokyo__courseSection--item-head-subtitle" style={{ color: styles.text }}>
                       {course.name},
                       <span className="cv-tokyo__courseSection--item-head-employer">{course.institution}</span>
                     </h3>
@@ -488,7 +489,7 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {awardSection.map((award) => (
                 <div key={award.id} className="cv-tokyo__awardSection--item">
-                  <h3 className="cv-tokyo__awardSection--item-subtitle">{award.name}</h3>
+                  <h3 className="cv-tokyo__awardSection--item-subtitle" style={{ color: styles.text }}>{award.name}</h3>
                   <p className="cv-tokyo__awardSection--item-date">{award.date}</p>
                   {award.description && (
                     <div className="cv-tokyo__awardSection--item-date-description">{award.description}</div>
@@ -514,8 +515,8 @@ const getProgressColorClass = (progress: number) => {
                 <div key={ref.id} className="cv-tokyo__referenceSection--item">
                   <div className="cv-tokyo__referenceSection--item-head">
                     <p>
-                      <span>{ref.name}</span>,
-                      <span>{ref.company}</span>
+                      <span style={{ color: styles.text }}>{ref.name}</span>,
+                      <span style={{ color: styles.text }}>{ref.company}</span>
                     </p>
                   </div>
                   <p className="cv-tokyo__referenceSection--item-phone">{ref.phone}</p>

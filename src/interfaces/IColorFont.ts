@@ -3,8 +3,8 @@ export interface IColorFontState {
 
   // 🎨 Valores seleccionados por el usuario (los actuales)
   selected: {
-    photoBorderColor: string;
-    titleColor: string;
+    textColor: string;
+    nameColor: string;
     professionColor: string;
     sectionTitleColor: string;
     itemColor: string;
@@ -14,8 +14,8 @@ export interface IColorFontState {
 
   // 🧩 Valores por defecto cargados según la plantilla  
   defaults: {
-    photoBorderColor: string;
-    titleColor: string;
+    textColor: string;
+    nameColor: string;
     professionColor: string;
     sectionTitleColor: string;
     itemColor: string;

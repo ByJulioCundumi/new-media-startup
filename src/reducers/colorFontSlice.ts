@@ -2,8 +2,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IColorFontState } from "../interfaces/IColorFont";
 
 export const emptyDefaults = {
-  photoBorderColor: "",
-  titleColor: "",
+  textColor: "",
+  nameColor: "",
   professionColor: "",
   sectionTitleColor: "",
   itemColor: "",
@@ -33,11 +33,11 @@ const colorFontSlice = createSlice({
     },
 
     /** Setters para actualizar SOLO selected */
-    setTitleColor(state, action: PayloadAction<string>) {
-      state.selected.titleColor = action.payload;
+    setNameColor(state, action: PayloadAction<string>) {
+      state.selected.nameColor = action.payload;
     },
-    setPhotoBorderColor(state, action: PayloadAction<string>) {
-      state.selected.photoBorderColor = action.payload;
+    setTextColor(state, action: PayloadAction<string>) {
+      state.selected.textColor = action.payload;
     },
     setProfessionColor(state, action: PayloadAction<string>) {
       state.selected.professionColor = action.payload;
@@ -86,7 +86,6 @@ const colorFontSlice = createSlice({
 export const {
   openPopup,
   closePopup,
-  setTitleColor,
   setProfessionColor,
   setSectionTitleColor,
   setItemColor,
@@ -95,8 +94,9 @@ export const {
   restoreDefaults,
   loadTemplateDefaults,
   loadStoredValues,
-  setPhotoBorderColor,
-  resetToTemplateDefaults
+  resetToTemplateDefaults,
+  setNameColor,
+  setTextColor
 } = colorFontSlice.actions;
 
 export default colorFontSlice.reducer;
