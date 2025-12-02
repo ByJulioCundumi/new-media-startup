@@ -14,7 +14,7 @@ import { LuTriangleAlert } from "react-icons/lu";
 export const cvTokyoDefaults = {
   photoBorderColor: "#000000",
   titleColor: "#051235",
-  professionColor: "#0A2A7A",
+  professionColor: "#a3a3a3",
   sectionTitleColor: "#1E1E1E",
   itemColor: "#555555",
   qrColor: "#000000",
@@ -128,7 +128,7 @@ const [page2Horizontal, setPage2Horizontal] = React.useState<string[]>([]);
   const measure = () => {
     const containerRect = container.getBoundingClientRect();
 
-    const LIMIT_1 = 1122 - 40;   // Page 1
+    const LIMIT_1 = (1122 - 40);   // Page 1
     const LIMIT_2 = LIMIT_1 * 2;   // Page 2
 
     const p1: string[] = [];
@@ -188,7 +188,7 @@ useEffect(() => {
   const measure = () => {
     const containerRect = container.getBoundingClientRect();
 
-    const LIMIT_1 = 1122 - 40;   // Page 1
+    const LIMIT_1 = (1122 - 40);   // Page 1
     const LIMIT_2 = LIMIT_1 * 2;   // Page 2
 
     const p1: string[] = [];

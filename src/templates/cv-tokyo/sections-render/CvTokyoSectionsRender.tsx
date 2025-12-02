@@ -379,12 +379,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                   <div className="cv-tokyo__experienceSection--item-date">
                     <p className="cv-tokyo__experienceSection--item-date-start">
-                      <span>{exp.startMonth}</span>
+                      <span>{exp.startMonth.slice(0, 3)}</span>
                       <span>{exp.startYear}</span>
                     </p>
                     <span>/</span>
                     <p className="cv-tokyo__experienceSection--item-date-end">
-                      {exp.present ? "Actualidad" : `${exp.endMonth} ${exp.endYear}`}
+                      <span>{exp.present ? "Actualidad" : `${exp.endMonth.slice(0, 3)} ${exp.endYear}`}</span>
                     </p>
                   </div>
                   <div className="cv-tokyo__experienceSection--item-date-description">{exp.description}</div>
@@ -416,12 +416,12 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                   <div className="cv-tokyo__educationSection--item-date">
                     <p className="cv-tokyo__educationSection--item-date-start">
-                      <span>{edu.startMonth}</span>
+                      <span>{edu.startMonth.slice(0, 3)}</span>
                       <span>{edu.startYear}</span>
                     </p>
                     <span>/</span>
                     <p className="cv-tokyo__educationSection--item-date-end">
-                      {edu.present ? "Actualidad" : `${edu.endMonth} ${edu.endYear}`}
+                      <span>{edu.present ? "Actualidad" : `${edu.endMonth.slice(0, 3)} ${edu.endYear}`}</span>
                     </p>
                   </div>
                   {edu.showExtraInfo && edu.description && (
