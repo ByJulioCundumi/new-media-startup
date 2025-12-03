@@ -70,7 +70,7 @@ const initialSections: ICvSection[] = [
   {
     name: "personalInfoSection",
     title: "Detalles",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -79,7 +79,7 @@ const initialSections: ICvSection[] = [
   {
     name: "linkSection",
     title: "Enlaces",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -88,7 +88,7 @@ const initialSections: ICvSection[] = [
   {
     name: "courseSection",
     title: "Cursos y Certificados",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -97,7 +97,7 @@ const initialSections: ICvSection[] = [
   {
     name: "hobbieSection",
     title: "Pasatiempos",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -106,7 +106,7 @@ const initialSections: ICvSection[] = [
   {
     name: "referenceSection",
     title: "Referencias Laborales",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -115,7 +115,7 @@ const initialSections: ICvSection[] = [
   {
     name: "awardSection",
     title: "Premios",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -124,7 +124,7 @@ const initialSections: ICvSection[] = [
   {
     name: "customSection",
     title: "Campo Personalizado",
-    enabled: false,
+    enabled: true,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -153,7 +153,11 @@ const cvSectionsSlice = createSlice({
 
     disableSection: (state, action: PayloadAction<string>) => {
       const section = state.sections.find((s) => s.name === action.payload);
-      if (section) section.enabled = false;
+      if (section) {
+        section.enabled = false;
+        section.isEditorOpen = false; // ← cerrar editor al desactivar
+        section.isOpen = false;       // (opcional) también cerrar el panel si quieres
+      }
     },
 
     setSectionProgress: (
@@ -241,6 +245,9 @@ const cvSectionsSlice = createSlice({
         s.isEditorOpen = false;
       });
     },
+    resetCvSections() {
+          return initialState;
+    }
   },
 });
 
@@ -257,6 +264,7 @@ export const {
   updateSectionTitle,
   toggleSectionEditor,
   closeAllEditors,
+  resetCvSections
 } = cvSectionsSlice.actions;
 
 export default cvSectionsSlice.reducer;

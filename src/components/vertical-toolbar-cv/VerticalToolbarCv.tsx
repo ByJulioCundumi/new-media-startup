@@ -4,14 +4,14 @@ import { LuScanQrCode, LuEye, LuNewspaper } from "react-icons/lu";
 import { FaRegEyeSlash, FaDownload, FaPalette } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
 
-import { setAllowQrCode } from "../../reducers/identitySlice";
+import { resetIdentity, setAllowQrCode } from "../../reducers/identitySlice";
 import { togglePreviewPopup } from "../../reducers/toolbarOptionSlice";
 
 import type { IState } from "../../interfaces/IState";
 
 import "./verticaltoolbarcv.scss";
-import { TbWorldCode } from "react-icons/tb";
 import { openPopup } from "../../reducers/colorFontSlice";
+import { TbWorldCode, TbWorldOff } from "react-icons/tb";
 
 const VerticalToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -47,8 +47,8 @@ const VerticalToolbarCV: React.FC = () => {
         <FaDownload />
       </button>
 
-      <button className="vertical-toolbar-btn clear-btn" title="Limpiar">
-        <GiBroom />
+      <button onClick={() => dispatch(setAllowQrCode(!allowQrCode))} className="vertical-toolbar-btn clear-btn" title="Limpiar">
+        {allowQrCode === true ? <TbWorldCode /> : <TbWorldOff />} 
       </button>
 
     </div>

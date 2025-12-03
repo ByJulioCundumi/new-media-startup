@@ -46,6 +46,9 @@ const educationSlice = createSlice({
     setEducationData(state, action: PayloadAction<IEducationEntry[]>) {
       return action.payload;
     },
+    resetEducation() {
+      return initialState;
+    }
   },
 });
 
@@ -54,6 +57,7 @@ export const {
   updateEducation,
   removeEducation,
   setEducationData,
+  resetEducation
 } = educationSlice.actions;
 
 export default educationSlice.reducer;

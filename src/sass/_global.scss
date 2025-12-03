@@ -15,7 +15,6 @@
   font-weight: 700;
   border-radius: 6px;
   white-space: nowrap;
-  pointer-events: none;
   transform: translateX(-50%) translateY(60%);
   animation: porgressPulse 1.9s infinite ease-in-out;
   z-index: 10;
@@ -23,12 +22,7 @@
   display: flex;
   align-items: center;
   background-color: white;
-
-  svg{
-    position: absolute;
-  right: -1rem;
-  color: #575757;
-  }
+  gap: 0.5rem;
 }
 
 /* Rojo — progreso bajo */

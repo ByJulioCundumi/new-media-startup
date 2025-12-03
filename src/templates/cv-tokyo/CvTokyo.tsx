@@ -12,7 +12,7 @@ import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 
 export const cvTokyoDefaults = {
-  textColor: "#000000",
+  textColor: "#494949ff",
   nameColor: "#0d0c0c",
   professionColor: "#808080",
   sectionTitleColor: "#323234",

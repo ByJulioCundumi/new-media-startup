@@ -30,6 +30,9 @@ const skillsSlice = createSlice({
     removeSkillEntry: (state, action: PayloadAction<string>) => {
       return state.filter((s) => s.id !== action.payload);
     },
+    resetSkills() {
+      return initialState;
+    }
   },
 });
 
@@ -38,6 +41,7 @@ export const {
   addSkillEntry,
   updateSkillEntry,
   removeSkillEntry,
+  resetSkills
 } = skillsSlice.actions;
 
 export default skillsSlice.reducer;

@@ -26,11 +26,23 @@ import {
   togglePreviewPopup,
   toggleTemplatePopup,
 } from "../../reducers/toolbarOptionSlice";
-import { HiShoppingCart } from "react-icons/hi2";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import QrToggleButton from "../qr-toggle-button/QrToggleButton";
-import { MdOutlinePublicOff, MdPublic } from "react-icons/md";
-import { setAllowQrCode } from "../../reducers/identitySlice";
+import { GiBroom } from "react-icons/gi";
+import { resetIdentity } from "../../reducers/identitySlice";
+import { resetEducation } from "../../reducers/educationSlice";
+import { resetExperience } from "../../reducers/experienceSlice";
+import { resetLanguage } from "../../reducers/languagesSlice";
+import { resetSkills } from "../../reducers/skillsSlice";
+import { resetProfile } from "../../reducers/profileSlice";
+import { clearAllContacts } from "../../reducers/contactSlice";
+import { clearAllPersonalInfo } from "../../reducers/personalInfoSlice";
+import { clearAllLinks } from "../../reducers/linksSlice";
+import { clearAllCourses } from "../../reducers/coursesSlice";
+import { clearAllHobbies } from "../../reducers/hobbiesSlice";
+import { clearAllReferences } from "../../reducers/referencesSlice";
+import { clearAllAwards } from "../../reducers/awardsSlice";
+import { clearAllCustom } from "../../reducers/customSlice";
+import { resetCvSections } from "../../reducers/cvSectionsSlice";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,6 +52,24 @@ const ToolbarCV: React.FC = () => {
   const { previewPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
   );
+
+  const clearCv = ()=>{
+      dispatch(resetIdentity());
+      dispatch(resetEducation());
+      dispatch(resetExperience());
+      dispatch(resetLanguage());
+      dispatch(resetSkills());
+      dispatch(resetProfile());
+      dispatch(clearAllContacts());
+      dispatch(clearAllPersonalInfo());
+      dispatch(clearAllLinks());
+      dispatch(clearAllCourses());
+      dispatch(clearAllHobbies());
+      dispatch(clearAllReferences());
+      dispatch(clearAllAwards());
+      dispatch(clearAllCustom());
+      dispatch(resetCvSections());
+    }
 
   // 🔹 Perfil del usuario (AJUSTA LOS NOMBRES SI TU STORE ES DIFERENTE)
 
@@ -130,8 +160,9 @@ const ToolbarCV: React.FC = () => {
           IA
         </button>
 
-        <button className="toolbar-cv-btn ghost" onClick={() => dispatch(setAllowQrCode(!allowQrCode))}>
-          {allowQrCode === true ? <><TbWorldCode /> Online</> : <><TbWorldOff /> Privado</>} 
+        <button onClick={clearCv} className="toolbar-cv-btn ghost">
+          <GiBroom />
+          Limpiar
         </button>
       </div>
 

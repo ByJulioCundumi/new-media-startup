@@ -1,13 +1,15 @@
 // templates/components/CvTokyoSectionsRender.tsx
 import React, { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
+import { disableSection, toggleSectionEditor, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
 import "./cvtokyosectionsrender.scss"
-import { TbArrowBadgeRight } from "react-icons/tb";
+import { TbArrowBadgeRight, TbGitBranchDeleted, TbTrashX } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
 import { cvTokyoDefaults } from "../CvTokyo";
 import { QRCodeSVG } from "qrcode.react";
 import { useTemplateColors } from "../../useTemplateColors";
+import { MdDeleteForever, MdOutlineDeleteOutline, MdOutlineDeleteSweep } from "react-icons/md";
+import { IoTrashBinOutline } from "react-icons/io5";
 
 interface SectionRenderProps {
   sectionName: string;
@@ -57,6 +59,7 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   const styles = useTemplateColors(cvTokyoDefaults);
   const section = sectionByName[sectionName];
   const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+  const dispatch = useDispatch()
   
   const { qrCodeUrl, allowQrCode, allowCvPhoto, photo, firstName, lastName, jobTitle } = useSelector(
     (state: IState) => state.identity
@@ -86,7 +89,7 @@ const getProgressColorClass = (progress: number) => {
               )}`}
             >
               {section.progress}%
-              <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+              <TbArrowBadgeRight className="cv-tokyo__arrow" />
             </span>
           )}
 
@@ -138,7 +141,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -159,7 +162,10 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("personalInfoSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -180,7 +186,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -227,7 +233,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -276,7 +282,10 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("linkSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -324,7 +333,10 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("hobbieSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -348,7 +360,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -364,7 +376,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -401,7 +413,7 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbArrowBadgeRight className="cv-tokyo__arrow" />
               </span>
             }
           </h2>
@@ -438,9 +450,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
-              !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("courseSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -482,7 +497,10 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("awardSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -506,7 +524,10 @@ const getProgressColorClass = (progress: number) => {
             {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("referenceSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
           </h2>
@@ -533,7 +554,10 @@ const getProgressColorClass = (progress: number) => {
                 {
               !previewPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-tokyo__section-arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("customSection"));
+                  }} className="cv-tokyo__remove" />
               </span>
             }
               </h2>

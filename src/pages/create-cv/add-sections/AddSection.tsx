@@ -26,6 +26,8 @@ import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
 import { clearAllReferences } from "../../../reducers/referencesSlice";
 import { clearAllAwards } from "../../../reducers/awardsSlice";
 import { clearAllCustom } from "../../../reducers/customSlice";
+import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
+import { LuTrash } from "react-icons/lu";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
@@ -100,7 +102,7 @@ const AddSections: React.FC = () => {
               </div>
 
               <div className="as-toggle-indicator">
-                {enabled ? "✓" : "+"}
+                {enabled ? <LuTrash/> : "+"}
               </div>
             </div>
           );

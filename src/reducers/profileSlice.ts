@@ -13,8 +13,11 @@ const profileSlice = createSlice({
     resetProfileContent: () => {
       return initialState;
     },
+    resetProfile() {
+      return initialState;
+    }
   },
 });
 
-export const { setProfileContent, resetProfileContent } = profileSlice.actions;
+export const { setProfileContent, resetProfileContent, resetProfile} = profileSlice.actions;
 export default profileSlice.reducer;

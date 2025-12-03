@@ -33,6 +33,9 @@ const languagesSlice = createSlice({
     removeLanguageEntry: (state, action: PayloadAction<string>) => {
       return state.filter((l) => l.id !== action.payload);
     },
+    resetLanguage() {
+      return initialState;
+    }
   },
 });
 
@@ -41,6 +44,7 @@ export const {
   addLanguageEntry,
   updateLanguageEntry,
   removeLanguageEntry,
+  resetLanguage
 } = languagesSlice.actions;
 
 export default languagesSlice.reducer;

@@ -45,6 +45,9 @@ const experienceSlice = createSlice({
     setExperienceData(state, action: PayloadAction<IExperienceEntry[]>) {
       return action.payload;
     },
+    resetExperience() {
+      return initialState;
+    }
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   updateExperience,
   removeExperience,
   setExperienceData,
+  resetExperience
 } = experienceSlice.actions;
 
 export default experienceSlice.reducer;

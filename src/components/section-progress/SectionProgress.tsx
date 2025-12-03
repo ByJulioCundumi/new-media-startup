@@ -172,10 +172,10 @@ const progressColorClass = useMemo(() => {
         onClick={() => setAddSections(!addSections)}
       >
         <span className="section-progress__arrow-text">
-          <MdFormatListBulletedAdd /> Más Secciones
+          <MdFormatListBulletedAdd /> Secciones
         </span>
 
-        <span className="section-progress__count">{enabledOptionalCount}/7</span>
+        <span className="section-progress__count">{enabledSectionsCount}/14</span>
       </div>
 
       {addSections && <AddSections />}
