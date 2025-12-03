@@ -1,3 +1,4 @@
+import CvRoma from "./cv-roma/CvRoma";
 import CvTokyo from "./cv-tokyo/CvTokyo";
 
 /*
@@ -20,5 +21,6 @@ Contemporáneo
 */
 
 export const templates = [
-  { id: "default", label: "Tokyo", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
+  { id: "adfsdf", label: "Tokio", category: ["limpio", "con foto", "elegante"], component: CvTokyo },
+  { id: "default", label: "Roma", category: ["limpio", "con foto", "elegante"], component: CvRoma },
 ];
