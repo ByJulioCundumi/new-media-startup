@@ -84,46 +84,4 @@
     padding: 16px;
     min-height: 160px;
   }
-
-  /* Estilos de Tiptap */
-  :global(.tiptap) {
-    outline: none;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #1f2937;
-
-    p {
-      margin: 0 0 10px;
-    }
-    strong { font-weight: 700; }
-    em { font-style: italic; }
-    u { text-decoration: underline; }
-
-    h1, h2, h3 {
-      margin: 20px 0 10px;
-      font-weight: 700;
-    }
-    h1 { font-size: 26px; }
-    h2 { font-size: 22px; }
-    h3 { font-size: 18px; }
-
-    ul, ol { padding-left: 24px; margin: 8px 0; }
-    ul { list-style: disc; }
-    ol { list-style: decimal; }
-
-    a {
-      color: #5a6eff;
-      text-decoration: underline;
-      font-weight: 500;
-      &:hover { opacity: 0.8; }
-    }
-
-    p.is-editor-empty:first-child::before {
-      content: attr(data-placeholder);
-      color: rgba(0, 0, 0, 0.35);
-      pointer-events: none;
-      height: 0;
-      float: left;
-    }
-  }
 }

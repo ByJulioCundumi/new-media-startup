@@ -21,6 +21,9 @@ const VerticalToolbarCV: React.FC = () => {
 
   return (
     <div className="vertical-toolbar-cv">
+      <button onClick={() => dispatch(setAllowQrCode(!allowQrCode))} className="vertical-toolbar-btn clear-btn" title="Limpiar">
+        {allowQrCode === true ? <TbWorldCode /> : <TbWorldOff />} 
+      </button>
 
       <button onClick={() => dispatch(openPopup())} className="vertical-toolbar-btn clear-btn" title="estilos">
         <FaPalette />
@@ -46,11 +49,6 @@ const VerticalToolbarCV: React.FC = () => {
       >
         <FaDownload />
       </button>
-
-      <button onClick={() => dispatch(setAllowQrCode(!allowQrCode))} className="vertical-toolbar-btn clear-btn" title="Limpiar">
-        {allowQrCode === true ? <TbWorldCode /> : <TbWorldOff />} 
-      </button>
-
     </div>
   );
 };

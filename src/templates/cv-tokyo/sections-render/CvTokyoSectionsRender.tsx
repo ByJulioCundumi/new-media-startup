@@ -364,7 +364,7 @@ const getProgressColorClass = (progress: number) => {
               </span>
             }
           </h2>
-          <div className="cv-tokyo__profileSection--item" dangerouslySetInnerHTML={{ __html: profileSection }} style={{ color: styles.textColor, opacity: "60%" }}/>
+          <div className="cv-tokyo__profileSection--item tiptap" dangerouslySetInnerHTML={{ __html: profileSection }} style={{ color: styles.textColor, opacity: "60%" }}/>
         </>
       );
 
@@ -399,7 +399,7 @@ const getProgressColorClass = (progress: number) => {
                       <span>{exp.present ? "Actualidad" : `${exp.endMonth.slice(0, 3)} ${exp.endYear}`}</span>
                     </p>
                   </div>
-                  <div className="cv-tokyo__experienceSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{exp.description}</div>
+                  <div className="cv-tokyo__experienceSection--item-date-description tiptap" dangerouslySetInnerHTML={{ __html: exp.description }} style={{ color: styles.textColor, opacity: "60%" }}/>
                 </div>
               ))}
         </>
@@ -437,7 +437,7 @@ const getProgressColorClass = (progress: number) => {
                     </p>
                   </div>
                   {edu.showExtraInfo && edu.description && (
-                    <div className="cv-tokyo__educationSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{edu.description}</div>
+                    <div className="cv-tokyo__educationSection--item-date-description tiptap" dangerouslySetInnerHTML={{ __html: edu.description }} style={{ color: styles.textColor, opacity: "60%" }}/>
                   )}
                 </div>
               ))}
@@ -482,7 +482,7 @@ const getProgressColorClass = (progress: number) => {
                     </p>
                   </div>
                   {course.description && (
-                    <div className="cv-tokyo__courseSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{course.description}</div>
+                    <div className="cv-tokyo__courseSection--item-date-description tiptap" dangerouslySetInnerHTML={{ __html: course.description }} style={{ color: styles.textColor, opacity: "60%" }}/>
                   )}
                 </div>
               ))}
@@ -509,7 +509,7 @@ const getProgressColorClass = (progress: number) => {
                   <h3 className="cv-tokyo__awardSection--item-subtitle" style={{ color: styles.itemColor }}>{award.name}</h3>
                   <p className="cv-tokyo__awardSection--item-date" style={{ color: styles.textColor, opacity: "90%" }}>{award.date}</p>
                   {award.description && (
-                    <div className="cv-tokyo__awardSection--item-date-description" style={{ color: styles.textColor, opacity: "60%" }}>{award.description}</div>
+                    <div className="cv-tokyo__awardSection--item-date-description tiptap" dangerouslySetInnerHTML={{ __html: award.description }} style={{ color: styles.textColor, opacity: "60%" }}/>
                   )}
                 </div>
               ))}
@@ -562,7 +562,7 @@ const getProgressColorClass = (progress: number) => {
             }
               </h2>
               {customSection.map((item) => (
-                <div key={item.id} className="cv-tokyo__customSection--item" dangerouslySetInnerHTML={{ __html: item.value }} style={{ color: styles.textColor, opacity: "60%" }}/>
+                <div key={item.id} className="cv-tokyo__customSection--item tiptap" dangerouslySetInnerHTML={{ __html: item.value }} style={{ color: styles.textColor, opacity: "60%" }}/>
               ))}
         </>
       );
