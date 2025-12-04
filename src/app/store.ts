@@ -17,6 +17,7 @@ import identitySlice from "../reducers/identitySlice";
 import contactSlice from "../reducers/contactSlice";
 import colorFontSlice from "../reducers/colorFontSlice"
 import toolbarOptionSlice from "../reducers/toolbarOptionSlice"
+import templateSlice from "../reducers/templateSlice"
 
 export default configureStore({
     reducer: {
@@ -38,5 +39,6 @@ export default configureStore({
         contactEntries: contactSlice,
         colorFont: colorFontSlice,
         toolbarOption: toolbarOptionSlice,
+        template: templateSlice
     }
 })

@@ -1,5 +1,5 @@
 // pages/CreateCv.tsx
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./createcv.scss";
@@ -20,8 +20,10 @@ import PopupTemplates from "../../templates/templates-popup/TemplatesPopup";
 function CreateCv() {
   const dispatch = useDispatch();
 
-  const [selectedTemplate, setSelectedTemplate] = useState<string>("default");
-  const {previewPopupOpen, templatesPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+  const selectedTemplate = useSelector((state: IState) => state.template.id);
+  const { previewPopupOpen, templatesPopupOpen } = useSelector(
+    (state: IState) => state.toolbarOption
+  );
 
   /** Selectores */
   const cvSectionsState = useSelector(
@@ -51,24 +53,15 @@ function CreateCv() {
     dispatch(setSidebar("create"));
   }, [dispatch]);
 
-  /** Persistencia de template */
-  useEffect(() => {
-    const saved = localStorage.getItem("selectedTemplate");
-    if (saved) setSelectedTemplate(saved);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("selectedTemplate", selectedTemplate);
-  }, [selectedTemplate]);
-
-  const SelectedTemplate = templates.find((t) => t.id === selectedTemplate)
-    ?.component;
+  const SelectedTemplate = templates.find(
+    (t) => t.id === selectedTemplate
+  )?.component;
 
   return (
     <div className="create-cv">
       <ToolbarCV />
-      <SectionProgress/>
-      <VerticalToolbarCV/>
+      <SectionProgress />
+      <VerticalToolbarCV />
 
       <div className="create-cv__template">
         {SelectedTemplate && (
@@ -116,8 +109,7 @@ function CreateCv() {
         </PreviewPopup>
       )}
 
-      {/* FLOATING EDITOR AUTOMÁTICO */}
-      { templatesPopupOpen && <PopupTemplates />}
+      {templatesPopupOpen && <PopupTemplates />}
       <FloatingEditor />
       <ColorFontPopup />
     </div>

@@ -1,3 +1,14 @@
+.templates-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 4rem;
+  z-index: 90;
+}
 
 /* templatespopup.scss */
 .templates-popup {
@@ -80,21 +91,22 @@
     }
 
     .preview {
-      background: #eaeaea;
-      height: 300px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow: hidden;
-      position: relative;
+  background: #eaeaea;
+  height: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
 
-      .preview-scale {
-        transform: scale(0.32);
-        transform-origin: top left;
-        width: 1000px; // garantiza espacio interno suficiente
-        pointer-events: none;
-      }
-    }
+.preview-scale {
+  width: 794px;       // <–– IMPORTANTÍSIMO
+  height: 1122px;     // <–– IMPORTANTÍSIMO
+  transform: scale(0.32);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
 
     .info {
       padding: 14px;

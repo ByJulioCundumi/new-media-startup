@@ -35,4 +35,5 @@ export interface IState{
     contactEntries: IContactEntry[], // cv sections
     colorFont: IColorFontState,
     toolbarOption: IToolbarOption,
+    template: {id: string}
 }
