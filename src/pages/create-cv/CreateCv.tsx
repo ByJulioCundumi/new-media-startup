@@ -15,12 +15,13 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
 import VerticalToolbarCV from "../../components/vertical-toolbar-cv/VerticalToolbarCv";
 import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
+import PopupTemplates from "../../templates/templates-popup/TemplatesPopup";
 
 function CreateCv() {
   const dispatch = useDispatch();
 
   const [selectedTemplate, setSelectedTemplate] = useState<string>("default");
-  const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+  const {previewPopupOpen, templatesPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
 
   /** Selectores */
   const cvSectionsState = useSelector(
@@ -116,8 +117,8 @@ function CreateCv() {
       )}
 
       {/* FLOATING EDITOR AUTOMÁTICO */}
+      { templatesPopupOpen && <PopupTemplates />}
       <FloatingEditor />
-
       <ColorFontPopup />
     </div>
   );

@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ICvSection, ICvSectionsState } from "../interfaces/ICvSections";
 
 // ---------------------- SECCIONES INICIALES ----------------------
-const initialSections: ICvSection[] = [
+export const initialSections: ICvSection[] = [
   {
     name: "identitySection",
     title: "Sobre Mi",
@@ -133,7 +133,7 @@ const initialSections: ICvSection[] = [
 ];
 
 // Orden inicial basado en initialSections
-const initialOrder = initialSections.map((s) => s.name);
+export const initialOrder = initialSections.map((s) => s.name);
 
 // ---------------------- ESTADO GLOBAL ----------------------
 const initialState: ICvSectionsState = {

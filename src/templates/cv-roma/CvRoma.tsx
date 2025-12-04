@@ -6,7 +6,7 @@ import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 
-import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
+import { setOrder, toggleSectionEditor } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 import { CvRomaSectionsRender } from "./sections-render/CvRomaSectionsRender";
@@ -21,10 +21,29 @@ export const cvRomaDefaults = {
   font: "Arial, Helvetica, sans-serif",
 };
 
+export const cvRomaDefaultOrder: string[] = [
+  "identitySection",
+  "personalInfoSection",
+  "contactSection",
+  "profileSection",
+  "experienceSection",
+  "educationSection",
+  "languageSection",
+  "skillSection",
+  "courseSection",
+  "awardSection",
+  "referenceSection",
+  "customSection",
+  "linkSection",
+  "hobbieSection",
+];
 
 export const CvRoma: React.FC<ITemplateProps> = (props) => {
-  // estilos
   const styles = useTemplateColors(cvRomaDefaults);
+  // estilos
+  useEffect(() => {
+    dispatch(setOrder(cvRomaDefaultOrder));
+  }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------

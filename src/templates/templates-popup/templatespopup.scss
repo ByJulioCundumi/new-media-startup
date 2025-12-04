@@ -1,0 +1,113 @@
+
+/* templatespopup.scss */
+.templates-popup {
+  width: 100%;
+  max-width: 850px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 100;
+  position: fixed;
+  top: 5rem;
+  left: 2rem;
+
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+
+      &:hover {
+        background: #f2f2f2;
+      }
+    }
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f6f6f6;
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    input {
+      border: none;
+      flex: 1;
+      background: transparent;
+      outline: none;
+      font-size: 15px;
+    }
+  }
+
+  .templates-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+
+  .template-card {
+    background: #fafafa;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s ease;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      border-color: #c9c9c9;
+    }
+
+    &.selected {
+      border-color: #007bff;
+    }
+
+    .preview {
+      background: #eaeaea;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+      position: relative;
+
+      .preview-scale {
+        transform: scale(0.32);
+        transform-origin: top left;
+        width: 1000px; // garantiza espacio interno suficiente
+        pointer-events: none;
+      }
+    }
+
+    .info {
+      padding: 14px;
+
+      h3 {
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+
+      p {
+        font-size: 13px;
+        color: #555;
+      }
+    }
+  }
+}

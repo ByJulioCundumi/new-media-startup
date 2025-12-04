@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 
 import { CvTokyoSectionsRender } from "./sections-render/CvTokyoSectionsRender";
-import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
+import { setOrder, toggleSectionEditor } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 
@@ -21,10 +21,30 @@ export const cvTokyoDefaults = {
   font: "Arial, Helvetica, sans-serif",
 };
 
+export const cvTokyoDefaultOrder: string[] = [
+  "identitySection",
+  "personalInfoSection",
+  "contactSection",
+  "profileSection",
+  "experienceSection",
+  "educationSection",
+  "languageSection",
+  "skillSection",
+  "courseSection",
+  "awardSection",
+  "referenceSection",
+  "customSection",
+  "linkSection",
+  "hobbieSection",
+];
+
 
 export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   // estilos
   const styles = useTemplateColors(cvTokyoDefaults);
+  useEffect(() => {
+      dispatch(setOrder(cvTokyoDefaultOrder));
+    }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------

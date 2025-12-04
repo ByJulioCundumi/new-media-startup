@@ -8,7 +8,7 @@ import type { IToolbarOption } from "../interfaces/IToolbarOption";
 const initialState: IToolbarOption = {
 previewPopupOpen: false,
 templatesPopupOpen: false,
-startPrint: false
+startPrint: false,
 };
 
 const toolbarOptionSlice = createSlice({

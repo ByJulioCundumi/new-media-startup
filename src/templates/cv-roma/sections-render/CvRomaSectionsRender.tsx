@@ -538,6 +538,7 @@ const getProgressColorClass = (progress: number) => {
               </span>
             }
           </h2>
+              <div className="cv-roma__referenceSection--content">
               {referenceSection.map((ref) => (
                 <div key={ref.id} className="cv-roma__referenceSection--item">
                   <div className="cv-roma__referenceSection--item-head">
@@ -550,6 +551,7 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-roma__referenceSection--item-email" style={{ color: styles.textColor, opacity: "60%" }}>{ref.email}</p>
                 </div>
               ))}
+              </div>
         </>
       );
 
