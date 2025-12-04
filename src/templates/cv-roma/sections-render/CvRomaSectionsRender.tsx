@@ -147,6 +147,10 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-roma__contactSection--item-value" style={{ color: styles.textColor, opacity: "100%" }}>{item.value}</p>
                 </div>
               ))}
+
+              {
+                contactSection.length <= 0 && <h2 className="cv-roma__contactSection--title">Informacion De Contacto</h2>
+              }
         </>
       );
 
@@ -167,6 +171,10 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-roma__personalInfoSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value},</p>
                 </div>
               ))}
+
+              {
+                personalInfo.length <= 0 && <h2 className="cv-roma__personalInfoSection--title">Informacion Personal</h2>
+              }
         </>
       );
 
@@ -183,6 +191,7 @@ const getProgressColorClass = (progress: number) => {
             }
           </h2>
 
+          <div className="cv-roma__skillSection--content">
               {skillSection.map((skill) => {
                 const getSkillProgress = (level: string) => {
                   const map: Record<string, number> = {
@@ -198,7 +207,7 @@ const getProgressColorClass = (progress: number) => {
                 const progress = getSkillProgress(skill.level);
 
                 return (
-                  <div key={skill.id} className="cv-roma__skillSection--item">
+                    <div key={skill.id} className="cv-roma__skillSection--item">
                     <div className="cv-roma__skillSection--header">
                       <h3 className="cv-roma__skillSection--item-name" style={{ color: styles.itemColor }}>{skill.name}</h3>
                       <p className="cv-roma__skillSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{skill.level}</p>
@@ -214,13 +223,14 @@ const getProgressColorClass = (progress: number) => {
                   </div>
                 );
               })}
+              </div>
         </>
       );
 
     case "languageSection":
       return (
         <>
-          <h2 className="cv-roma__languajeSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-roma__languageSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
               !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -230,6 +240,7 @@ const getProgressColorClass = (progress: number) => {
             }
           </h2>
 
+            <div className="cv-roma__languageSection--content">
               {languageSection.map((lang) => {
                 const getProgress = (level: string) => {
                   const map: Record<string, number> = {
@@ -247,22 +258,23 @@ const getProgressColorClass = (progress: number) => {
                 const progress = getProgress(lang.level);
 
                 return (
-                  <div key={lang.id} className="cv-roma__languajeSection--item">
-                    <div className="cv-roma__languajeSection--header">
-                      <h3 className="cv-roma__languajeSection--item-name" style={{ color: styles.itemColor }}>{lang.name}</h3>
-                      <p className="cv-roma__languajeSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{lang.level}</p>
+                  <div key={lang.id} className="cv-roma__languageSection--item">
+                    <div className="cv-roma__languageSection--header">
+                      <h3 className="cv-roma__languageSection--item-name" style={{ color: styles.itemColor }}>{lang.name}</h3>
+                      <p className="cv-roma__languageSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{lang.level}</p>
                     </div>
 
                     {/* Barra de progreso */}
-                    <div className="cv-roma__languajeSection--progress">
+                    <div className="cv-roma__languageSection--progress">
                       <div
-                        className="cv-roma__languajeSection--progress-bar"
+                        className="cv-roma__languageSection--progress-bar"
                         style={{ width: `${progress}%` }}
                       ></div>
                     </div>
                   </div>
                 );
               })}
+              </div>
         </>
       );
 
@@ -281,6 +293,8 @@ const getProgressColorClass = (progress: number) => {
               </span>
             }
           </h2>
+
+          <div className="cv-roma__linkSection--content">
                 {linkSection.map((link) => (
                   <div key={link.id} className="cv-roma__linkSection--item">
                     {/* SI visible → nombre como <a> + URL debajo */}
@@ -314,6 +328,7 @@ const getProgressColorClass = (progress: number) => {
                     )}
                   </div>
                 ))}
+                </div>
         </>
       );
 
