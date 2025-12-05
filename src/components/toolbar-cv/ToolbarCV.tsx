@@ -155,11 +155,6 @@ const ToolbarCV: React.FC = () => {
           Plantillas
         </button>
 
-        <button className="toolbar-cv-btn ghost">
-          <TbScan />
-          IA
-        </button>
-
         <button onClick={clearCv} className="toolbar-cv-btn ghost">
           <GiBroom />
           Limpiar

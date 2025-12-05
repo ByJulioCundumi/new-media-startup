@@ -2,9 +2,24 @@ import type { ITemplateProps } from "../interfaces/ITemplateProps";
 import { initialSections, initialOrder } from "../reducers/cvSectionsSlice";
 
 export const mockTemplateData: ITemplateProps = {
+   identitySection: {
+    photo: null,
+    firstName: "Julio",
+    lastName: "Cundumi",
+    jobTitle: "Desarrollador Web",
+    allowCvPhoto: false,
+    allowQrCode: false,
+    qrCodeUrl: ""
+  },
+
   personalInfo: [
-    { id: "1", name: "Correo", value: "usuario@mail.com" },
-    { id: "2", name: "Teléfono", value: "+57 300 123 4567" }
+    { id: "1", name: "direccion", value: "+57 300 123 4567" },
+    { id: "2", name: "nacionalidad", value: "usuario@mail.com" },
+  ],
+
+  contactSection: [
+    { id: "ct1", type: "Email", value: "usuario@mail.com" },
+    { id: "ct2", type: "WhatsApp", value: "+57 300 123 4567" }
   ],
 
   profileSection: "Profesional con experiencia en desarrollo web, orientado a resultados y resolución de problemas.",
@@ -96,21 +111,6 @@ export const mockTemplateData: ITemplateProps = {
       id: "ct1",
       value: "Disponible para trabajo remoto e híbrido."
     }
-  ],
-
-  identitySection: {
-    photo: null,
-    firstName: "Julio",
-    lastName: "Cundumi",
-    jobTitle: "Desarrollador Web",
-    allowCvPhoto: false,
-    allowQrCode: false,
-    qrCodeUrl: ""
-  },
-
-  contactSection: [
-    { id: "ct1", type: "Email", value: "usuario@mail.com" },
-    { id: "ct2", type: "WhatsApp", value: "+57 300 123 4567" }
   ],
 
   sectionsConfig: initialSections,

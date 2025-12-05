@@ -1,286 +1,214 @@
 /* ========================================= */
-/* SECTION PROGRESS — CONTENEDOR PRINCIPAL   */
+/*                CONTENEDOR                 */
 /* ========================================= */
 .section-progress {
-  position: fixed;                  /* ⬅⬅ YA ESTÁ FIXED */
+  position: fixed;
   top: 5.5rem;
   left: 2rem;
-  width: 250px;
+  width: 270px;
   height: calc(100vh - 7rem);
 
   display: flex;
   flex-direction: column;
 
-  background-color: white;
-  padding: 0.8rem;
-  border-radius: 10px;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 12px;
 
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.062);
-  border: 1px solid rgba(0, 0, 0, 0.089);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   z-index: 50;
 
-  &__count{
+  &__count {
     font-size: 0.8rem;
+    opacity: 0.8;
   }
 }
 
-
-
 /* ========================================= */
-/* ICONO DE VISIBILIDAD (OJO)                */
+/*               HEADER & BARRA              */
 /* ========================================= */
-.section-progress__eye {
-  font-size: 1.9rem;
-  background-color: #fdfdfdbf;
-  padding: 0rem 0.5rem;
-  border-radius: 5px;
-  position: absolute;
-  right: 0.3rem;
-}
-
-
-
-/* ========================================= */
-/* CONTENEDOR DE FLECHAS (UP / DOWN)         */
-/* ========================================= */
-.section-progress__arrow-box {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.section-progress__arrow-container {
-  width: 100%;
-
-  padding: 0.45rem 0.6rem;
-  border-radius: 6px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: 0.2s ease;
-}
-
-.section-progress__arrow-container--up {
-  margin-bottom: 0.6rem;
-}
-
-.section-progress__arrow-container--down {
-  margin-top: 0.6rem;
-
-  &:hover {
-    scale: 1.02;
-  }
-}
-
-
-
-/* ========================================= */
-/* TEXTO DENTRO DE LOS CONTENEDORES          */
-/* ========================================= */
-.section-progress__arrow-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: #555;
-  padding: 0.4rem 0.2rem;
-
-  svg {
-    font-size: 1.1rem;
-    margin-bottom: -0.2rem;
-    margin-right: 0.5rem;
-  }
-}
-
-
-
-/* ========================================= */
-/* BOTONES DE FLECHAS                       */
-/* ========================================= */
-.section-progress__arrow-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .section-progress__arrow-icon {
-    font-size: 1.2rem;
-    color: #444;
-    transition: 0.15s ease;
-  }
-
-  &:hover .section-progress__arrow-icon {
-    transform: scale(1.1);
-  }
-}
-
-
-
-/* ========================================= */
-/* CONTENEDOR LISTA SCROLLABLE               */
-/* ========================================= */
-.section-progress__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-  height: 100%;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-
-
-/* ========================================= */
-/* ITEM DE LISTA                              */
-/* ========================================= */
-.section-progress__item {
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
-
-  background: #ffffff;
-  border-radius: 10px;
-
-  transition: 0.2s ease;
-  cursor: pointer;
-  padding: 0.3rem 0.2rem;
-  position: relative;
-}
-
-.section-progress__item--box {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-
-
-/* ========================================= */
-/* ICONO                                      */
-/* ========================================= */
-.section-progress__icon {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-}
-
-
-
-/* ========================================= */
-/* LABEL                                       */
-/* ========================================= */
-.section-progress__label {
-  color: #070b51;
-  padding: 0.35rem 0.5rem;
-  border-radius: 5px;
-
-  font-size: 0.9rem;
-  font-weight: 500;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100px;
-}
-
-.to-click {
-  cursor: pointer;
-}
-
-/* Se reutilizan los colores */
-.section-progress-red { background-color :  #ff8d8f29; border: 1px solid #ff000411; box-shadow: 0px 2px 5px #ff000413;}
-.section-progress-yellow { background-color :  #ffd50022; border: 1px solid #ffd50022; box-shadow: 0px 2px 5px #ffd50022;}
-.section-progress-blue { background-color :  #11d49328; border: 1px solid #00ff9928; box-shadow: 0px 2px 5px #01ffaa28;}
-
 .section-progress__header {
   display: flex;
-  flex-direction: column; /* texto arriba, barra abajo */
-  justify-content: space-between;
-  gap: 6px; /* espacio entre texto y barra */
-  margin-bottom: 12px;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
 
   &--box {
     display: flex;
-    justify-content: space-between; /* texto izquierda/derecha */
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .section-progress__label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2f3b4e;
+    }
   }
 }
 
 .section-progress-bar {
-  width: 95%;
-  height: 6px;
-  background: #e8eaf7;
+  width: 100%;
+  height: 7px;
+  background: #eef1f7;
   border-radius: 10px;
-  margin: 0 auto;
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 10px;
-  transition: width 0.4s ease;
+  transition: width 0.35s ease;
+
+  &.progress-red { background: #ff6b70; }
+  &.progress-yellow { background: #ffd860; }
+  &.progress-blue { background: #2ad398; }
 }
 
-.progress-bar-fill.progress-red { background: #ff8d8f; }
-.progress-bar-fill.progress-yellow { background: #ffe878; }
-.progress-bar-fill.progress-blue { background: #0ed3919d; }
-
-
-.section-progress__label {
-  font-size: 14px;
-  font-weight: 600;
-  min-width: 50px;
-  text-align: right;
-  color: #2e3b4e;
-}
-
-
+/* ========================================= */
+/*                LISTA SCROLL               */
+/* ========================================= */
 .section-progress__list {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0rem;
+  gap: 0.35rem;
   overflow-y: auto;
-  padding-right: 0.5rem;
-  height: 100%;
+  padding-right: 0.3rem;
 
-  /* Scroll visible pero sutil */
-  scrollbar-width: thin;          
-  scrollbar-color: rgba(0,0,0,0.08) transparent;  
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.08) transparent;
 
   &::-webkit-scrollbar {
-    width: 3px;                   
+    width: 4px;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;      
+    background: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.06); /* color normal muy sutil */
-    border-radius: 3px;           
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.10); /* hover suave */
+    background: rgba(0, 0, 0, 0.18);
   }
+}
+
+/* ========================================= */
+/*                  ITEM                      */
+/* ========================================= */
+.section-progress__item {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  text-align: center;
+  padding: 0.55rem 0.6rem;
+  border-radius: 10px;
+
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  cursor: pointer;
+
+  transition: background 0.2s ease, border 0.2s ease;
+
+  &:hover {
+    background: #fff8f8;
+    border-color: #ffd3d3;
+  }
+
+  .section-progress__label {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #080b10;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+}
+
+/* ========================================= */
+/*                COLORES ITEM               */
+/* ========================================= */
+.section-progress-red {
+  background: #fcf0f1;
+  border-color: #fbe4e5;
+
+  .section-progress__label { color: #871f24; }
+}
+
+.section-progress-yellow {
+  background: #fffbee;
+  border-color: #fef3d8;
+
+  .section-progress__label { color: #8a6b06; }
+}
+
+.section-progress-blue {
+  background: #eefff8;
+  border-color: #d7fdeb;
+
+  .section-progress__label { color: #0d5f43; }
+}
+
+/* ========================================= */
+/*                  ICONO OJO                */
+/* ========================================= */
+.section-progress__eye {
+  font-size: 0.85rem;
+
+
+  position: absolute;
+  right: -1.5rem;
+
+  color: #3d4c64;
+  transition: 0.2s ease;
+}
+
+/* ========================================= */
+/*       CONTENEDOR DE SECCIONES EXTRA       */
+/* ========================================= */
+.section-progress__arrow-container {
+  width: 100%;
+  margin-top: 0.7rem;
+
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+
+  background: #fafbff;
+  border: 1px solid #e0e4ef;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: #f1f4ff;
+    border-color: #ccd7ff;
+  }
+}
+
+.section-progress__arrow-text {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #48556b;
+
+  svg {
+    font-size: 1.1rem;
+  }
+}
+
+.section-progress__count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #566583;
 }

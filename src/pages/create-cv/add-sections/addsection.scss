@@ -1,130 +1,172 @@
+/* CONTENEDOR */
 .add-sections {
-  width: 100%;
-  background: rgb(255, 255, 255);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 16px 20px;
-  height: 400px;
-  position: absolute;
-  bottom: 0.4rem;
-  right: -19.5rem;
-  border-radius: 15px;
-  z-index: 50;
   width: 300px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.133);
+  height: 420px;
+  position: absolute;
+  bottom: 0.8rem;
+  right: -19.5rem;
+
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 20px;
+
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ececec;
+  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /* LISTA */
 .as-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: 0.5rem 0;
+  gap: 14px;
+
   overflow-y: auto;
-  height: 95%;
-  padding-right: 0.5rem;
-  background-color: white;
+  height: 100%;
+  padding-right: 6px;
+  margin-top: 4px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #c6c6c6 #f2f2f2;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c6c6c6;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f2f2f2;
+  }
 }
 
-/* ITEM */
+/* ITEM BASE */
 .as-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 12px 16px;
+
+  padding: 14px 16px;
   border-radius: 12px;
-  transition: 0.2s ease;
+
+  background: #ffffff;
+  border: 1px solid #e4e4e4;
+
   cursor: pointer;
-  background-color: white;
+  transition: all 0.22s ease;
 
-  &.enabled {
-    background: #f5f5f5;
-    border: 1px solid #cce0ff;
-    box-shadow: 0 2px 2px rgba(0, 115, 255, 0.15);
-
-    .as-icon-box svg {
-      color: #00aeff;
-    }
-
-    .as-title {
-      color: #030e33da;
-      font-weight: 500;
-    }
-
-    .as-state {
-      color: #0073ff;
-      opacity: 0.9;
-    }
-
-    .as-toggle-indicator {
-      color: #00aeff;
-      font-weight: 700;
-    }
-  }
-
-  &.disabled {
-    background: #f9f9f9;
-    border: 1px solid #d4d4d4;
-    opacity: 0.45;
-
-    .as-icon-box svg {
-      color: #808080;
-    }
-
-    .as-title {
-      color: #3a3a3a;
-      font-weight: 400;
-    }
-
-    .as-state {
-      color: #3b3b3b;
-    }
-
-    .as-toggle-indicator {
-      color: #464646;
-    }
+  &:hover {
+    background: #f6f9ff;
+    border-color: #c9ddff;
   }
 }
 
-/* LEFT */
+/* ITEM ACTIVADO */
+.as-item.enabled {
+  background: #eef5ff;
+  border: 1px solid #b7d4ff;
+  box-shadow: 0 2px 8px rgba(0, 115, 255, 0.12);
+
+  .as-icon-box svg {
+    color: #006ae8;
+  }
+
+  .as-title {
+    color: #073b73;
+    font-weight: 600;
+  }
+
+  .as-state {
+    color: #006ae8;
+    opacity: 0.9;
+  }
+
+  .as-toggle-indicator {
+    color: #007aff;
+  }
+}
+
+/* ITEM DESACTIVADO */
+.as-item.disabled {
+  background: #fafafa;
+  border: 1px solid #dddddd;
+  opacity: 0.7;
+
+  .as-icon-box svg {
+    color: #6a6a6a;
+  }
+
+  .as-title {
+    color: #333;
+  }
+
+  .as-state {
+    color: #666;
+  }
+
+  .as-toggle-indicator {
+    color: #555;
+  }
+
+  &:hover {
+    background: #f0f0f0;
+    opacity: 0.85;
+  }
+}
+
+/* IZQUIERDA */
 .as-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
+/* ICONO */
 .as-icon-box {
-  padding: 0.5rem 0.6rem;
+  padding: 0.55rem 0.7rem;
   border-radius: 10px;
+
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  align-items: center;
 
   svg {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
+    color: #555;
   }
 }
 
+/* TEXTOS */
 .as-texts {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .as-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1e1e1e;
+
+  letter-spacing: -0.2px; /* mejora legibilidad */
 }
 
 .as-state {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  color: #6a6a6a;
+  letter-spacing: -0.1px;
 }
 
-/* RIGHT INDICATOR */
+/* INDICADOR DERECHA */
 .as-toggle-indicator {
-  font-size: 1.4rem;
-  font-weight: 500;
+  font-size: 1.45rem;
+  font-weight: 600;
   opacity: 0.85;
 }

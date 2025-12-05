@@ -21,26 +21,24 @@
   width: fit-content;
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   gap: 0.5rem;
+  border: 1px solid rgb(246, 246, 246);
 }
 
 /* Rojo — progreso bajo */
 .progress-indicator.progress-red {
-  color: #ffffff;
-  background-color : #ff8d8f7b;
+  color: #ff8d8f7b;
 }
 
 /* Amarillo/Naranja — progreso medio */
 .progress-indicator.progress-yellow {
-  color: #ffffff;
-  background-color : #f5d41c7a;
+  color: #f5d41c7a;
 }
 
 /* Azul — progreso completo */
 .progress-indicator.progress-blue {
-  color: #ffffff;
-  background-color : #11d4937c;
+  color: #11d4937c;
 }
 
 

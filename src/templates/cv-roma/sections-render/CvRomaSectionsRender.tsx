@@ -56,12 +56,14 @@ export const CvRomaSectionsRender: React.FC<SectionRenderProps> = ({
 
   const styles = useTemplateColors(cvRomaDefaults);
   const section = sectionByName[sectionName];
-  const {previewPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+  const {previewPopupOpen, templatesPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
   const dispatch = useDispatch()
   
-  const { qrCodeUrl, allowQrCode, allowCvPhoto, photo, firstName, lastName, jobTitle } = useSelector(
-    (state: IState) => state.identity
-  );
+  const { qrCodeUrl, photo, firstName, lastName, jobTitle } = identitySection
+  
+    const { allowQrCode, allowCvPhoto } = useSelector(
+      (state: IState) => state.identity
+    );
   
   const fullName = `${firstName || ""} ${lastName || ""}`.trim();
   const occupation = jobTitle || "";
@@ -86,7 +88,7 @@ const getProgressColorClass = (progress: number) => {
               )}
 
           <div className="cv-roma__identitySection--main">
-          {!previewPopupOpen &&
+          {!previewPopupOpen && !templatesPopupOpen &&
           typeof section?.progress === "number" && (
             <span
               className={`progress-indicator cv-roma__identitySection--progress-indicator ${getProgressColorClass(
@@ -136,9 +138,12 @@ const getProgressColorClass = (progress: number) => {
       return (
         <>
             {
-              !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("contactSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
             
@@ -158,7 +163,7 @@ const getProgressColorClass = (progress: number) => {
       return (
         <>
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -184,9 +189,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__skillSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("skillSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
           </h2>
@@ -233,9 +241,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__languageSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("languageSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
           </h2>
@@ -284,7 +295,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__linkSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -338,7 +349,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__hobbieSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -365,9 +376,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__profileSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("profileSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
           </h2>
@@ -381,9 +395,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__experienceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("experienceSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
           </h2>
@@ -418,9 +435,12 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__educationSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
-                <TbArrowBadgeRight className="cv-roma__arrow" />
+                <TbTrashX onClick={(e) => {
+                    e.stopPropagation();      // ← evita que se abra el editor
+                    dispatch(disableSection("educationSection"));
+                  }} className="cv-roma__remove" />
               </span>
             }
           </h2>
@@ -457,7 +477,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__courseSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
-              !previewPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -502,7 +522,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__awardSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -529,7 +549,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__referenceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -561,7 +581,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-roma__customSection--title" style={{ color: styles.sectionTitleColor }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
-              !previewPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-roma__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
