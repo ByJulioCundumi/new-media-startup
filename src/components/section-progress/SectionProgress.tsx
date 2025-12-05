@@ -20,6 +20,8 @@ import SortableSection from "../../pages/create-cv/sortable-section/SortableSect
 import type { IState } from "../../interfaces/IState";
 import { reorderSections, toggleSectionOpen } from "../../reducers/cvSectionsSlice";
 import { BiEditAlt } from "react-icons/bi";
+import { TbFileCv } from "react-icons/tb";
+import { FaSave } from "react-icons/fa";
 
 function SectionProgress() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,21 +113,61 @@ const progressColorClass = useMemo(() => {
   return "progress-blue";
 }, [overallProgress]);
 
+const [title, setTitle] = useState("Mi CV Profesional");
+  const [editing, setEditing] = useState(false);
+
+  const handleEditTitle = () => setEditing(true);
+  const handleSaveTitle = () => {
+    if (!title.trim()) setTitle("Mi CV Profesional");
+    setEditing(false);
+  };
+
+  const handleTitleBlur = () => {
+    if (!title.trim()) setTitle("Mi CV Profesional");
+    setEditing(false);
+  };
+
 
   return (
     <div ref={mainRef} className="section-progress">
       
       <div className="section-progress__header">
-  <div className="section-progress__header--box">
-    <span className="section-progress__label">Mi CV</span>
-    <span className="section-progress__label">{overallProgress}%</span>
-  </div>
-  <div className="section-progress-bar">
-    <div
-      className={`progress-bar-fill ${progressColorClass}`}
-      style={{ width: `${overallProgress}%` }}
-    />
-  </div>
+  <div className="toolbar-cv-header">
+        <div className="toolbar-cv-header__main">
+          {editing ? (
+          <input
+            className="toolbar-cv-title-input editing"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onBlur={handleTitleBlur}
+            autoFocus
+          />
+        ) : (
+          <h2 className="toolbar-cv-title">
+            {title}{" "}
+          </h2>
+        )}
+
+        {editing ? (
+          <button
+            className="toolbar-cv-edit-btn save"
+            onClick={handleSaveTitle}
+            title="Guardar título"
+          >
+            <FaSave />
+          </button>
+        ) : (
+          <button
+            className="toolbar-cv-edit-btn"
+            onClick={handleEditTitle}
+            title="Editar título"
+          >
+            <BiEditAlt />
+          </button>
+        )}
+        </div>
+      </div>
+      
 </div>
 
 

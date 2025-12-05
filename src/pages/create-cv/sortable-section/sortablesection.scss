@@ -1,7 +1,6 @@
 .sortable-section {
   width: 100%;
   background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.056);
   padding: 1rem 0.5rem;
   /* NO ocultes el contenido */
   overflow: visible !important;
@@ -16,6 +15,7 @@
 .drag-handle {
   width: 36px;
   height: 36px;
+  margin-right: 0rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,13 +23,8 @@
   cursor: grab;
   user-select: none;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.023);
   transition: background 0.15s ease;
   margin-top: 0.2rem;
-}
-
-.drag-handle:hover {
-  background: rgba(0, 0, 0, 0.052);
 }
 
 .drag-handle:active {

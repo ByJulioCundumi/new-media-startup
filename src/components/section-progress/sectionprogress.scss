@@ -73,7 +73,7 @@
   flex-direction: column;
   gap: 0.35rem;
   overflow-y: auto;
-  padding-right: 0.3rem;
+  padding-right: 0.5rem;
 
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.08) transparent;
@@ -103,29 +103,28 @@
   position: relative;
 
   display: flex;
-  justify-content: center;
+  text-align: start;
   align-items: center;
-  width: 90%;
-  text-align: center;
-  padding: 0.55rem 0.6rem;
+  width: 80%;
+  padding: 0.55rem 0.4rem;
   border-radius: 10px;
 
   background: #fff;
-  border: 1px solid #e6e6e6;
   cursor: pointer;
 
-  transition: background 0.2s ease, border 0.2s ease;
+  transition: all 0.2s ease, border 0.2s ease;
 
   &:hover {
-    background: #fff8f8;
-    border-color: #ffd3d3;
+    scale: 0.98;
   }
 
   .section-progress__label {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 400;
     color: #080b10;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5rem;
+    margin-top: -0.1rem;
   }
 }
 
@@ -133,37 +132,37 @@
 /*                COLORES ITEM               */
 /* ========================================= */
 .section-progress-red {
-  background: #fcf0f1;
-  border-color: #fbe4e5;
+  background: #ffffff;
+  border-color: #ffe9e9;
 
-  .section-progress__label { color: #871f24; }
+  .section-progress__label { color: #871f248f; }
 }
 
 .section-progress-yellow {
-  background: #fffbee;
+  background: #ffffff;
   border-color: #fef3d8;
 
-  .section-progress__label { color: #8a6b06; }
+  .section-progress__label { color: #ffc400dc; }
 }
 
 .section-progress-blue {
-  background: #eefff8;
+  background: #ffffff;
   border-color: #d7fdeb;
 
-  .section-progress__label { color: #0d5f43; }
+  .section-progress__label { color: #0dd1b0; }
 }
 
 /* ========================================= */
 /*                  ICONO OJO                */
 /* ========================================= */
 .section-progress__eye {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 
 
   position: absolute;
   right: -1.5rem;
 
-  color: #3d4c64;
+  color: #54585f;
   transition: 0.2s ease;
 }
 
@@ -174,7 +173,7 @@
   width: 100%;
   margin-top: 0.7rem;
 
-  padding: 0.55rem 0.7rem;
+  padding: 1rem 0.7rem;
   border-radius: 8px;
 
   background: #fafbff;
@@ -211,4 +210,80 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: #566583;
+}
+
+
+
+.toolbar-cv-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 0.5rem;
+
+  &__main{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    color: #0073ff;
+    margin-top: -0.4rem;
+  }
+}
+
+.toolbar-cv-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #060a46;
+  letter-spacing: -0.3px;
+
+  svg {
+    opacity: 0.7;
+  }
+}
+
+/* Editable input */
+.toolbar-cv-title-input {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  width: 100%;
+  max-width: 180px;
+  color: #090c2b;
+  outline: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.toolbar-cv-title-input.editing {
+  opacity: 0.45;
+  width: fit-content;
+}
+
+/* Edit button */
+.toolbar-cv-edit-btn {
+  background: transparent;
+  border: none;
+  color: #0b305f;
+  font-size: 22px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.2s ease;
+  cursor: pointer;
+  margin-bottom: -0.3em;
+  margin-right: -0.3rem;
 }

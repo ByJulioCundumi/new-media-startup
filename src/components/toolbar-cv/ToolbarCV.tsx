@@ -75,19 +75,7 @@ const ToolbarCV: React.FC = () => {
 
   const [progress, setProgress] = useState(0);
 
-  const [title, setTitle] = useState("Mi CV Profesional");
-  const [editing, setEditing] = useState(false);
-
-  const handleEditTitle = () => setEditing(true);
-  const handleSaveTitle = () => {
-    if (!title.trim()) setTitle("Mi CV Profesional");
-    setEditing(false);
-  };
-
-  const handleTitleBlur = () => {
-    if (!title.trim()) setTitle("Mi CV Profesional");
-    setEditing(false);
-  };
+  
 
   // ======================
   // CÁLCULO DE PROGRESO
@@ -182,42 +170,7 @@ const ToolbarCV: React.FC = () => {
       {/* ===== PERFIL + VIP ===== */}
       <div className="toolbar-cv-end">
         {/* ===== TÍTULO DEL CV ===== */}
-      <div className="toolbar-cv-header">
-        {editing ? (
-          <input
-            className="toolbar-cv-title-input editing"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onBlur={handleTitleBlur}
-            autoFocus
-          />
-        ) : (
-          <h2 className="toolbar-cv-title">
-            {title}{" "}
-            <span>
-              <TbFileCv /> Tokyo
-            </span>
-          </h2>
-        )}
-
-        {editing ? (
-          <button
-            className="toolbar-cv-edit-btn save"
-            onClick={handleSaveTitle}
-            title="Guardar título"
-          >
-            <FaSave />
-          </button>
-        ) : (
-          <button
-            className="toolbar-cv-edit-btn"
-            onClick={handleEditTitle}
-            title="Editar título"
-          >
-            <BiEditAlt />
-          </button>
-        )}
-      </div>
+      
 
         <ProfileAvatar />
       </div>

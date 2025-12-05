@@ -28,12 +28,26 @@ import { clearAllAwards } from "../../../reducers/awardsSlice";
 import { clearAllCustom } from "../../../reducers/customSlice";
 import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
 import { LuTrash } from "react-icons/lu";
+import { clearAllPersonalInfo } from "../../../reducers/personalInfoSlice";
+import { resetEducation } from "../../../reducers/educationSlice";
+import { resetExperience } from "../../../reducers/experienceSlice";
+import { resetLanguage } from "../../../reducers/languagesSlice";
+import { resetSkills } from "../../../reducers/skillsSlice";
+import { resetProfile } from "../../../reducers/profileSlice";
+import { clearAllContacts } from "../../../reducers/contactSlice";
 
 const AddSections: React.FC = () => {
   const dispatch = useDispatch();
   const cvSections = useSelector((state: IState) => state.cvSections);
 
   const sections = [
+    { name: "personalInfoSection", label: "Información Personal", icon: <PiIdentificationBadgeFill /> },
+    { name: "profileSection", label: "Perfil", icon: <MdRateReview /> },
+    { name: "educationSection", label: "Educación", icon: <FaGraduationCap /> },
+    { name: "experienceSection", label: "Experiencia", icon: <FaGraduationCap /> },
+    { name: "languageSection", label: "Idiomas", icon: <PiMaskHappyFill /> },
+    { name: "skillSection", label: "Habilidades", icon: <PiMaskHappyFill /> },
+    { name: "contactSection", label: "Contacto", icon: <FaLink /> },
     { name: "personalInfoSection", label: "Información Personal", icon: <PiIdentificationBadgeFill /> },
     { name: "linkSection", label: "Enlaces", icon: <FaLink /> },
     { name: "courseSection", label: "Cursos", icon: <FaGraduationCap /> },
@@ -49,26 +63,74 @@ const AddSections: React.FC = () => {
       dispatch(setSectionProgress({ name, progress: 0 }));
 
       switch (name) {
-        case "personalInfoSection":
-        case "linkSection":
-          dispatch(clearAllLinks());
-          break;
-        case "courseSection":
-          dispatch(clearAllCourses());
-          break;
-        case "hobbieSection":
-          dispatch(clearAllHobbies());
-          break;
-        case "referenceSection":
-          dispatch(clearAllReferences());
-          break;
-        case "awardSection":
-          dispatch(clearAllAwards());
-          break;
-        case "customSection":
-          dispatch(clearAllCustom());
-          break;
-      }
+      /** ---------------------- Información Personal ---------------------- */
+      case "personalInfoSection":
+        dispatch(clearAllPersonalInfo());
+        break;
+
+      /** ---------------------- Enlaces ---------------------- */
+      case "linkSection":
+        dispatch(clearAllLinks());
+        break;
+
+      /** ---------------------- Cursos ---------------------- */
+      case "courseSection":
+        dispatch(clearAllCourses());
+        break;
+
+      /** ---------------------- Hobbies ---------------------- */
+      case "hobbieSection":
+        dispatch(clearAllHobbies());
+        break;
+
+      /** ---------------------- Referencias ---------------------- */
+      case "referenceSection":
+        dispatch(clearAllReferences());
+        break;
+
+      /** ---------------------- Premios ---------------------- */
+      case "awardSection":
+        dispatch(clearAllAwards());
+        break;
+
+      /** ---------------------- Sección Personalizada ---------------------- */
+      case "customSection":
+        dispatch(clearAllCustom());
+        break;
+
+      /** ---------------------- Educación ---------------------- */
+      case "educationSection":
+        dispatch(resetEducation());
+        break;
+
+      /** ---------------------- Experiencia ---------------------- */
+      case "experienceSection":
+        dispatch(resetExperience());
+        break;
+
+      /** ---------------------- Idiomas ---------------------- */
+      case "languageSection":
+        dispatch(resetLanguage());
+        break;
+
+      /** ---------------------- Habilidades ---------------------- */
+      case "skillsSection":
+        dispatch(resetSkills());
+        break;
+
+      /** ---------------------- Perfil ---------------------- */
+      case "profileSection":
+        dispatch(resetProfile());
+        break;
+
+      /** ---------------------- Contacto ---------------------- */
+      case "contactSection":
+        dispatch(clearAllContacts());
+        break;
+
+      default:
+        break;
+    }
     } else {
       dispatch(enableSection(name));
     }

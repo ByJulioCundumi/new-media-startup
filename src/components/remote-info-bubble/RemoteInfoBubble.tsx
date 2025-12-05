@@ -18,7 +18,7 @@ const RemoteInfoBubble: React.FC = () => {
         {/* Texto con typing infinito */}
         <div className="info-text">
           <Typewriter
-            words={["Trabaja en remoto con nosotros"]}
+            words={["Trabaja En Remoto Sin Experiencia 💼"]}
             loop={0} // infinito
             typeSpeed={45}
             deleteSpeed={45}
