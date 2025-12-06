@@ -10,6 +10,7 @@ import JobPage from './pages/job-page/JobPage'
 import AccountPage from './pages/account-page/AccountPage'
 import CreateCv from './pages/create-cv/CreateCv'
 import RemoteInfoBubble from './components/remote-info-bubble/RemoteInfoBubble'
+import SubscriptionsPage from './pages/subscriptions-page/SubscriptionsPage'
 
 function App() {
 
@@ -26,9 +27,10 @@ function App() {
           </Route>
 
           <Route path='/app' element={<LoggedSection/>}>
-            <Route path='' element={<DashboardCVs/>} />
+            <Route path='cvs' element={<DashboardCVs/>} />
             <Route path='create' element={<CreateCv/>} />
             <Route path='templates' element={<TemplatesPage/>} />
+            <Route path='subscription' element={<SubscriptionsPage/>} />
             <Route path='job' element={<JobPage/>} />
 
             <Route path='account' element={<AccountPage/>} />

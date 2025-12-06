@@ -11,7 +11,7 @@ function LoggedSection() {
   return (
     <section className="logged-section">
       {sidebarOption !== "create" && <Sidebar/>}
-      {sidebarOption !== "create" && <Navbar/>}
+      {sidebarOption !== "create" && sidebarOption !== "job" && <Navbar/>}
         <Outlet/>
     </section>
   )

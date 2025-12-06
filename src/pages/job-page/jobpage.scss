@@ -1,3 +1,117 @@
-.job-page{
-    
+/* ============================================================
+    JOB PAGE — Estilos Modernos Premium
+   ============================================================ */
+
+.job-page {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  background: #fafafe;
+  color: #111;
+
+  animation: fadeIn 0.8s ease;
+
+  /* ========================================================
+      NAVBAR
+    ======================================================== */
+  .jp-navbar {
+    position: sticky;
+    top: 0rem;
+    left: 0;
+    right: 0;
+    height: 76px;
+    padding: 1.5rem 2.5rem;
+    padding-left: 7.7rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+
+    .jp-nav-logo {
+      font-weight: 800;
+      font-size: 21px;
+      background: linear-gradient(90deg, #4f46e5, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .jp-nav-links {
+      display: flex;
+      gap: 1rem;
+
+      button {
+        background: transparent;
+        border: none;
+        padding: 8px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: 0.25s ease;
+        color: #334155;
+
+        &:hover {
+          background: #eef2ff;
+          color: #4f46e5;
+        }
+
+        &.active {
+          background: #eef2ff;
+          color: #4f46e5;
+        }
+      }
+
+      .highlight {
+        background: #4f46e5;
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        &:hover {
+          background: #4338ca;
+        }
+
+        &.active {
+          background: #4338ca;
+        }
+      }
+    }
+  }
+}
+
+/* ============================================================
+    ANIMACIONES
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.fade-page {
+  animation: fadeIn 0.4s ease;
+}
+
+/* ============================================================
+    RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .job-page {
+    gap: 4rem;
+
+    .hero h1 {
+      font-size: 32px;
+    }
+  }
 }

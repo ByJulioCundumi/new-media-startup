@@ -10,17 +10,23 @@
 --------------------------------*/
 .tp-topbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 18px;
+  background: #fff;
+  z-index: 10;
   position: sticky;
   top: 4rem;
   padding: 0.4rem 0;
-  background: #fff;
-  z-index: 10;
 
   padding: 0.2rem 7.5rem;
   padding-right: 2rem;
+
+  &__box{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  }
 }
 
 /* ------------------------------

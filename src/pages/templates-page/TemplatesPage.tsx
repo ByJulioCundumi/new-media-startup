@@ -7,6 +7,7 @@ import { mockTemplateData } from "../../templates/mockTemplateData";
 import { CategorySelector } from "../../components/category-selector/CategorySelector";
 import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
+import SearchBar from "../../components/search-bar/SearchBar";
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -49,7 +50,14 @@ export default function TemplatesPage() {
       {/* 🔝 TOP BAR */}
       <div className="tp-topbar">
 
-        {/* Categorías */}
+        <div className="dashboard-header">
+        <h1>Mis Currículums</h1>
+        <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
+      </div>
+
+        <div className="tp-topbar__box">
+          <SearchBar textHolder=""/>
+          {/* Categorías */}
         <CategorySelector/>
 
         {/* Favoritos */}
@@ -59,6 +67,7 @@ export default function TemplatesPage() {
         >
           ⭐ {showFavorites ? "Ver todas" : "Favoritos"}
         </button>
+        </div>
       </div>
 
       {/* 📄 GRID DE PLANTILLAS */}

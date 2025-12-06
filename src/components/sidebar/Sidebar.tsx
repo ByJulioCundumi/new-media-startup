@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./sidebar.scss";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { IoSearchSharp } from "react-icons/io5";
-import { MdOutlineAdminPanelSettings, MdOutlineWorkOutline, MdWork } from "react-icons/md";
+import { IoCreate, IoCreateOutline, IoPricetagsOutline, IoSearchSharp } from "react-icons/io5";
+import { MdOutlineAdminPanelSettings, MdOutlineWorkHistory, MdOutlineWorkOutline, MdWork } from "react-icons/md";
 import { LuLayoutDashboard, LuSettings2, LuUsers } from "react-icons/lu";
 import { RiArrowGoBackFill, RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
 import type { IState } from "../../interfaces/IState";
@@ -27,17 +27,34 @@ const Sidebar: React.FC = () => {
         <ul className="sidebar__menu">
           {/* --- Home --- */}
           <Link
-            to="/app"
-            onClick={() => dispatch(setSidebar("cvs"))}
+            to="/"
+            onClick={() => dispatch(setSidebar("home"))}
             className={
-              sidebarOption === "cvs"
+              sidebarOption === "home"
                 ? "sidebar__menu-item-active sidebar__profile-active"
                 : "sidebar__menu-item sidebar__profile-active"
             }
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon">
-                {sidebarOption === "cvs" ? <HiHome /> : sidebarOption !== "create" ? <HiHome /> : <RiArrowGoBackFill/>}
+                <HiHome />
+              </span>
+              <span className="sidebar__tooltip">Inicio</span>
+            </div>
+          </Link>
+
+          <Link
+            to="/app/cvs"
+            onClick={() => dispatch(setSidebar("cvs"))}
+            className={
+              sidebarOption === "cvs"
+                ? "sidebar__menu-item-active"
+                : "sidebar__menu-item"
+            }
+          >
+            <div className="sidebar__tooltip-container">
+              <span className="sidebar__icon sidebar__explore-icon">
+                {sidebarOption === "cvs" ? <IoCreateOutline /> : sidebarOption !== "create" ? <IoCreateOutline /> : <RiArrowGoBackFill/>}
               </span>
               <span className="sidebar__tooltip">Mis CV</span>
             </div>
@@ -60,6 +77,25 @@ const Sidebar: React.FC = () => {
             </div>
           </Link>
 
+          { 
+            <Link
+            to="/app/subscription"
+            onClick={() => dispatch(setSidebar("subscription"))}
+            className={
+              sidebarOption === "subscription"
+                ? "sidebar__menu-item-active"
+                : "sidebar__menu-item"
+            }
+          >
+            <div className="sidebar__tooltip-container">
+              <span className="sidebar__icon">
+                <IoPricetagsOutline />
+              </span>
+              <span className="sidebar__tooltip">Suscripciones</span>
+            </div>
+          </Link>
+          }
+
           {/* --- Menú general (visible siempre) --- */}
           { 
             <Link
@@ -72,8 +108,8 @@ const Sidebar: React.FC = () => {
             }
           >
             <div className="sidebar__tooltip-container">
-              <span className="sidebar__icon">
-                <MdOutlineWorkOutline />
+              <span className="sidebar__icon jobs-pulse">
+                <MdOutlineWorkHistory />
               </span>
               <span className="sidebar__tooltip">Trabaja Con Nosotros</span>
             </div>
