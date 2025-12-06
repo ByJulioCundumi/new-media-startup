@@ -1,4 +1,5 @@
 import type { IAwardEntry } from "./IAward";
+import type { ICategories } from "./ICategory";
 import type { IColorFontState } from "./IColorFont";
 import type { IContactEntry } from "./IContact";
 import type { ICourseEntry } from "./ICourses";
@@ -35,5 +36,6 @@ export interface IState{
     contactEntries: IContactEntry[], // cv sections
     colorFont: IColorFontState,
     toolbarOption: IToolbarOption,
-    template: {id: string}
+    template: {id: string},
+    categories: ICategories,
 }

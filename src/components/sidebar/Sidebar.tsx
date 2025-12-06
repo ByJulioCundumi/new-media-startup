@@ -8,7 +8,8 @@ import { MdOutlineAdminPanelSettings, MdOutlineWorkOutline, MdWork } from "react
 import { LuLayoutDashboard, LuSettings2, LuUsers } from "react-icons/lu";
 import { RiArrowGoBackFill, RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
 import type { IState } from "../../interfaces/IState";
-import { TbArrowBack } from "react-icons/tb";
+import { TbArrowBack, TbTemplate } from "react-icons/tb";
+import { HiHome } from "react-icons/hi2";
 
 const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon">
-                {sidebarOption === "cvs" ? <RiDashboardFill /> : sidebarOption !== "create" ? <RiDashboardFill /> : <RiArrowGoBackFill/>}
+                {sidebarOption === "cvs" ? <HiHome /> : sidebarOption !== "create" ? <HiHome /> : <RiArrowGoBackFill/>}
               </span>
               <span className="sidebar__tooltip">Mis CV</span>
             </div>
@@ -53,7 +54,7 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon sidebar__explore-icon">
-                <IoSearchSharp />
+                <TbTemplate />
               </span>
               <span className="sidebar__tooltip">Platillas</span>
             </div>

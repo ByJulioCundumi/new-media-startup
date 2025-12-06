@@ -1,0 +1,134 @@
+.category-selector-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0rem;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Evita que sobresalga en pantallas pequeñas */
+  * {
+    min-width: 0;
+  }
+}
+
+.category-selector {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  padding: 0.2rem 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.category-button {
+  flex-shrink: 0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 12px;
+  background-color: #f9f9f9e9;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  color: #353535ce;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+
+  &:hover {
+    background-color: #eeeeee;
+    border-color: #99999913;
+  }
+
+  &.active {
+    background-color: #121212;
+    border: 1px solid #c3e6ffe4;
+    font-weight: 500;
+    color: #ffffff;
+  }
+}
+
+.category__arrow-button {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #b3b3b3;
+  user-select: none;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  padding: 0 0.1rem;
+
+  &:hover {
+    color: #00aaff;
+  }
+
+  &.left {
+    margin-right: 0.2rem;
+  }
+
+  &.right {
+    margin-left: 0.2rem;
+  }
+}
+
+.clear-selection-button {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  color: #666;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #eef9ff;
+    color: #00aaff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .category-selector__icon {
+    font-size: 1.1rem;
+  }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .category-selector-wrapper {
+    gap: 0.3rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .category-button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .category__arrow-button {
+    font-size: 1.3rem;
+  }
+
+  .clear-selection-button {
+    padding: 0.3rem 0.6rem;
+  }
+}

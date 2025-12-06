@@ -1,9 +1,11 @@
 .sortable-section {
-  width: 100%;
+  width: 90%;
   background: #fff;
   padding: 1rem 0.5rem;
   /* NO ocultes el contenido */
   overflow: visible !important;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.042);
+  margin:  0 auto;
 }
 
 .sortable-inner {
