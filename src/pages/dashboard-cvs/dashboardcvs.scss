@@ -1,8 +1,140 @@
-.dashboardcvs {
+.dashboard-cvs {
   width: 100%;
-  padding: 5.7rem 0rem; // PADDING corregido (antes demasiado grande y asimétrico)
-  padding-top: 0.5rem;
+  padding: 6rem 8rem;
   font-family: "Inter", sans-serif;
 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px;
+}
 
+/* -------------------------
+   HEADER
+-------------------------- */
+.dashboard-header {
+  grid-column: 1 / -1; // ocupar todo el ancho
+  margin-bottom: 1rem;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #6b7280;
+  }
+}
+
+/* -------------------------
+   TARJETA BASE
+-------------------------- */
+.cv-item {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  transition: 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* ---- menú contextual ---- */
+.cv-menu {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 18px;
+  color: #9ca3af;
+}
+
+/* -------------------------
+   PREVIEW
+-------------------------- */
+.cv-preview {
+  background: #f3f4f6;
+  height: 300px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cv-preview-scale {
+  width: 794px;
+  height: 1122px;
+  transform: scale(0.3);
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+/* -------------------------
+   INFO CV
+-------------------------- */
+.cv-info {
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #111827;
+  }
+
+  p {
+    font-size: 14px;
+    color: #4b5563;
+  }
+
+  .date {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+    display: inline-block;
+  }
+}
+
+/* -------------------------
+   TARJETA CREAR NUEVO CV
+-------------------------- */
+.create-new {
+  background: #fafafa;
+  border: 2px dashed #d1d5db;
+  border-radius: 20px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s;
+
+  &:hover {
+    background: #f5f5f5;
+    border-color: #c4c4c4;
+  }
+
+  .create-box {
+    text-align: center;
+    color: #6b7280;
+
+    .plus {
+      font-size: 52px;
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
 }
