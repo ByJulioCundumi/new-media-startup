@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux'
 import type { IState } from './interfaces/IState'
 import HomePageNavbar from './pages/home-page/home-page-navbar/HomePageNavbar'
 import PricingPage from './pages/pricing-page/PricingPage'
+import Footer from './components/footer/Footer'
 
 function App() {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
@@ -43,6 +44,7 @@ function App() {
         </Routes>
       </section>
     </BrowserRouter>
+    <Footer/>
     </>
   )
 }

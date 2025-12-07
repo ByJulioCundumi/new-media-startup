@@ -1,11 +1,12 @@
 import { ArrowRight, DollarSign, TrendingUp, Users, Sparkle } from "lucide-react";
 import "./hero.scss";
+import Footer from "../../../components/footer/Footer";
 
 function Hero() {
   const floatingUsers = [
-    { id: 1, name: "María G.", earnings: "70% de comisión" },
-    { id: 2, name: "Carlos L.", earnings: "70% de comisión" },
-    { id: 3, name: "Ana P.", earnings: "70% de comisión" },
+    { id: 1, name: "María G.", earnings: "+70% de comisión" },
+    { id: 2, name: "Carlos L.", earnings: "+70% de comisión" },
+    { id: 3, name: "Ana P.", earnings: "+70% de comisión" },
   ];
 
   return (
@@ -84,7 +85,6 @@ function Hero() {
 
         </div>
       </section>
-
     </div>
   );
 }

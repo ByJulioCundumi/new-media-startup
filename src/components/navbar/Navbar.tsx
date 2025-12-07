@@ -56,66 +56,6 @@ function Navbar() {
           <button className="login">Iniciar sesión</button>
           <button className="signup">Crear Cuenta</button>
         </div>
-
-        {/* HAMBURGER BUTTON */}
-        <div
-          className={`navbar__hamburger ${menuOpen ? "active link" : " link"}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-
-      {/* MOBILE MENU */}
-      <div className={`navbar__mobile ${menuOpen ? "open" : ""}`}>
-        <ul>
-          <Link to={"/"}
-            className={sidebarOption === "home" ? "active link" : " link"}
-            onClick={() => {
-              dispatch(setSidebar("option"))
-              setMenuOpen(false);
-            }}
-          >
-            Inicio
-          </Link>
-
-          <Link to={"/affiliate"}
-            className={sidebarOption === "affiliate" ? "active link" : " link"}
-            onClick={() => {
-              dispatch(setSidebar("affiliate"))
-              setMenuOpen(false);
-            }}
-          >
-            <span className="jobs-pulse">Trabaja Con Nosotros</span>
-            
-          </Link>
-
-          <Link to={"/option"}
-            className={sidebarOption === "option" ? "active link" : " link"}
-            onClick={() => {
-              dispatch(setSidebar("option"))
-              setMenuOpen(false);
-            }}
-          >
-            Plantillas CV
-          </Link>
-
-          <Link to={"/option"}
-            className={sidebarOption === "option" ? "active link" : " link"}
-            onClick={() => {
-              dispatch(setSidebar("option"))
-              setMenuOpen(false);
-            }}
-          >
-            Precios
-          </Link>
-        </ul>
-
-        <div className="mobile-buttons">
-          <button className="signup">Iniciar Sesion</button>
-        </div>
       </div>
     </nav>
   );

@@ -142,52 +142,61 @@
 }
 
 /* ========================================================
-      BENEFICIOS
+      BENEFICIOS (FLOTACIÓN + ANIMACIÓN SECUENCIAL)
 ======================================================== */
 .benefits {
-  text-align: center;
   width: fit-content;
   margin: 0 auto;
+  text-align: center;
+  padding-top: 1rem;
 }
 
 .benefits-title {
   font-size: 34px;
-  font-weight: 700;
-  color: #111;
+  font-weight: 800;
+  color: #0f172a;
   margin-bottom: 3rem;
+  letter-spacing: -0.3px;
 }
 
+/* GRID */
 .benefit-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 34px;
+  gap: 30px;
 }
 
+/* TARJETAS */
 .benefit-card {
-  background: #fff;
-  padding: 34px;
-  border-radius: 22px;
-  width: 320px;
-  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.05);
-  border: 1px solid #eef1ff;
-  transition: 0.25s ease;
+  background: #ffffff;
+  padding: 32px;
+  width: 300px;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  transition: 0.4s ease;
+  will-change: transform, box-shadow, border-color;
 
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.08);
-  }
+  /* FLOTACIÓN MARCADA + EFECTO HOVER AUTOMÁTICO */
+  animation: floatAndPulse 5s ease-in-out infinite;
+  animation-delay: calc(var(--index) * 0.8s);
 
   .icon {
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: #eef0ff;
     color: #4f46e5;
-    width: 46px;
-    height: 46px;
-    margin-bottom: 14px;
   }
 
   h3 {
-    font-size: 20px;
-    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
   }
 
   p {
@@ -195,4 +204,39 @@
     color: #475569;
     line-height: 1.6;
   }
+
+  /* HOVER (el mismo efecto, pero más suave porque ya se anima solo) */
+  &:hover {
+    transform: translateY(-18px);
+    border-color: #c7cbe2;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+  }
 }
+
+/* Animación combinada: flotación + efecto hover automático */
+@keyframes floatAndPulse {
+  0% {
+    transform: translateY(0px);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    border-color: #e5e7eb;
+  }
+
+  40% {
+    transform: translateY(-18px);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+    border-color: #c7cbe2;
+  }
+
+  100% {
+    transform: translateY(0px);
+    box-shadow: none;
+    border-color: #e5e7eb;
+  }
+}
+
+/* Índices para animación secuencial izquierda → derecha */
+.benefit-card:nth-child(1) { --index: 0; }
+.benefit-card:nth-child(2) { --index: 1; }
+.benefit-card:nth-child(3) { --index: 2; }
+.benefit-card:nth-child(4) { --index: 3; }
+

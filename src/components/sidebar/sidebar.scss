@@ -155,17 +155,6 @@
   }
 }
 
-.jobs-pulse {
-  animation: jobs-pulse 5s ease-in-out infinite;
-}
-
-@keyframes jobs-pulse {
-  0%   { color: rgba(216, 174, 35, 0.84); }   /* Amarillo */
-  33%  { color: rgba(0, 132, 255, 0.9); }   /* Azul */
-  100% { color: rgba(216, 174, 35, 0.84); }   /* Amarillo */
-}
-
-
 .sidebar {
   // ... todo tu código existente
 

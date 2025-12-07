@@ -65,6 +65,11 @@
         color: #0073ff;
         border-color: #0073ff;
       }
+
+      &:last-child:hover {
+        color: rgba(216, 174, 35, 0.774);
+        border-color: rgba(216, 174, 35, 0.774);
+      }
     }
 
     @media (max-width: 950px) {
@@ -115,109 +120,6 @@
       display: none;
     }
   }
-
-  /* HAMBURGER ICON */
-  &__hamburger {
-    width: 28px;
-    height: 20px;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-
-    span {
-      width: 100%;
-      height: 3px;
-      background: #333;
-      border-radius: 6px;
-      transition: 0.3s ease;
-    }
-
-    &.active span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    &.active span:nth-child(2) {
-      opacity: 0;
-    }
-    &.active span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-
-    @media (max-width: 950px) {
-      display: flex;
-    }
-  }
-
-  /* MOBILE MENU */
-  &__mobile {
-    width: 100%;
-    background: white;
-    border-top: 1px solid #e6e6e6;
-    padding: 20px;
-    display: none;
-    flex-direction: column;
-    gap: 18px;
-    animation: fadeMenu 0.3s ease;
-
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-
-      .link {
-        font-size: 17px;
-        color: #444;
-        cursor: pointer;
-        transition: 0.2s;
-
-        &:hover {
-          color: #0073ff;
-        }
-      }
-    }
-
-    .mobile-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-
-      .login,
-      .signup {
-        padding: 13px 0;
-        width: 100%;
-        border-radius: 10px;
-        font-size: 16px;
-      }
-
-      .login {
-        background: transparent;
-        border: 1px solid #ccc;
-        color: #333;
-      }
-
-      .signup {
-        background: #0073ff;
-        color: white;
-        border: none;
-      }
-    }
-
-    &.open {
-      display: flex;
-    }
-  }
-
-  @keyframes fadeMenu {
-    from {
-      opacity: 0;
-      transform: translateY(-6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 }
 
 /* ESTILO DE ACTIVE PARA DESKTOP */
@@ -227,12 +129,11 @@
   font-weight: 600;
 }
 
-/* ESTILO DE ACTIVE PARA MOBILE */
-.navbar__mobile ul .link.active {
-  color: #0073ff;
+.navbar__links .link:last-child.active {
+  color: rgba(216, 174, 35, 0.774);
+  border-color: rgba(216, 174, 35, 0.774);
   font-weight: 600;
 }
-
 
 .jobs-pulse {
   animation: jobs-pulse 5s ease-in-out infinite;
@@ -240,6 +141,6 @@
 
 @keyframes jobs-pulse {
   0%   { color: rgba(216, 174, 35, 0.84); }   /* Amarillo */
-  33%  { color: rgba(0, 132, 255, 0.9); }   /* Azul */
+  33%  { color: #95a0a8; }   /* Azul */
   100% { color: rgba(216, 174, 35, 0.84); }   /* Amarillo */
 }

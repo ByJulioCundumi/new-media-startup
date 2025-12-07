@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import SearchBar from "../../components/search-bar/SearchBar";
 import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
+import { IoStarOutline } from "react-icons/io5";
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -57,7 +58,7 @@ export default function TemplatesPage() {
       <div className="tp-topbar">
           <CategorySelector/>
           <SearchBar textHolder="Buscar Plantillas"/>
-          <button className="tp-fav-toggle">Favoritos</button>
+          <button className="tp-fav-toggle"> <IoStarOutline /> Favoritos</button>
       </div>
 
       {/* 📄 GRID DE PLANTILLAS */}

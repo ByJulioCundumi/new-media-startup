@@ -79,7 +79,7 @@ export const initialSections: ICvSection[] = [
   {
     name: "linkSection",
     title: "Enlaces",
-    enabled: true,
+    enabled: false,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -88,7 +88,7 @@ export const initialSections: ICvSection[] = [
   {
     name: "courseSection",
     title: "Cursos y Certificados",
-    enabled: true,
+    enabled: false,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -97,7 +97,7 @@ export const initialSections: ICvSection[] = [
   {
     name: "hobbieSection",
     title: "Pasatiempos",
-    enabled: true,
+    enabled: false,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -106,7 +106,7 @@ export const initialSections: ICvSection[] = [
   {
     name: "referenceSection",
     title: "Referencias Laborales",
-    enabled: true,
+    enabled: false,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,
@@ -115,7 +115,7 @@ export const initialSections: ICvSection[] = [
   {
     name: "awardSection",
     title: "Premios",
-    enabled: true,
+    enabled: false,
     progress: 0,
     isOpen: false,
     isEditorOpen: false,

@@ -67,17 +67,24 @@
    ⭐ FAVORITOS
 --------------------------------*/
 .tp-fav-toggle {
-  padding: 8px 18px;
-  border-radius: 18px;
+  padding: 8px 15px;
+  border-radius: 15px;
   box-shadow: 0 5px 18px rgba(78, 70, 229, 0.111);
   background-color: white;
   cursor: pointer;
-  border: 2px solid #5b5ff5;
+  border: 2px solid #5b60f59d;
   transition: 0.25s ease;
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
   color: #5b5ff5;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  svg{
+    font-size: 1.1rem;
+  }
 
   &.active {
     background: #ffefab;

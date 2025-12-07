@@ -1,0 +1,97 @@
+/* ========================================================
+      FOOTER — MODERNO Y PROFESIONAL
+======================================================== */
+
+.footer {
+  background: #0b0f19; // negro azul oscuro
+  padding: 4rem 20px 2.5rem;
+  color: #fff;
+  margin-top: 4rem;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* LOGO + DESCRIPCIÓN -------------------------------- */
+.footer-brand {
+  max-width: 340px;
+
+  .footer-logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  .footer-desc {
+    font-size: 15px;
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+}
+
+/* LINKS --------------------------------------------- */
+.footer-links {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h4 {
+    color: #9ca3af; // gris para títulos
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  a {
+    color: #ffffff;
+    font-size: 15px;
+    opacity: 0.75;
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    &:hover {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+  }
+}
+
+/* COPYRIGHT ----------------------------------------- */
+.footer-bottom {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+
+  p {
+    color: #cbd5e1;
+    font-size: 14px;
+    opacity: 0.75;
+  }
+}
+
+/* RESPONSIVE ---------------------------------------- */
+@media (max-width: 768px) {
+  .footer-container {
+    text-align: left;
+  }
+
+  .footer-links {
+    gap: 30px;
+  }
+}
