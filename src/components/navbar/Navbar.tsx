@@ -44,7 +44,7 @@ function Navbar() {
           </Link>
 
           <Link to={"/affiliate"}
-            className={sidebarOption === "affiliate" ? "active link" : " link"}
+            className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
             onClick={()=>dispatch(setSidebar("affiliate"))}
           >
             Trabaja Con Nosotros

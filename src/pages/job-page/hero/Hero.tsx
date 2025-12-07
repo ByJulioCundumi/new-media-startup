@@ -37,7 +37,7 @@ function Hero() {
 
         <p className="hero-subtitle">
           Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
-          Gana un <strong>20% de comisión desde el primer día</strong> y solicita
+          Gana un <strong>20% de comisiones recurrentes desde el primer día</strong> y solicita
           un aumento al <strong>70%</strong> si tienes una suscripción activa.
         </p>
 

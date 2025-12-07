@@ -51,13 +51,13 @@ export default function TemplatesPage() {
       <div className="templates-page__info">
         <h2>Plantillas de CV</h2>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum, cum.</p>
-        <button>Crear un CV</button>
       </div>
 
       {/* 🔝 TOP BAR */}
       <div className="tp-topbar">
           <CategorySelector/>
           <SearchBar textHolder="Buscar Plantillas"/>
+          <button className="tp-fav-toggle">Favoritos</button>
       </div>
 
       {/* 📄 GRID DE PLANTILLAS */}
