@@ -40,7 +40,11 @@ function Hero() {
         </p>
 
         <button className="cta-button">
-          Afiliarme <ArrowRight size={18} />
+          Afiliarme Gratis <ArrowRight size={18} />
+        </button>
+
+         <button className="cta-button">
+          Solicitar 70%
         </button>
       </div>
 

@@ -6,6 +6,7 @@ import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
 import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
+import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
 
 const mockUserCVs = [
   {
@@ -36,7 +37,6 @@ export default function DashboardCVs() {
   return (
     <div className="dashboard-cvs">
 
-      {/* 🔹 HEADER */}
       <div className="dashboard-header">
         <h1>Mis Currículums</h1>
         <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>

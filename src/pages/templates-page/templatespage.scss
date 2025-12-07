@@ -1,25 +1,27 @@
 .templates-page {
-  
   display: flex;
   flex-direction: column;
   gap: 32px;
+  padding-top: 4rem;
 }
-
 /* ------------------------------
    🔝 TOP BAR
 --------------------------------*/
 .tp-topbar {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  align-items: center;
+  gap: 10px;
   background: #fff;
   z-index: 10;
   position: sticky;
-  top: 4rem;
-  padding: 0.4rem 0;
+  top: 4.5rem;
+  padding: 0.5rem 2rem;
+  padding-top: 1rem;
 
-  padding: 0.2rem 7.5rem;
-  padding-right: 2rem;
+  &__main{
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__box{
     display: flex;
@@ -60,10 +62,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 32px;
-  margin: 0 7.5rem;
-  margin-right: 2rem;
-  margin-top: 2rem;
-  padding: 1rem;
+  margin: 0 2rem;
+  padding: 0 2rem;
 }
 
 /* ------------------------------

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    sidebarOption:"cvs",
+    sidebarOption:"home",
 }
 
 const SidebarSlice = createSlice({

@@ -5,11 +5,14 @@ import "./sidebar.scss";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import { IoCreate, IoCreateOutline, IoPricetagsOutline, IoSearchSharp } from "react-icons/io5";
 import { MdOutlineAdminPanelSettings, MdOutlineWorkHistory, MdOutlineWorkOutline, MdWork } from "react-icons/md";
-import { LuLayoutDashboard, LuSettings2, LuUsers } from "react-icons/lu";
+import { LuFileSearch, LuLayoutDashboard, LuPencilLine, LuSettings2, LuUsers } from "react-icons/lu";
 import { RiArrowGoBackFill, RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
 import type { IState } from "../../interfaces/IState";
-import { TbArrowBack, TbTemplate } from "react-icons/tb";
-import { HiHome } from "react-icons/hi2";
+import { TbArrowBack, TbSettingsCode, TbTemplate } from "react-icons/tb";
+import { HiHome, HiOutlineCreditCard } from "react-icons/hi2";
+import { PiCardsThreeLight } from "react-icons/pi";
+import { GrSelect } from "react-icons/gr";
+import { FaRegCreditCard } from "react-icons/fa";
 
 const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,7 +47,7 @@ const Sidebar: React.FC = () => {
           </Link>
 
           <Link
-            to="/app/cvs"
+            to="/cvs"
             onClick={() => dispatch(setSidebar("cvs"))}
             className={
               sidebarOption === "cvs"
@@ -54,14 +57,14 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon sidebar__explore-icon">
-                {sidebarOption === "cvs" ? <IoCreateOutline /> : sidebarOption !== "create" ? <IoCreateOutline /> : <RiArrowGoBackFill/>}
+                {sidebarOption === "cvs" ? <LuPencilLine /> : sidebarOption !== "create" ? <LuPencilLine /> : <RiArrowGoBackFill/>}
               </span>
               <span className="sidebar__tooltip">Mis CV</span>
             </div>
           </Link>
 
           <Link
-            to="/app/templates"
+            to="/templates"
             onClick={() => dispatch(setSidebar("templates"))}
             className={
               sidebarOption === "templates"
@@ -71,7 +74,7 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon sidebar__explore-icon">
-                <TbTemplate />
+                <LuFileSearch />
               </span>
               <span className="sidebar__tooltip">Platillas</span>
             </div>
@@ -79,7 +82,7 @@ const Sidebar: React.FC = () => {
 
           { 
             <Link
-            to="/app/subscription"
+            to="/subscription"
             onClick={() => dispatch(setSidebar("subscription"))}
             className={
               sidebarOption === "subscription"
@@ -89,29 +92,9 @@ const Sidebar: React.FC = () => {
           >
             <div className="sidebar__tooltip-container">
               <span className="sidebar__icon">
-                <IoPricetagsOutline />
+                <HiOutlineCreditCard />
               </span>
               <span className="sidebar__tooltip">Suscripciones</span>
-            </div>
-          </Link>
-          }
-
-          {/* --- Menú general (visible siempre) --- */}
-          { 
-            <Link
-            to="/app/job"
-            onClick={() => dispatch(setSidebar("job"))}
-            className={
-              sidebarOption === "job"
-                ? "sidebar__menu-item-active"
-                : "sidebar__menu-item"
-            }
-          >
-            <div className="sidebar__tooltip-container">
-              <span className="sidebar__icon jobs-pulse">
-                <MdOutlineWorkHistory />
-              </span>
-              <span className="sidebar__tooltip">Trabaja Con Nosotros</span>
             </div>
           </Link>
           }
@@ -123,19 +106,18 @@ const Sidebar: React.FC = () => {
         className="sidebar__bottom"
       >
         <Link
-              to={`/app/account`}
+              to={`/account`}
               onClick={() => dispatch(setSidebar("account"))}
               className={`sidebar__profile-link ${
                 sidebarOption === "account" ? "sidebar__profile-link--active" : ""
               }`}
             >
-              <img
-                src={"https://caricom.org/wp-content/uploads/Floyd-Morris-Remake-1024x879-1.jpg"}
-                alt="Perfil"
-                className={`sidebar__profile-img ${
-                  sidebarOption === "account" ? "sidebar__profile-img--active" : ""
-                }`}
-              />
+              <span className="sidebar__icon">
+              <TbSettingsCode/>
+              </span>
+              <span className="sidebar__tooltip">
+                Cuenta
+              </span>
             </Link>
 
         <div onClick={handleLogout} className="sidebar__tooltip-container logout" role="button">

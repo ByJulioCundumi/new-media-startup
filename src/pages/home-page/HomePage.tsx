@@ -6,7 +6,6 @@ import HeroSection from "./hero-section/HeroSection";
 const HomePage: React.FC = () => {
   return (
     <section className="home-page">
-        <HomePageNavbar/>
         <HeroSection/>
     </section>
   );

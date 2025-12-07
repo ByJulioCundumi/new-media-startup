@@ -21,7 +21,7 @@ function JobPage() {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(setSidebar("job"))
+    dispatch(setSidebar("affiliate"))
   },[])
 
   return (
