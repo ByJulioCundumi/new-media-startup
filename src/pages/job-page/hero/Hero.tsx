@@ -2,54 +2,58 @@ import { ArrowRight, DollarSign, TrendingUp, Users, Sparkle } from "lucide-react
 import "./hero.scss";
 
 function Hero() {
-  const plans = [
-    {
-      id: 1,
-      name: "Plan Mensual",
-      price: 5.99,
-      icon: <DollarSign size={34} />,
-    },
-    {
-      id: 2,
-      name: "Plan Semestral",
-      price: 19.99,
-      icon: <TrendingUp size={34} />,
-    },
-    {
-      id: 3,
-      name: "Plan Anual",
-      price: 29.99,
-      icon: <Sparkle size={34} />,
-    },
+  const floatingUsers = [
+    { id: 1, name: "María G.", earnings: "70% de comisión" },
+    { id: 2, name: "Carlos L.", earnings: "70% de comisión" },
+    { id: 3, name: "Ana P.", earnings: "70% de comisión" },
   ];
 
   return (
     <div className="hero-page">
 
+      {/* ---------- TARJETAS FLOTANTES ---------- */}
+      <div className="floating-users">
+        {floatingUsers.map((u, index) => (
+          <div
+            key={u.id}
+            className={`floating-card card-${index + 1}`}
+          >
+            <div className="avatar">{u.name.charAt(0)}</div>
+            <div>
+              <p className="user-name">{u.name}</p>
+              <span className="user-earn">{u.earnings}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* ---------- HERO SECTION ---------- */}
-      <div className="hero">
+      <section className="hero">
+
         <h1 className="hero-title">
           Trabaja En Remoto, Sin Experiencia
           <span>Gana Dinero Promocionando Nuestra Plataforma</span>
         </h1>
 
         <p className="hero-subtitle">
-              Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
-              Gana un <strong>20% de comisión desde el primer día</strong> y solicita
-              un aumento al <strong>70%</strong> si tienes una suscripción activa.
+          Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
+          Gana un <strong>20% de comisión desde el primer día</strong> y solicita
+          un aumento al <strong>70%</strong> si tienes una suscripción activa.
         </p>
 
-        <button className="cta-button">
-          Afiliarme Gratis <ArrowRight size={18} />
-        </button>
+        <div className="cta-container">
+          <button className="cta-button">
+            Afiliarme Gratis <ArrowRight size={18} />
+          </button>
 
-         <button className="cta-button">
-          Solicitar 70%
-        </button>
-      </div>
+          <button className="cta-button outline">
+            Solicitar 70%
+          </button>
+        </div>
+      </section>
 
       {/* ---------- BENEFICIOS ---------- */}
-      <div className="benefits">
+      <section className="benefits">
         <h2 className="benefits-title">¿Por qué convertirte en afiliado?</h2>
 
         <div className="benefit-grid">
@@ -79,7 +83,7 @@ function Hero() {
           </div>
 
         </div>
-      </div>
+      </section>
 
     </div>
   );

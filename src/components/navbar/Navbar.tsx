@@ -43,13 +43,6 @@ function Navbar() {
             Plantillas CV
           </Link>
 
-          <Link to={"/pricing"}
-            className={sidebarOption === "pricing" ? "active link" : " link"}
-            onClick={()=>dispatch(setSidebar("pricing"))}
-          >
-            Precios
-          </Link>
-
           <Link to={"/affiliate"}
             className={sidebarOption === "affiliate" ? "active link" : " link"}
             onClick={()=>dispatch(setSidebar("affiliate"))}
