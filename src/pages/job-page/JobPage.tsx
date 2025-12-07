@@ -27,37 +27,6 @@ function JobPage() {
   return (
     <section className="job-page">
 
-      {/* ---------- NAVBAR FIXED ---------- */}
-      <nav className="jp-navbar">
-        <div className="jp-nav-logo">Afiliados</div>
-
-        <div className="jp-nav-links">
-          <button
-            onClick={() => setPage("info")}
-            className={page === "info" ? "active" : ""}
-          >
-            Info
-          </button>
-
-          <button
-            onClick={() => setPage("affiliates")}
-            className={page === "affiliates" ? "active" : ""}
-          >
-            Miembros
-          </button>
-
-          <button
-            onClick={() => setPage("request")}
-            className={page === "request" ? "active" : ""}
-          >
-            Solicitar 70% 
-          </button>
-        </div>
-
-        <ProfileAvatar/>
-      </nav>
-
-
       {/* ====================================================== */}
       {/* ===================== PÁGINA INFO ===================== */}
       {/* ====================================================== */}
@@ -65,26 +34,6 @@ function JobPage() {
         <div className="fade-page">
           {/* -------- HERO -------- */}
           <Hero/>
-        </div>
-      )}
-
-
-      {/* ====================================================== */}
-      {/* ================= PÁGINA AFILIADOS =================== */}
-      {/* ====================================================== */}
-      {page === "affiliates" && (
-        <div className="fade-page">
-          <Affiliates/>
-        </div>
-      )}
-
-
-      {/* ====================================================== */}
-      {/* =================== PÁGINA REQUEST ==================== */}
-      {/* ====================================================== */}
-      {page === "request" && (
-        <div className="fade-page">
-          <CommissionRequest/>
         </div>
       )}
 

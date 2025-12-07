@@ -48,58 +48,6 @@ function Hero() {
         </button>
       </div>
 
-
-
-      {/* ---------- PLANES / CARRUSEL ---------- */}
-      <div className="plans-carousel">
-        <h2 className="plans-title">Planes que puedes promocionar</h2>
-
-        <div className="carousel">
-          {plans.map((plan) => {
-            const base20 = +(plan.price * 0.20).toFixed(2);
-            const high70 = +(plan.price * 0.70).toFixed(2);
-
-            return (
-              <div key={plan.id} className="plan-card">
-
-                {/* Icono */}
-                <div className="icon">{plan.icon}</div>
-
-                {/* Título */}
-                <h3 className="plan-name">{plan.name}</h3>
-
-                {/* Precio */}
-                <p className="price">${plan.price}</p>
-
-                {/* Comisión 20% */}
-                <p className="commission">
-                  <strong>Comisión base / 20%</strong>
-                </p>
-
-                {/* Comisión 70% */}
-                <p className="commission-high">
-                  <strong>Para Miembros / 70%</strong>
-                </p>
-
-                {/* Box de ganancias */}
-                <div className="earnings-box">
-                  <p className="heading">Ganancia Recurrente / Venta:</p>
-                  <p>% Base: <strong>${base20} USD</strong></p>
-                  <p>% Miembros: <strong>${high70} USD</strong></p>
-                </div>
-
-                {/* Botón */}
-                <button className="promote-btn">
-                  Afiliarme <ArrowRight size={16} />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-
-
       {/* ---------- BENEFICIOS ---------- */}
       <div className="benefits">
         <h2 className="benefits-title">¿Por qué convertirte en afiliado?</h2>

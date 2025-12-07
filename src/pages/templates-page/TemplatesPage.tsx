@@ -48,6 +48,12 @@ export default function TemplatesPage() {
   return (
     <section className="templates-page">
 
+      <div className="templates-page__info">
+        <h2>Plantillas de CV</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum, cum.</p>
+        <button>Crear un CV</button>
+      </div>
+
       {/* 🔝 TOP BAR */}
       <div className="tp-topbar">
           <CategorySelector/>

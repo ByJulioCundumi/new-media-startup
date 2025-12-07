@@ -14,6 +14,7 @@ import AppPages from './pages/app-pages/AppPages'
 import { useSelector } from 'react-redux'
 import type { IState } from './interfaces/IState'
 import HomePageNavbar from './pages/home-page/home-page-navbar/HomePageNavbar'
+import PricingPage from './pages/pricing-page/PricingPage'
 
 function App() {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
@@ -36,7 +37,7 @@ function App() {
             <Route path='cvs' element={<DashboardCVs/>} />
             <Route path='create' element={<CreateCv/>} />
             <Route path='templates' element={<TemplatesPage/>} />
-            <Route path='subscription' element={<SubscriptionsPage/>} />
+            <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliate' element={<JobPage/>} />
             <Route path='account' element={<AccountPage/>} />
         </Routes>
