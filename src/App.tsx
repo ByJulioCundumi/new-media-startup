@@ -1,7 +1,6 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import './App.scss'
 import Navbar from './components/navbar/Navbar'
-import Sidebar from './components/sidebar/Sidebar'
 import HomePage from './pages/home-page/HomePage'
 import DashboardCVs from './pages/dashboard-cvs/DashboardCvs'
 import TemplatesPage from './pages/templates-page/TemplatesPage'
@@ -9,16 +8,17 @@ import JobPage from './pages/job-page/JobPage'
 import AccountPage from './pages/account-page/AccountPage'
 import CreateCv from './pages/create-cv/CreateCv'
 import RemoteInfoBubble from './components/remote-info-bubble/RemoteInfoBubble'
-import SubscriptionsPage from './pages/subscriptions-page/SubscriptionsPage'
-import AppPages from './pages/app-pages/AppPages'
 import { useSelector } from 'react-redux'
 import type { IState } from './interfaces/IState'
-import HomePageNavbar from './pages/home-page/home-page-navbar/HomePageNavbar'
 import PricingPage from './pages/pricing-page/PricingPage'
 import Footer from './components/footer/Footer'
+import TemplatesPopup from './components/templates-popup/TemplatesPopup'
 
 function App() {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+  const { templatesPopupOpen } = useSelector(
+    (state: IState) => state.toolbarOption
+  );
 
   return (
     <>
@@ -28,6 +28,7 @@ function App() {
 
         {/* popups globales */}
         <RemoteInfoBubble/>
+        {templatesPopupOpen && <TemplatesPopup/>}
 
         {/* paginas */}
         <Outlet/>
@@ -44,7 +45,7 @@ function App() {
         </Routes>
       </section>
     </BrowserRouter>
-    <Footer/>
+    {sidebarOption !== "cvs" && sidebarOption !== "create" && sidebarOption !== "affiliate" && <Footer/>}
     </>
   )
 }

@@ -17,14 +17,6 @@ export default function TemplatesPage() {
   const dispatch = useDispatch()
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  useEffect(()=>{
-    dispatch(setTemplatePopupOpen(true))
-
-    return ()=>{
-      dispatch(setTemplatePopupOpen(false))
-    }
-  },[])
-
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
       prev.includes(id)
@@ -37,7 +29,7 @@ export default function TemplatesPage() {
     return templates.filter((tpl) => {
       const categoryOK =
         selectedCategory === "all" ||
-        tpl.category.includes(selectedCategory);
+        tpl.categories.includes(selectedCategory);
 
       const favoriteOK =
         !showFavorites || favorites.includes(tpl.id);
@@ -73,6 +65,11 @@ export default function TemplatesPage() {
               {/* PREVIEW WRAPPER + ESTRELLA */}
               <div className="tpl-preview-wrapper">
 
+                {/* OVERLAY HOVER */}
+                <div className="tpl-hover-overlay">
+                  <span>Seleccionar Plantilla</span>
+                </div>
+
                 <div
                   className="tpl-fav-icon"
                   onClick={() => toggleFavorite(tpl.id)}
@@ -83,11 +80,13 @@ export default function TemplatesPage() {
                 <div className="tpl-preview">
                   <Component {...mockTemplateData} />
                 </div>
+
               </div>
+
 
               {/* INFORMACIÓN */}
               <h3 className="tpl-title">{tpl.label}</h3>
-              <p className="tpl-category">{tpl.category.join(", ")}</p>
+              <p className="tpl-category">{tpl.categories.join(", ")}</p>
 
             </div>
           );

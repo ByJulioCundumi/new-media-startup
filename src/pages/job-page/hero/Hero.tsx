@@ -73,14 +73,14 @@ function Hero() {
 
           <div className="benefit-card">
             <DollarSign className="icon" />
-            <h3>Comisiones superiores</h3>
+            <h3>Comisiones recurrentes</h3>
             <p>Gana un 20% base y sube al 70% si eres usuario suscrito.</p>
           </div>
 
           <div className="benefit-card">
             <TrendingUp className="icon" />
             <h3>Demanda constante</h3>
-            <p>Miles de usuarios requieren CVs cada día. Tú solo recomiendas.</p>
+            <p>Miles de personas requieren CVs cada día. Tú solo recomiendas.</p>
           </div>
 
         </div>

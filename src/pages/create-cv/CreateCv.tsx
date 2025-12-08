@@ -15,13 +15,12 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
 import VerticalToolbarCV from "../../components/vertical-toolbar-cv/VerticalToolbarCv";
 import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
-import PopupTemplates from "../../templates/templates-popup/TemplatesPopup";
 
 function CreateCv() {
   const dispatch = useDispatch();
 
   const selectedTemplate = useSelector((state: IState) => state.template.id);
-  const { previewPopupOpen, templatesPopupOpen } = useSelector(
+  const { previewPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
   );
 
@@ -109,7 +108,6 @@ function CreateCv() {
         </PreviewPopup>
       )}
 
-      {templatesPopupOpen && <PopupTemplates />}
       <FloatingEditor />
       <ColorFontPopup />
     </div>

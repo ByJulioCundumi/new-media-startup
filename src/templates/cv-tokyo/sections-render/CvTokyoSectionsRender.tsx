@@ -58,6 +58,7 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   const styles = useTemplateColors(cvTokyoDefaults);
   const section = sectionByName[sectionName];
   const {previewPopupOpen, templatesPopupOpen} = useSelector((state:IState)=>state.toolbarOption)
+  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const dispatch = useDispatch()
   
   const { qrCodeUrl, photo, firstName, lastName, jobTitle } = identitySection
@@ -82,7 +83,7 @@ const getProgressColorClass = (progress: number) => {
       return (
         <>
           <div className="cv-tokyo__identitySection--main">
-          {!previewPopupOpen && !templatesPopupOpen &&
+          {!previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false &&
           typeof section?.progress === "number" && (
             <span
               className={`progress-indicator cv-tokyo__identitySection--progress-indicator ${getProgressColorClass(
@@ -140,7 +141,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__contactSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Contacto"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -164,7 +165,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__personalInfoSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Detalles"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -188,7 +189,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__skillSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -238,7 +239,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__languajeSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -290,7 +291,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__linkSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -341,7 +342,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__hobbieSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -368,7 +369,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__profileSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Perfil"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -387,7 +388,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__experienceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Experiencia"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -427,7 +428,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__educationSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Educación"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -469,7 +470,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__courseSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Cursos y Certificados"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -514,7 +515,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__awardSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Premios"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -541,7 +542,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__referenceSection--title" style={{ color: styles.sectionTitleColor }}>
             {sectionByName[sectionName]?.title || "Referencias Laborales"}
             {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor
@@ -571,7 +572,7 @@ const getProgressColorClass = (progress: number) => {
           <h2 className="cv-tokyo__customSection--title" style={{ color: styles.sectionTitleColor }}>
                 {sectionsConfig.find(s => s.name === "customSection")?.title || "Campo Personalizado"}
                 {
-              !previewPopupOpen && !templatesPopupOpen && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
+              !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-tokyo__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
                 <TbTrashX onClick={(e) => {
                     e.stopPropagation();      // ← evita que se abra el editor

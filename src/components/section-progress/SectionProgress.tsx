@@ -113,17 +113,17 @@ const progressColorClass = useMemo(() => {
   return "progress-blue";
 }, [overallProgress]);
 
-const [title, setTitle] = useState("Mi CV Profesional");
+const [title, setTitle] = useState("Nuevo CV");
   const [editing, setEditing] = useState(false);
 
   const handleEditTitle = () => setEditing(true);
   const handleSaveTitle = () => {
-    if (!title.trim()) setTitle("Mi CV Profesional");
+    if (!title.trim()) setTitle("Nuevo CV");
     setEditing(false);
   };
 
   const handleTitleBlur = () => {
-    if (!title.trim()) setTitle("Mi CV Profesional");
+    if (!title.trim()) setTitle("Nuevo CV");
     setEditing(false);
   };
 

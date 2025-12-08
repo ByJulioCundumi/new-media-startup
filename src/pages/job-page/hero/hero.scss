@@ -223,7 +223,7 @@
 
   40% {
     transform: translateY(-18px);
-    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.063);
     border-color: #c7cbe2;
   }
 
@@ -239,4 +239,5 @@
 .benefit-card:nth-child(2) { --index: 1; }
 .benefit-card:nth-child(3) { --index: 2; }
 .benefit-card:nth-child(4) { --index: 3; }
+
 

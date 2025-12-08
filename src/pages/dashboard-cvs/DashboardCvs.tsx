@@ -7,6 +7,7 @@ import { mockTemplateData } from "../../templates/mockTemplateData";
 import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
+import { setSidebar } from "../../reducers/sidebarSlice";
 
 const mockUserCVs = [
   {
@@ -27,12 +28,8 @@ export default function DashboardCVs() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-      dispatch(setTemplatePopupOpen(true))
-  
-      return ()=>{
-        dispatch(setTemplatePopupOpen(false))
-      }
-    },[])
+    dispatch(setSidebar("cvs"))
+  },[])
 
   return (
     <div className="dashboard-cvs">
@@ -43,7 +40,7 @@ export default function DashboardCVs() {
       </div>
 
       {/* 🔹 Tarjeta Crear Nuevo */}
-      <div className="cv-item create-new">
+      <div className="cv-item create-new" onClick={()=> dispatch(setTemplatePopupOpen(true))}>
         <div className="create-box">
           <span className="plus">+</span>
           <p>Crear nuevo CV</p>
