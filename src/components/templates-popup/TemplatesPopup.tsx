@@ -57,10 +57,8 @@ export default function TemplatesPopup() {
 
   return (
     <div className="template-popup-popup-overlay">
-
       {/* POPUP */}
       <div ref={popupRef} className="template-popup-popup popup-animate">
-
         {/* HEADER */}
         <div className="template-popup-header">
           <h2>Selecciona Tu Plantilla</h2>
@@ -109,13 +107,19 @@ export default function TemplatesPopup() {
                     dispatch(setTemplate(tpl.id));
                   }}
                 >
-
                   <div className="template-popup-preview-wrapper">
 
                     {/* OVERLAY HOVER */}
                     <div className="template-popup-hover-overlay">
                       <span>Seleccionar Plantilla</span>
                     </div>
+
+                    {/* OVERLAY FIJO SELECCIONADA */}
+                    {selectedTemplate === tpl.id && (
+                      <div className="template-popup-selected-overlay">
+                        <span>Plantilla Seleccionada</span>
+                      </div>
+                    )}
 
                     {/* FAVORITO */}
                     <div
@@ -136,14 +140,16 @@ export default function TemplatesPopup() {
 
                   {/* INFO */}
                   <h3 className="template-popup-title">{tpl.label}</h3>
-                  <p className="template-popup-category">{tpl.categories.join(", ")}</p>
+                  <p className="template-popup-category">
+                    {tpl.categories.join(", ")}
+                  </p>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* BOTÓN FIJO DENTRO DEL POPUP (ABAJO DERECHA) */}
+        {/* BOTÓN FIJO */}
         {selectedTemplate && (
           <div className="template-popup-btn-container">
             <button
@@ -154,9 +160,7 @@ export default function TemplatesPopup() {
             </button>
           </div>
         )}
-
       </div>
-    
     </div>
   );
 }

@@ -4,10 +4,6 @@
 .template-popup-popup-overlay {
   position: fixed;
   inset: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
   display: flex;
@@ -23,7 +19,7 @@
   background: #fff;
   border-radius: 20px;
   width: 1170px;
-  max-height: 90vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.25);
@@ -100,7 +96,7 @@
 }
 
 /* ===========================
-   SCROLL
+   SCROLL AREA
 =========================== */
 .template-popup-scroll {
   overflow-y: auto;
@@ -108,7 +104,7 @@
 }
 
 /* ===========================
-   GRID ITEMS
+   GRID
 =========================== */
 .template-popup-grid {
   display: flex;
@@ -118,7 +114,9 @@
   width: 100%;
 }
 
-/* ITEM */
+/* ===========================
+   ITEM
+=========================== */
 .template-popup-item {
   display: flex;
   flex-direction: column;
@@ -126,12 +124,15 @@
   gap: 15px;
   cursor: pointer;
 
+  /* ❌ Borde removido */
   &.selected .template-popup-preview-wrapper {
-    border: 2px dashed #04093da7;
+    border: none !important;
   }
 }
 
-/* PREVIEW WRAPPER */
+/* ===========================
+   PREVIEW WRAPPER
+=========================== */
 .template-popup-preview-wrapper {
   position: relative;
   width: 340px;
@@ -148,7 +149,7 @@
 }
 
 /* ===========================
-   OVERLAY
+   OVERLAY HOVER
 =========================== */
 .template-popup-hover-overlay {
   position: absolute;
@@ -173,10 +174,33 @@
   }
 }
 
-/* ❗ IMPORTANT: Quitar overlay si está seleccionada */
+/* ❗ OCULTAR OVERLAY HOVER EN SELECCIONADA */
 .template-popup-item.selected .template-popup-hover-overlay {
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+/* ===========================
+   OVERLAY SELECCIONADA
+=========================== */
+.template-popup-selected-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.47);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+
+  span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 12px;
+    backdrop-filter: blur(3px);
+  }
 }
 
 /* FAVORITO */
@@ -186,7 +210,7 @@
   right: 14px;
   font-size: 26px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* PREVIEW ESCALADA */
@@ -216,9 +240,8 @@
   margin-left: 0.5rem;
 }
 
-
 /* ===========================
-   BOTÓN ABAJO A LA DERECHA
+   BOTÓN ABAJO DERECHA
 =========================== */
 .template-popup-btn-container {
   position: absolute;
@@ -227,7 +250,6 @@
   z-index: 50;
 }
 
-/* ESTILOS BOTÓN */
 .template-popup-continue-btn {
   background: #040d2c;
   color: white;
