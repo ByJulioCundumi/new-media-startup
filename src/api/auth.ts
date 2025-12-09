@@ -1,0 +1,77 @@
+export interface AuthUser {
+  id: string;
+  email: string;
+  userName: string;
+}
+
+interface AuthResponse {
+  message: string;
+  user?: AuthUser;
+}
+
+interface CheckSessionResponse {
+  logged: boolean;
+  user?: AuthUser;
+}
+
+const BASE_URL = "http://localhost:4000/api";
+
+export const signup = async (email: string, username: string, password: string): Promise<AuthResponse> => {
+  const res = await fetch(`${BASE_URL}/auth/signup`, {
+    method: "POST",
+    credentials: "include", // para que se envíen cookies
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, username, password }),
+  });
+
+  return res.json();
+};
+
+export const login = async (email: string, password: string): Promise<AuthResponse> => {
+  const res = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  return res.json();
+};
+
+export const checkSession = async (): Promise<CheckSessionResponse> => {
+  const res = await fetch(`${BASE_URL}/auth/check`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  return res.json();
+};
+
+export const logout = async (): Promise<{ message: string }> => {
+  const res = await fetch(`${BASE_URL}/auth/logout`, { 
+    method: "POST",
+    credentials: "include",
+  });
+
+  return res.json();
+};
+
+export const requestPasswordReset = async (email: string) => {
+  const res = await fetch(`${BASE_URL}/auth/password/request`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  return res.json();
+};
+
+export const resetPassword = async (email: string, code: string, newPassword: string) => {
+  const res = await fetch(`${BASE_URL}/auth/password/reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code, newPassword }),
+  });
+  return res.json();
+};

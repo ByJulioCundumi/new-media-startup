@@ -16,6 +16,7 @@ import type { IReferenceEntry } from "./IReferences";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
 import type { IToolbarOption } from "./IToolbarOption";
+import type { IUserState } from "./IUser";
 
 export interface IState{
     sidebar: ISidebar,
@@ -38,4 +39,5 @@ export interface IState{
     toolbarOption: IToolbarOption,
     template: {id: string},
     categories: ICategories,
+    user: IUserState
 }

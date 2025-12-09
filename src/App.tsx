@@ -8,21 +8,39 @@ import JobPage from './pages/job-page/JobPage'
 import AccountPage from './pages/account-page/AccountPage'
 import CreateCv from './pages/create-cv/CreateCv'
 import RemoteInfoBubble from './components/remote-info-bubble/RemoteInfoBubble'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { IState } from './interfaces/IState'
 import PricingPage from './pages/pricing-page/PricingPage'
 import Footer from './components/footer/Footer'
 import TemplatesPopup from './components/templates-popup/TemplatesPopup'
-import AuthPopup from './components/auth-popup/AuthPopup'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { checkSession } from './api/auth'
+import { clearUser, setUser } from './reducers/userSlice'
 
 function App() {
+  const dispatch = useDispatch()
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   const { templatesPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
   );
 
-  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    const verifySession = async () => {
+      try {
+        const res = await checkSession();
+        if (res.logged && res.user) {
+          dispatch(setUser(res.user)); // guarda usuario en Redux
+        } else {
+          dispatch(clearUser()); // limpia si no hay sesión
+        }
+      } catch (err) {
+        console.error("Error al verificar sesión:", err);
+        dispatch(clearUser());
+      }
+    };
+
+    verifySession();
+  }, [dispatch]);
 
   return (
     <>
@@ -33,7 +51,6 @@ function App() {
         {/* popups globales */}
         <RemoteInfoBubble/>
         {templatesPopupOpen && <TemplatesPopup/>}
-        {<AuthPopup isOpen={open} onClose={() => setOpen(true)} onAuthSuccess={(user) => { /* redirect */ }} />}
 
         {/* paginas */}
         <Outlet/>

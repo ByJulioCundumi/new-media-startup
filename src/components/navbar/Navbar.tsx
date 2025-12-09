@@ -5,59 +5,115 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import type { IState } from "../../interfaces/IState";
 import { Link } from "react-router-dom";
 
+import Auth from "../auth/Auth";
+import ProfileAvatar from "../profile-avatar/ProfileAvatar";
+import { TbLogout2 } from "react-icons/tb";
+import { HiHome } from "react-icons/hi2";
+import { LuFileSearch, LuPencilLine } from "react-icons/lu";
+import { MdOutlineWorkOutline } from "react-icons/md";
+import { RiAccountCircleFill } from "react-icons/ri";
+
 function Navbar() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
-  const {sidebarOption} = useSelector((state:IState)=> state.sidebar)
+  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
+  const { logged } = useSelector((state: IState) => state.user);
+
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authSection, setAuthSection] = useState<"login" | "signup">("login");
 
   return (
-    <nav className="navbar">
-      <div className="navbar__content">
+    <>
+      <nav className="navbar">
+        <div className="navbar__content">
 
-        {/* LOGO */}
-        <Link to={"/"} className="navbar__logo" onClick={()=>dispatch(setSidebar("home"))}>
-          <div className="logo-icon"></div>
-          <span className="logo-text">CVBuilder</span>
-        </Link>
-
-        {/* DESKTOP MENU */}
-        <ul className="navbar__links">
-          <Link to={"/"}
-            className={sidebarOption === "home" ? "active link" : " link"}
-            onClick={()=>dispatch(setSidebar("home"))}
-          >
-            Inicio
+          {/* LOGO */}
+          <Link to={"/"} className="navbar__logo" onClick={() => dispatch(setSidebar("home"))}>
+            <div className="logo-icon"></div>
+            <span className="logo-text">CVBuilder</span>
           </Link>
 
-          <Link to={"/cvs"}
-            className={sidebarOption === "cvs" ? "active link" : " link"}
-            onClick={()=>dispatch(setSidebar("cvs"))}
-          >
-            Crea un CV
-          </Link>
+          {/* DESKTOP MENU */}
+          <ul className="navbar__links">
+            <Link
+              to={"/"}
+              className={sidebarOption === "home" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("home"))}
+            >
+             <HiHome /> Inicio
+            </Link>
 
-          <Link to={"/templates"}
-            className={sidebarOption === "templates" ? "active link" : " link"}
-            onClick={()=>dispatch(setSidebar("templates"))}
-          >
-            Plantillas CV
-          </Link>
+            <Link
+              to={"/cvs"}
+              className={sidebarOption === "cvs" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("cvs"))}
+            >
+             <LuPencilLine /> Crea un CV
+            </Link>
 
-          <Link to={"/affiliate"}
-            className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
-            onClick={()=>dispatch(setSidebar("affiliate"))}
-          >
-            Trabaja Con Nosotros
-          </Link>
-        </ul>
+            <Link
+              to={"/templates"}
+              className={sidebarOption === "templates" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("templates"))}
+            >
+              <LuFileSearch /> Plantillas
+            </Link>
 
-        {/* ACTION BUTTONS */}
-        <div className="navbar__actions">
-          <button className="login">Iniciar sesión</button>
-          <button className="signup">Crear Cuenta</button>
+            <Link
+              to={"/affiliate"}
+              className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
+              onClick={() => dispatch(setSidebar("affiliate"))}
+            >
+              <MdOutlineWorkOutline /> Trabajo
+            </Link>
+
+            <Link
+              to={"/account"}
+              className={sidebarOption === "account" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("account"))}
+            >
+               Mi Cuenta
+            </Link>
+          </ul>
+
+          {/* ACTION BUTTONS */}
+          { logged === true ?
+            <>
+              <ProfileAvatar/> 
+            </>
+            :
+            <div className="navbar__actions">
+            <button
+              className="login"
+              onClick={() => {
+                setAuthSection("login");
+                setAuthOpen(true);
+              }}
+            >
+              Iniciar sesión
+            </button>
+
+            <button
+              className="signup"
+              onClick={() => {
+                setAuthSection("signup");
+                setAuthOpen(true);
+              }}
+            >
+              Crear Cuenta
+            </button>
+          </div>
+          }
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Popup Auth */}
+      <Auth
+        isOpen={authOpen}
+        onClose={() => setAuthOpen(false)}
+        initialSection={authSection}
+      />
+    </>
   );
 }
 

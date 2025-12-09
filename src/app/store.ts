@@ -19,6 +19,7 @@ import colorFontSlice from "../reducers/colorFontSlice"
 import toolbarOptionSlice from "../reducers/toolbarOptionSlice"
 import templateSlice from "../reducers/templateSlice"
 import categoriesSlice from "../reducers/categoriesSlice"
+import userSlice from "../reducers/userSlice"
 
 export default configureStore({
     reducer: {
@@ -41,6 +42,7 @@ export default configureStore({
         colorFont: colorFontSlice,
         toolbarOption: toolbarOptionSlice,
         template: templateSlice,
-        categories: categoriesSlice
+        categories: categoriesSlice,
+        user: userSlice
     }
 })

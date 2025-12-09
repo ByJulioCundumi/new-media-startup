@@ -68,51 +68,16 @@
 .profile-avatar-btn {
   position: relative;
   border: none;
-  background: transparent;
   cursor: pointer;
-  padding: 0;
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  border-radius: 100%;
+  font-size: 1.2rem;
 
   display: flex;
   align-items: center;
 
-  &:hover .profile-avatar-icon {
-    transform: scale(1.11);
-  }
-}
-
-.profile-avatar-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #e6e6e6;
-}
-
-/* ----------------------------
-   AVATAR ICON (VIP/Free)
------------------------------ */
-.profile-avatar-icon {
-  position: absolute;
-  bottom: -3px;
-  right: -4px;
-
-  background: #ffffff;
-  border-radius: 50%;
-  padding: 3px;
-  font-size: 14px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: 0.2s ease;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-
-  &.vip {
-    color: #0b9f7a;
-  }
-
-  &.novip {
-    color: #f59e0b;
+  &:hover {
+    transform: scale(1.1);
   }
 }

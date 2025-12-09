@@ -10,12 +10,17 @@ import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import SearchBar from "../../components/search-bar/SearchBar";
 import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
 import { IoStarOutline } from "react-icons/io5";
+import { setSidebar } from "../../reducers/sidebarSlice";
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showFavorites, setShowFavorites] = useState(false);
   const dispatch = useDispatch()
   const [favorites, setFavorites] = useState<string[]>([]);
+  
+    useEffect(()=>{
+        dispatch(setSidebar("templates"))
+      },[])
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
