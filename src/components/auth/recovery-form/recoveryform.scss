@@ -6,7 +6,6 @@
 
   &__container {
     width: 100%;
-    max-width: 420px;
     background: #ffffff;
     padding: 2.8rem;
     border-radius: 20px;
@@ -178,4 +177,11 @@
       transform: scale(1);
     }
   }
+}
+
+.info {
+  color: #f89c95;
+  font-size: 0.9rem;
+  margin-top: 0px;
+  text-align: center;
 }

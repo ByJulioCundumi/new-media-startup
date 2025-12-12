@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoEye, IoEyeOff, IoCheckmarkCircle } from "react-icons/io5";
 import "./recoveryform.scss";
-import { requestPasswordReset, resetPassword } from "../../../api/auth"; // los agregaremos al API
+import { requestPasswordReset, resetPassword, verifyPasswordCode } from "../../../api/auth"; // los agregaremos al API
 
 interface Props {
   goLogin: () => void;
@@ -15,6 +15,7 @@ function RecoveryForm({ goLogin }: Props) {
   const [showNewPass, setShowNewPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   // ---------------------------
   // 1️⃣ Solicitar código de recuperación
@@ -28,7 +29,32 @@ function RecoveryForm({ goLogin }: Props) {
       const res = await requestPasswordReset(email);
 
       if (res.codeSent) {
+        if (res.remainingMs) {
+          const totalSeconds = Math.floor(res.remainingMs / 1000);
+
+          let formatted = "";
+
+          if (totalSeconds < 60) {
+            // Solo segundos
+            formatted = `${totalSeconds} segundos`;
+          } else {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+
+            const m = String(minutes).padStart(2, "0");
+            const s = String(seconds).padStart(2, "0");
+
+            formatted = `${m}:${s} minutos`;
+          }
+
+          setInfo(`Código activo. Expira en ${formatted}.`);
+
+        } else {
+          setInfo("Código enviado correctamente.");
+        }
+
         setStep("verify");
+        return;
       } else {
         setError(res.message || "No se pudo enviar el código");
       }
@@ -48,12 +74,11 @@ const handleVerifyCode = async (e: React.FormEvent) => {
   setError("");
 
   try {
-    // Consultamos al backend si el código es válido
-    const res = await resetPassword(email, inputCode, ""); // enviamos "" como newPassword solo para validar
+    const res = await verifyPasswordCode(email, inputCode);
+
     if (res.message === "Código inválido" || res.message === "Código expirado") {
       setError(res.message);
     } else {
-      // Código válido, podemos avanzar
       setStep("reset");
     }
   } catch (err: any) {
@@ -62,6 +87,7 @@ const handleVerifyCode = async (e: React.FormEvent) => {
     setLoading(false);
   }
 };
+
 
 
   // ---------------------------
@@ -114,6 +140,7 @@ const handleVerifyCode = async (e: React.FormEvent) => {
               </div>
 
               {error && <p className="error">{error}</p>}
+              {info && <p className="info">{info}</p>}
 
               <button className="recoveryform__btn" disabled={loading}>
                 {loading ? "Enviando..." : "Enviar código"}
@@ -145,6 +172,7 @@ const handleVerifyCode = async (e: React.FormEvent) => {
               </div>
 
               {error && <p className="error">{error}</p>}
+              {info && <p className="info">{info}</p>}
 
               <button className="recoveryform__btn" disabled={loading}>
                 {loading ? "Verificando..." : "Verificar"}

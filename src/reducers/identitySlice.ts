@@ -36,6 +36,9 @@ const identitySlice = createSlice({
     setAllowQrCode(state, action: PayloadAction<boolean>){
       state.allowQrCode = action.payload
     },
+    setIdentity(_, action: PayloadAction<IIdentityData>) {
+      return { ...action.payload };
+    },
     resetIdentity() {
       return initialState;
     }
@@ -50,7 +53,8 @@ export const {
   setJobTitle,
   setAllowCvPhoto, 
   setAllowQrCode,
-  resetIdentity
+  resetIdentity,
+  setIdentity
 } = identitySlice.actions;
 
 export default identitySlice.reducer;

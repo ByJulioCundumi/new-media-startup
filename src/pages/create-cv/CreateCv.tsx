@@ -15,11 +15,28 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
 import VerticalToolbarCV from "../../components/vertical-toolbar-cv/VerticalToolbarCv";
 import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
+import { useParams } from "react-router-dom";
+import { loadCvForEditing } from "../../util/loadCvThunk";
+import type { AppDispatch } from "../../app/store";
 
 function CreateCv() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const { cvId } = useParams<{ cvId: string }>();
+ 
+  
+  useEffect(() => {
+    if (cvId) {
+      console.log("[CreateCv] Iniciando carga del CV con ID:", cvId);
+      dispatch(loadCvForEditing(cvId))
+        .then(() => console.log("[CreateCv] CV cargado con éxito"))
+        .catch((err) => console.error("[CreateCv] Error cargando CV:", err));
+    } else {
+      console.warn("[CreateCv] No hay cvId en la URL");
+    }
+  }, [cvId, dispatch]);
 
-  const selectedTemplate = useSelector((state: IState) => state.template.id);
+
+  const {selectedTemplateId} = useSelector((state: IState) => state.cvCreation);
   const { previewPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
   );
@@ -53,7 +70,7 @@ function CreateCv() {
   }, [dispatch]);
 
   const SelectedTemplate = templates.find(
-    (t) => t.id === selectedTemplate
+    (t) => t.id === selectedTemplateId
   )?.component;
 
   return (
@@ -65,46 +82,48 @@ function CreateCv() {
       <div className="create-cv__template">
         {SelectedTemplate && (
           <SelectedTemplate
-            personalInfo={personalInfo}
-            profileSection={String(profile)}
-            educationSection={education}
-            experienceSection={experience}
-            skillSection={skills}
-            languageSection={languages}
-            linkSection={links}
-            courseSection={courses}
-            hobbieSection={hobbies}
-            referenceSection={references}
-            awardSection={awards}
-            customSection={customSection}
-            identitySection={identity}
-            contactSection={contact}
-            sectionsConfig={sections}
-            sectionsOrder={order}
-          />
+  personalInfo={personalInfo}
+  identitySection={identity}
+  contactSection={contact}
+  profileSection={profile}
+  educationSection={education}
+  experienceSection={experience}
+  skillSection={skills}
+  languageSection={languages}
+  linkSection={links}
+  courseSection={courses}
+  hobbieSection={hobbies}
+  referenceSection={references}
+  awardSection={awards}
+  customSection={customSection}
+  sectionsConfig={sections}
+  sectionsOrder={order}
+/>
+
         )}
       </div>
 
       {previewPopupOpen && SelectedTemplate && (
         <PreviewPopup>
           <SelectedTemplate
-            personalInfo={personalInfo}
-            profileSection={String(profile)}
-            educationSection={education}
-            experienceSection={experience}
-            skillSection={skills}
-            languageSection={languages}
-            linkSection={links}
-            courseSection={courses}
-            hobbieSection={hobbies}
-            referenceSection={references}
-            awardSection={awards}
-            customSection={customSection}
-            identitySection={identity}
-            contactSection={contact}
-            sectionsConfig={sections}
-            sectionsOrder={order}
-          />
+  personalInfo={personalInfo}
+  identitySection={identity}
+  contactSection={contact}
+  profileSection={profile}
+  educationSection={education}
+  experienceSection={experience}
+  skillSection={skills}
+  languageSection={languages}
+  linkSection={links}
+  courseSection={courses}
+  hobbieSection={hobbies}
+  referenceSection={references}
+  awardSection={awards}
+  customSection={customSection}
+  sectionsConfig={sections}
+  sectionsOrder={order}
+/>
+
         </PreviewPopup>
       )}
 

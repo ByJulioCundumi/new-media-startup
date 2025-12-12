@@ -17,11 +17,12 @@ import identitySlice from "../reducers/identitySlice";
 import contactSlice from "../reducers/contactSlice";
 import colorFontSlice from "../reducers/colorFontSlice"
 import toolbarOptionSlice from "../reducers/toolbarOptionSlice"
-import templateSlice from "../reducers/templateSlice"
 import categoriesSlice from "../reducers/categoriesSlice"
+import templateSlice from "../reducers/templateSlice"
 import userSlice from "../reducers/userSlice"
+import cvCreationSlice from "../reducers/cvCreationSlice";
 
-export default configureStore({
+export const store = configureStore({
     reducer: {
         sidebar: sidebarSlice,
         personalInfo: personalInfoSlice,
@@ -41,8 +42,10 @@ export default configureStore({
         contactEntries: contactSlice,
         colorFont: colorFontSlice,
         toolbarOption: toolbarOptionSlice,
-        template: templateSlice,
         categories: categoriesSlice,
-        user: userSlice
+        user: userSlice,
+        cvCreation: cvCreationSlice,
     }
 })
+
+export type AppDispatch = typeof store.dispatch;

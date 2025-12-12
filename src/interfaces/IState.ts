@@ -4,6 +4,7 @@ import type { IColorFontState } from "./IColorFont";
 import type { IContactEntry } from "./IContact";
 import type { ICourseEntry } from "./ICourses";
 import type { ICustomEntry } from "./ICustom";
+import type { ICvCreationState } from "./ICvCreation";
 import type { ICvSectionsState } from "./ICvSections";
 import type { IEducationEntry } from "./IEducation";
 import type { IExperienceEntry } from "./IExperience";
@@ -15,6 +16,7 @@ import type { IPersonalInfoEntry } from "./IPersonalInfo";
 import type { IReferenceEntry } from "./IReferences";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
+import type { ITemplate } from "./ITemplate";
 import type { IToolbarOption } from "./IToolbarOption";
 import type { IUserState } from "./IUser";
 
@@ -37,7 +39,8 @@ export interface IState{
     contactEntries: IContactEntry[], // cv sections
     colorFont: IColorFontState,
     toolbarOption: IToolbarOption,
-    template: {id: string},
     categories: ICategories,
-    user: IUserState
+    template: ITemplate,
+    user: IUserState,
+    cvCreation: ICvCreationState
 }

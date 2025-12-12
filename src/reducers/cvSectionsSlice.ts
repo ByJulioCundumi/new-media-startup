@@ -245,6 +245,9 @@ const cvSectionsSlice = createSlice({
         s.isEditorOpen = false;
       });
     },
+    setCvSections(state, action: PayloadAction<ICvSectionsState>) {
+  return { ...action.payload };
+},
     resetCvSections() {
           return initialState;
     }
@@ -264,7 +267,8 @@ export const {
   updateSectionTitle,
   toggleSectionEditor,
   closeAllEditors,
-  resetCvSections
+  resetCvSections,
+  setCvSections
 } = cvSectionsSlice.actions;
 
 export default cvSectionsSlice.reducer;

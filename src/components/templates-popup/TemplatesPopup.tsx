@@ -9,33 +9,17 @@ import { CategorySelector } from "../category-selector/CategorySelector";
 import { useDispatch, useSelector } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import type { IState } from "../../interfaces/IState";
-import { setTemplate } from "../../reducers/templateSlice";
+import { setCreateCvPopup, setSelectedTemplateId } from "../../reducers/cvCreationSlice";
 
 export default function TemplatesPopup() {
-  const [searchValue, setSearchValue] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<string>("");
+  const {selectedTemplateId} = useSelector((state:IState)=>state.cvCreation)
 
-  const storedTemplate = useSelector((state: IState) => state.template.id);
   const dispatch = useDispatch();
 
   const popupRef = useRef<HTMLDivElement | null>(null);
-
-  /* ===========================
-      Cerrar al hacer clic fuera
-  ============================== */
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
-        dispatch(setTemplatePopupOpen(false));
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [dispatch]);
-
+  
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
@@ -47,13 +31,12 @@ export default function TemplatesPopup() {
     return templates.filter((tpl) => {
       const matchesSearch = tpl.label
         .toLowerCase()
-        .includes(searchValue.toLowerCase());
 
       const matchesFavorite = !showFavorites || favorites.includes(tpl.id);
 
       return matchesSearch && matchesFavorite;
     });
-  }, [searchValue, showFavorites, favorites]);
+  }, [showFavorites, favorites]);
 
   return (
     <div className="template-popup-popup-overlay">
@@ -78,8 +61,6 @@ export default function TemplatesPopup() {
 
           <SearchBar
             textHolder="Buscar Plantilla"
-            value={searchValue}
-            onChange={setSearchValue}
           />
 
           <button
@@ -101,10 +82,9 @@ export default function TemplatesPopup() {
               return (
                 <div
                   key={tpl.id}
-                  className={`template-popup-item ${selectedTemplate === tpl.id ? "selected" : ""}`}
+                  className={`template-popup-item ${selectedTemplateId === tpl.id ? "selected" : ""}`}
                   onClick={() => {
-                    setSelectedTemplate(tpl.id);
-                    dispatch(setTemplate(tpl.id));
+                    dispatch(setSelectedTemplateId(tpl.id));
                   }}
                 >
                   <div className="template-popup-preview-wrapper">
@@ -115,7 +95,7 @@ export default function TemplatesPopup() {
                     </div>
 
                     {/* OVERLAY FIJO SELECCIONADA */}
-                    {selectedTemplate === tpl.id && (
+                    {selectedTemplateId === tpl.id && (
                       <div className="template-popup-selected-overlay">
                         <span>Plantilla Seleccionada</span>
                       </div>
@@ -150,11 +130,11 @@ export default function TemplatesPopup() {
         </div>
 
         {/* BOTÓN FIJO */}
-        {selectedTemplate && (
+        {selectedTemplateId && (
           <div className="template-popup-btn-container">
             <button
               className="template-popup-continue-btn"
-              onClick={() => dispatch(setTemplatePopupOpen(false))}
+              onClick={() => dispatch(setCreateCvPopup(true))}
             >
               Comenzar a Editar
             </button>

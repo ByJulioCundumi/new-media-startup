@@ -16,10 +16,12 @@ import TemplatesPopup from './components/templates-popup/TemplatesPopup'
 import { useEffect } from 'react'
 import { checkSession } from './api/auth'
 import { clearUser, setUser } from './reducers/userSlice'
+import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
 
 function App() {
   const dispatch = useDispatch()
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+  const {isOpen} = useSelector((state:IState)=>state.cvCreation)
   const { templatesPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
   );
@@ -51,6 +53,7 @@ function App() {
         {/* popups globales */}
         <RemoteInfoBubble/>
         {templatesPopupOpen && <TemplatesPopup/>}
+        {isOpen && <CreateNewCvPopup/>}
 
         {/* paginas */}
         <Outlet/>
@@ -59,7 +62,7 @@ function App() {
         <Routes>
             <Route path='/' element={<HomePage/>} />
             <Route path='cvs' element={<DashboardCVs/>} />
-            <Route path='create' element={<CreateCv/>} />
+            <Route path='create/:cvId' element={<CreateCv/>} />
             <Route path='templates' element={<TemplatesPage/>} />
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliate' element={<JobPage/>} />

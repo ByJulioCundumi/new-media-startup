@@ -6,8 +6,8 @@ import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
 import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
-import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
 import { setSidebar } from "../../reducers/sidebarSlice";
+import { setSelectedTemplateId } from "../../reducers/cvCreationSlice";
 
 const mockUserCVs = [
   {
@@ -27,9 +27,13 @@ const mockUserCVs = [
 export default function DashboardCVs() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(setSidebar("cvs"))
-  },[])
+  useEffect(() => {
+    dispatch(setSidebar("cvs"));
+  }, []);
+
+  const handleCreateClick = () => {
+    dispatch(setTemplatePopupOpen(true));
+  };
 
   return (
     <div className="dashboard-cvs">
@@ -39,8 +43,8 @@ export default function DashboardCVs() {
         <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
       </div>
 
-      {/* 🔹 Tarjeta Crear Nuevo */}
-      <div className="cv-item create-new" onClick={()=> dispatch(setTemplatePopupOpen(true))}>
+      {/* 🔹 Crear nuevo CV */}
+      <div className="cv-item create-new" onClick={handleCreateClick}>
         <div className="create-box">
           <span className="plus">+</span>
           <p>Crear nuevo CV</p>
@@ -49,18 +53,11 @@ export default function DashboardCVs() {
 
       {/* 🔹 Lista de CVs */}
       {mockUserCVs.map((cv) => {
-        let tpl = templates.find((t) => t.id === cv.templateId);
-        if (!tpl) tpl = templates[0];
-
+        let tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
         const Component = tpl.component;
 
         return (
-          <div key={cv.id} className="cv-item">
-
-            <div className="cv-menu">
-              <span>•••</span>
-            </div>
-
+          <div key={cv.id} className="cv-item" onClick={()=> dispatch(setSelectedTemplateId(cv.templateId))}>
             <div className="cv-preview">
               <div className="cv-preview-scale">
                 <Component {...mockTemplateData} />
@@ -75,6 +72,7 @@ export default function DashboardCVs() {
           </div>
         );
       })}
+
     </div>
   );
 }

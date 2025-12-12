@@ -67,6 +67,16 @@ export const requestPasswordReset = async (email: string) => {
   return res.json();
 };
 
+export const verifyPasswordCode = async (email: string, code: string) => {
+  const res = await fetch(`${BASE_URL}/auth/password/code`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code }),
+  });
+
+  return res.json();
+};
+
 export const resetPassword = async (email: string, code: string, newPassword: string) => {
   const res = await fetch(`${BASE_URL}/auth/password/reset`, {
     method: "POST",
