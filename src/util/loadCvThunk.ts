@@ -20,12 +20,8 @@ import { loadTemplateDefaults, loadStoredValues } from "../reducers/colorFontSli
 import { setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
 import type { AppDispatch } from "../app/store";
 import { getCvByIdApi } from "../api/cv";
-// Opcional: si tienes un slice para el template seleccionado
-// import { setCurrentTemplate } from "../reducers/templateSlice";
 
-/**
- * Thunk para cargar un CV existente desde el backend y poblar todo el store
- */
+
 export const loadCvForEditing =
   (cvId: string) =>
   async (dispatch: AppDispatch): Promise<void> => {
@@ -87,8 +83,6 @@ export const loadCvForEditing =
       return cvData;
     } catch (error: any) {
       console.error("Error al cargar el CV para edición:", error);
-      // Aquí puedes dispatch un error global o mostrar un toast
-      // dispatch(showError(error.message || "No se pudo cargar el CV"));
       throw error; // Propagar el error para manejarlo en el componente si es necesario
     }
   };

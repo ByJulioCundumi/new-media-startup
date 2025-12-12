@@ -1,35 +1,42 @@
 // DashboardCVs.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./DashboardCVs.scss";
 
 import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
+
 import { useDispatch } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import { setSelectedTemplateId } from "../../reducers/cvCreationSlice";
-
-const mockUserCVs = [
-  {
-    id: "cv1",
-    title: "CV Principal",
-    templateId: "tokyo",
-    createdAt: "2024-11-10",
-  },
-  {
-    id: "cv2",
-    title: "CV Inglés",
-    templateId: "roma",
-    createdAt: "2024-12-01",
-  }
-];
+import { getAllCvsApi } from "../../api/cv";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardCVs() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
+  const [cvs, setCvs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 🔹 Cargar CVs al iniciar
   useEffect(() => {
     dispatch(setSidebar("cvs"));
-  }, []);
+
+    const fetchCvs = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllCvsApi(); // ← async/await API real
+        setCvs(data);
+      } catch (error) {
+        console.error("Error cargando CVs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCvs();
+  }, [dispatch]);
 
   const handleCreateClick = () => {
     dispatch(setTemplatePopupOpen(true));
@@ -51,28 +58,58 @@ export default function DashboardCVs() {
         </div>
       </div>
 
-      {/* 🔹 Lista de CVs */}
-      {mockUserCVs.map((cv) => {
-        let tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
-        const Component = tpl.component;
+      {/* 🔹 Loading */}
+      {loading && <p>Cargando tus CVs...</p>}
 
-        return (
-          <div key={cv.id} className="cv-item" onClick={()=> dispatch(setSelectedTemplateId(cv.templateId))}>
-            <div className="cv-preview">
-              <div className="cv-preview-scale">
-                <Component {...mockTemplateData} />
+      {/* 🔹 Lista de CVs desde backend */}
+      {!loading && cvs.length === 0 && (
+        <p>No tienes CVs creados todavía.</p>
+      )}
+
+      {!loading &&
+        cvs.map((cv) => {
+          const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
+          const Component = tpl.component;
+
+          return (
+            <div
+              key={cv.id}
+              className="cv-item"
+              onClick={() => dispatch(setSelectedTemplateId(cv.templateId))}
+            >
+              <div className="cv-preview" onClick={()=> navigate(`/create/${cv.id}`)}>
+                <div className="cv-preview-scale">
+                  <Component
+                    personalInfo={cv.personalInfo || []}
+                    identitySection={cv.identity || {}}
+                    contactSection={cv.contactEntries || []}
+                    profileSection={cv.profileSection || ""}
+                    educationSection={cv.educationEntries || []}
+                    experienceSection={cv.experienceEntries || []}
+                    skillSection={cv.skillsEntries || []}
+                    languageSection={cv.languagesEntries || []}
+                    linkSection={cv.linksEntries || []}
+                    courseSection={cv.coursesEntries || []}
+                    hobbieSection={cv.hobbiesEntries || []}
+                    referenceSection={cv.referencesEntries || []}
+                    awardSection={cv.awardsEntries || []}
+                    customSection={cv.customEntries || []}
+                    sectionsConfig={cv.cvSections?.sections || []}
+                    sectionsOrder={cv.cvSections?.order || []}
+                  />
+                </div>
+              </div>
+
+              <div className="cv-info">
+                <h3>{cv.title}</h3>
+                <p>{cv.cvTitle}</p>
+                <span className="date">
+                  Plantilla: {tpl.label} / {cv.createdAt?.split("T")[0]}
+                </span>
               </div>
             </div>
-
-            <div className="cv-info">
-              <h3>{cv.title}</h3>
-              <p>Plantilla: {tpl.label}</p>
-              <span className="date">Creado el {cv.createdAt}</span>
-            </div>
-          </div>
-        );
-      })}
-
+          );
+        })}
     </div>
   );
 }

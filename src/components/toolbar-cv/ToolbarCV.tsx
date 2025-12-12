@@ -43,6 +43,7 @@ import { clearAllReferences } from "../../reducers/referencesSlice";
 import { clearAllAwards } from "../../reducers/awardsSlice";
 import { clearAllCustom } from "../../reducers/customSlice";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
+import { Link } from "react-router-dom";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -129,9 +130,9 @@ const ToolbarCV: React.FC = () => {
   return (
     <div className="toolbar-cv-wrapper">
       {/* ===== BOTÓN RETROCESO ===== */}
-      <button className="toolbar-cv-btn ghost toolbar-cv-btn__back">
+      <Link to={"/cvs"} className="toolbar-cv-btn ghost toolbar-cv-btn__back">
         <IoChevronBackOutline />
-      </button>
+      </Link>
 
       {/* ===== BOTONES IZQUIERDA ===== */}
       <div className="toolbar-cv-buttons">

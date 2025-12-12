@@ -18,6 +18,7 @@ import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
 import { useParams } from "react-router-dom";
 import { loadCvForEditing } from "../../util/loadCvThunk";
 import type { AppDispatch } from "../../app/store";
+import { resetCvEditor } from "../../util/resetCvThunk";
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,15 +26,27 @@ function CreateCv() {
  
   
   useEffect(() => {
-    if (cvId) {
+  if (!cvId) {
+    console.warn("[CreateCv] No hay cvId en la URL");
+    return;
+  }
+
+  (async () => {
+    try {
       console.log("[CreateCv] Iniciando carga del CV con ID:", cvId);
-      dispatch(loadCvForEditing(cvId))
-        .then(() => console.log("[CreateCv] CV cargado con éxito"))
-        .catch((err) => console.error("[CreateCv] Error cargando CV:", err));
-    } else {
-      console.warn("[CreateCv] No hay cvId en la URL");
+      await dispatch(loadCvForEditing(cvId));
+      console.log("[CreateCv] CV cargado con éxito");
+    } catch (err) {
+      console.error("[CreateCv] Error cargando CV:", err);
     }
-  }, [cvId, dispatch]);
+  })();
+
+  return () => {
+      console.log("[CreateCv] Saliendo del editor → limpiando estado");
+      dispatch(resetCvEditor());
+    };
+
+}, [cvId, dispatch]);
 
 
   const {selectedTemplateId} = useSelector((state: IState) => state.cvCreation);

@@ -29,3 +29,17 @@ export const getCvByIdApi = async (id: string) => {
 
   return data;
 };
+
+
+export const getAllCvsApi = async () => {
+  const res = await fetch(`${BASE_URL}/all`, {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Error cargando CVs");
+
+  return data; // debe ser un array de CVs
+};

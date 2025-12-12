@@ -1,9 +1,6 @@
 // components/section-progress/SectionProgress.tsx
 import "./sectionprogress.scss";
-import { GrGrow } from "react-icons/gr";
-import { MdFormatListBulletedAdd, MdOutlineWorkOutline, MdPendingActions } from "react-icons/md";
-import { PiIdentificationBadge, PiStudentLight } from "react-icons/pi";
-import { IoChevronUp, IoChevronDown, IoEyeOutline } from "react-icons/io5";
+import { MdFormatListBulletedAdd } from "react-icons/md";
 import { LuCheck, LuEyeClosed } from "react-icons/lu";
 
 import { useRef, useState, useEffect, useMemo } from "react";
@@ -20,8 +17,8 @@ import SortableSection from "../../pages/create-cv/sortable-section/SortableSect
 import type { IState } from "../../interfaces/IState";
 import { reorderSections, toggleSectionOpen } from "../../reducers/cvSectionsSlice";
 import { BiEditAlt } from "react-icons/bi";
-import { TbFileCv } from "react-icons/tb";
 import { FaSave } from "react-icons/fa";
+import { setSelectedCvTitle } from "../../reducers/cvCreationSlice";
 
 function SectionProgress() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +30,7 @@ function SectionProgress() {
   /* ⭐ Datos reales del store */
   const sections = useSelector((state: IState) => state.cvSections.sections);
   const order = useSelector((state: IState) => state.cvSections.order);
+  const {selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
 
   /* ⭐ Secciones opcionales (solo estas cuentan 0–7) */
   const OPTIONAL_SECTIONS = [
@@ -113,17 +111,16 @@ const progressColorClass = useMemo(() => {
   return "progress-blue";
 }, [overallProgress]);
 
-const [title, setTitle] = useState("Nuevo CV");
   const [editing, setEditing] = useState(false);
 
   const handleEditTitle = () => setEditing(true);
   const handleSaveTitle = () => {
-    if (!title.trim()) setTitle("Nuevo CV");
+    if (!selectedCvTitle.trim()) dispatch(setSelectedCvTitle("Titulo del cv"));
     setEditing(false);
   };
 
   const handleTitleBlur = () => {
-    if (!title.trim()) setTitle("Nuevo CV");
+    if (!selectedCvTitle.trim()) dispatch(setSelectedCvTitle("Titulo del cv"));
     setEditing(false);
   };
 
@@ -132,19 +129,19 @@ const [title, setTitle] = useState("Nuevo CV");
     <div ref={mainRef} className="section-progress">
       
       <div className="section-progress__header">
-  <div className="toolbar-cv-header">
+      <div className="toolbar-cv-header">
         <div className="toolbar-cv-header__main">
           {editing ? (
           <input
             className="toolbar-cv-title-input editing"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={selectedCvTitle}
+            onChange={(e) => dispatch(setSelectedCvTitle(e.target.value))}
             onBlur={handleTitleBlur}
             autoFocus
           />
         ) : (
           <h2 className="toolbar-cv-title">
-            {title}{" "}
+            {selectedCvTitle}{" "}
           </h2>
         )}
 
