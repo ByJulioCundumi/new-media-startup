@@ -4,13 +4,9 @@ import {
   FaSyncAlt,
   FaSave,
 } from "react-icons/fa";
-import { LuEye, LuScanQrCode, LuShoppingBasket } from "react-icons/lu";
 import "./toolbarcv.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { openPopup } from "../../reducers/colorFontSlice";
-import { TbEdit, TbFileCv, TbReportAnalytics, TbScan, TbWorldCode, TbWorldOff } from "react-icons/tb";
-import { RiArrowGoBackLine, RiShoppingBagLine, RiVipLine } from "react-icons/ri";
-import { IoChevronBackOutline, IoDiamond } from "react-icons/io5";
+import { IoCheckmarkDoneOutline, IoChevronBackOutline, IoDiamond, IoSave, IoSaveOutline } from "react-icons/io5";
 import type { IState } from "../../interfaces/IState";
 import {
   FaRegFaceFrown,
@@ -21,9 +17,7 @@ import {
   FaRegFaceSurprise,
 } from "react-icons/fa6";
 import { BsEmojiSunglasses } from "react-icons/bs";
-import { BiEditAlt } from "react-icons/bi";
 import {
-  togglePreviewPopup,
   toggleTemplatePopup,
 } from "../../reducers/toolbarOptionSlice";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
@@ -44,15 +38,13 @@ import { clearAllAwards } from "../../reducers/awardsSlice";
 import { clearAllCustom } from "../../reducers/customSlice";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
 import { Link } from "react-router-dom";
+import { LuSave } from "react-icons/lu";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { allowQrCode } = useSelector((state: IState) => state.identity);
+  const { hasUnsavedChanges, isSaving } = useSelector((state: IState) => state.cvSave);
   const cvSections = useSelector((state: IState) => state.cvSections);
-  const { previewPopupOpen } = useSelector(
-    (state: IState) => state.toolbarOption
-  );
 
   const clearCv = ()=>{
       dispatch(resetIdentity());
@@ -147,6 +139,19 @@ const ToolbarCV: React.FC = () => {
         <button onClick={clearCv} className="toolbar-cv-btn ghost">
           <GiBroom />
           Limpiar
+        </button>
+
+        <button onClick={clearCv} className="toolbar-cv-btn ghost">
+          <LuSave /> 
+          {
+            !isSaving === true ? <IoCheckmarkDoneOutline />
+            :
+            <div className="loading-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          }
         </button>
       </div>
 

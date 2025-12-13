@@ -5,6 +5,7 @@ import type { IContactEntry } from "./IContact";
 import type { ICourseEntry } from "./ICourses";
 import type { ICustomEntry } from "./ICustom";
 import type { ICvCreationState } from "./ICvCreation";
+import type { ICvSaveState } from "./ICvSave";
 import type { ICvSectionsState } from "./ICvSections";
 import type { IEducationEntry } from "./IEducation";
 import type { IExperienceEntry } from "./IExperience";
@@ -42,5 +43,6 @@ export interface IState{
     categories: ICategories,
     template: ITemplate,
     user: IUserState,
-    cvCreation: ICvCreationState
+    cvCreation: ICvCreationState,
+    cvSave: ICvSaveState
 }

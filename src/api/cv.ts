@@ -43,3 +43,20 @@ export const getAllCvsApi = async () => {
 
   return data; // debe ser un array de CVs
 };
+
+
+export const updateCvApi = async (id: string, data: any) => {
+  const res = await fetch(`${BASE_URL}/${id}`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Error actualizando CV");
+  }
+
+  return res.json();
+};

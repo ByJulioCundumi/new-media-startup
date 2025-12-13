@@ -18,9 +18,9 @@ import contactSlice from "../reducers/contactSlice";
 import colorFontSlice from "../reducers/colorFontSlice"
 import toolbarOptionSlice from "../reducers/toolbarOptionSlice"
 import categoriesSlice from "../reducers/categoriesSlice"
-import templateSlice from "../reducers/templateSlice"
 import userSlice from "../reducers/userSlice"
 import cvCreationSlice from "../reducers/cvCreationSlice";
+import cvSaveSlice from "../reducers/cvSaveSlice";
 
 export const store = configureStore({
     reducer: {
@@ -45,6 +45,7 @@ export const store = configureStore({
         categories: categoriesSlice,
         user: userSlice,
         cvCreation: cvCreationSlice,
+        cvSave: cvSaveSlice
     }
 })
 

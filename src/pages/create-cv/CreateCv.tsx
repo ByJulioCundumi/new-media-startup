@@ -19,12 +19,19 @@ import { useParams } from "react-router-dom";
 import { loadCvForEditing } from "../../util/loadCvThunk";
 import type { AppDispatch } from "../../app/store";
 import { resetCvEditor } from "../../util/resetCvThunk";
+import { setHasUnsavedChanges, setIsSaving, setOriginalData } from "../../reducers/cvSaveSlice";
+import { updateCvApi } from "../../api/cv";
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
   const { cvId } = useParams<{ cvId: string }>();
- 
-  
+  const {selectedTemplateId, selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
+  const { previewPopupOpen } = useSelector(
+    (state: IState) => state.toolbarOption
+  );
+
+  // ----------------------------------------------------------------------------------
+
   useEffect(() => {
   if (!cvId) {
     console.warn("[CreateCv] No hay cvId en la URL");
@@ -48,11 +55,69 @@ function CreateCv() {
 
 }, [cvId, dispatch]);
 
+  // ----------------------------------------------------------------------------------
 
-  const {selectedTemplateId} = useSelector((state: IState) => state.cvCreation);
-  const { previewPopupOpen } = useSelector(
-    (state: IState) => state.toolbarOption
-  );
+  const originalData = useSelector((state: IState) => state.cvSave.originalData);
+  const hasUnsavedChanges = useSelector((state: IState) => state.cvSave.hasUnsavedChanges);
+  const isSaving = useSelector((state: IState) => state.cvSave.isSaving);
+
+  // Todos los selectores actuales
+  const currentData = {
+    cvTitle: selectedCvTitle,
+    templateId: selectedTemplateId,
+    identity: useSelector((state: IState) => state.identity),
+    profileContent: useSelector((state: IState) => state.profileSection),
+    contactEntries: useSelector((state: IState) => state.contactEntries),
+    educationEntries: useSelector((state: IState) => state.educationEntries),
+    experienceEntries: useSelector((state: IState) => state.experienceEntries),
+    skillsEntries: useSelector((state: IState) => state.skillsEntries),
+    languagesEntries: useSelector((state: IState) => state.languagesEntries),
+    linksEntries: useSelector((state: IState) => state.linksEntries),
+    coursesEntries: useSelector((state: IState) => state.coursesEntries),
+    hobbiesEntries: useSelector((state: IState) => state.hobbiesEntries),
+    referencesEntries: useSelector((state: IState) => state.referencesEntries),
+    awardsEntries: useSelector((state: IState) => state.awardsEntries),
+    customEntries: useSelector((state: IState) => state.customEntries),
+    personalInfoEntries: useSelector((state: IState) => state.personalInfo),
+    cvSections: useSelector((state: IState) => state.cvSections),
+    colorFont: useSelector((state: IState) => state.colorFont),
+  };
+
+  // Detectar cambios
+  useEffect(() => {
+    if (!originalData || !cvId) return;
+
+    const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentData);
+    dispatch(setHasUnsavedChanges(hasChanges));
+  }, [currentData, originalData, dispatch, cvId]);
+
+  // Guardar
+  const handleSave = async () => {
+    if (!cvId || isSaving || !hasUnsavedChanges) return;
+
+    dispatch(setIsSaving(true));
+    try {
+      await updateCvApi(cvId, currentData);
+      // Actualizar originalData después de guardar
+      dispatch(setOriginalData(currentData));
+      dispatch(setHasUnsavedChanges(false));
+      console.log("CV guardado con éxito");
+    } catch (err) {
+      console.error("Error guardando CV:", err);
+    } finally {
+      dispatch(setIsSaving(false));
+    }
+  };
+
+  // Opcional: auto-guardado cada X segundos si hay cambios
+  useEffect(() => {
+    if (hasUnsavedChanges && cvId) {
+      const timer = setTimeout(handleSave, 5000); // 3 segundos
+      return () => clearTimeout(timer);
+    }
+  }, [hasUnsavedChanges, currentData]);
+ 
+  // ----------------------------------------------------------------------------------
 
   /** Selectores */
   const cvSectionsState = useSelector(

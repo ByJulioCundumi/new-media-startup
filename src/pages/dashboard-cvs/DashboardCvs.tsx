@@ -80,10 +80,10 @@ export default function DashboardCVs() {
               <div className="cv-preview" onClick={()=> navigate(`/create/${cv.id}`)}>
                 <div className="cv-preview-scale">
                   <Component
-                    personalInfo={cv.personalInfo || []}
+                    personalInfo={cv.personalInfoEntries || []}
                     identitySection={cv.identity || {}}
                     contactSection={cv.contactEntries || []}
-                    profileSection={cv.profileSection || ""}
+                    profileSection={cv.profileContent || ""}
                     educationSection={cv.educationEntries || []}
                     experienceSection={cv.experienceEntries || []}
                     skillSection={cv.skillsEntries || []}

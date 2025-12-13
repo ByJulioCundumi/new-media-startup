@@ -20,6 +20,7 @@ import { loadTemplateDefaults, loadStoredValues } from "../reducers/colorFontSli
 import { setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
 import type { AppDispatch } from "../app/store";
 import { getCvByIdApi } from "../api/cv";
+import { setOriginalData } from "../reducers/cvSaveSlice";
 
 
 export const loadCvForEditing =
@@ -78,6 +79,9 @@ export const loadCvForEditing =
 
       // --- Final ---
       console.log(`CV "${cvData.cvTitle || cvId}" cargado correctamente para edición`);
+      
+      // ← GUARDAR ESTADO ORIGINAL
+      dispatch(setOriginalData(cvData));
 
       // Retornamos los datos por si el componente necesita hacer algo más
       return cvData;
