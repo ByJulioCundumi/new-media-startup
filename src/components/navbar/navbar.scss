@@ -18,6 +18,14 @@
     align-items: center;
   }
 
+  &__settings{
+    font-size: 1.3rem;
+  }
+
+  &__pricing{
+    font-size: 1.1rem;
+  }
+
   /* LOGO */
   &__logo {
     display: flex;
@@ -60,10 +68,13 @@
       padding: 4px 0;
       border-bottom: 2px solid transparent;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
 
       &:hover {
-        color: #0073ff;
-        border-color: #0073ff;
+        color: #0099ff;
+        border-color: #0099ff;
       }
 
       &:last-child:hover {
@@ -124,8 +135,8 @@
 
 /* ESTILO DE ACTIVE PARA DESKTOP */
 .navbar__links .link.active {
-  color: #0073ff;
-  border-color: #0073ff;
+  color: #0099ff;
+  border-color: #0099ff;
   font-weight: 600;
 }
 

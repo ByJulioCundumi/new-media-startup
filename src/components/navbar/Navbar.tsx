@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 
 import Auth from "../auth/Auth";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import { TbLogout2 } from "react-icons/tb";
+import { TbLogout2, TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
-import { MdOutlineWorkOutline } from "react-icons/md";
-import { RiAccountCircleFill } from "react-icons/ri";
+import { MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
+import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function Navbar() {
               className={sidebarOption === "home" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("home"))}
             >
-             <HiHome /> Inicio
+             <HiHome />
             </Link>
 
             <Link
@@ -60,6 +60,14 @@ function Navbar() {
             </Link>
 
             <Link
+              to={"/pricing"}
+              className={sidebarOption === "pricing" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("pricing"))}
+            >
+              <MdOutlineDiamond className="navbar__pricing"/> Planes
+            </Link>
+
+            <Link
               to={"/affiliate"}
               className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
               onClick={() => dispatch(setSidebar("affiliate"))}
@@ -72,7 +80,7 @@ function Navbar() {
               className={sidebarOption === "account" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("account"))}
             >
-               Mi Cuenta
+               <TbSettingsCode className="navbar__settings"/>
             </Link>
           </ul>
 

@@ -21,6 +21,23 @@ import type { AppDispatch } from "../../app/store";
 import { resetCvEditor } from "../../util/resetCvThunk";
 import { setHasUnsavedChanges, setIsSaving, setOriginalData } from "../../reducers/cvSaveSlice";
 import { updateCvApi } from "../../api/cv";
+import { setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../../reducers/cvCreationSlice";
+import { setIdentity } from "../../reducers/identitySlice";
+import { setContactEntries } from "../../reducers/contactSlice";
+import { setProfileContent } from "../../reducers/profileSlice";
+import { setEducationData } from "../../reducers/educationSlice";
+import { setExperienceData } from "../../reducers/experienceSlice";
+import { setSkillsEntries } from "../../reducers/skillsSlice";
+import { setLanguagesEntries } from "../../reducers/languagesSlice";
+import { setLinksEntries } from "../../reducers/linksSlice";
+import { setCoursesEntries } from "../../reducers/coursesSlice";
+import { setHobbiesEntries } from "../../reducers/hobbiesSlice";
+import { setReferencesEntries } from "../../reducers/referencesSlice";
+import { setAwardsEntries } from "../../reducers/awardsSlice";
+import { setCustomEntries } from "../../reducers/customSlice";
+import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
+import { setCvSections } from "../../reducers/cvSectionsSlice";
+import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,28 +48,79 @@ function CreateCv() {
   );
 
   // ----------------------------------------------------------------------------------
-
-  useEffect(() => {
+useEffect(() => {
   if (!cvId) {
     console.warn("[CreateCv] No hay cvId en la URL");
     return;
   }
 
-  (async () => {
+  const loadCv = async () => {
     try {
-      console.log("[CreateCv] Iniciando carga del CV con ID:", cvId);
+      console.log("[CreateCv] Intentando cargar CV con ID:", cvId);
+
+      // 1. Primero intenta cargar desde localStorage (borradores)
+      const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+      const draftCv = localDrafts.find((draft: any) => draft.localId === cvId);
+
+      if (draftCv) {
+        console.log("[CreateCv] Cargando CV desde localStorage (borrador)");
+
+        // Simular exactamente lo que hace loadCvForEditing
+        dispatch(setSelectedCvId(draftCv.localId));
+        dispatch(setSelectedTemplateId(draftCv.templateId));
+        dispatch(setSelectedCvTitle(draftCv.cvTitle));
+
+        dispatch(setIdentity(draftCv.identity || {}));
+        dispatch(setContactEntries(draftCv.contactEntries || []));
+        dispatch(setProfileContent(draftCv.profileContent || ""));
+        dispatch(setEducationData(draftCv.educationEntries || []));
+        dispatch(setExperienceData(draftCv.experienceEntries || []));
+        dispatch(setSkillsEntries(draftCv.skillsEntries || []));
+        dispatch(setLanguagesEntries(draftCv.languagesEntries || []));
+        dispatch(setLinksEntries(draftCv.linksEntries || []));
+        dispatch(setCoursesEntries(draftCv.coursesEntries || []));
+        dispatch(setHobbiesEntries(draftCv.hobbiesEntries || []));
+        dispatch(setReferencesEntries(draftCv.referencesEntries || []));
+        dispatch(setAwardsEntries(draftCv.awardsEntries || []));
+        dispatch(setCustomEntries(draftCv.customEntries || []));
+        dispatch(setPersonalInfoEntries(draftCv.personalInfoEntries || []));
+
+        if (draftCv.cvSections) {
+          dispatch(setCvSections(draftCv.cvSections));
+        }
+
+        if (draftCv.colorFont) {
+          if (draftCv.colorFont.defaults) {
+            dispatch(loadTemplateDefaults(draftCv.colorFont.defaults));
+          }
+          if (draftCv.colorFont.selected) {
+            dispatch(loadStoredValues(draftCv.colorFont.selected));
+          }
+        }
+
+        // Guardar estado original para detectar cambios
+        dispatch(setOriginalData(draftCv));
+
+        console.log("[CreateCv] Borrador cargado correctamente desde localStorage");
+        return;
+      }
+
+      // 2. Si no es un borrador → cargar desde backend
+      console.log("[CreateCv] No es borrador → cargando desde backend");
       await dispatch(loadCvForEditing(cvId));
-      console.log("[CreateCv] CV cargado con éxito");
+
     } catch (err) {
       console.error("[CreateCv] Error cargando CV:", err);
     }
-  })();
+  };
 
+  loadCv();
+
+  // Cleanup: limpiar estado al salir del editor
   return () => {
-      console.log("[CreateCv] Saliendo del editor → limpiando estado");
-      dispatch(resetCvEditor());
-    };
-
+    console.log("[CreateCv] Saliendo del editor → limpiando estado");
+    dispatch(resetCvEditor());
+  };
 }, [cvId, dispatch]);
 
   // ----------------------------------------------------------------------------------
@@ -93,21 +161,30 @@ function CreateCv() {
 
   // Guardar
   const handleSave = async () => {
-    if (!cvId || isSaving || !hasUnsavedChanges) return;
+  if (!cvId || isSaving || !hasUnsavedChanges) return;
 
-    dispatch(setIsSaving(true));
-    try {
-      await updateCvApi(cvId, currentData);
-      // Actualizar originalData después de guardar
+  const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+  const isDraft = localDrafts.some((draft: any) => draft.localId === cvId);
+
+  dispatch(setIsSaving(true));
+  try {
+    if (isDraft) {
+      // Guardar en local
+      const updatedDrafts = localDrafts.map((draft: any) => draft.localId === cvId ? { ...draft, ...currentData } : draft);
+      localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
       dispatch(setOriginalData(currentData));
-      dispatch(setHasUnsavedChanges(false));
-      console.log("CV guardado con éxito");
-    } catch (err) {
-      console.error("Error guardando CV:", err);
-    } finally {
-      dispatch(setIsSaving(false));
+    } else {
+      // Guardar en backend
+      await updateCvApi(cvId, currentData);
+      dispatch(setOriginalData(currentData));
     }
-  };
+    dispatch(setHasUnsavedChanges(false));
+  } catch (err) {
+    console.error("Error guardando:", err);
+  } finally {
+    dispatch(setIsSaving(false));
+  }
+};
 
   // Opcional: auto-guardado cada X segundos si hay cambios
   useEffect(() => {

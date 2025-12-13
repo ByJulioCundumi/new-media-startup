@@ -86,7 +86,6 @@
   h3 {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 4px;
     color: #111827;
   }
 
@@ -98,8 +97,10 @@
   .date {
     font-size: 12px;
     color: #6b7280;
-    margin-top: 6px;
     display: inline-block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 }
 
@@ -204,7 +205,7 @@
   }
 
   &.enabled {
-    background: #838386fa; // verde esmeralda
+    background: #a6a6a7fa; // verde esmeralda
   }
 }
 
@@ -231,3 +232,49 @@
     color: #ffffff;
   }
 }
+
+
+/* Etiqueta Borrador */
+.draft-tag {
+  position: absolute;
+  bottom: 55px;
+  right: 16px;
+  z-index: 12;
+  background: #f59e0b;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Botón Guardar en nube */
+.cv-save-cloud-btn {
+  position: absolute;
+  bottom: 100px;
+  left: 16px;
+  z-index: 11;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #2563eb;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+
+
+

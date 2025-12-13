@@ -3,7 +3,8 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { Typewriter } from "react-simple-typewriter";
 import "./remoteinfobubble.scss";
-import { LuMessageSquareMore, LuMessagesSquare } from "react-icons/lu";
+import { FaRegShareSquare } from "react-icons/fa";
+import { MdWorkOutline } from "react-icons/md";
 
 const RemoteInfoBubble: React.FC = () => {
   const [closed, setClosed] = useState(false);
@@ -14,12 +15,12 @@ const RemoteInfoBubble: React.FC = () => {
     <div className="remote-info-bubble">
       <div className="info-container">
         {/* Icono de información */}
-        <LuMessageSquareMore className="info-icon" />
+        <MdWorkOutline className="info-icon" />
 
         {/* Texto con typing infinito */}
         <div className="info-text">
           <Typewriter
-            words={["Trabaja En Remoto Sin Experiencia"]}
+            words={["Comparte Y Gana Comisiones del 70%"]}
             loop={0} // infinito
             typeSpeed={45}
             deleteSpeed={45}

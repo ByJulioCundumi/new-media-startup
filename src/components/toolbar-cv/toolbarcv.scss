@@ -238,12 +238,13 @@
 }
 
 .loading-dots span {
-  width: 6px;
-  height: 6px;
-  background: #0073ff; /* color del punto */
+  width: 3px;
+  height: 3px;
+  background: #7e7e7e; /* color del punto */
   border-radius: 50%;
   display: inline-block;
   animation: bounce 1.2s infinite ease-in-out;
+  margin-bottom: -0.5rem;
 }
 
 .loading-dots span:nth-child(1) {

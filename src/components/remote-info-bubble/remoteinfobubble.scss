@@ -11,33 +11,31 @@
 .info-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   background: #ffffff;
-  padding: 10px 16px;
-  border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  padding: 5px 16px;
+  border-radius: 7px;
+  box-shadow: 0 0px 5px #31313100;
+  border: 1px solid #00000013;
   position: relative;
 }
 
 .info-icon {
   font-size: 30px;
-  color: #4a5cff;
-  background: #f5f6ff;
-  padding: 6px;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+  color: #cead19;
+  padding: 6px 0;
 }
 
 .info-text {
   font-size: 15px;
-  color: #2e325a;
+  color: #cead19;
   white-space: nowrap;
 }
 
 /* Botón de cerrar */
 .close-icon {
   font-size: 20px;
-  color: #70738c;
+  color: #515264;
   cursor: pointer;
   transition: 0.2s ease;
 }
