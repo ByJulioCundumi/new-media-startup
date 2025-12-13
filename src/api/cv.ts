@@ -60,3 +60,19 @@ export const updateCvApi = async (id: string, data: any) => {
 
   return res.json();
 };
+
+
+// api/cv.ts
+export const deleteCvApi = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Error eliminando CV");
+  }
+
+  return res.json();
+};
