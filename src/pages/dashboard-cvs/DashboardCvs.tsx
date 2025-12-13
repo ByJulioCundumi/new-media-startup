@@ -86,6 +86,25 @@ export default function DashboardCVs() {
           const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
           const Component = tpl.component;
 
+          const hasQrCode = cv.identity?.allowQrCode === true;
+
+          // ← CÁLCULO DEL PROGRESO TOTAL
+          const sections = cv.cvSections?.sections || [];
+          const enabledSections = sections.filter((s: any) => s.enabled);
+          const totalProgress = enabledSections.length > 0
+            ? Math.round(
+                enabledSections.reduce((sum: number, s: any) => sum + s.progress, 0) / 
+                enabledSections.length
+              )
+            : 0;
+
+          // Color dinámico del progreso
+          const progressColor = totalProgress < 30 
+            ? "#ef4444ad"   // rojo
+            : totalProgress < 70 
+            ? "#f59f0b88"   // ámbar
+            : "#10b9818a";  // verde
+
           return (
             <div key={cv.id} className="cv-item">
               {/* Botón eliminar */}
@@ -99,19 +118,28 @@ export default function DashboardCVs() {
                   <span className="spinner">⟳</span>
                 ) : (
                   <svg viewBox="0 0 24 24" width="18" height="18">
-                    <path
-                      fill="currentColor"
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                    />
+                    <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                   </svg>
                 )}
               </button>
 
+              {/* Tag QR */}
+              {hasQrCode && (
+                <div className="cv-qr-tag enabled">
+                  <svg viewBox="0 0 24 24" width="14" height="14">
+                    <path fill="currentColor" d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM16 16h2v2h-2zM18 18h2v2h-2zM14 14h2v2h-2zM20 14h2v2h-2zM16 20h2v2h-2zM14 18h2v2h-2z" />
+                  </svg>
+                  <span>QR Link</span>
+                </div>
+              )}
+
+              {/* ← NUEVO: Tag de progreso total */}
+              <div className="cv-progress-tag" style={{ backgroundColor: progressColor }}>
+                <span className="progress-text">{totalProgress}%</span>
+              </div>
+
               {/* Preview */}
-              <div
-                className="cv-preview"
-                onClick={() => navigate(`/create/${cv.id}`)}
-              >
+              <div className="cv-preview" onClick={() => navigate(`/create/${cv.id}`)}>
                 <div className="cv-preview-scale">
                   <Component
                     personalInfo={cv.personalInfoEntries || []}
