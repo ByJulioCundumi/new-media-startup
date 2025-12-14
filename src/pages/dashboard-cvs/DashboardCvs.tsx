@@ -265,12 +265,6 @@ export default function DashboardCVs() {
               {isOffline && <div className="draft-tag"><IoCloudOfflineSharp /></div>}
               {!isOffline && <div className="not-draft-tag"><BsFillCloudCheckFill /></div>}
 
-              {hasPendingChanges && (
-                <div className="pending-sync-tag" title="Cambios pendientes por sincronizar">
-                  <BiSync />
-                </div>
-              )}
-
               <button
                 className="cv-delete-btn"
                 onClick={(e) => handleDelete(cv, e)}
@@ -330,7 +324,7 @@ export default function DashboardCVs() {
                 <h3>{cv.cvTitle}</h3>
                 <p>
                   {hasPendingChanges && <span style={{ color: "#f59e0b" }}> <BiSync/> </span>}
-                  {tpl.label}
+                  {tpl.label} {isOffline && hasPendingChanges && !isLogged && "(Local)"} {isOffline && hasPendingChanges && isLogged && "(Sincronizar)"} {isOffline && !hasPendingChanges && "(Local)"}
                   <span> - </span>
                   <span className="date">
                     {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
