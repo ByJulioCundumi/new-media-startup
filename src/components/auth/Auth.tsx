@@ -7,6 +7,7 @@ import RecoveryForm from "./recovery-form/RecoveryForm";
 
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reducers/userSlice"; // tu slice de usuario
+import { addFavoriteTemplateApi } from "../../api/user";
 
 type Section = "login" | "signup" | "recovery";
 
@@ -42,8 +43,17 @@ export default function Auth({ isOpen, onClose, initialSection }: Props) {
   }, [isOpen]);
 
   // Función común para manejar login/signup exitoso
-  const handleSuccess = (user: { id: string; email: string; userName: string }) => {
+  const handleSuccess = async (user: { id: string; email: string; userName: string; favoriteTemplates: string[] }) => {
     dispatch(setUser(user)); // guardamos en Redux
+
+    // Después de login exitoso
+    const localFavs = JSON.parse(localStorage.getItem("localFavorites") || "[]");
+    if (localFavs.length > 0) {
+      for (const id of localFavs) {
+        await addFavoriteTemplateApi(id);
+      }
+      localStorage.removeItem("localFavorites");
+    }
     handleClose(); // cerramos el popup
   };
 

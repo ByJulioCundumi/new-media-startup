@@ -2,6 +2,7 @@ export interface AuthUser {
   id: string;
   email: string;
   userName: string;
+  favoriteTemplates: string[]
 }
 
 interface AuthResponse {
@@ -13,6 +14,16 @@ interface CheckSessionResponse {
   logged: boolean;
   user?: AuthUser;
 }
+
+const normalizeAuthUser = (user: any): AuthUser => ({
+  id: user.id,
+  email: user.email,
+  userName: user.userName,
+  favoriteTemplates: Array.isArray(user.favoriteTemplates)
+    ? user.favoriteTemplates
+    : [],
+});
+
 
 const BASE_URL = "http://localhost:4000/api";
 

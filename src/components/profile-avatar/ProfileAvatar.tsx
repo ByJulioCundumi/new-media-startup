@@ -1,7 +1,7 @@
 import React from "react";
-import { IoDiamond, IoWater } from "react-icons/io5";
+import { IoCardOutline, IoDiamond, IoDiamondOutline, IoWater } from "react-icons/io5";
 import { LuShoppingBasket } from "react-icons/lu";
-import { BsCalendar2Check } from "react-icons/bs";
+import { BsCalendar2Check, BsCreditCard2Front } from "react-icons/bs";
 import "./profileavatar.scss";
 import { TbLogout2 } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,12 +11,15 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { clearUser } from "../../reducers/userSlice";
 import { logout } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineArrowLeftStartOnRectangle, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
+import { MdOutlineDiamond } from "react-icons/md";
+import { FaRegCreditCard } from "react-icons/fa6";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {logged} = useSelector((state:IState)=> state.user)
-  const mockIsVip = false;
+  const mockIsVip = true;
   const mockEndDate = "20 Dic 2025";
 
   const handleLogout = async()=>{
@@ -34,18 +37,18 @@ const ProfileAvatar: React.FC = () => {
       {/* Indicador de suscripción refinado */}
       <div className={`subscription-badge ${mockIsVip ? "vip" : "free"}`}>
         {mockIsVip ? 
-        <BsCalendar2Check className="subscription-badge__icon" />
+        <IoCardOutline className="subscription-badge__icon" />
         :
         <IoWater className="subscription-badge__icon"/>
       }
 
         <div className="subscription-badge__text">
           <span className="subscription-badge__title">
-            {mockIsVip ? "Plan Premium" : "Plan Gratuito"}
+            {mockIsVip ? "Plan Mensual" : "Plan Gratuito"}
           </span>
 
           <p className="subscription-badge__subtitle">
-            {mockIsVip ? `Válido hasta ${mockEndDate}` : "Marca de agua visible"}
+            {mockIsVip ? `Caducidad: ${mockEndDate}` : "Marca de agua visible"}
           </p>
         </div>
       </div>
@@ -53,7 +56,7 @@ const ProfileAvatar: React.FC = () => {
       {/* Botón avatar */}
       <button className="profile-avatar-btn">
         {
-          logged ? <BiLogOutCircle onClick={handleLogout}/> : <RiLogoutCircleRLine />
+          logged ? <HiOutlineArrowLeftStartOnRectangle onClick={handleLogout}/> : <HiOutlineArrowRightEndOnRectangle />
         }
       </button>
     </div>

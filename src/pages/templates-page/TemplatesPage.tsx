@@ -1,5 +1,5 @@
 // TemplatesPage.tsx
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./templatespage.scss";
 
 import { templates } from "../../templates/templates";
@@ -8,102 +8,189 @@ import { CategorySelector } from "../../components/category-selector/CategorySel
 import { useDispatch, useSelector } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import SearchBar from "../../components/search-bar/SearchBar";
-import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar";
-import { IoStarOutline } from "react-icons/io5";
+import { IoStar, IoStarOutline } from "react-icons/io5";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { setTemplateId } from "../../reducers/templateSlice"; // ✅ Importamos acción
 import type { IState } from "../../interfaces/IState";
 import { setCreateCvPopup, setSelectedTemplateId } from "../../reducers/cvCreationSlice";
+import {
+  getFavoriteTemplatesApi,
+  addFavoriteTemplateApi,
+  removeFavoriteTemplateApi,
+} from "../../api/user";
+import { setFavorites, setUser } from "../../reducers/userSlice";
 
 export default function TemplatesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [showFavorites, setShowFavorites] = useState(false);
-  const [favorites, setFavorites] = useState<string[]>([]);
   const dispatch = useDispatch();
 
-  const templateIdFromRedux = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
+  const isLogged = useSelector((state: IState) => state.user.logged);
+  const userFavorites = useSelector((state: IState) => state.user.favoriteTemplates || []);
+  const selectedTemplateId = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // ← Ahora es array
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [localFavorites, setLocalFavorites] = useState<string[]>([]);
+
+  // Cargar favoritos locales cuando no hay sesión
+  useEffect(() => {
+    if (!isLogged) {
+      const saved = localStorage.getItem("localFavorites");
+      if (saved) {
+        setLocalFavorites(JSON.parse(saved));
+      }
+    } else {
+      setLocalFavorites([]); // Limpiar si está logueado
+    }
+  }, [isLogged]);
+
+  // Cargar favoritos del backend al montar (solo si logueado)
+  useEffect(() => {
+    if (isLogged) {
+      const loadFavorites = async () => {
+        try {
+          await getFavoriteTemplatesApi(); // La API ya actualiza Redux (asumiendo que lo hace)
+        } catch (err) {
+          console.error("Error cargando favoritos:", err);
+        }
+      };
+      loadFavorites();
+    }
+  }, [isLogged]);
+
+  // Toggle favorito
+  const toggleFavorite = async (templateId: string) => {
+  if (!isLogged) {
+    // Offline: localStorage
+    const updated = localFavorites.includes(templateId)
+      ? localFavorites.filter((id) => id !== templateId)
+      : [...localFavorites, templateId];
+    setLocalFavorites(updated);
+    localStorage.setItem("localFavorites", JSON.stringify(updated));
+    return;
+  }
+
+  try {
+    const isFavorite = userFavorites.includes(templateId);
+
+    let updatedFavorites: string[];
+
+    if (isFavorite) {
+      updatedFavorites = await removeFavoriteTemplateApi(templateId);
+    } else {
+      updatedFavorites = await addFavoriteTemplateApi(templateId);
+    }
+
+    // ← ¡AQUÍ ESTÁ LA CLAVE! Actualizar Redux con el nuevo array
+    dispatch(setFavorites(updatedFavorites));
+
+  } catch (err) {
+    console.error("Error actualizando favorito:", err);
+    alert("Error al actualizar favoritos. Intenta de nuevo.");
+  }
+};
+
+  // Filtrado de plantillas
+  const filteredTemplates = useMemo(() => {
+    const currentFavorites = isLogged ? userFavorites : localFavorites;
+
+    return templates.filter((tpl) => {
+      // Búsqueda por nombre o categoría
+      const matchesSearch =
+        tpl.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tpl.categories.some((cat) => cat.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      // Filtro por categorías seleccionadas (múltiples)
+      const matchesCategories =
+        selectedCategories.length === 0 ||
+        selectedCategories.some((cat) => tpl.categories.includes(cat));
+
+      // Filtro por favoritos
+      const matchesFavorites = !showFavorites || currentFavorites.includes(tpl.id);
+
+      return matchesSearch && matchesCategories && matchesFavorites;
+    });
+  }, [searchQuery, selectedCategories, showFavorites, userFavorites, localFavorites, isLogged]);
+
+  const handleSelect = (id: string) => {
+    dispatch(setSelectedTemplateId(id));
+    dispatch(setCreateCvPopup(true));
+  };
 
   useEffect(() => {
     dispatch(setSidebar("templates"));
   }, [dispatch]);
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelect = (id:string)=>{
-    dispatch(setSelectedTemplateId(id))
-    dispatch(setCreateCvPopup(true))
-  }
-
-  const filteredTemplates = useMemo(() => {
-    return templates.filter((tpl) => {
-      const categoryOK =
-        selectedCategory === "all" || tpl.categories.includes(selectedCategory);
-
-      const favoriteOK = !showFavorites || favorites.includes(tpl.id);
-
-      return categoryOK && favoriteOK;
-    });
-  }, [selectedCategory, showFavorites, favorites]);
-
   return (
     <section className="templates-page">
       <div className="templates-page__info">
         <h2>Plantillas de CV</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum, cum.</p>
+        <p>Elige la plantilla perfecta para destacar tu perfil profesional.</p>
       </div>
 
-      {/* 🔝 TOP BAR */}
+      {/* TOP BAR */}
       <div className="tp-topbar">
-        <CategorySelector />
-        <SearchBar textHolder="Buscar Plantillas" />
-        <button className="tp-fav-toggle"> <IoStarOutline /> Favoritos</button>
+        <CategorySelector
+          selectedCategories={selectedCategories}
+          onCategoryChange={setSelectedCategories}
+        />
+        <SearchBar
+          textHolder="Buscar plantillas..."
+          value={searchQuery}
+          onChange={setSearchQuery}
+        />
+        <button
+          className={`tp-fav-toggle ${showFavorites ? "active" : ""}`}
+          onClick={() => setShowFavorites(!showFavorites)}
+        >
+          <IoStar className={showFavorites ? "filled" : ""} />
+          {showFavorites ? "Todas" : "Favoritos"}
+        </button>
       </div>
 
-      {/* 📄 GRID DE PLANTILLAS */}
+      {/* GRID DE PLANTILLAS */}
       <div className="tp-grid">
-        {filteredTemplates.map((tpl) => {
-          const Component = tpl.component;
-          const isFavorite = favorites.includes(tpl.id);
-          const isSelected = templateIdFromRedux === tpl.id; // ✅ Marca la plantilla seleccionada
+        {filteredTemplates.length === 0 ? (
+          <p className="no-templates">No se encontraron plantillas con los filtros aplicados.</p>
+        ) : (
+          filteredTemplates.map((tpl) => {
+            const Component = tpl.component;
+            const currentFavorites = isLogged ? userFavorites : localFavorites;
+            const isFavorite = currentFavorites.includes(tpl.id);
+            const isSelected = selectedTemplateId === tpl.id;
 
-          return (
-            <div
-              key={tpl.id}
-              className={`tpl-item ${isSelected ? "selected" : ""}`} // ✅ Clase para visual feedback
-              onClick={()=> handleSelect(tpl.id)} // ✅ Actualiza templateId en Redux
-            >
-              {/* PREVIEW WRAPPER + ESTRELLA */}
-              <div className="tpl-preview-wrapper">
-                {/* OVERLAY HOVER */}
-                <div className="tpl-hover-overlay">
-                  <span>Seleccionar Plantilla</span>
+            return (
+              <div
+                key={tpl.id}
+                className={`tpl-item ${isSelected ? "selected" : ""}`}
+                onClick={() => handleSelect(tpl.id)}
+              >
+                <div className="tpl-preview-wrapper">
+                  <div className="tpl-hover-overlay">
+                    <span>Usar esta plantilla</span>
+                  </div>
+
+                  <button
+                    className={`tpl-fav-icon ${isFavorite ? "filled" : ""}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(tpl.id);
+                    }}
+                    title={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+                  >
+                    {isFavorite ? <IoStar /> : <IoStarOutline />}
+                  </button>
+
+                  <div className="tpl-preview">
+                    <Component {...mockTemplateData} />
+                  </div>
                 </div>
 
-                <div
-                  className="tpl-fav-icon"
-                  onClick={(e) => {
-                    e.stopPropagation(); // evita que el click cierre o seleccione la plantilla
-                    toggleFavorite(tpl.id);
-                  }}
-                >
-                  {isFavorite ? "⭐" : "✩"}
-                </div>
-
-                <div className="tpl-preview">
-                  <Component {...mockTemplateData} />
-                </div>
+                <h3 className="tpl-title">{tpl.label}</h3>
+                <p className="tpl-category">{tpl.categories.join(" • ")}</p>
               </div>
-
-              {/* INFORMACIÓN */}
-              <h3 className="tpl-title">{tpl.label}</h3>
-              <p className="tpl-category">{tpl.categories.join(", ")}</p>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </section>
   );

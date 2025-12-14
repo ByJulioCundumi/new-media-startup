@@ -6,7 +6,7 @@ import { login } from "../../../api/auth";
 interface Props {
   goSignup: () => void;
   goRecovery: () => void;
-  onLoginSuccess?: (user: { id: string; email: string; userName: string }) => void;
+  onLoginSuccess?: (user: { id: string; email: string; userName: string; favoriteTemplates: string[] }) => void;
 }
 
 export default function LoginForm({ goSignup, goRecovery, onLoginSuccess }: Props) {

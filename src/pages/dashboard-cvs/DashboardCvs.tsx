@@ -217,8 +217,8 @@ export default function DashboardCVs() {
         )}
 
         {!isLogged && localDrafts.length > 0 && (
-          <p style={{ color: "#9333ea", fontStyle: "italic", marginTop: "8px" }}>
-            Estás trabajando offline. Inicia sesión para guardar tus cambios en la nube.
+          <p style={{ color: "#f8b43f", fontStyle: "italic", marginTop: "8px" }}>
+            Estás trabajando en el entorno local. Inicia sesión para guardar tus cv.
           </p>
         )}
       </div>

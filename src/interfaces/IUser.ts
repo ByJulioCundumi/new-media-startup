@@ -3,4 +3,5 @@ export interface IUserState {
   email: string | null;
   userName: string | null;
   logged: boolean;
+  favoriteTemplates?: string[];
 }

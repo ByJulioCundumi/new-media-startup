@@ -144,7 +144,7 @@ const ToolbarCV: React.FC = () => {
         <button onClick={clearCv} className="toolbar-cv-btn ghost">
           <LuSave /> 
           {
-            !isSaving === true ? <IoCheckmarkDoneOutline />
+            !hasUnsavedChanges === true ? <IoCheckmarkDoneOutline />
             :
             <div className="loading-dots">
               <span></span>

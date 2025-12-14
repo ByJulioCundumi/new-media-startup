@@ -15,7 +15,6 @@ import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
 
 function Navbar() {
   const dispatch = useDispatch();
-  const [menuOpen, setMenuOpen] = useState(false);
   const { sidebarOption } = useSelector((state: IState) => state.sidebar);
   const { logged } = useSelector((state: IState) => state.user);
 
@@ -48,7 +47,7 @@ function Navbar() {
               className={sidebarOption === "cvs" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("cvs"))}
             >
-             <LuPencilLine /> Crea un CV
+             <LuPencilLine /> {logged ? "Mis CV" : "Crea un CV"}
             </Link>
 
             <Link
@@ -75,13 +74,15 @@ function Navbar() {
               <MdOutlineWorkOutline /> Trabajo
             </Link>
 
-            <Link
+            {
+              logged && <Link
               to={"/account"}
               className={sidebarOption === "account" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("account"))}
             >
                <TbSettingsCode className="navbar__settings"/>
             </Link>
+            }
           </ul>
 
           {/* ACTION BUTTONS */}

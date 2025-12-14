@@ -17,6 +17,7 @@ import { useEffect } from 'react'
 import { checkSession } from './api/auth'
 import { clearUser, setUser } from './reducers/userSlice'
 import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
+import { addFavoriteTemplateApi } from './api/user'
 
 function App() {
   const dispatch = useDispatch()
@@ -32,6 +33,16 @@ function App() {
         const res = await checkSession();
         if (res.logged && res.user) {
           dispatch(setUser(res.user)); // guarda usuario en Redux
+          
+          // Después de login exitoso
+          const localFavs = JSON.parse(localStorage.getItem("localFavorites") || "[]");
+          if (localFavs.length > 0) {
+            for (const id of localFavs) {
+              await addFavoriteTemplateApi(id);
+          }
+            localStorage.removeItem("localFavorites");
+          };
+
         } else {
           dispatch(clearUser()); // limpia si no hay sesión
         }
@@ -40,7 +51,7 @@ function App() {
         dispatch(clearUser());
       }
     };
-
+    
     verifySession();
   }, [dispatch]);
 
