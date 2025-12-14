@@ -10,9 +10,11 @@ import { RiLogoutBoxRLine, RiLogoutCircleRLine } from "react-icons/ri";
 import { BiLogOutCircle } from "react-icons/bi";
 import { clearUser } from "../../reducers/userSlice";
 import { logout } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {logged} = useSelector((state:IState)=> state.user)
   const mockIsVip = false;
   const mockEndDate = "20 Dic 2025";
@@ -20,6 +22,7 @@ const ProfileAvatar: React.FC = () => {
   const handleLogout = async()=>{
     try {
       await logout()
+      navigate("/")
     } catch (error) {
       console.log(error)
     }
