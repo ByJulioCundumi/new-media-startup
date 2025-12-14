@@ -160,27 +160,51 @@ useEffect(() => {
   }, [currentData, originalData, dispatch, cvId]);
 
   // Guardar
-  const handleSave = async () => {
+  // En CreateCv.tsx → handleSave
+const handleSave = async () => {
   if (!cvId || isSaving || !hasUnsavedChanges) return;
 
-  const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
-  const isDraft = localDrafts.some((draft: any) => draft.localId === cvId);
-
   dispatch(setIsSaving(true));
+
+  const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+  const isLocalDraft = localDrafts.some((d: any) => d.localId === cvId || d.backendId === cvId);
+
   try {
-    if (isDraft) {
-      // Guardar en local
-      const updatedDrafts = localDrafts.map((draft: any) => draft.localId === cvId ? { ...draft, ...currentData } : draft);
+    if (isLocalDraft) {
+      // Es un borrador → guardar en local
+      const updatedDrafts = localDrafts.map((d: any) => 
+        (d.localId === cvId || d.backendId === cvId) 
+          ? { ...d, ...currentData, updatedAt: new Date().toISOString() } 
+          : d
+      );
       localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
-      dispatch(setOriginalData(currentData));
     } else {
-      // Guardar en backend
+      // Es un CV del backend → intentar guardar online
       await updateCvApi(cvId, currentData);
-      dispatch(setOriginalData(currentData));
     }
+
+    dispatch(setOriginalData(currentData));
     dispatch(setHasUnsavedChanges(false));
-  } catch (err) {
-    console.error("Error guardando:", err);
+    console.log("Cambios guardados");
+  } catch (err: any) {
+    console.warn("No se pudo guardar en backend → guardando como borrador local");
+
+    // Si falla el guardado online → convertir en borrador local
+    const draftToSave = {
+      backendId: cvId, // ← importante: guardamos el ID real del backend
+      localId: crypto.randomUUID(), // ID temporal para el dashboard
+      isDraft: true,
+      ...currentData,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const updatedDrafts = localDrafts.filter((d: any) => d.backendId !== cvId); // evitar duplicados
+    updatedDrafts.push(draftToSave);
+    localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
+
+    dispatch(setOriginalData(currentData));
+    dispatch(setHasUnsavedChanges(false));
+    alert("Sin conexión. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online.");
   } finally {
     dispatch(setIsSaving(false));
   }

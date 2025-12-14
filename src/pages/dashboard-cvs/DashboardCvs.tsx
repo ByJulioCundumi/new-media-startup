@@ -7,11 +7,12 @@ import { templates } from "../../templates/templates";
 import { useDispatch, useSelector } from "react-redux";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { getAllCvsApi, deleteCvApi, createCvApi, updateCvApi } from "../../api/cv";
+import { getAllCvsApi, deleteCvApi, updateCvApi, createCvApi } from "../../api/cv";
 import { useNavigate } from "react-router-dom";
 import type { IState } from "../../interfaces/IState";
-import { GrUpdate } from "react-icons/gr";
 import { IoCloudOfflineSharp } from "react-icons/io5";
+import { BsFillCloudCheckFill } from "react-icons/bs";
+import { BiCloudUpload } from "react-icons/bi";
 
 export default function DashboardCVs() {
   const dispatch = useDispatch();
@@ -21,38 +22,93 @@ export default function DashboardCVs() {
 
   const [cvs, setCvs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [savingId, setSavingId] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     dispatch(setSidebar("cvs"));
 
-    const fetchCvs = async () => {
+    const loadAndSyncCvs = async () => {
       try {
         setLoading(true);
+        setSyncing(false);
 
-        let backendCvs = [];
+        // 1. Cargar CVs del backend
+        let backendCvs: any[] = [];
         if (isLogged) {
-          backendCvs = await getAllCvsApi();
+          try {
+            backendCvs = await getAllCvsApi();
+          } catch (err) {
+            console.warn("Error cargando CVs del backend:", err);
+          }
         }
 
-        const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
-        setCvs([...localDrafts, ...backendCvs]);
+        // 2. Cargar borradores locales
+        const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+
+        // 3. SINCRONIZACIÓN AUTOMÁTICA
+        const pendingSyncDrafts = localDrafts.filter((d: any) => d.backendId);
+
+        if (pendingSyncDrafts.length > 0 && isLogged) {
+          setSyncing(true);
+          console.log(`Sincronizando automáticamente ${pendingSyncDrafts.length} CV(s)...`);
+
+          const successfulSyncs: string[] = [];
+
+          for (const draft of pendingSyncDrafts) {
+            try {
+              const { localId, isDraft, backendId, ...cvData } = draft;
+              await updateCvApi(backendId, cvData);
+              successfulSyncs.push(localId);
+            } catch (err) {
+              console.error(`Error sincronizando CV ${draft.backendId}:`, err);
+            }
+          }
+
+          // Eliminar sincronizados
+          const remainingDrafts = localDrafts.filter(
+            (d: any) => !successfulSyncs.includes(d.localId)
+          );
+          localStorage.setItem("draftCvs", JSON.stringify(remainingDrafts));
+        }
+
+        // 4. CONSTRUIR LISTA FINAL SIN DUPLICADOS
+        const finalCvs: any[] = [];
+
+        // Mapa de backendId que tienen borrador local (para evitar duplicados)
+        const localBackendIds = new Set(
+          localDrafts
+            .filter((d: any) => d.backendId)
+            .map((d: any) => d.backendId)
+        );
+
+        // Todos los borradores locales (incluyendo los con backendId)
+        finalCvs.push(...localDrafts);
+
+        // Solo agregar CVs del backend que NO tengan borrador local pendiente
+        if (isLogged) {
+          const backendWithoutLocal = backendCvs.filter(
+            (cv) => !localBackendIds.has(cv.id)
+          );
+          finalCvs.push(...backendWithoutLocal);
+        }
+
+        setCvs(finalCvs);
       } catch (error) {
-        console.error("Error cargando CVs:", error);
+        console.error("Error en carga/sincronización:", error);
       } finally {
         setLoading(false);
+        setSyncing(false);
       }
     };
 
-    fetchCvs();
+    loadAndSyncCvs();
   }, [dispatch, isLogged]);
 
   const handleCreateClick = () => {
     dispatch(setTemplatePopupOpen(true));
   };
 
-  const handleDelete = async (cvId: string, e: React.MouseEvent, isDraft: boolean) => {
+  const handleDelete = async (cvId: string, e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (!window.confirm("¿Estás seguro de que quieres eliminar este CV? Esta acción no se puede deshacer.")) {
@@ -60,20 +116,16 @@ export default function DashboardCVs() {
     }
 
     try {
-      setDeletingId(cvId);
-      if (isDraft) {
-        const existingDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
-        const updatedDrafts = existingDrafts.filter((draft: any) => draft.localId !== cvId);
-        localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
-      } else {
-        await deleteCvApi(cvId);
-      }
-      setCvs(cvs.filter((cv) => (cv.id || cv.localId) !== cvId));
+      const existingDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+      const updatedDrafts = existingDrafts.filter(
+        (d: any) => d.localId !== cvId && d.backendId !== cvId
+      );
+      localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
+
+      setCvs((prev) => prev.filter((cv) => (cv.id || cv.localId) !== cvId));
     } catch (error) {
       console.error("Error eliminando CV:", error);
       alert("No se pudo eliminar el CV.");
-    } finally {
-      setDeletingId(null);
     }
   };
 
@@ -86,21 +138,19 @@ export default function DashboardCVs() {
     }
 
     try {
-      setSavingId(draftCv.localId);
-      const { localId, isDraft, ...cvData } = draftCv;
       const created = await createCvApi(draftCv.cvTitle, draftCv.templateId);
+      const { localId, isDraft, ...cvData } = draftCv;
       await updateCvApi(created.id, cvData);
 
-      const existingDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+      const existingDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
       const updatedDrafts = existingDrafts.filter((d: any) => d.localId !== localId);
-      localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
+      localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
 
-      setCvs([...updatedDrafts, { ...created, ...cvData }]);
+      const freshBackendCvs = await getAllCvsApi();
+      setCvs([...updatedDrafts, ...freshBackendCvs]);
     } catch (error) {
       console.error("Error guardando en nube:", error);
       alert("Error al guardar en la nube");
-    } finally {
-      setSavingId(null);
     }
   };
 
@@ -109,6 +159,16 @@ export default function DashboardCVs() {
       <div className="dashboard-header">
         <h1>Mis Currículums</h1>
         <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
+        {syncing && (
+          <p style={{ color: "#f59e0b", fontStyle: "italic", marginTop: "8px" }}>
+            Sincronizando cambios pendientes...
+          </p>
+        )}
+        {!isLogged && localStorage.getItem("draftCvs") && JSON.parse(localStorage.getItem("draftCvs") || "[]").length > 0 && (
+          <p style={{ color: "#9333ea", fontStyle: "italic", marginTop: "8px" }}>
+            Estás trabajando offline. Inicia sesión para sincronizar tus cambios.
+          </p>
+        )}
       </div>
 
       <div className="cv-item create-new" onClick={handleCreateClick}>
@@ -125,72 +185,65 @@ export default function DashboardCVs() {
         cvs.map((cv) => {
           const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
           const Component = tpl.component;
-          const isDraft = !!cv.isDraft;
+
+          const isOffline = !!cv.localId;
           const cvKey = cv.id || cv.localId;
 
           const hasQrCode = cv.identity?.allowQrCode === true;
 
-          // Progreso total
           const sections = cv.cvSections?.sections || [];
           const enabledSections = sections.filter((s: any) => s.enabled);
           const totalProgress = enabledSections.length > 0
             ? Math.round(enabledSections.reduce((sum: number, s: any) => sum + s.progress, 0) / enabledSections.length)
             : 0;
 
-          const progressColor = totalProgress < 30 
+          const progressColor = totalProgress < 30
             ? "#ef4444ad"
-            : totalProgress < 70 
+            : totalProgress < 70
             ? "#f59f0b88"
-            : "#10b9818a";
+            : "#0bc2f5";
+
+          // Mostrar botón solo para borradores nuevos o cambios pendientes (si no logueado)
+          const showSaveButton = isOffline && !(isLogged && cv.backendId);
 
           return (
-            <div key={cvKey} className={`cv-item ${isDraft ? "draft" : ""}`}>
-              {/* Etiqueta Borrador (arriba izquierda) */}
-              {isDraft && <div className="draft-tag"><IoCloudOfflineSharp /></div>}
+            <div key={cvKey} className={`cv-item ${isOffline ? "draft" : ""}`}>
+              {isOffline && <div className="draft-tag"><IoCloudOfflineSharp /></div>}
+              {!isOffline && <div className="not-draft-tag"><BsFillCloudCheckFill /></div>}
 
-              {/* Botón eliminar (arriba derecha) */}
               <button
                 className="cv-delete-btn"
-                onClick={(e) => handleDelete(cvKey, e, isDraft)}
-                disabled={deletingId === cvKey}
+                onClick={(e) => handleDelete(cvKey, e)}
                 title="Eliminar CV"
               >
-                {deletingId === cvKey ? (
-                  <span className="spinner">⟳</span>
-                ) : (
-                  <svg viewBox="0 0 24 24" width="18" height="18">
-                    <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                  </svg>
-                )}
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                  <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                </svg>
               </button>
 
-              {/* Tag QR (arriba izquierda, debajo de borrador si existe) */}
               {hasQrCode && (
                 <div className="cv-qr-tag enabled">
                   <svg viewBox="0 0 24 24" width="14" height="14">
                     <path fill="currentColor" d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM16 16h2v2h-2zM18 18h2v2h-2zM14 14h2v2h-2zM20 14h2v2h-2zM16 20h2v2h-2zM14 18h2v2h-2z" />
                   </svg>
-                  <span>QR Habilitado</span>
                 </div>
               )}
 
-              {/* Tag progreso (abajo derecha) */}
               <div className="cv-progress-tag" style={{ backgroundColor: progressColor }}>
                 <span className="progress-text">{totalProgress}%</span>
               </div>
 
-              {/* Botón Guardar en nube (abajo izquierda, solo drafts y logueado) */}
-              {isDraft && isLogged && (
+              {showSaveButton && (
                 <button
                   className="cv-save-cloud-btn"
                   onClick={(e) => handleSaveToCloud(cv, e)}
-                  disabled={savingId === cv.localId}
+                  disabled={!isLogged}
                 >
-                  {savingId === cv.localId ? "Guardando..." : "Guardar en nube"}
+                  <BiCloudUpload />
+                  {!isLogged ? "Inicia sesión" : "Guardar Online"}
                 </button>
               )}
 
-              {/* Preview */}
               <div className="cv-preview" onClick={() => navigate(`/create/${cvKey}`)}>
                 <div className="cv-preview-scale">
                   <Component
@@ -216,10 +269,13 @@ export default function DashboardCVs() {
 
               <div className="cv-info">
                 <h3>{cv.cvTitle}</h3>
-                <p>Plantilla: {tpl.label}</p>
-                <span className="date">
-                  <GrUpdate /> {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
-                </span>
+                <p>
+                  {tpl.label} {isOffline && <span>Offline</span>}
+                  <span> - </span>
+                  <span className="date">
+                    {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
+                  </span>
+                </p>
               </div>
             </div>
           );
