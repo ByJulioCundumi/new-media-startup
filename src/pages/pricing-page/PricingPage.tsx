@@ -1,45 +1,67 @@
 import { Check, Sparkles } from "lucide-react";
+import { IoCardOutline, IoDiamondOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { setSidebar } from "../../reducers/sidebarSlice";
 import "./pricingpage.scss";
+import { useEffect } from "react";
 
 function PricingPage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSidebar("pricing"));
+  }, [dispatch]);
+
   const plans = [
     {
-      id: 1,
+      name: "Plan Gratuito",
+      price: "$0",
+      period: "Beneficios Limitado",
+      highlight: false,
+      isFree: true,
+      benefits: [
+        "Crear CVs ilimitados en local",
+        "Guarda hasta 11 CVs online",
+        "Plantilas con marca de agua",
+        "Descargas en PDF ilimitadas",
+        "Programa de afiliados",
+        "Comisión de afiliado +20%",
+        "Comisiones recurrentes cada mes",
+      ],
+    },
+    {
       name: "Plan Mensual",
-      price: "$5.99",
+      price: "$14.99",
       period: "por mes",
       highlight: false,
       benefits: [
-        "Acceso ilimitado a creador de CVs",
-        "Plantillas premium elegantes",
-        "Descargas ilimitadas en PDF",
-        "Soporte prioritario",
+        "Crear CVs ilimitados en local",
+        "Guarda CVs ilimitados online",
+        "Acceso a todas las plantillas",
+        "Plantillas sin marca de agua",
+        "Descargas en PDF ilimitadas",
+        "Programa de afiliados",
+        "Comisión de afiliado +70%",
+        "Comisiones recurrentes cada mes",
       ],
     },
     {
-      id: 2,
-      name: "Plan Semestral",
-      price: "$24.99",
-      period: "cada 6 meses",
-      highlight: true, // el destacado
-      benefits: [
-        "Todo lo del plan mensual",
-        "Ahorra más del 30%",
-        "Acceso prioritario a nuevas funciones",
-        "Insignia de miembro pro",
-      ],
-    },
-    {
-      id: 3,
       name: "Plan Anual",
-      price: "$39.99",
+      price: "$59.99",
       period: "por año",
-      highlight: false,
+      monthlyEquivalent: "$5.00/mes",
+      savings: "Ahorras 67%",
+      highlight: true,
+      popular: true,
       benefits: [
-        "Todo lo del plan semestral",
-        "Ahorro superior al 50%",
-        "Regalo exclusivo de bienvenida",
-        "Actualizaciones premium sin límite",
+        "Crear CVs ilimitados en local",
+        "Guarda CVs ilimitados online",
+        "Acceso a todas las plantillas",
+        "Plantillas sin marca de agua",
+        "Descargas en PDF ilimitadas",
+        "Programa de afiliados",
+        "Comisión de afiliado +70%",
+        "Comisiones recurrentes cada mes",
       ],
     },
   ];
@@ -50,39 +72,59 @@ function PricingPage() {
         <h1>
           Planes diseñados para <span>impulsar tu carrera</span>
         </h1>
-        <p>Elige el plan que mejor se adapte a tus necesidades y comienza a crear tu CV perfecto.</p>
+        <p>
+          Crea CVs profesionales con o sin marca de agua. Todos los planes incluyen acceso al
+          programa de afiliados con comisiones recurrentes.
+        </p>
       </div>
 
       <div className="pricing-grid">
         {plans.map((plan) => (
           <div
-            key={plan.id}
-            className={`pricing-card ${plan.highlight ? "highlight" : ""}`}
+            key={plan.name}
+            className={`pricing-card ${plan.highlight ? "highlight" : ""} ${plan.isFree ? "free" : ""}`}
           >
-            {plan.highlight && (
+            {plan.popular && (
               <div className="badge">
                 <Sparkles size={18} />
                 Más Popular
               </div>
             )}
 
-            <h2>{plan.name}</h2>
+            <div className="card-header">
+              <h2>
+                {plan.isFree ? (
+                  <IoCardOutline className="icon" />
+                ) : (
+                  <IoDiamondOutline className="icon" />
+                )}
+                {plan.name}
+              </h2>
+            </div>
 
             <div className="price">
-              <span>{plan.price}</span>
-              <small>{plan.period}</small>
+              <span className="amount">{plan.price}</span>
+              <small className="period">{plan.period}</small>
+              {plan.monthlyEquivalent && (
+                <div className="equivalent">
+                  {plan.monthlyEquivalent}
+                  <span className="savings">{plan.savings}</span>
+                </div>
+              )}
             </div>
 
             <ul className="benefits">
-              {plan.benefits.map((b, index) => (
+              {plan.benefits.map((benefit, index) => (
                 <li key={index}>
                   <Check size={18} />
-                  {b}
+                  <span>{benefit}</span>
                 </li>
               ))}
             </ul>
 
-            <button className="btn-select">Elegir plan</button>
+            <button className={`btn-select ${plan.isFree ? "free-btn" : ""}`}>
+              {plan.isFree ? "Empezar Gratis" : "Elegir Plan"}
+            </button>
           </div>
         ))}
       </div>
