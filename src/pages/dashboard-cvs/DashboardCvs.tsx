@@ -1,5 +1,5 @@
 // DashboardCVs.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./DashboardCVs.scss";
 
 import { templates } from "../../templates/templates";
@@ -14,6 +14,9 @@ import { IoCloudOfflineSharp } from "react-icons/io5";
 import { BsFillCloudCheckFill } from "react-icons/bs";
 import { BiCloudUpload, BiSync } from "react-icons/bi";
 import { BiLoaderAlt } from "react-icons/bi";
+import SearchBar from "../../components/search-bar/SearchBar";
+
+type CvFilter = "all" | "local" | "pending" | "online";
 
 export default function DashboardCVs() {
   const dispatch = useDispatch();
@@ -22,7 +25,10 @@ export default function DashboardCVs() {
 
   const [cvs, setCvs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [syncingPending, setSyncingPending] = useState(false); // Para sincronización manual global
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState<CvFilter>("all");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(setSidebar("cvs"));
@@ -31,7 +37,6 @@ export default function DashboardCVs() {
       try {
         setLoading(true);
 
-        // 1. Cargar CVs del backend (solo si está logueado)
         let backendCvs: any[] = [];
         if (isLogged) {
           try {
@@ -41,25 +46,16 @@ export default function DashboardCVs() {
           }
         }
 
-        // 2. Cargar borradores locales
         const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
 
-        // 3. Construir lista final sin duplicados
-        const finalCvs: any[] = [];
-
-        // IDs del backend que ya tienen borrador local pendiente
         const localBackendIds = new Set(
           localDrafts.filter((d: any) => d.backendId).map((d: any) => d.backendId)
         );
 
-        // Añadir todos los borradores locales
-        finalCvs.push(...localDrafts);
+        const finalCvs: any[] = [...localDrafts];
 
-        // Añadir CVs del backend que no tengan cambios pendientes locales
         if (isLogged) {
-          const backendWithoutLocal = backendCvs.filter(
-            (cv) => !localBackendIds.has(cv.id)
-          );
+          const backendWithoutLocal = backendCvs.filter((cv) => !localBackendIds.has(cv.id));
           finalCvs.push(...backendWithoutLocal);
         }
 
@@ -88,8 +84,8 @@ export default function DashboardCVs() {
     try {
       const cvId = cv.id || cv.backendId || cv.localId;
 
-      // CV sincronizado en el backend
       if (cv.id && isLogged) {
+        setDeletingId(cvId);
         await deleteCvApi(cv.id);
         const freshBackendCvs = await getAllCvsApi();
         const currentDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
@@ -97,7 +93,6 @@ export default function DashboardCVs() {
         return;
       }
 
-      // Borrador local
       const existingDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
       const updatedDrafts = existingDrafts.filter(
         (d: any) => d.localId !== cv.localId && d.backendId !== cvId
@@ -113,10 +108,11 @@ export default function DashboardCVs() {
     } catch (error: any) {
       console.error("Error eliminando CV:", error);
       alert("No se pudo eliminar el CV.");
+    } finally {
+      setDeletingId(null);
     }
   };
 
-  // Guardar CV nuevo (sin backendId) en la nube
   const handleSaveToCloud = async (draftCv: any, e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -126,6 +122,7 @@ export default function DashboardCVs() {
     }
 
     try {
+      setSavingId(draftCv.localId);
       const created = await createCvApi(draftCv.cvTitle, draftCv.templateId);
       const { localId, isDraft, ...cvData } = draftCv;
       await updateCvApi(created.id, cvData);
@@ -139,8 +136,35 @@ export default function DashboardCVs() {
     } catch (error) {
       console.error("Error guardando en nube:", error);
       alert("Error al guardar en la nube");
+    } finally {
+      setSavingId(null);
     }
   };
+
+  // Filtrado + búsqueda
+  const filteredCvs = useMemo(() => {
+    return cvs.filter((cv) => {
+      const isLocalOnly = !!cv.localId && !cv.id;
+      const isPendingSync = !!cv.backendId && !!cv.localId;
+      const isOnline = !!cv.id && !cv.localId;
+
+      const matchesSearch = cv.cvTitle.toLowerCase().includes(searchQuery.toLowerCase());
+
+      let matchesFilter = true;
+      if (filterType === "local") matchesFilter = isLocalOnly;
+      else if (filterType === "pending") matchesFilter = isPendingSync;
+      else if (filterType === "online") matchesFilter = isOnline;
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [cvs, searchQuery, filterType]);
+
+  const totalCvs = cvs.length;
+
+  // Detectar si hay cambios pendientes
+  const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+  const hasPendingSync = isLogged && localDrafts.some((d: any) => d.backendId);
+  const [syncingPending, setSyncingPending] = useState(false); // Para sincronización manual global
 
   // Sincronizar manualmente TODOS los cambios pendientes (CVs con backendId)
   const handleSyncPending = async () => {
@@ -185,17 +209,18 @@ export default function DashboardCVs() {
     }
   };
 
-  // Detectar si hay cambios pendientes
-  const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-  const hasPendingSync = isLogged && localDrafts.some((d: any) => d.backendId);
-
   return (
     <div className="dashboard-cvs">
+      {/* HEADER CON FILTROS */}
       <div className="dashboard-header">
-        <h1>Mis Currículums</h1>
-        <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
+        <div className="header-left">
+          <h1>Mis Currículums</h1>
+          <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
+          <p className="cv-count">
+            {filteredCvs.length} de {totalCvs} CV{totalCvs !== 1 ? "s" : ""}
+          </p>
 
-        {/* Botón global de sincronización manual */}
+          {/* Botón global de sincronización manual */}
         {hasPendingSync && (
           <button
             className="sync-pending-btn"
@@ -218,11 +243,32 @@ export default function DashboardCVs() {
 
         {!isLogged && localDrafts.length > 0 && (
           <p style={{ color: "#f8b43f", fontStyle: "italic", marginTop: "8px" }}>
-            Estás trabajando en el entorno local. Inicia sesión para guardar tus cv.
+            Inicia sesión para guardar tus CVs online.
           </p>
         )}
+        </div>
+
+        <div className="header-right">
+          <SearchBar
+            textHolder="Buscar por título..."
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
+
+          <select
+            className="cv-filter-select"
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value as CvFilter)}
+          >
+            <option value="all">Todos los CVs</option>
+            <option value="local">Solo locales</option>
+            <option value="pending">Pendientes de sincronizar</option>
+            <option value="online">Guardados online</option>
+          </select>
+        </div>
       </div>
 
+      {/* BOTÓN CREAR NUEVO */}
       <div className="cv-item create-new" onClick={handleCreateClick}>
         <div className="create-box">
           <span className="plus">+</span>
@@ -230,15 +276,25 @@ export default function DashboardCVs() {
         </div>
       </div>
 
-      {loading && <p>Cargando tus CVs...</p>}
-      {!loading && cvs.length === 0 && <p>No tienes CVs creados todavía.</p>}
+      {loading && <p className="loading-text">Cargando tus CVs...</p>}
+      {!loading && filteredCvs.length === 0 && (
+        <p className="no-cvs-text">
+          {searchQuery || filterType !== "all"
+            ? "No se encontraron CVs con los filtros aplicados."
+            : "No tienes CVs creados todavía."}
+        </p>
+      )}
 
+      {/* GRID DE CVs */}
       {!loading &&
-        cvs.map((cv) => {
+        filteredCvs.map((cv) => {
           const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
           const Component = tpl.component;
 
-          const isOffline = !!cv.localId;
+          const isLocalOnly = !!cv.localId && !cv.id;
+          const isPendingSync = !!cv.backendId && !!cv.localId;
+          const isOnline = !!cv.id && !cv.localId;
+
           const cvKey = cv.id || cv.localId;
           const hasQrCode = cv.identity?.allowQrCode === true;
 
@@ -255,24 +311,32 @@ export default function DashboardCVs() {
             : "#0bc2f5";
 
           // Botón "Guardar Online" solo para CVs nuevos (sin backendId)
+          const isOffline = !!cv.localId;
           const showSaveButton = isOffline && !cv.backendId;
 
           // Indicador visual si tiene cambios pendientes
           const hasPendingChanges = cv.backendId && isOffline;
 
           return (
-            <div key={cvKey} className={`cv-item ${isOffline ? "draft" : ""}`}>
-              {isOffline && <div className="draft-tag"><IoCloudOfflineSharp /></div>}
-              {!isOffline && <div className="not-draft-tag"><BsFillCloudCheckFill /></div>}
+            <div key={cvKey} className={`cv-item ${isLocalOnly || isPendingSync ? "draft" : ""}`}>
+              {(isLocalOnly || isPendingSync) && <div className="draft-tag"><IoCloudOfflineSharp /></div>}
+              {isOnline && <div className="not-draft-tag"><BsFillCloudCheckFill /></div>}
 
               <button
                 className="cv-delete-btn"
                 onClick={(e) => handleDelete(cv, e)}
                 title="Eliminar CV"
               >
-                <svg viewBox="0 0 24 24" width="18" height="18">
-                  <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                </svg>
+                {deletingId === cv.id ? (
+                  <span className="spinner">⟳</span>
+                ) : (
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path
+                      fill="currentColor"
+                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                )}
               </button>
 
               {hasQrCode && (
@@ -293,8 +357,15 @@ export default function DashboardCVs() {
                   onClick={(e) => handleSaveToCloud(cv, e)}
                 >
                   <BiCloudUpload />
-                  Guardar Online
+                  {savingId === cv.localId ? "Guardando..." : "Guardar Online"}
                 </button>
+              )}
+
+              {isPendingSync && (
+                <div className="cv-pending-tag">
+                  <BiSync />
+                  Sin Sincronizar
+                </div>
               )}
 
               <div className="cv-preview" onClick={() => navigate(`/create/${cvKey}`)}>
@@ -323,8 +394,8 @@ export default function DashboardCVs() {
               <div className="cv-info">
                 <h3>{cv.cvTitle}</h3>
                 <p>
-                  {hasPendingChanges && <span style={{ color: "#f59e0b" }}> <BiSync/> </span>}
-                  {tpl.label} {isOffline && hasPendingChanges && !isLogged && "(Local)"} {isOffline && hasPendingChanges && isLogged && "(Sincronizar)"} {isOffline && !hasPendingChanges && "(Local)"}
+                  {tpl.label}
+                  {isOffline && hasPendingChanges && !isLogged && <span className="status-local">(Local)</span>}  {isOffline && !hasPendingChanges && <span className="status-local">(Local)</span>}
                   <span> - </span>
                   <span className="date">
                     {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
