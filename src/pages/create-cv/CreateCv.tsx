@@ -1,6 +1,7 @@
 // pages/CreateCv.tsx
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom"; // ← Añadido useNavigate
 
 import "./createcv.scss";
 
@@ -15,7 +16,6 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import FloatingEditor from "../../components/floating-editor/FloatingEditor";
 import VerticalToolbarCV from "../../components/vertical-toolbar-cv/VerticalToolbarCv";
 import { PreviewPopup } from "../../components/preview-popup/PreviewPopup";
-import { useParams } from "react-router-dom";
 import { loadCvForEditing } from "../../util/loadCvThunk";
 import type { AppDispatch } from "../../app/store";
 import { resetCvEditor } from "../../util/resetCvThunk";
@@ -41,95 +41,98 @@ import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFont
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { cvId } = useParams<{ cvId: string }>();
-  const {selectedTemplateId, selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
-  const { previewPopupOpen } = useSelector(
-    (state: IState) => state.toolbarOption
-  );
+  const { selectedTemplateId, selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
+  const { previewPopupOpen } = useSelector((state: IState) => state.toolbarOption);
+
+  const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
 
   // ----------------------------------------------------------------------------------
-useEffect(() => {
-  if (!cvId) {
-    console.warn("[CreateCv] No hay cvId en la URL");
-    return;
-  }
-
-  const loadCv = async () => {
-    try {
-      console.log("[CreateCv] Intentando cargar CV con ID:", cvId);
-
-      // 1. Primero intenta cargar desde localStorage (borradores)
-      const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-      const draftCv = localDrafts.find((draft: any) => draft.localId === cvId);
-
-      if (draftCv) {
-        console.log("[CreateCv] Cargando CV desde localStorage (borrador)");
-
-        // Simular exactamente lo que hace loadCvForEditing
-        dispatch(setSelectedCvId(draftCv.localId));
-        dispatch(setSelectedTemplateId(draftCv.templateId));
-        dispatch(setSelectedCvTitle(draftCv.cvTitle));
-
-        dispatch(setIdentity(draftCv.identity || {}));
-        dispatch(setContactEntries(draftCv.contactEntries || []));
-        dispatch(setProfileContent(draftCv.profileContent || ""));
-        dispatch(setEducationData(draftCv.educationEntries || []));
-        dispatch(setExperienceData(draftCv.experienceEntries || []));
-        dispatch(setSkillsEntries(draftCv.skillsEntries || []));
-        dispatch(setLanguagesEntries(draftCv.languagesEntries || []));
-        dispatch(setLinksEntries(draftCv.linksEntries || []));
-        dispatch(setCoursesEntries(draftCv.coursesEntries || []));
-        dispatch(setHobbiesEntries(draftCv.hobbiesEntries || []));
-        dispatch(setReferencesEntries(draftCv.referencesEntries || []));
-        dispatch(setAwardsEntries(draftCv.awardsEntries || []));
-        dispatch(setCustomEntries(draftCv.customEntries || []));
-        dispatch(setPersonalInfoEntries(draftCv.personalInfoEntries || []));
-
-        if (draftCv.cvSections) {
-          dispatch(setCvSections(draftCv.cvSections));
-        }
-
-        if (draftCv.colorFont) {
-          if (draftCv.colorFont.defaults) {
-            dispatch(loadTemplateDefaults(draftCv.colorFont.defaults));
-          }
-          if (draftCv.colorFont.selected) {
-            dispatch(loadStoredValues(draftCv.colorFont.selected));
-          }
-        }
-
-        // Guardar estado original para detectar cambios
-        dispatch(setOriginalData(draftCv));
-
-        console.log("[CreateCv] Borrador cargado correctamente desde localStorage");
-        return;
-      }
-
-      // 2. Si no es un borrador → cargar desde backend
-      console.log("[CreateCv] No es borrador → cargando desde backend");
-      await dispatch(loadCvForEditing(cvId));
-
-    } catch (err) {
-      console.error("[CreateCv] Error cargando CV:", err);
+  // Validación de cvId y carga del CV (local o backend)
+  // ----------------------------------------------------------------------------------
+  useEffect(() => {
+    // Si no hay cvId → redirigir inmediatamente
+    if (!cvId) {
+      console.warn("[CreateCv] No hay cvId en la URL → redirigiendo a /cvs");
+      navigate("/cvs", { replace: true });
+      return;
     }
-  };
 
-  loadCv();
+    const validateAndLoadCv = async () => {
+      setIsLoading(true);
 
-  // Cleanup: limpiar estado al salir del editor
-  return () => {
-    console.log("[CreateCv] Saliendo del editor → limpiando estado");
-    dispatch(resetCvEditor());
-  };
-}, [cvId, dispatch]);
+      try {
+        // 1. Buscar en borradores locales (incluye tanto localId como backendId)
+        const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+        const draftCv = localDrafts.find((draft: any) => 
+          draft.localId === cvId || draft.backendId === cvId
+        );
 
+        if (draftCv) {
+          console.log("[CreateCv] CV encontrado en borradores locales");
+
+          dispatch(setSelectedCvId(draftCv.localId || draftCv.backendId));
+          dispatch(setSelectedTemplateId(draftCv.templateId));
+          dispatch(setSelectedCvTitle(draftCv.cvTitle));
+
+          dispatch(setIdentity(draftCv.identity || {}));
+          dispatch(setContactEntries(draftCv.contactEntries || []));
+          dispatch(setProfileContent(draftCv.profileContent || ""));
+          dispatch(setEducationData(draftCv.educationEntries || []));
+          dispatch(setExperienceData(draftCv.experienceEntries || []));
+          dispatch(setSkillsEntries(draftCv.skillsEntries || []));
+          dispatch(setLanguagesEntries(draftCv.languagesEntries || []));
+          dispatch(setLinksEntries(draftCv.linksEntries || []));
+          dispatch(setCoursesEntries(draftCv.coursesEntries || []));
+          dispatch(setHobbiesEntries(draftCv.hobbiesEntries || []));
+          dispatch(setReferencesEntries(draftCv.referencesEntries || []));
+          dispatch(setAwardsEntries(draftCv.awardsEntries || []));
+          dispatch(setCustomEntries(draftCv.customEntries || []));
+          dispatch(setPersonalInfoEntries(draftCv.personalInfoEntries || []));
+
+          if (draftCv.cvSections) dispatch(setCvSections(draftCv.cvSections));
+
+          if (draftCv.colorFont) {
+            if (draftCv.colorFont.defaults) dispatch(loadTemplateDefaults(draftCv.colorFont.defaults));
+            if (draftCv.colorFont.selected) dispatch(loadStoredValues(draftCv.colorFont.selected));
+          }
+
+          dispatch(setOriginalData(draftCv));
+          setIsLoading(false);
+          return;
+        }
+
+        // 2. No encontrado en local → cargar desde backend
+        console.log("[CreateCv] No encontrado en local → cargando desde backend");
+        await dispatch(loadCvForEditing(cvId));
+
+        // Si llega aquí, loadCvForEditing tuvo éxito → CV existe
+        setIsLoading(false);
+      } catch (err) {
+        console.error("[CreateCv] CV no encontrado o error de conexión:", err);
+        // Redirigir si no existe o falla la carga
+        navigate("/cvs", { replace: true });
+      }
+    };
+
+    validateAndLoadCv();
+
+    // Cleanup al salir del componente
+    return () => {
+      console.log("[CreateCv] Saliendo del editor → limpiando estado");
+      dispatch(resetCvEditor());
+    };
+  }, [cvId, dispatch, navigate]);
+
+  // ----------------------------------------------------------------------------------
+  // Lógica de guardado (mantiene todo lo que ya tenías)
   // ----------------------------------------------------------------------------------
 
   const originalData = useSelector((state: IState) => state.cvSave.originalData);
   const hasUnsavedChanges = useSelector((state: IState) => state.cvSave.hasUnsavedChanges);
   const isSaving = useSelector((state: IState) => state.cvSave.isSaving);
 
-  // Todos los selectores actuales
   const currentData = {
     cvTitle: selectedCvTitle,
     templateId: selectedTemplateId,
@@ -154,77 +157,69 @@ useEffect(() => {
   // Detectar cambios
   useEffect(() => {
     if (!originalData || !cvId) return;
-
     const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentData);
     dispatch(setHasUnsavedChanges(hasChanges));
   }, [currentData, originalData, dispatch, cvId]);
 
-  // Guardar
-  // En CreateCv.tsx → handleSave
-const handleSave = async () => {
-  if (!cvId || isSaving || !hasUnsavedChanges) return;
+  // Función de guardado (exactamente como la tenías)
+  const handleSave = async () => {
+    if (!cvId || isSaving || !hasUnsavedChanges) return;
 
-  dispatch(setIsSaving(true));
+    dispatch(setIsSaving(true));
 
-  const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
-  const isLocalDraft = localDrafts.some((d: any) => d.localId === cvId || d.backendId === cvId);
+    const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+    const isLocalDraft = localDrafts.some((d: any) => d.localId === cvId || d.backendId === cvId);
 
-  try {
-    if (isLocalDraft) {
-      // Es un borrador → guardar en local
-      const updatedDrafts = localDrafts.map((d: any) => 
-        (d.localId === cvId || d.backendId === cvId) 
-          ? { ...d, ...currentData, updatedAt: new Date().toISOString() } 
-          : d
-      );
+    try {
+      if (isLocalDraft) {
+        const updatedDrafts = localDrafts.map((d: any) => 
+          (d.localId === cvId || d.backendId === cvId) 
+            ? { ...d, ...currentData, updatedAt: new Date().toISOString() } 
+            : d
+        );
+        localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
+      } else {
+        await updateCvApi(cvId, currentData);
+      }
+
+      dispatch(setOriginalData(currentData));
+      dispatch(setHasUnsavedChanges(false));
+      console.log("Cambios guardados");
+    } catch (err: any) {
+      console.warn("No se pudo guardar en backend → guardando como borrador local");
+
+      const draftToSave = {
+        backendId: cvId,
+        localId: crypto.randomUUID(),
+        isDraft: true,
+        ...currentData,
+        updatedAt: new Date().toISOString(),
+      };
+
+      const updatedDrafts = localDrafts.filter((d: any) => d.backendId !== cvId);
+      updatedDrafts.push(draftToSave);
       localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
-    } else {
-      // Es un CV del backend → intentar guardar online
-      await updateCvApi(cvId, currentData);
+
+      dispatch(setOriginalData(currentData));
+      dispatch(setHasUnsavedChanges(false));
+      alert("Sin conexión. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online.");
+    } finally {
+      dispatch(setIsSaving(false));
     }
+  };
 
-    dispatch(setOriginalData(currentData));
-    dispatch(setHasUnsavedChanges(false));
-    console.log("Cambios guardados");
-  } catch (err: any) {
-    console.warn("No se pudo guardar en backend → guardando como borrador local");
-
-    // Si falla el guardado online → convertir en borrador local
-    const draftToSave = {
-      backendId: cvId, // ← importante: guardamos el ID real del backend
-      localId: crypto.randomUUID(), // ID temporal para el dashboard
-      isDraft: true,
-      ...currentData,
-      updatedAt: new Date().toISOString(),
-    };
-
-    const updatedDrafts = localDrafts.filter((d: any) => d.backendId !== cvId); // evitar duplicados
-    updatedDrafts.push(draftToSave);
-    localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
-
-    dispatch(setOriginalData(currentData));
-    dispatch(setHasUnsavedChanges(false));
-    alert("Sin conexión. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online.");
-  } finally {
-    dispatch(setIsSaving(false));
-  }
-};
-
-  // Opcional: auto-guardado cada X segundos si hay cambios
+  // Auto-guardado cada 5 segundos si hay cambios
   useEffect(() => {
     if (hasUnsavedChanges && cvId) {
-      const timer = setTimeout(handleSave, 5000); // 3 segundos
+      const timer = setTimeout(handleSave, 5000);
       return () => clearTimeout(timer);
     }
-  }, [hasUnsavedChanges, currentData]);
- 
+  }, [hasUnsavedChanges, currentData, cvId]);
+
   // ----------------------------------------------------------------------------------
-
-  /** Selectores */
-  const cvSectionsState = useSelector(
-    (state: IState) => state.cvSections
-  ) as ICvSectionsState;
-
+  // Selectores para el template
+  // ----------------------------------------------------------------------------------
+  const cvSectionsState = useSelector((state: IState) => state.cvSections) as ICvSectionsState;
   const sections = cvSectionsState.sections;
   const order = cvSectionsState.order;
 
@@ -243,15 +238,39 @@ const handleSave = async () => {
   const identity = useSelector((state: IState) => state.identity);
   const contact = useSelector((state: IState) => state.contactEntries);
 
-  /** Sidebar */
   useEffect(() => {
     dispatch(setSidebar("create"));
   }, [dispatch]);
 
-  const SelectedTemplate = templates.find(
-    (t) => t.id === selectedTemplateId
-  )?.component;
+  const SelectedTemplate = templates.find((t) => t.id === selectedTemplateId)?.component;
 
+  // ----------------------------------------------------------------------------------
+  // Render: Loading full-screen mientras se valida
+  // ----------------------------------------------------------------------------------
+  if (isLoading) {
+  return (
+    <div className="create-cv__loading-overlay">
+      <div className="create-cv__loading-container">
+        <h2 className="create-cv__loading-title">CV Builder</h2>
+        <div className="create-cv__loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+        <button
+          onClick={() => navigate("/cvs")}
+          className="create-cv__loading-back-button"
+        >
+          ← Volver a mis CVs
+        </button>
+    </div>
+  );
+}
+
+  // Si por algún motivo llegamos aquí sin carga exitosa (aunque ya redirigimos), no renderizamos nada
   return (
     <div className="create-cv">
       <ToolbarCV />
@@ -261,48 +280,46 @@ const handleSave = async () => {
       <div className="create-cv__template">
         {SelectedTemplate && (
           <SelectedTemplate
-  personalInfo={personalInfo}
-  identitySection={identity}
-  contactSection={contact}
-  profileSection={profile}
-  educationSection={education}
-  experienceSection={experience}
-  skillSection={skills}
-  languageSection={languages}
-  linkSection={links}
-  courseSection={courses}
-  hobbieSection={hobbies}
-  referenceSection={references}
-  awardSection={awards}
-  customSection={customSection}
-  sectionsConfig={sections}
-  sectionsOrder={order}
-/>
-
+            personalInfo={personalInfo}
+            identitySection={identity}
+            contactSection={contact}
+            profileSection={profile}
+            educationSection={education}
+            experienceSection={experience}
+            skillSection={skills}
+            languageSection={languages}
+            linkSection={links}
+            courseSection={courses}
+            hobbieSection={hobbies}
+            referenceSection={references}
+            awardSection={awards}
+            customSection={customSection}
+            sectionsConfig={sections}
+            sectionsOrder={order}
+          />
         )}
       </div>
 
       {previewPopupOpen && SelectedTemplate && (
         <PreviewPopup>
           <SelectedTemplate
-  personalInfo={personalInfo}
-  identitySection={identity}
-  contactSection={contact}
-  profileSection={profile}
-  educationSection={education}
-  experienceSection={experience}
-  skillSection={skills}
-  languageSection={languages}
-  linkSection={links}
-  courseSection={courses}
-  hobbieSection={hobbies}
-  referenceSection={references}
-  awardSection={awards}
-  customSection={customSection}
-  sectionsConfig={sections}
-  sectionsOrder={order}
-/>
-
+            personalInfo={personalInfo}
+            identitySection={identity}
+            contactSection={contact}
+            profileSection={profile}
+            educationSection={education}
+            experienceSection={experience}
+            skillSection={skills}
+            languageSection={languages}
+            linkSection={links}
+            courseSection={courses}
+            hobbieSection={hobbies}
+            referenceSection={references}
+            awardSection={awards}
+            customSection={customSection}
+            sectionsConfig={sections}
+            sectionsOrder={order}
+          />
         </PreviewPopup>
       )}
 

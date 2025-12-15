@@ -13,7 +13,7 @@ import type { IState } from './interfaces/IState'
 import PricingPage from './pages/pricing-page/PricingPage'
 import Footer from './components/footer/Footer'
 import TemplatesPopup from './components/templates-popup/TemplatesPopup'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { checkSession } from './api/auth'
 import { clearUser, setUser } from './reducers/userSlice'
 import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
@@ -21,6 +21,7 @@ import { addFavoriteTemplateApi } from './api/user'
 
 function App() {
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   const {isOpen} = useSelector((state:IState)=>state.cvCreation)
   const { templatesPopupOpen } = useSelector(
@@ -42,18 +43,36 @@ function App() {
           }
             localStorage.removeItem("localFavorites");
           };
-
         } else {
           dispatch(clearUser()); // limpia si no hay sesión
         }
+        setIsLoading(false)
       } catch (err) {
         console.error("Error al verificar sesión:", err);
+        setIsLoading(false)
         dispatch(clearUser());
       }
     };
     
     verifySession();
   }, [dispatch]);
+
+  if (isLoading) {
+  return (
+    <div className="app__loading-overlay">
+      <div className="app__loading-container">
+        <h2 className="app__loading-title">CV Builder</h2>
+        <div className="app__loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
   return (
     <>
@@ -73,7 +92,7 @@ function App() {
         <Routes>
             <Route path='/' element={<HomePage/>} />
             <Route path='cvs' element={<DashboardCVs/>} />
-            <Route path='create/:cvId' element={<CreateCv/>} />
+            <Route path="create/:cvId?" element={<CreateCv />} />
             <Route path='templates' element={<TemplatesPage/>} />
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliate' element={<JobPage/>} />

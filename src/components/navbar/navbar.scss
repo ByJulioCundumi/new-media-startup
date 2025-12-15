@@ -58,15 +58,16 @@
   &__links {
     list-style: none;
     display: flex;
-    gap: 34px;
+    gap: 15px;
 
     .link {
       font-size: 16px;
       color: #95a0a8;
       cursor: pointer;
       transition: 0.2s ease;
-      padding: 4px 0;
-      border-bottom: 2px solid transparent;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
       font-weight: 500;
       display: flex;
       align-items: center;

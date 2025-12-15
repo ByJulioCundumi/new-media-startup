@@ -215,13 +215,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20;
+  z-index: 15;
   transition: all 0.25s ease;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
+  background-color: #66666600;
+  background: rgba(255, 255, 255, 0.993);
 
   &:hover {
     transform: scale(1.05);
@@ -239,7 +238,6 @@
   .filled {
     svg {
       color: #f1c40f; /* Dorado brillante */
-      filter: drop-shadow(0 0 8px rgba(241, 196, 15, 0.6));
     }
   }
 

@@ -214,11 +214,15 @@ export default function DashboardCVs() {
       {/* HEADER CON FILTROS */}
       <div className="dashboard-header">
         <div className="header-left">
-          <h1>Mis Currículums</h1>
-          <p>Administra, visualiza o crea fácilmente nuevos CVs.</p>
-          <p className="cv-count">
-            {filteredCvs.length} de {totalCvs} CV{totalCvs !== 1 ? "s" : ""}
-          </p>
+          <h1>
+            Mis Currículums
+
+            <span className="cv-count">
+            ({filteredCvs.length}/{totalCvs} CV{totalCvs !== 1 ? "s" : ""})
+          </span>
+          </h1>
+          <p>Administra, visualiza y crea fácilmente nuevos CVs.</p>
+          
 
           {/* Botón global de sincronización manual */}
         {hasPendingSync && (
@@ -250,7 +254,7 @@ export default function DashboardCVs() {
 
         <div className="header-right">
           <SearchBar
-            textHolder="Buscar por título..."
+            textHolder="Buscar CV..."
             value={searchQuery}
             onChange={setSearchQuery}
           />
