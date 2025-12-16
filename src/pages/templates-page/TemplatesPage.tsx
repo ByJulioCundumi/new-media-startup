@@ -18,6 +18,7 @@ import {
   removeFavoriteTemplateApi,
 } from "../../api/user";
 import { setFavorites, setUser } from "../../reducers/userSlice";
+import Footer from "../../components/footer/Footer";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -192,6 +193,7 @@ export default function TemplatesPage() {
           })
         )}
       </div>
+      <Footer/>
     </section>
   );
 }

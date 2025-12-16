@@ -4,6 +4,7 @@ import { Typewriter } from "react-simple-typewriter";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import { useDispatch } from "react-redux";
+import Footer from "../../components/footer/Footer";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch()
@@ -90,6 +91,7 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
             </div>
+            <Footer/>
     </section>
   );
 };

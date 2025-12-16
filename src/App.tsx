@@ -100,7 +100,6 @@ function App() {
         </Routes>
       </section>
     </BrowserRouter>
-    {sidebarOption !== "cvs" && sidebarOption !== "create" && sidebarOption !== "affiliate" && <Footer/>}
     </>
   )
 }
