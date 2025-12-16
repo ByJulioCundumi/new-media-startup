@@ -5,7 +5,7 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import "./pricingpage.scss";
 import { useEffect } from "react";
 import { FaUserPlus } from "react-icons/fa6";
-import { MdOutlineVerifiedUser } from "react-icons/md";
+import { MdOutlineVerifiedUser, MdWorkOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { GrContactInfo } from "react-icons/gr";
 import { LuMousePointerClick } from "react-icons/lu";
@@ -137,7 +137,7 @@ function PricingPage() {
     <h2>¿Te Interesa Generar <br /> <span>Ingresos Extras ?</span></h2>
   
   <p className="affiliate-subtitle">
-    Únete a nuestro <Link to={"/affiliate"} ><strong className="affiliate-link">Programa de Afiliados</strong></Link> y obtén comisiones recurrentes 
+    Únete a nuestro <Link to={"/affiliate"} ><strong className="affiliate-link"><MdWorkOutline /> Programa de Afiliados</strong></Link> y obtén comisiones recurrentes 
     de hasta el <strong>50%</strong> cada vez que usen tu enlace de afiliado.
   </p>
 </div>

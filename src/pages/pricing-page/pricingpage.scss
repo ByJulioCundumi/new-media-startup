@@ -218,6 +218,9 @@
 
 .affiliate-link{
   text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .affiliate-invitation {
@@ -236,13 +239,13 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: 0 0px 30px #00030411;
-  border: 2px solid rgb(255, 255, 255);
+  border: 3px solid rgb(255, 255, 255);
   margin-bottom: -4rem;
 
   span{
     color: #10b981;
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   h2 {

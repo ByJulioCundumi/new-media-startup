@@ -1,3 +1,464 @@
-.account-page{
-    
+.account-page {
+  min-height: 100vh;
+  background-color: white;
+  padding: 7rem 3rem;
+  font-family: "Inter", sans-serif;
+
+  .account-container {
+    margin: 0 auto;
+  }
+
+  .account-header {
+    text-align: center;
+    margin-bottom: 4rem;
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #6b7280;
+      font-size: 1.1rem;
+    }
+  }
+
+  .account-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .account-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.2rem 2.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      svg {
+        color: #6a5af9;
+      }
+
+      h3 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+        border-left: 4px solid #6a5af9;
+        padding-left: 0.8rem;
+      }
+    }
+
+    .card-note {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 1rem 0 0;
+    }
+  }
+
+  /* Información Personal */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      color: #9ca3af;
+    }
+
+    .label {
+      display: block;
+      font-size: 0.9rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .value {
+      font-weight: 600;
+      color: #111827;
+    }
+  }
+
+  /* Plan */
+  .plan-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .plan-badge {
+      background: #ecfdf5;
+      color: #10b981;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Cambio de Contraseña */
+  .password-form {
+    margin-top: 1rem;
+  }
+
+  .password-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .password-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    background: #fff;
+    transition: all 0.25s ease;
+
+    svg:first-child {
+      color: #9ca3af;
+      font-size: 1.2rem;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      margin-left: 0.8rem;
+      font-size: 0.98rem;
+      color: #111827;
+    }
+
+    .visibility-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9ca3af;
+      font-size: 1.2rem;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #6a5af9;
+      }
+    }
+
+    &:focus-within {
+      border-color: #6a5af9;
+      box-shadow: 0 0 0 3px rgba(106, 90, 249, 0.15);
+      svg:first-child {
+        color: #6a5af9;
+      }
+    }
+  }
+
+  .error-text {
+    color: #dc2626;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0.5rem 0;
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .success-message {
+    color: #6a5af9;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    animation: fadeInOut 3s ease forwards;
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; transform: translateY(-5px); }
+    10%, 90% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Afiliados */
+  .affiliate-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.8rem 0;
+    padding: 1.2rem;
+    background: #f9f9f9;
+    border-radius: 14px;
+  }
+
+  .stat-item {
+    text-align: center;
+
+    .label {
+      display: block;
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 0.4rem;
+    }
+
+    .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #111827;
+
+      &.highlight {
+        color: #6a5af9;
+      }
+    }
+  }
+
+  .affiliate-link {
+    margin: 1.5rem 0;
+
+    label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .link-wrapper {
+      display: flex;
+      gap: 0.8rem;
+
+      input {
+        flex: 1;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        background: #f9f9f9;
+        font-size: 0.95rem;
+      }
+
+      .copy-btn {
+        background: #6a5af9;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          background: #5845f5;
+        }
+      }
+    }
+
+    .copied-text {
+      display: block;
+      margin-top: 0.5rem;
+      color: #10b981;
+      font-weight: 500;
+    }
+  }
+
+  .upgrade-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fef3c7;
+    padding: 1.2rem;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+
+    svg {
+      color: #f59e0b;
+    }
+
+    .upgrade-text {
+      flex: 1;
+
+      strong {
+        display: block;
+        color: #92400e;
+      }
+
+      p {
+        margin: 0.3rem 0 0;
+        color: #92400e;
+        font-size: 0.92rem;
+      }
+    }
+  }
+
+  /* Botones generales */
+  .action-btn {
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &.primary {
+      background: linear-gradient(90deg, #6a5af9, #a855f7);
+      color: white;
+      box-shadow: 0 4px 12px rgba(106, 90, 249, 0.25);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(106, 90, 249, 0.3);
+      }
+    }
+
+    &.secondary {
+      background: #f3f4f6;
+      color: #374151;
+
+      &:hover {
+        background: #e5e7eb;
+      }
+    }
+
+    &.danger {
+      background: #ef4444;
+      color: white;
+
+      &:hover {
+        background: #dc2626;
+      }
+    }
+
+    &.save {
+      background: #6a5af9;
+      color: white;
+      box-shadow: 0 4px 12px rgba(106, 90, 249, 0.25);
+
+      &:hover {
+        background: #5845f5;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .logout-section {
+    text-align: center;
+    margin-top: 5rem;
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-size: 1.05rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  /* Modales */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 460px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    p {
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+
+    .account-header h1 {
+      font-size: 2.2rem;
+    }
+
+    .account-card {
+      padding: 1.8rem;
+    }
+
+    .password-grid,
+    .info-grid,
+    .affiliate-stats {
+      grid-template-columns: 1fr;
+    }
+  }
 }
