@@ -18,6 +18,7 @@ import { checkSession } from './api/auth'
 import { clearUser, setUser } from './reducers/userSlice'
 import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
 import { addFavoriteTemplateApi } from './api/user'
+import AdminPage from './pages/admin-page/AdminPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -97,6 +98,7 @@ function App() {
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliate' element={<JobPage/>} />
             <Route path='account' element={<AccountPage/>} />
+            <Route path='admin' element={<AdminPage/>} />
         </Routes>
       </section>
     </BrowserRouter>

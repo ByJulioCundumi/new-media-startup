@@ -36,10 +36,10 @@ function PricingPage() {
     },
     {
       name: "Plan Mensual",
-      price: "$9.99 US",
-      period: "Por Mes",
+      price: "$9.99",
+      period: "USD / Por Mes",
       highlight: true,
-      popular: true,
+      popular: false,
       benefits: [
         "Crea CVs ilimitados",
         "Guarda CVs ilimitados online",
@@ -52,12 +52,12 @@ function PricingPage() {
     },
     {
       name: "Plan Anual",
-      price: "$48.00 US",
-      period: "Por Año ⬎",
-      monthlyEquivalent: "$4.00/mes",
-      savings: "Ahorras 60%",
+      price: "$4.99",
+      period: "USD / Por Mes",
+      monthlyEquivalent: "$59.99 / Cobro Anual",
+      savings: "Ahorras 50%",
       highlight: true,
-      popular: false,
+      popular: true,
       benefits: [
         "Crea CVs ilimitados",
         "Guarda CVs ilimitados online",
@@ -107,11 +107,11 @@ function PricingPage() {
 
             <div className="pricing-price">
               <span className="pricing-amount">{plan.price}</span>
-              <small className="pricing-period">{plan.period}</small>
+              <small className="pricing-period">{plan.period} <span className="pricing-savings">{plan.savings}</span></small>
               {plan.monthlyEquivalent && (
                 <div className="pricing-equivalent">
                   {plan.monthlyEquivalent}
-                  <span className="pricing-savings">{plan.savings}</span>
+                  
                 </div>
               )}
             </div>

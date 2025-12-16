@@ -1,0 +1,266 @@
+.admin-users {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: white;
+  padding: 2rem 2.5rem;
+  min-height: 100vh;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1.2rem;
+  }
+
+  &__summary {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #020617;
+  }
+
+  &__total {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  &__select {
+    height: 42px;
+    padding: 0 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+  }
+
+  &__checkbox {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    input {
+      accent-color: #2563eb;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 22px rgba(2, 6, 23, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__identity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  &__email {
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+
+  &__plan {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+
+    &--gratuito {
+      background: #f1f5f9;
+    }
+
+    &--mensual {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    &--anual {
+      background: #dcfce7;
+      color: #15803d;
+    }
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+
+  &__metric {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    display: flex;
+    justify-content: space-between;
+
+    &--restricted {
+      background: #fef2f2;
+      border-color: #fecaca;
+
+      .admin-users__metric-label {
+        color: #b91c1c;
+        font-weight: 600;
+      }
+
+      .admin-users__metric-value {
+        color: #991b1b;
+      }
+    }
+  }
+
+  &__metric-label {
+    font-size: 0.7rem;
+    color: #64748b;
+  }
+
+  &__metric-value {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__commission {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  &__btn {
+    border-radius: 8px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+
+    &--restrict {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    &--primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    &--secondary {
+      background: #f1f5f9;
+    }
+  }
+
+  /* POPUP */
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+
+  &__popup {
+    background: white;
+    width: 420px;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__popup-user {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  &__switches {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  &__switch {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+
+    input {
+      display: none;
+    }
+  }
+
+  &__slider {
+    width: 42px;
+    height: 22px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+  }
+
+  &__switch input:checked + &__slider {
+    background: #2563eb;
+
+    &::after {
+      transform: translateX(20px);
+    }
+  }
+
+  &__popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+}

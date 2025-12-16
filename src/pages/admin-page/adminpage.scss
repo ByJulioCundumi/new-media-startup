@@ -1,0 +1,119 @@
+.admin-page {
+  display: flex;
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: "Inter", sans-serif;
+  position: relative;
+
+  &__sidebar {
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+    border-left: 4px solid #6366f1;
+    padding-left: 0.6rem;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 6.58rem;
+  }
+
+  &__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    svg {
+      font-size: 1.2rem;
+    }
+
+    &:hover {
+      background-color: #f3f3f3;
+    }
+
+    &--active {
+      background-color: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 6px 14px rgba(99, 102, 241, 0.25);
+
+      &:hover{
+        background-color: #6366f1;
+      }
+
+      svg {
+        color: #ffffff;
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 6.5rem;
+  }
+
+  &__section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+
+    &__sidebar {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &__nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    &__content {
+      padding: 2rem;
+    }
+  }
+}

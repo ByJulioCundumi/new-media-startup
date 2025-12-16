@@ -1,6 +1,6 @@
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { FaSave, FaPercentage } from "react-icons/fa";
-import { RiUserStarLine } from "react-icons/ri";
+import { RiMailSendFill, RiMailSendLine, RiUserStarLine } from "react-icons/ri";
 import "./affiliatecommissisonrequest.scss";
 
 type RequestStatus = "pending" | "approved" | null;
@@ -112,7 +112,7 @@ const AffiliateCommissionRequest: React.FC = () => {
             type="submit"
             className="affiliate-commission-request__save-btn"
           >
-            Enviar Solicitud
+            <RiMailSendFill /> Enviar Solicitud
           </button>
         )}
 

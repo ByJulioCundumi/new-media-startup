@@ -1,0 +1,267 @@
+.admin-commission-request {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  min-height: 100vh;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #020617;
+  }
+
+  &__total {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    box-shadow: 0 8px 22px rgba(2, 6, 23, 0.04);
+  }
+
+  &__identity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #020617;
+  }
+
+  &__email {
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+
+  &__badge {
+    background: #eef2ff;
+    color: #3730a3;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &__detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid #e2e8f0;
+  }
+
+  &__detail-label {
+    color: #64748b;
+  }
+
+  &__detail-value {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+
+    &--primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    &--secondary {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  /* POPUP */
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  &__popup {
+    width: 420px;
+    background: white;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__popup-user {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  &__decision {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+
+    label {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input,
+    textarea {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.5rem 0.6rem;
+      font-size: 0.8rem;
+      resize: none;
+    }
+  }
+
+  &__popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+}
+
+.admin-commission-request {
+  &__controls {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  &__select {
+    height: 42px;
+    padding: 0 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    font-size: 0.85rem;
+    background: white;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+  }
+
+  &__status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+
+    &--pendiente {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    &--aprobada {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    &--rechazada {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  }
+}
+
+
+.admin-commission-request {
+  &__deny-reason {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  &__deny-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #9f1239;
+    text-transform: uppercase;
+  }
+
+  &__deny-text {
+    font-size: 0.78rem;
+    color: #881337;
+    line-height: 1.4;
+  }
+}

@@ -10,7 +10,7 @@ import ProfileAvatar from "../profile-avatar/ProfileAvatar";
 import { TbLogout2, TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
-import { MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
+import { MdAdminPanelSettings, MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
 import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
 
 function Navbar() {
@@ -83,6 +83,17 @@ function Navbar() {
                <TbSettingsCode className="navbar__settings"/>
             </Link>
             }
+
+            {
+              logged && <Link
+              to={"/admin"}
+              className={sidebarOption === "admin" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("admin"))}
+            >
+               <MdAdminPanelSettings className="navbar__settings"/> Admin
+            </Link>
+            }
+
           </ul>
 
           {/* ACTION BUTTONS */}
