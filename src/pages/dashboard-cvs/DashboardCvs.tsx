@@ -222,34 +222,6 @@ export default function DashboardCVs() {
           </span>
           </h1>
           <p>Administra, visualiza y crea fácilmente nuevos CVs.</p>
-          
-
-          {/* Botón global de sincronización manual */}
-        {hasPendingSync && (
-          <button
-            className="sync-pending-btn"
-            onClick={handleSyncPending}
-            disabled={syncingPending}
-          >
-            {syncingPending ? (
-              <>
-                <BiLoaderAlt className="spinner" />
-                Sincronizando...
-              </>
-            ) : (
-              <>
-                <BiSync />
-                Sincronizar cambios pendientes ({localDrafts.filter((d: any) => d.backendId).length})
-              </>
-            )}
-          </button>
-        )}
-
-        {!isLogged && localDrafts.length > 0 && (
-          <p style={{ color: "#f8b43f", fontStyle: "italic", marginTop: "8px" }}>
-            Inicia sesión para guardar tus CVs online.
-          </p>
-        )}
         </div>
 
         <div className="header-right">
@@ -273,11 +245,38 @@ export default function DashboardCVs() {
       </div>
 
       {/* BOTÓN CREAR NUEVO */}
+      <div className="cv-info-box">
       <div className="cv-item create-new" onClick={handleCreateClick}>
         <div className="create-box">
           <span className="plus">+</span>
           <p>Crear nuevo CV</p>
         </div>
+      </div>
+        {!isLogged && localDrafts.length > 0 && (
+          <p style={{ color: "#f8b43f", fontStyle: "italic", marginTop: "8px", textAlign: "center" }}>
+            Inicia sesión para guardar CVs online.
+          </p>
+        )}
+        {/* Botón global de sincronización manual */}
+        {hasPendingSync && (
+          <button
+            className="sync-pending-btn"
+            onClick={handleSyncPending}
+            disabled={syncingPending}
+          >
+            {syncingPending ? (
+              <>
+                <BiLoaderAlt className="spinner" />
+                Sincronizando...
+              </>
+            ) : (
+              <>
+                <BiSync />
+                Sincronizar cambios pendientes ({localDrafts.filter((d: any) => d.backendId).length})
+              </>
+            )}
+          </button>
+        )}
       </div>
 
       {loading && <p className="loading-text">Cargando tus CVs...</p>}

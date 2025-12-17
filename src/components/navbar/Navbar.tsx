@@ -71,7 +71,7 @@ function Navbar() {
               className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
               onClick={() => dispatch(setSidebar("affiliate"))}
             >
-              <MdOutlineWorkOutline /> Trabajo
+              <MdOutlineWorkOutline /> Trabajo Remoto
             </Link>
 
             {
