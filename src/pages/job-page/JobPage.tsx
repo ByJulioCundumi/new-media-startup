@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
+import Footer from "../../components/footer/Footer";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -28,7 +29,8 @@ function JobPage() {
   
 
   return (
-    <section className="job-page">
+    <>
+      <section className="job-page">
 <div className="job-page__hero-page">
 
       {/* ---------- TARJETAS FLOTANTES ---------- */}
@@ -106,6 +108,8 @@ function JobPage() {
       </section>
     </div>
     </section>
+    <Footer/>
+    </>
   );
 }
 

@@ -22,7 +22,6 @@ function AdminPage() {
     <section className="admin-page">
       {/* NAV */}
       <aside className="admin-page__sidebar">
-        <h2 className="admin-page__title">Admin Panel</h2>
 
         <nav className="admin-page__nav">
           <button

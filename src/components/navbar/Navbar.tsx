@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import Auth from "../auth/Auth";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import { TbLogout2, TbSettingsCode } from "react-icons/tb";
+import { TbLogout2, TbPencilPlus, TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
 import { MdAdminPanelSettings, MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
@@ -28,8 +28,8 @@ function Navbar() {
 
           {/* LOGO */}
           <Link to={"/"} className="navbar__logo" onClick={() => dispatch(setSidebar("home"))}>
-            <div className="logo-icon"></div>
-            <span className="logo-text">CVBuilder</span>
+            <div className="logo-icon"><TbPencilPlus /></div>
+            <span className="logo-text">CvRemoto</span>
           </Link>
 
           {/* DESKTOP MENU */}

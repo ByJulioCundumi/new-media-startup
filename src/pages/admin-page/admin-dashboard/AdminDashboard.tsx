@@ -25,13 +25,6 @@ function AdminDashboard() {
 
   return (
     <section className="admin-dashboard">
-      {/* HEADER */}
-      <header className="admin-dashboard__header">
-        <h1 className="admin-dashboard__title">Panel de Administración</h1>
-        <p className="admin-dashboard__subtitle">
-          Resumen general de usuarios, actividad y operaciones
-        </p>
-      </header>
 
       {/* USUARIOS */}
       <section className="admin-dashboard__section">

@@ -17,8 +17,8 @@
   h3 {
     font-size: 1.45rem;
     font-weight: 700;
-    color: #1f2937;
-    border-left: 4px solid #15a88b;
+    color: #0b2357;
+    border-left: 4px solid #0b2357;
     padding-left: 0.75rem;
   }
 
@@ -54,8 +54,8 @@
       height: 46px;
 
       &:focus {
-        border-color: #15a88b;
-        background: #fff;
+        background: #0b2357;
+    color: white;
       }
 
       &::placeholder {
@@ -97,8 +97,8 @@
     }
 
     &:focus-within {
-      border-color: #15a88b;
-      background: #fff;
+      background: #0b2357;
+    color: white;
     }
   }
 
@@ -136,15 +136,15 @@
       font-size: 0.9rem;
 
       &:focus {
-        border-color: #15a88b;
-        background: #fff;
+        background: #0b2357;
+    color: white;
       }
     }
   }
 
   &__verify-btn {
-    background: #15a88b;
-    color: #fff;
+    background: #0b2357;
+    color: white;
     font-size: 0.85rem;
     border: none;
     border-radius: 8px;
@@ -157,13 +157,15 @@
     white-space: nowrap;
 
     &:hover {
-      background: #15a88b;
+      background: #0b2357;
+    color: white;
       transform: translateY(-1px);
     }
   }
 
   &__verified-text {
-    color: #15a88b;
+    background: #0b2357;
+    color: white;
     font-weight: 600;
     font-size: 0.9rem;
     margin-top: 0.6rem;
@@ -183,8 +185,8 @@
     }
 
     &.react-select__control--is-focused {
-      border-color: #15a88b;
-      background: #fff;
+      background: #0b2357;
+    color: white;
     }
   }
 
@@ -295,8 +297,8 @@
   }
 
   &__plan-change {
-    background: #15a88b;
-    color: #fff;
+    background: #0b2357;
+    color: white;
     border: none;
     border-radius: 10px;
     padding: 0.9rem 1.4rem;

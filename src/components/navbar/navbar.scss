@@ -34,11 +34,11 @@
     cursor: pointer;
 
     .logo-icon {
-      width: 30px;
-      height: 30px;
-      background: #0073ff;
-      border-radius: 6px;
-      transition: 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #181818;
     }
 
     .logo-text {
@@ -46,11 +46,6 @@
       font-weight: 800;
       color: #181818;
       letter-spacing: -0.5px;
-    }
-
-    &:hover .logo-icon {
-      transform: scale(1.07);
-      background: #005fcc;
     }
   }
 

@@ -9,6 +9,7 @@ import { MdOutlineVerifiedUser, MdWorkOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { GrContactInfo } from "react-icons/gr";
 import { LuMousePointerClick } from "react-icons/lu";
+import Footer from "../../components/footer/Footer";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ function PricingPage() {
       name: "Plan Anual",
       price: "$4.99",
       period: "USD / Por Mes",
-      monthlyEquivalent: "$59.99 / Cobro Anual",
+      monthlyEquivalent: "Cobro Anual / $59.99",
       savings: "Ahorras 50%",
       highlight: true,
       popular: true,
@@ -71,7 +72,8 @@ function PricingPage() {
   ];
 
   return (
-    <section className="pricing-page">
+    <>
+      <section className="pricing-page">
       <div className="pricing-header">
         <h1>
           Elige un plan Y <span>Consigue Empleo</span>
@@ -141,7 +143,10 @@ function PricingPage() {
     de hasta el <strong>50%</strong> cada vez que usen tu enlace de afiliado.
   </p>
 </div>
+
     </section>
+    <Footer/>
+    </>
   );
 }
 

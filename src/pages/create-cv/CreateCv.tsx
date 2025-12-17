@@ -38,6 +38,7 @@ import { setCustomEntries } from "../../reducers/customSlice";
 import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
 import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
+import { TbPencilPlus } from "react-icons/tb";
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -251,7 +252,7 @@ function CreateCv() {
   return (
     <div className="create-cv__loading-overlay">
       <div className="create-cv__loading-container">
-        <h2 className="create-cv__loading-title">CV Builder</h2>
+        <h2 className="create-cv__loading-title"><TbPencilPlus /> CvRemoto</h2>
         <div className="create-cv__loading-dots">
           <span></span>
           <span></span>

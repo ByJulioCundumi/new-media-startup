@@ -18,9 +18,9 @@
     h3 {
       font-size: 1.3rem;
       font-weight: 700;
-      color: #1f2937;
+      color: #0b2357;
       margin-bottom: 0.4rem;
-      border-left: 4px solid #15a88b;
+      border-left: 4px solid #0b2357;
       padding-left: 0.6rem;
     }
 
@@ -96,8 +96,8 @@
     }
 
     &--approved {
-      background: #ecfdf5;
-      color: #047857;
+      background: #0b2357;
+    color: white;
       border: 1px solid #a7f3d0;
     }
   }
@@ -110,8 +110,8 @@
   }
 
   &__save-btn {
-    background: #15a88b;
-    color: #fff;
+    background: #0b2357;
+    color: white;
     font-weight: 600;
     font-size: 0.95rem;
     border: none;

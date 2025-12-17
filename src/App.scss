@@ -82,6 +82,13 @@
     margin: 0;
     letter-spacing: -0.5px;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    svg{
+      font-size: 1.8rem;
+    }
   }
 
   &__loading-subtitle {

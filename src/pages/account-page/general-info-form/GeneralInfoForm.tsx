@@ -67,7 +67,7 @@ const GeneralInfoForm: React.FC = () => {
           <div className="general-info-form__plan-actions">
           <button className="general-info-form__plan-cancel">
             <MdCancel />
-            Cancelar plan
+            Cancelar Suscripcion
           </button>
           
           <button className="general-info-form__plan-change">
