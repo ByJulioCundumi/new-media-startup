@@ -178,3 +178,105 @@
     }
   }
 }
+
+
+.admin-dashboard {
+  &__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 0.85rem;
+
+    thead {
+      background: #f8fafc;
+
+      th {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #475569;
+        border-bottom: 1px solid #e2e8f0;
+        white-space: nowrap;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: #f1f5f9;
+        }
+      }
+
+      td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        color: #020617;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.admin-dashboard {
+  &__table {
+    font-size: 0.8rem;
+
+    thead th {
+      background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    td.num,
+    th.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    td.date {
+      font-weight: 600;
+      color: #334155;
+    }
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .badge--warning {
+    color: #e26c12;
+  }
+
+  .badge--success {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+  }
+}
+

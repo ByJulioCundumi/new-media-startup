@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./adminactions.scss";
 
+type ProtectedAction = "edit" | "logout" | null;
+
 function AdminActions() {
   const [actions, setActions] = useState({
     loginEnabled: true,
-    cvCreationEnabled: true,
-    cvUpdateEnabled: true,
+    accountCreationEnabled: true,
     passwordRecoveryEnabled: true,
   });
 
@@ -13,31 +14,46 @@ function AdminActions() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
+  const [pendingAction, setPendingAction] =
+    useState<ProtectedAction>(null);
 
   const toggleAction = (key: keyof typeof actions) => {
     if (!isEditing) return;
     setActions((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleEditClick = () => {
+  const requestAuth = (action: ProtectedAction) => {
+    setPendingAction(action);
     setShowAuthModal(true);
   };
 
   const handleAuthConfirm = () => {
-    // ⚠️ Simulación de validación (aquí va backend)
-    if (password === "admin123") {
-      setIsEditing(true);
-      setShowAuthModal(false);
-      setPassword("");
-      setAuthError("");
-    } else {
+    // ⚠️ Validación simulada (backend real aquí)
+    if (password !== "admin123") {
       setAuthError("Contraseña incorrecta");
+      return;
     }
+
+    if (pendingAction === "edit") setIsEditing(true);
+    if (pendingAction === "logout") handleForceLogout();
+
+    resetAuthModal();
   };
 
   const handleSaveChanges = () => {
-    // 👉 Aquí se envían los cambios al backend
+    // 👉 Enviar flags al backend
     setIsEditing(false);
+  };
+
+  const handleForceLogout = () => {
+    console.log("🚨 Sesión cerrada para todos los usuarios");
+  };
+
+  const resetAuthModal = () => {
+    setShowAuthModal(false);
+    setPassword("");
+    setAuthError("");
+    setPendingAction(null);
   };
 
   return (
@@ -45,49 +61,51 @@ function AdminActions() {
       <header className="admin-actions__header">
         <h2 className="admin-actions__title">Control del sistema</h2>
         <p className="admin-actions__subtitle">
-          Administración de funcionalidades críticas de la plataforma
+          Administración de funcionalidades críticas
         </p>
       </header>
 
       <div className="admin-actions__list">
         <AdminSwitch
           label="Inicio de sesión"
-          description="Permite el acceso de usuarios a la plataforma"
+          description="Permite el acceso de usuarios"
           checked={actions.loginEnabled}
           disabled={!isEditing}
           onChange={() => toggleAction("loginEnabled")}
         />
 
         <AdminSwitch
-          label="Creación de CVs"
-          description="Habilita la creación de nuevos currículums"
-          checked={actions.cvCreationEnabled}
+          label="Creación de cuentas"
+          description="Permite que nuevos usuarios se registren"
+          checked={actions.accountCreationEnabled}
           disabled={!isEditing}
-          onChange={() => toggleAction("cvCreationEnabled")}
-        />
-
-        <AdminSwitch
-          label="Actualización de CVs"
-          description="Permite modificar CVs existentes"
-          checked={actions.cvUpdateEnabled}
-          disabled={!isEditing}
-          onChange={() => toggleAction("cvUpdateEnabled")}
+          onChange={() => toggleAction("accountCreationEnabled")}
         />
 
         <AdminSwitch
           label="Recuperación de contraseñas"
-          description="Permite restablecer contraseñas olvidadas"
+          description="Permite restablecer contraseñas"
           checked={actions.passwordRecoveryEnabled}
           disabled={!isEditing}
           onChange={() => toggleAction("passwordRecoveryEnabled")}
         />
       </div>
 
+      
+
+      {/* ACCIONES NORMALES */}
       <div className="admin-actions__actions">
+        <button
+          className="admin-actions__logout-all-btn"
+          onClick={() => requestAuth("logout")}
+        >
+          Cerrar sesión de todos los usuarios
+        </button>
+
         {!isEditing ? (
           <button
             className="admin-actions__edit-btn"
-            onClick={handleEditClick}
+            onClick={() => requestAuth("edit")}
           >
             Editar configuración
           </button>
@@ -101,34 +119,35 @@ function AdminActions() {
         )}
       </div>
 
+      
+
       {/* MODAL DE AUTENTICACIÓN */}
       {showAuthModal && (
         <div className="admin-actions__modal-overlay">
-          <div className="admin-actions__modal">
-            <h3>Confirmar identidad</h3>
-            <p>
-              Ingresa tu contraseña para habilitar la edición de esta sección
-            </p>
+          <div className="admin-actions__modal admin-actions__modal--auth">
+            <div className="admin-actions__modal-header">
+              <h3>Confirmación de seguridad</h3>
+              <p>Esta acción requiere validación administrativa</p>
+            </div>
 
             <input
               type="password"
-              placeholder="Contraseña"
+              placeholder="Contraseña de administrador"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoFocus
             />
 
             {authError && (
-              <span className="admin-actions__error">{authError}</span>
+              <div className="admin-actions__error">
+                {authError}
+              </div>
             )}
 
             <div className="admin-actions__modal-actions">
               <button
                 className="admin-actions__cancel-btn"
-                onClick={() => {
-                  setShowAuthModal(false);
-                  setPassword("");
-                  setAuthError("");
-                }}
+                onClick={resetAuthModal}
               >
                 Cancelar
               </button>
@@ -170,7 +189,9 @@ function AdminSwitch({
     >
       <div className="admin-actions__info">
         <span className="admin-actions__label">{label}</span>
-        <small className="admin-actions__description">{description}</small>
+        <small className="admin-actions__description">
+          {description}
+        </small>
       </div>
 
       <label className="admin-actions__switch">

@@ -122,7 +122,8 @@ export default function TemplatesPage() {
   }, [dispatch]);
 
   return (
-    <section className="templates-page">
+    <>
+      <section className="templates-page">
       <div className="templates-page__info">
         <h2>Plantillas de CV</h2>
         <p>Elige la plantilla perfecta para destacar tu perfil profesional.</p>
@@ -193,7 +194,8 @@ export default function TemplatesPage() {
           })
         )}
       </div>
-      <Footer/>
     </section>
+      <Footer/>
+    </>
   );
 }

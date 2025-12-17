@@ -40,6 +40,7 @@
     flex-direction: column;
     gap: 1.2rem;
     box-shadow: 0 8px 22px rgba(2, 6, 23, 0.04);
+    height: fit-content;
   }
 
   &__identity {
@@ -77,6 +78,32 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+
+    &--box{
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+
+      p{
+      color: rgb(73, 73, 73);
+      font-size: 0.85rem;
+      padding: 0.5rem 0 0 0;
+    }
+
+    span{
+      color: rgb(39, 110, 57);
+      background-color: #ffffff;
+      border: 1px solid #96b4a4c7;
+      font-weight: 500;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    }
   }
 
   &__detail {
@@ -100,7 +127,8 @@
 
   &__footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    margin-top: -1.2rem;
   }
 
   &__btn {
@@ -110,6 +138,7 @@
     font-weight: 600;
     border: none;
     cursor: pointer;
+    height: fit-content;
 
     &--primary {
       background: #2563eb;
@@ -250,6 +279,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    margin-top: -0.5rem;
   }
 
   &__deny-title {
@@ -263,5 +293,134 @@
     font-size: 0.78rem;
     color: #881337;
     line-height: 1.4;
+  }
+}
+
+
+.admin-commission-request {
+
+  &__user{
+    display: flex;
+    flex-direction: column;
+  }
+  /* ===== POPUP HEADER ===== */
+  &__popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__popup-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #020617;
+  }
+
+  &__popup-subtitle {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+  }
+
+  &__popup-close {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #64748b;
+
+    &:hover {
+      color: #020617;
+    }
+  }
+
+  /* ===== USER BOX ===== */
+  &__popup-user-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+
+    strong {
+      font-size: 0.85rem;
+      color: #020617;
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+  }
+
+  &__popup-commission {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.7rem;
+    color: #64748b;
+
+    strong {
+      font-size: 1rem;
+      color: #2563eb;
+    }
+  }
+
+  /* ===== DECISION CARDS ===== */
+  &__popup-decision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .decision-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+
+    input {
+      display: none;
+    }
+
+    &:hover {
+      background: #f8fafc;
+    }
+
+    &--active {
+      box-shadow: 0 8px 20px rgba(2, 6, 23, 0.08);
+      transform: translateY(-1px);
+    }
+
+    &--approve {
+      border-color: #22c55e;
+      color: #166534;
+      background: #f0fdf4;
+    }
+
+    &--deny {
+      border-color: #ef4444;
+      color: #991b1b;
+      background: #fef2f2;
+    }
+  }
+
+  /* ===== POPUP FOOTER ===== */
+  &__popup-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 0.5rem;
   }
 }

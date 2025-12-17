@@ -116,6 +116,7 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    width: fit-content;
   }
 
   &__edit-btn {
@@ -185,5 +186,88 @@
   &__error {
     color: #dc2626;
     font-size: 0.85rem;
+  }
+}
+
+.admin-actions {
+  &__logout-all-btn {
+    background: #fd9292;
+    color: white;
+    padding: 0.7rem 1.6rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+
+    &:hover {
+      background: #cf3131;
+    }
+  }
+}
+
+
+.admin-actions {
+  &__actions{
+    display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  }
+
+  /* MODAL MEJORADO */
+  &__modal--auth {
+    animation: modalFadeIn 0.25s ease-out;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  &__modal-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #020617;
+    }
+
+    p {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  }
+
+  &__modal input {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    transition: border 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+  }
+
+  &__error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

@@ -10,7 +10,6 @@ interface CommissionRequest {
   email: string;
   hotmartEmail: string;
   hotmartUser: string;
-  hotmartAffiliateId: string;
   currentCommission: number;
   requestedAt: string;
   status: RequestStatus;
@@ -24,7 +23,6 @@ const mockRequests: CommissionRequest[] = [
     email: "carlos@email.com",
     hotmartEmail: "carlos@hotmart.com",
     hotmartUser: "carlosg",
-    hotmartAffiliateId: "AF-12345",
     currentCommission: 20,
     requestedAt: "2024-10-10T10:30:00Z",
     status: "Pendiente",
@@ -35,7 +33,6 @@ const mockRequests: CommissionRequest[] = [
     email: "laura@email.com",
     hotmartEmail: "laura@hotmart.com",
     hotmartUser: "lauram",
-    hotmartAffiliateId: "AF-67890",
     currentCommission: 10,
     requestedAt: "2024-11-02T14:15:00Z",
     status: "Aprobada",
@@ -46,7 +43,6 @@ const mockRequests: CommissionRequest[] = [
     email: "juan@email.com",
     hotmartEmail: "juan@hotmart.com",
     hotmartUser: "juanp",
-    hotmartAffiliateId: "AF-99999",
     currentCommission: 15,
     requestedAt: "2024-11-05T09:10:00Z",
     status: "Rechazada",
@@ -82,8 +78,7 @@ function AdminCommissionRequest() {
           req.name.toLowerCase().includes(searchLower) ||
           req.email.toLowerCase().includes(searchLower) ||
           req.hotmartEmail.toLowerCase().includes(searchLower) ||
-          req.hotmartUser.toLowerCase().includes(searchLower) ||
-          req.hotmartAffiliateId.toLowerCase().includes(searchLower);
+          req.hotmartUser.toLowerCase().includes(searchLower) 
 
         const matchesStatus =
           statusFilter === "Todas" ? true : req.status === statusFilter;
@@ -168,12 +163,12 @@ function AdminCommissionRequest() {
             </div>
 
             <div className="admin-commission-request__details">
-              <Detail label="Email de Hotmart" value={request.hotmartEmail} />
               <Detail label="Usuario en Hotmart" value={request.hotmartUser} />
-              <Detail
-                label="ID de Afiliado (Hotmart)"
-                value={request.hotmartAffiliateId}
-              />
+              <Detail label="Email de Hotmart" value={request.hotmartEmail} />
+              <div className="admin-commission-request__details--box">
+                <p>03/08/2026</p>
+                <span>Comision {"20%"}</span>
+              </div>
             </div>
 
             {request.status === "Rechazada" && request.denyReason && (
@@ -204,77 +199,116 @@ function AdminCommissionRequest() {
 
       {/* POPUP */}
       {showPopup && selectedRequest && (
-        <div className="admin-commission-request__overlay">
-          <div className="admin-commission-request__popup">
-            <h3>Revisión de comisión</h3>
+  <div className="admin-commission-request__overlay">
+    <div className="admin-commission-request__popup">
+      
+      {/* HEADER */}
+      <header className="admin-commission-request__popup-header">
+        <div>
+          <h3 className="admin-commission-request__popup-title">
+            Revisión de solicitud
+          </h3>
+          <span className="admin-commission-request__popup-subtitle">
+            Incremento de comisión
+          </span>
+        </div>
 
-            <p className="admin-commission-request__popup-user">
-              {selectedRequest.name} – {selectedRequest.email}
-            </p>
+        <button
+          className="admin-commission-request__popup-close"
+          onClick={() => setShowPopup(false)}
+        >
+          ✕
+        </button>
+      </header>
 
-            <div className="admin-commission-request__decision">
-              <label>
-                <input
-                  type="radio"
-                  checked={decision === "approve"}
-                  onChange={() => setDecision("approve")}
-                />
-                Aprobar
-              </label>
+      {/* USER INFO */}
+      <section className="admin-commission-request__popup-user-box">
+        <div className="admin-commission-request__user">
+          <strong>{selectedRequest.name}</strong>
+          <span>{selectedRequest.email}</span>
+        </div>
 
-              <label>
-                <input
-                  type="radio"
-                  checked={decision === "deny"}
-                  onChange={() => setDecision("deny")}
-                />
-                Rechazar
-              </label>
-            </div>
+        <div className="admin-commission-request__popup-commission">
+          Comisión actual
+          <strong>{selectedRequest.currentCommission}%</strong>
+        </div>
+      </section>
 
-            {decision === "approve" && (
-              <div className="admin-commission-request__field">
-                <label>Nueva comisión (%)</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={newCommission}
-                  onChange={(e) => setNewCommission(+e.target.value)}
-                />
-              </div>
-            )}
+      {/* DECISION */}
+      <section className="admin-commission-request__popup-decision">
+        <label
+          className={`decision-card ${
+            decision === "approve" ? "decision-card--active decision-card--approve" : ""
+          }`}
+        >
+          <input
+            type="radio"
+            checked={decision === "approve"}
+            onChange={() => setDecision("approve")}
+          />
+          <span>Aprobar</span>
+        </label>
 
-            {decision === "deny" && (
-              <div className="admin-commission-request__field">
-                <label>Motivo del rechazo</label>
-                <textarea
-                  rows={3}
-                  value={denyReason}
-                  onChange={(e) => setDenyReason(e.target.value)}
-                />
-              </div>
-            )}
+        <label
+          className={`decision-card ${
+            decision === "deny" ? "decision-card--active decision-card--deny" : ""
+          }`}
+        >
+          <input
+            type="radio"
+            checked={decision === "deny"}
+            onChange={() => setDecision("deny")}
+          />
+          <span>Rechazar</span>
+        </label>
+      </section>
 
-            <div className="admin-commission-request__popup-actions">
-              <button
-                className="admin-commission-request__btn admin-commission-request__btn--secondary"
-                onClick={() => setShowPopup(false)}
-              >
-                Cancelar
-              </button>
-
-              <button
-                className="admin-commission-request__btn admin-commission-request__btn--primary"
-                disabled={!decision || (decision === "deny" && !denyReason)}
-                onClick={handleSubmit}
-              >
-                Confirmar
-              </button>
-            </div>
-          </div>
+      {/* FORM */}
+      {decision === "approve" && (
+        <div className="admin-commission-request__field">
+          <label>Nueva comisión (%)</label>
+          <input
+            type="number"
+            min={0}
+            max={100}
+            value={newCommission}
+            onChange={(e) => setNewCommission(+e.target.value)}
+          />
         </div>
       )}
+
+      {decision === "deny" && (
+        <div className="admin-commission-request__field">
+          <label>Motivo del rechazo</label>
+          <textarea
+            rows={4}
+            placeholder="Explica brevemente el motivo..."
+            value={denyReason}
+            onChange={(e) => setDenyReason(e.target.value)}
+          />
+        </div>
+      )}
+
+      {/* ACTIONS */}
+      <footer className="admin-commission-request__popup-actions">
+        <button
+          className="admin-commission-request__btn admin-commission-request__btn--secondary"
+          onClick={() => setShowPopup(false)}
+        >
+          Cancelar
+        </button>
+
+        <button
+          className="admin-commission-request__btn admin-commission-request__btn--primary"
+          disabled={!decision || (decision === "deny" && !denyReason)}
+          onClick={handleSubmit}
+        >
+          Confirmar Accion
+        </button>
+      </footer>
+    </div>
+  </div>
+)}
     </section>
   );
 }

@@ -7,9 +7,8 @@ type RequestStatus = "pending" | "approved" | null;
 
 const AffiliateCommissionRequest: React.FC = () => {
   const [form, setForm] = useState({
-    hotmartEmail: "",
     hotmartUsername: "",
-    hotmartUserId: "",
+    hotmartEmail: "",
   });
 
   const [status, setStatus] = useState<RequestStatus>(null);
@@ -47,23 +46,7 @@ const AffiliateCommissionRequest: React.FC = () => {
 
       <div className="affiliate-commission-request__content">
         <div className="affiliate-commission-request__field">
-          <label>Email de Hotmart</label>
-          <div className="affiliate-commission-request__input-icon">
-            <RiUserStarLine />
-            <input
-              type="email"
-              name="hotmartEmail"
-              value={form.hotmartEmail}
-              onChange={handleChange}
-              placeholder="email@hotmart.com"
-              required
-              disabled={status === "approved"}
-            />
-          </div>
-        </div>
-
-        <div className="affiliate-commission-request__field">
-          <label>Usuario en Hotmart</label>
+          <label>Nombre de Usuario Afiliado (En Hotmart)</label>
           <div className="affiliate-commission-request__input-icon">
             <RiUserStarLine />
             <input
@@ -79,15 +62,15 @@ const AffiliateCommissionRequest: React.FC = () => {
         </div>
 
         <div className="affiliate-commission-request__field">
-          <label>ID de Afiliado (Hotmart)</label>
+          <label>Tu Email de Afiliado (En Hotmart)</label>
           <div className="affiliate-commission-request__input-icon">
             <RiUserStarLine />
             <input
-              type="text"
-              name="hotmartUserId"
-              value={form.hotmartUserId}
+              type="email"
+              name="hotmartEmail"
+              value={form.hotmartEmail}
               onChange={handleChange}
-              placeholder="ID interno de Hotmart"
+              placeholder="email@hotmart.com"
               required
               disabled={status === "approved"}
             />
