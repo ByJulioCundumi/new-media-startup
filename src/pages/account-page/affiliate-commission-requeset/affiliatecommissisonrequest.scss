@@ -1,267 +1,292 @@
 .affiliate-commission-request {
+  margin: 0 auto;
   background: #ffffff;
-  border-radius: 18px;
-  padding: 2rem 2.5rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-  transition: all 0.3s ease;
-  font-family: "Inter", sans-serif;
-
-  &:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  }
+  border-radius: 20px;
+  padding: 2.2rem 2.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
 
   &__header {
+    text-align: center;
+    margin-bottom: 1.8rem;
+
     h3 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      color: #0b2357;
-      margin-bottom: 0.4rem;
-      border-left: 4px solid #0b2357;
-      padding-left: 0.6rem;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #0b2357;
+        font-weight: 800;
+      }
     }
 
     p {
-      color: #6b7280;
-      font-size: 0.95rem;
+      color: #64748b;
+      font-size: 0.98rem;
+      line-height: 1.5;
     }
   }
 
-  &__content {
+  &__form {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.6rem;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
   }
 
   &__field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
     label {
+      display: block;
       font-weight: 600;
-      font-size: 0.9rem;
       color: #374151;
-    }
-
-    input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: #111827;
+      margin-bottom: 0.5rem;
       font-size: 0.95rem;
-      padding: 0.4rem 0;
     }
   }
 
-  &__input-icon {
+  &__input-wrapper {
     display: flex;
     align-items: center;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    padding: 0.65rem 0.9rem;
-    background: #fff;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
     transition: all 0.25s ease;
 
     svg {
-      color: #9ca3af;
-      margin-right: 0.6rem;
-      font-size: 1.2rem;
+      color: #94a3b8;
+      font-size: 1.25rem;
+      margin-right: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 0.98rem;
+      color: #1e293b;
+
+      &::placeholder {
+        color: #94a3b8;
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
     }
 
     &:focus-within {
-      border-color: #15a88b;
-      box-shadow: 0 0 0 3px rgba(21, 168, 139, 0.15);
+      border-color: #0b2357;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(11, 35, 87, 0.12);
 
       svg {
-        color: #15a88b;
+        color: #0b2357;
       }
     }
   }
 
-  &__status {
-    padding: 0.9rem 1.1rem;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: 600;
+  // Tarjetas de estado - Diseño premium
+  .status-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.3rem 1.5rem;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border: 1px solid transparent;
+
+    &__icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    &__content {
+      flex: 1;
+
+      strong {
+        display: block;
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0;
+        color: inherit;
+        opacity: 0.95;
+      }
+
+      &__reason {
+        background: rgba(0, 0, 0, 0.06);
+        padding: 0.9rem;
+        border-radius: 10px;
+        margin: 0.8rem 0;
+        font-style: italic;
+      }
+
+      &__note {
+        font-size: 0.88rem;
+        opacity: 0.85;
+        margin-top: 0.8rem;
+      }
+    }
 
     &--pending {
-      background: #fff7ed;
-      color: #b45309;
-      border: 1px solid #fed7aa;
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+
+      .status-card__icon {
+        color: #f59e0b;
+      }
     }
 
     &--approved {
-      background: #0b2357;
-    color: white;
-      border: 1px solid #a7f3d0;
+      background: linear-gradient(135deg, #0b2357, #1e3a8a);
+      color: white;
+      border-color: #3b82f6;
+
+      .status-card__icon {
+        color: #86efac;
+      }
+    }
+
+    &--rejected {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #991b1b;
+
+      .status-card__icon {
+        color: #ef4444;
+      }
+    }
+
+    &--cancelled {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #475569;
+
+      .status-card__icon {
+        color: #64748b;
+      }
     }
   }
 
   &__actions {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.8rem;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 0.5rem;
   }
 
-  &__save-btn {
-    background: #0b2357;
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem 1.6rem;
+  .btn {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 3px 8px rgba(21, 168, 139, 0.25);
-    cursor: pointer;
-    transition: all 0.25s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(21, 168, 139, 0.3);
-      background: #119c81;
-    }
-  }
-
-  &__success {
-    font-size: 0.9rem;
-    color: #15a88b;
+    justify-content: center;
+    gap: 0.6rem;
     font-weight: 600;
-    animation: fadeInOut 3s ease forwards;
-  }
-
-  @keyframes fadeInOut {
-    0% {
-      opacity: 0;
-      transform: translateY(-5px);
-    }
-    10% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-5px);
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-}
-
-
-.affiliate-commission-request {
-  // ... tus estilos existentes
-
-  &__status {
-    padding: 1rem 1.2rem;
+    font-size: 0.98rem;
+    padding: 0.9rem 1.6rem;
+    border: none;
     border-radius: 12px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
-    strong {
-      display: block;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      margin: 0.4rem 0 0;
-      font-size: 0.9rem;
-      opacity: 0.95;
-    }
-
-    &--pending {
-      background: #fffbeb;
-      color: #92400e;
-      border: 1px solid #fcd34d;
-    }
-
-    &--approved {
-      background-color: #119c80d7;
+    &--primary {
+      background: #0b2357;
       color: white;
-      border: none;
-      
-      strong,p{
-        font-weight: 600;
+
+      &:hover:not(:disabled) {
+        background: #1e3a8a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(11, 35, 87, 0.3);
       }
     }
 
-    &--rejected {
+    &--secondary {
+      background: #1e293b;
+      color: white;
+
+      &:hover {
+        background: #334155;
+        transform: translateY(-2px);
+      }
+    }
+
+    &--danger {
+      background: transparent;
+      color: #dc2626;
+      border: 1.5px solid #fca5a5;
+
+      &:hover {
+        background: #fee2e2;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  .toast {
+    padding: 0.9rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeInOut 4s ease forwards;
+
+    &--success {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #86efac;
+    }
+
+    &--error {
       background: #fee2e2;
-      color: #991b1b;
+      color: #dc2626;
       border: 1px solid #fca5a5;
     }
-
-    &--cancelled {
-      background: #f3f4f6;
-      color: #4b5563;
-      border: 1px solid #d1d5db;
-    }
   }
 
-  &__update-btn {
-    background: #0a2063;
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all 0.25s ease;
-
-    &:hover {
-      background: #1e3a8a;
-      transform: translateY(-2px);
-    }
-
-    svg {
-      font-size: 1.1rem;
-    }
+  .loading-text {
+    text-align: center;
+    padding: 3rem 0;
+    color: #64748b;
+    font-size: 1rem;
   }
 
-  &__cancel-btn {
-    background: transparent;
-    color: #dc2626;
-    border: 1px solid #fca5a5;
-    font-weight: 600;
-    padding: 0.75rem 1.4rem;
-    border-radius: 10px;
-    cursor: pointer;
-
-    &:hover {
-      background: #fee2e2;
-    }
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; transform: translateY(-8px); }
+    10%, 90% { opacity: 1; transform: translateY(0); }
   }
 
-  &__message {
-    font-weight: 600;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
+  @media (max-width: 640px) {
+    padding: 1.8rem 1.5rem;
+    border-radius: 16px;
 
-    &.success {
-      color: #4fa18a;
+    &__actions {
+      gap: 0.8rem;
     }
 
-    &.error {
-      color: #b94c4c;
+    .btn {
+      padding: 0.85rem 1.4rem;
+      font-size: 0.95rem;
     }
   }
 }
