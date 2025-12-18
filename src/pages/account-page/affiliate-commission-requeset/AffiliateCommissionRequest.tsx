@@ -3,7 +3,6 @@ import React, { useState, useEffect, type ChangeEvent, type FormEvent } from "re
 import {
   RiMailSendFill,
   RiUserStarLine,
-  RiRefreshLine,
   RiTimeLine,
   RiCheckLine,
   RiCloseLine,
@@ -26,6 +25,9 @@ interface CommissionRequestData {
   hotmartEmail: string;
   denyReason?: string;
   approvedCommission?: number;
+  previousHotmartUsername?: string | null;
+  previousHotmartEmail?: string | null;
+  previousApprovedCommission?: number | null;
 }
 
 const AffiliateCommissionRequest: React.FC = () => {
@@ -35,6 +37,8 @@ const AffiliateCommissionRequest: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
+
+  const prevRequestRef = React.useRef<CommissionRequestData | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -46,15 +50,34 @@ const AffiliateCommissionRequest: React.FC = () => {
         ]);
 
         setCurrentCommission(commission);
+
         if (myRequest) {
           setRequest(myRequest);
           setForm({
             hotmartUsername: myRequest.hotmartUsername,
             hotmartEmail: myRequest.hotmartEmail,
           });
+
+          if (myRequest.status === "APPROVED" && myRequest.approvedCommission) {
+            setCurrentCommission(myRequest.approvedCommission);
+          }
+
+          // Detectar restauración tras rechazo/cancelación de reasignación
+          if (
+            prevRequestRef.current?.status === "PENDING" &&
+            myRequest.status === "APPROVED" &&
+            prevRequestRef.current.previousHotmartUsername !== null
+          ) {
+            setMessage("Tu reasignación fue rechazada o cancelada. Se restauraron tus datos y comisión anteriores.");
+          }
+        } else {
+          setRequest(null);
+          setForm({ hotmartUsername: "", hotmartEmail: "" });
         }
+
+        prevRequestRef.current = myRequest;
       } catch (err: any) {
-        setMessage("Error al cargar la información. Intenta recargar la página.");
+        setMessage("Error al cargar la información. Por favor, recarga la página.");
       } finally {
         setInitialLoading(false);
       }
@@ -76,49 +99,60 @@ const AffiliateCommissionRequest: React.FC = () => {
     setMessage(null);
 
     try {
-      const newRequest = await createCommissionRequestApi(form);
-      setRequest(newRequest);
-      setMessage(
-        request?.status === "PENDING"
-          ? "¡Datos actualizados correctamente!"
-          : "¡Solicitud enviada con éxito!"
-      );
+      const response = await createCommissionRequestApi(form);
+      const updatedRequest = response.request || response; // compatibilidad
+
+      setRequest(updatedRequest);
+      setForm({
+        hotmartUsername: updatedRequest.hotmartUsername,
+        hotmartEmail: updatedRequest.hotmartEmail,
+      });
+
+      if (request?.status === "APPROVED" && updatedRequest.status === "PENDING") {
+        setCurrentCommission(20);
+        setMessage("Reasignación solicitada. Tu comisión vuelve temporalmente al 20% hasta nueva aprobación.");
+      } else if (!request || ["CANCELLED", "REJECTED"].includes(request.status)) {
+        setMessage("¡Solicitud enviada con éxito! Pronto será revisada.");
+      } else if (request.status === "PENDING") {
+        setMessage("Datos actualizados. Tu solicitud sigue en revisión.");
+      }
     } catch (err: any) {
       setMessage(err.message || "Error al procesar la solicitud.");
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage(null), 4000);
+      setTimeout(() => setMessage(null), 8000);
     }
   };
 
   const handleCancel = async () => {
-    if (!request?.id) return;
+    if (!request?.id || request.status !== "PENDING") return;
+
     setLoading(true);
     try {
       await cancelCommissionRequestApi(request.id);
-      setRequest(null);
-      setForm({ hotmartUsername: "", hotmartEmail: "" });
-      setMessage("Solicitud cancelada correctamente.");
+      setMessage("Solicitud cancelada. Se restauró tu estado anterior si correspondía.");
+      window.location.reload();
     } catch (err: any) {
-      setMessage(err.message || "Error al cancelar la solicitud.");
+      setMessage(err.message || "Error al cancelar.");
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage(null), 4000);
+      setTimeout(() => setMessage(null), 6000);
     }
   };
 
-  const handleRequestNewIncrease = () => {
-    setRequest(null);
-    setForm({ hotmartUsername: "", hotmartEmail: "" });
-    setMessage("Puedes solicitar un nuevo incremento cuando cumplas los requisitos.");
-    setTimeout(() => setMessage(null), 4000);
-  };
-
-  // Lógica de permisos
-  const canEditOrCreate = !request || ["REJECTED", "CANCELLED"].includes(request.status);
-  const canUpdatePending = request?.status === "PENDING";
-  const canRequestNewAfterApproval = request?.status === "APPROVED";
   const isPending = request?.status === "PENDING";
+  const isApproved = request?.status === "APPROVED";
+  const isRejected = request?.status === "REJECTED" && request.previousHotmartUsername === null;
+  const isCancelled = request?.status === "CANCELLED" && request.previousHotmartUsername === null;
+
+  const isSubmitEnabled = !loading && form.hotmartUsername.trim() && form.hotmartEmail.trim();
+
+  const getSubmitButtonText = () => {
+    if (!request || isCancelled || isRejected) return "Solicitar Incremento de Comisión";
+    if (isPending) return "Actualizar Datos";
+    if (isApproved) return "Reasignar mi Comisión";
+    return "Solicitar Incremento de Comisión";
+  };
 
   if (initialLoading) {
     return (
@@ -131,16 +165,14 @@ const AffiliateCommissionRequest: React.FC = () => {
   return (
     <div className="affiliate-commission-request">
       <header className="affiliate-commission-request__header">
-        <h3>
-          Comisión actual: <strong>{currentCommission}%</strong>
-        </h3>
-        <p>Solicita un incremento enviando tus credenciales de Hotmart.</p>
+        <h3>Incremento de Comisión al 50%</h3>
+        <p>Envía tus datos de afiliado en Hotmart para solicitar o gestionar tu incremento de comisión.</p>
       </header>
 
       <form onSubmit={handleSubmit} className="affiliate-commission-request__form">
         <div className="affiliate-commission-request__fields">
           <div className="affiliate-commission-request__field">
-            <label>Usuario en Hotmart</label>
+            <label>Nombre de Usuario (Hotmart)</label>
             <div className="affiliate-commission-request__input-wrapper">
               <RiUserStarLine />
               <input
@@ -150,13 +182,13 @@ const AffiliateCommissionRequest: React.FC = () => {
                 onChange={handleChange}
                 placeholder="tu_usuario_hotmart"
                 required
-                disabled={!canEditOrCreate && !canUpdatePending || loading}
+                disabled={loading}
               />
             </div>
           </div>
 
           <div className="affiliate-commission-request__field">
-            <label>Email registrado en Hotmart</label>
+            <label>Email de Afiliado (Hotmart)</label>
             <div className="affiliate-commission-request__input-wrapper">
               <RiUserStarLine />
               <input
@@ -166,100 +198,85 @@ const AffiliateCommissionRequest: React.FC = () => {
                 onChange={handleChange}
                 placeholder="tuemail@hotmart.com"
                 required
-                disabled={!canEditOrCreate && !canUpdatePending || loading}
+                disabled={loading}
               />
             </div>
           </div>
         </div>
 
-        {/* Estado de la solicitud - Tarjetas visuales mejoradas */}
         {request && (
           <div className={`status-card status-card--${request.status.toLowerCase()}`}>
             <div className="status-card__icon">
-              {request.status === "PENDING" && <RiTimeLine />}
-              {request.status === "APPROVED" && <RiCheckLine />}
-              {request.status === "REJECTED" && <RiCloseLine />}
-              {request.status === "CANCELLED" && <RiInformationLine />}
+              {isPending && <RiTimeLine />}
+              {isApproved && <RiCheckLine />}
+              {isRejected && <RiCloseLine />}
+              {isCancelled && <RiInformationLine />}
             </div>
             <div className="status-card__content">
-              {request.status === "PENDING" && (
+              {isPending && (
                 <>
-                  <strong>Tu solicitud está en revisión</strong>
-                  <p>Gracias por tu interés. Te avisaremos pronto el resultado.</p>
+                  <strong>Solicitud en revisión</strong>
+                  <p>El administrador la revisará pronto.</p>
+                  <p className="status-card__note">Puedes actualizar tus datos o cancelar la solicitud.</p>
                 </>
               )}
 
-              {request.status === "APPROVED" && (
+              {isApproved && (
                 <>
-                  <strong>¡Felicidades! Comisión aumentada</strong>
-                  <p>
-                    Ahora ganas <strong>{request.approvedCommission}%</strong> por cada venta.
+                  <strong>¡Comisión aprobada: {request.approvedCommission}%!</strong>
+                  <p>Estás ganando más por cada venta.</p>
+                  <p className="status-card__note">
+                    Si cambiaste de cuenta Hotmart, pulsa "Reasignar mi Comisión" para solicitar una nueva revisión.
                   </p>
                 </>
               )}
 
-              {request.status === "REJECTED" && (
+              {isRejected && (
                 <>
                   <strong>Solicitud rechazada</strong>
-                  <p className="status-card__reason">
-                    {request.denyReason ||
-                      "Aún no cumples los requisitos mínimos. Mejora tus ventas y vuelve a intentarlo."}
+                  <p>Motivo: {request.denyReason || "No especificado."}</p>
+                  <p className="status-card__note">
+                    <strong>¡Puedes reintentar!</strong> Envía nuevamente tus datos.
                   </p>
-                  <p className="status-card__note">Puedes enviar una nueva solicitud cuando estés listo.</p>
                 </>
               )}
 
-              {request.status === "CANCELLED" && (
+              {isCancelled && (
                 <>
                   <strong>Solicitud cancelada</strong>
-                  <p>Puedes enviar una nueva solicitud cuando desees.</p>
+                  <p>Puedes solicitar el incremento nuevamente cuando lo desees.</p>
                 </>
               )}
             </div>
           </div>
         )}
 
-        {/* Acciones */}
-        <div className="affiliate-commission-request__actions">
-          {(canEditOrCreate || canUpdatePending) && (
-            <button
-              type="submit"
-              disabled={
-                loading ||
-                !form.hotmartUsername.trim() ||
-                !form.hotmartEmail.trim()
-              }
-              className="btn btn--primary"
-            >
-              <RiMailSendFill />
-              {canUpdatePending ? "Actualizar solicitud" : "Enviar solicitud"}
-            </button>
-          )}
+        {isApproved && request.denyReason && (
+                <span>Reasignacion Rechazada: {request.denyReason}</span>
+              )}
 
-          {canRequestNewAfterApproval && (
-            <button
-              type="button"
-              onClick={handleRequestNewIncrease}
-              className="btn btn--secondary"
-            >
-              <RiRefreshLine />
-              Solicitar nuevo incremento
-            </button>
-          )}
+        <div className="affiliate-commission-request__actions">
+          <button type="submit" disabled={!isSubmitEnabled} className="btn btn--primary">
+            <RiMailSendFill />
+            {getSubmitButtonText()}
+          </button>
 
           {isPending && (
-            <button
-              type="button"
-              onClick={handleCancel}
-              disabled={loading}
-              className="btn btn--danger"
-            >
-              Cancelar solicitud
+            <button type="button" onClick={handleCancel} disabled={loading} className="btn btn--danger">
+              Cancelar Solicitud
             </button>
           )}
 
           {message && (
-            <div className={`toast ${message.includes("éxito") || message.includes("correctamente") ? "toast--success" : "toast--error"}`}>
+            <div
+              className={`toast ${
+                message.includes("rechazada") || message.includes("restaur") || message.includes("cancelada")
+                  ? "toast--info"
+                  : message.includes("éxito") || message.includes("enviado")
+                  ? "toast--success"
+                  : "toast--error"
+              }`}
+            >
               {message}
             </div>
           )}

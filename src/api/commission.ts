@@ -29,6 +29,7 @@ export const getMyCommissionRequestApi = async (): Promise<any | null> => {
 };
 
 // Crear una nueva solicitud de incremento
+// Crear o actualizar solicitud
 export const createCommissionRequestApi = async (data: {
   hotmartUsername: string;
   hotmartEmail: string;
@@ -41,7 +42,16 @@ export const createCommissionRequestApi = async (data: {
   });
 
   const responseData = await res.json();
-  if (!res.ok) throw new Error(responseData.message || "Error enviando solicitud");
+
+  if (!res.ok) {
+    // Manejo especial si ya hay una solicitud procesada
+    if (res.status === 400 && responseData.currentRequest) {
+      throw new Error(
+        "Ya tienes una solicitud procesada. Si deseas solicitar un nuevo incremento, espera o contacta al administrador."
+      );
+    }
+    throw new Error(responseData.message || "Error al enviar la solicitud");
+  }
 
   return responseData.request;
 };
