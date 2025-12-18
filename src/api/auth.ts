@@ -96,3 +96,21 @@ export const resetPassword = async (email: string, code: string, newPassword: st
   });
   return res.json();
 };
+
+
+// Obtener comisión actual del usuario (útil para mostrar en perfil o panel)
+export const getMyCommissionApi = async (): Promise<number> => {
+  const res = await fetch(`${BASE_URL}/auth/my-commission`, {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message || "Error obteniendo comisión");
+  }
+
+  const data = await res.json();
+  return data.commission; // → número como 20 o 50
+};
