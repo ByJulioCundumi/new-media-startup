@@ -97,6 +97,33 @@ export const resetPassword = async (email: string, code: string, newPassword: st
   return res.json();
 };
 
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string
+): Promise<{ message: string }> => {
+  if (newPassword !== confirmPassword) {
+    throw new Error("Las contraseñas no coinciden");
+  }
+
+  const res = await fetch(`${BASE_URL}/auth/password/change`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al cambiar la contraseña");
+  }
+
+  return data; // { message: "Contraseña actualizada correctamente" }
+};
+
 
 // Obtener comisión actual del usuario (útil para mostrar en perfil o panel)
 export const getMyCommissionApi = async (): Promise<number> => {

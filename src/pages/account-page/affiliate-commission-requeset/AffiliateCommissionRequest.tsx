@@ -73,7 +73,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       setMessage(err.message || "Ocurrió un error al enviar tu solicitud. Inténtalo de nuevo.");
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage(null), 6000);
+      setTimeout(() => setMessage(null), 3000);
     }
   };
 
@@ -89,7 +89,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       setMessage(err.message || "No se pudo cancelar la solicitud. Inténtalo más tarde.");
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage(null), 5000);
+      setTimeout(() => setMessage(null), 3000);
     }
   };
 
@@ -97,7 +97,7 @@ const AffiliateCommissionRequest: React.FC = () => {
     setRequest(null);
     setForm({ hotmartUsername: "", hotmartEmail: "" });
     setMessage("Ahora puedes solicitar un nuevo incremento de comisión cuando lo desees.");
-    setTimeout(() => setMessage(null), 6000);
+    setTimeout(() => setMessage(null), 3000);
   };
 
   const canSendNewRequest = !request || request.status === "REJECTED" || request.status === "CANCELLED";
@@ -171,12 +171,10 @@ const AffiliateCommissionRequest: React.FC = () => {
 
             {request.status === "APPROVED" && (
               <>
-                <strong>🎉 ¡Excelente noticia! Tu comisión ha sido aumentada</strong>
+                <strong>¡Tu comisión ha sido aumentada!</strong>
                 <p>
-                  Ahora ganas <strong>{request.approvedCommission || 50}%</strong> por cada venta realizada.
+                  Ahora ganaras un <strong>{request.approvedCommission}%</strong> de comision por cada venta realizada.
                 </p>
-                <p>¡Gracias por tu gran desempeño como afiliado!</p>
-                <p>Si sigues creciendo, puedes pedir otro incremento en el futuro.</p>
               </>
             )}
 

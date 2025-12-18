@@ -191,9 +191,13 @@
     }
 
     &--approved {
-      background: linear-gradient(135deg, #0b2357, #119c81);
+      background-color: #119c80d7;
       color: white;
       border: none;
+      
+      strong,p{
+        font-weight: 600;
+      }
     }
 
     &--rejected {
@@ -210,7 +214,7 @@
   }
 
   &__update-btn {
-    background: #1e40af;
+    background: #0a2063;
     color: white;
     font-weight: 600;
     font-size: 0.95rem;
@@ -253,13 +257,11 @@
     border-radius: 8px;
 
     &.success {
-      background: #d1fae5;
-      color: #065f46;
+      color: #4fa18a;
     }
 
     &.error {
-      background: #fee2e2;
-      color: #991b1b;
+      color: #b94c4c;
     }
   }
 }

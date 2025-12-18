@@ -2,6 +2,7 @@ import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import "./PasswordSettings.scss";
 import { MdLockOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { FaSave, FaCheckCircle } from "react-icons/fa";
+import { changePassword } from "../../../api/auth";
 
 const PasswordSettings: React.FC = () => {
   const [passwordForm, setPasswordForm] = useState({
@@ -9,15 +10,14 @@ const PasswordSettings: React.FC = () => {
     newPassword: "",
     confirmPassword: "",
   });
-
   const [showPasswords, setShowPasswords] = useState({
     current: false,
     new: false,
     confirm: false,
   });
-
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,20 +29,30 @@ const PasswordSettings: React.FC = () => {
     setShowPasswords({ ...showPasswords, [field]: !showPasswords[field] });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    const { newPassword, confirmPassword } = passwordForm;
-    if (newPassword !== confirmPassword) {
-      setError("Las contraseñas no coinciden.");
-      return;
+    try {
+      await changePassword(
+        passwordForm.currentPassword,
+        passwordForm.newPassword,
+        passwordForm.confirmPassword
+      );
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+      setPasswordForm({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (err: any) {
+      setError(err.message || "Error al actualizar la contraseña");
+    } finally {
+      setLoading(false);
     }
-
-    // Simulación de guardado
-    console.log("Contraseña actualizada:", passwordForm);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-    setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
   };
 
   return (
@@ -65,8 +75,9 @@ const PasswordSettings: React.FC = () => {
               name="currentPassword"
               value={passwordForm.currentPassword}
               onChange={handleChange}
-              placeholder="********"
+              placeholder="Ingresa tu contraseña actual"
               required
+              disabled={loading}
             />
             <button
               type="button"
@@ -88,8 +99,9 @@ const PasswordSettings: React.FC = () => {
               name="newPassword"
               value={passwordForm.newPassword}
               onChange={handleChange}
-              placeholder="********"
+              placeholder="Ingresa nueva contraseña"
               required
+              disabled={loading}
             />
             <button
               type="button"
@@ -111,8 +123,9 @@ const PasswordSettings: React.FC = () => {
               name="confirmPassword"
               value={passwordForm.confirmPassword}
               onChange={handleChange}
-              placeholder="********"
+              placeholder="Repite la nueva contraseña"
               required
+              disabled={loading}
             />
             <button
               type="button"
@@ -128,9 +141,14 @@ const PasswordSettings: React.FC = () => {
       {error && <p className="password-settings__error">{error}</p>}
 
       <div className="password-settings__actions">
-        <button type="submit" className="password-settings__save-btn">
-          <FaSave /> Guardar cambios
+        <button
+          type="submit"
+          className="password-settings__save-btn"
+          disabled={loading}
+        >
+          <FaSave /> {loading ? "Guardando..." : "Guardar cambios"}
         </button>
+
         {saved && (
           <span className="password-settings__success">
             <FaCheckCircle /> Contraseña actualizada
