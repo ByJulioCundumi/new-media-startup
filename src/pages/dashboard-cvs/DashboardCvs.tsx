@@ -398,7 +398,7 @@ export default function DashboardCVs() {
                 <h3>{cv.cvTitle}</h3>
                 <p>
                   {tpl.label}
-                  {isOffline && hasPendingChanges && !isLogged && <span className="status-local">(Local)</span>}  {isOffline && !hasPendingChanges && <span className="status-local">(Local)</span>}
+                  {isOffline && hasPendingChanges && <span className="status-local">(Local)</span>}  {isOffline && !hasPendingChanges && <span className="status-local">(Local)</span>}
                   <span> - </span>
                   <span className="date">
                     {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}

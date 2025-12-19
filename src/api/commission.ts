@@ -109,3 +109,18 @@ export const reviewCommissionRequestApi = async (
 
   return await res.json();
 };
+
+export const getCommissionRequestByIdApi = async (requestId: string): Promise<any> => {
+  const res = await fetch(`${COMMISSION_BASE_URL}/request/${requestId}`, {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.message || "Error al obtener la solicitud");
+  }
+
+  return await res.json();
+};

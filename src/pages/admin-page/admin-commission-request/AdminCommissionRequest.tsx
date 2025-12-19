@@ -34,9 +34,11 @@ function AdminCommissionRequest() {
   const [decision, setDecision] = useState<"approve" | "deny" | null>(null);
   const [newCommission, setNewCommission] = useState(50);
   const [denyReason, setDenyReason] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     const fetchRequests = async () => {
+      setLoading(true);
       try {
         const data = await getAllCommissionRequestsApi();
         setRequests(data);
@@ -72,22 +74,51 @@ function AdminCommissionRequest() {
 
   const openPopup = (request: CommissionRequest) => {
     if (request.status !== "PENDING") return;
+
     setSelectedRequest(request);
-    setNewCommission(request.approvedCommission || 50);
     setDecision(null);
     setDenyReason("");
+    setNewCommission(request.approvedCommission || 50);
     setShowPopup(true);
   };
 
+  // Función auxiliar para obtener solicitud fresca por ID
+  const fetchRequestById = async (id: string): Promise<CommissionRequest> => {
+    const res = await fetch(`http://localhost:4000/api/commission/request/${id}`, {
+      method: "GET",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || "Error al verificar la solicitud");
+    }
+
+    return await res.json();
+  };
+
   const handleReview = async () => {
-    if (!selectedRequest || !decision) return;
+    if (!selectedRequest || !decision || processing) return;
 
     if (decision === "deny" && !denyReason.trim()) {
       alert("Por favor, ingresa un motivo para rechazar la solicitud.");
       return;
     }
 
+    setProcessing(true);
+
     try {
+      // 1. Verificar estado actual de la solicitud
+      const currentRequest = await fetchRequestById(selectedRequest.id);
+
+      if (currentRequest.status !== "PENDING") {
+        alert("La solicitud ya no está pendiente. La página se actualizará para reflejar el estado actual.");
+        window.location.reload();
+        return;
+      }
+
+      // 2. Si sigue pendiente → proceder con la revisión
       const response = await reviewCommissionRequestApi(
         selectedRequest.id,
         decision === "approve" ? "APPROVED" : "REJECTED",
@@ -95,9 +126,9 @@ function AdminCommissionRequest() {
         decision === "deny" ? denyReason : undefined
       );
 
-      // CORREGIDO: el backend devuelve { message: "...", request: updatedRequest }
       const updatedRequest = response.request;
 
+      // Actualizar lista local
       setRequests((prev) =>
         prev.map((r) => (r.id === selectedRequest.id ? updatedRequest : r))
       );
@@ -105,11 +136,14 @@ function AdminCommissionRequest() {
       setShowPopup(false);
       alert(
         decision === "approve"
-          ? "¡Solicitud aprobada!"
-          : "Solicitud rechazada. Se restauraron los datos anteriores si era una reasignación."
+          ? "¡Solicitud aprobada exitosamente!"
+          : "Solicitud rechazada correctamente."
       );
     } catch (err: any) {
-      alert(err.message || "Error al procesar la decisión.");
+      alert(err.message || "No se pudo procesar la decisión. Es posible que la solicitud ya haya cambiado de estado.");
+      window.location.reload();
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -188,14 +222,11 @@ function AdminCommissionRequest() {
 
               {request.status === "PENDING" && request.previousHotmartUsername && (
                 <div className="admin-commission-request__reassign-info">
-                  <strong>→ Reasignación solicitada</strong>
+                  <h3>Reasignación solicitada: {request.previousApprovedCommission}% (Usuario Anterior)</h3>
                   <p>
-                    Beneficiario anterior: <strong>{request.previousHotmartUsername}</strong> (
-                    {request.previousHotmartEmail})
-                  </p>
-                  <p>Comisión anterior: <strong>{request.previousApprovedCommission}%</strong></p>
-                  <p className="admin-commission-request__reassign-warning">
-                    Si rechazas, se restaurarán los datos y comisión anteriores.
+                    <strong>{request.previousHotmartUsername}</strong>
+                    <br />
+                    <strong>{request.previousHotmartEmail}</strong>
                   </p>
                 </div>
               )}
@@ -222,73 +253,76 @@ function AdminCommissionRequest() {
         </div>
       )}
 
+      {/* Popup */}
       {showPopup && selectedRequest && (
-        <div className="admin-commission-request__overlay">
-          <div className="admin-commission-request__popup">
+        <div className="admin-commission-request__overlay" onClick={() => !processing && setShowPopup(false)}>
+          <div className="admin-commission-request__popup" onClick={(e) => e.stopPropagation()}>
             <header className="admin-commission-request__popup-header">
               <div>
-                <h3>Revisar solicitud</h3>
-                <span>{selectedRequest.user?.userName} ({selectedRequest.user?.email})</span>
+                <h3 className="admin-commission-request__popup-title">Revisar solicitud</h3>
+                <p className="admin-commission-request__popup-subtitle">
+                  {selectedRequest.user?.userName} ({selectedRequest.user?.email})
+                </p>
               </div>
-              <button onClick={() => setShowPopup(false)}>✕</button>
+              <button
+                className="admin-commission-request__popup-close"
+                onClick={() => setShowPopup(false)}
+                disabled={processing}
+              >
+                ✕
+              </button>
             </header>
 
-            <section className="admin-commission-request__popup-user-box">
-              <div>
-                <strong>Datos solicitados (nuevos)</strong>
-                <span>{selectedRequest.hotmartUsername}</span>
-                <span>{selectedRequest.hotmartEmail}</span>
-              </div>
-            </section>
-
-            {selectedRequest.previousHotmartUsername && (
-              <section className="admin-commission-request__popup-user-box admin-commission-request__popup-previous">
-                <div>
-                  <strong>Datos anteriores (actuales aprobados)</strong>
-                  <span>{selectedRequest.previousHotmartUsername}</span>
-                  <span>{selectedRequest.previousHotmartEmail}</span>
-                  <small>Comisión actual: {selectedRequest.previousApprovedCommission}%</small>
-                </div>
-              </section>
-            )}
-
             <section className="admin-commission-request__popup-decision">
-              <label
-                className={`decision-card ${decision === "approve" ? "decision-card--active decision-card--approve" : ""}`}
-              >
-                <input type="radio" checked={decision === "approve"} onChange={() => setDecision("approve")} />
-                <span>Aprobar nueva cuenta</span>
+              <label className={`decision-card ${decision === "approve" ? "decision-card--active decision-card--approve" : ""}`}>
+                <input
+                  type="radio"
+                  name="decision"
+                  checked={decision === "approve"}
+                  onChange={() => setDecision("approve")}
+                  disabled={processing}
+                />
+                <span>Aprobar</span>
               </label>
-              <label
-                className={`decision-card ${decision === "deny" ? "decision-card--active decision-card--deny" : ""}`}
-              >
-                <input type="radio" checked={decision === "deny"} onChange={() => setDecision("deny")} />
-                <span>Rechazar (mantener anterior)</span>
+
+              <label className={`decision-card ${decision === "deny" ? "decision-card--active decision-card--deny" : ""}`}>
+                <input
+                  type="radio"
+                  name="decision"
+                  checked={decision === "deny"}
+                  onChange={() => setDecision("deny")}
+                  disabled={processing}
+                />
+                <span>Rechazar</span>
               </label>
             </section>
 
             {decision === "approve" && (
               <div className="admin-commission-request__field">
-                <label>Nueva comisión (%)</label>
+                <label htmlFor="commission">Nueva comisión (%)</label>
                 <input
+                  id="commission"
                   type="number"
                   min="20"
                   max="100"
                   step="5"
                   value={newCommission}
                   onChange={(e) => setNewCommission(Number(e.target.value))}
+                  disabled={processing}
                 />
               </div>
             )}
 
             {decision === "deny" && (
               <div className="admin-commission-request__field">
-                <label>Motivo del rechazo</label>
+                <label htmlFor="deny-reason">Motivo del rechazo</label>
                 <textarea
+                  id="deny-reason"
                   rows={5}
                   placeholder="Explica el motivo del rechazo..."
                   value={denyReason}
                   onChange={(e) => setDenyReason(e.target.value)}
+                  disabled={processing}
                 />
                 <small className="admin-commission-request__hint">
                   Los datos y comisión anteriores se restaurarán automáticamente.
@@ -297,13 +331,19 @@ function AdminCommissionRequest() {
             )}
 
             <footer className="admin-commission-request__popup-actions">
-              <button onClick={() => setShowPopup(false)}>Cancelar</button>
               <button
-                className="admin-commission-request__btn--primary"
-                disabled={!decision || (decision === "deny" && !denyReason.trim())}
+                className="admin-commission-request__btn admin-commission-request__btn--secondary"
+                onClick={() => setShowPopup(false)}
+                disabled={processing}
+              >
+                Cancelar
+              </button>
+              <button
+                className="admin-commission-request__btn admin-commission-request__btn--primary"
+                disabled={processing || !decision || (decision === "deny" && !denyReason.trim())}
                 onClick={handleReview}
               >
-                Confirmar decisión
+                {processing ? "Procesando..." : "Confirmar decisión"}
               </button>
             </footer>
           </div>
