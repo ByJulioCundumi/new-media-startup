@@ -7,6 +7,7 @@ import {
   RiCheckLine,
   RiCloseLine,
   RiInformationLine,
+  RiVipCrownLine,
 } from "react-icons/ri";
 import {
   getMyCommissionRequestApi,
@@ -15,6 +16,11 @@ import {
 } from "../../../api/commission";
 import { getMyCommissionApi } from "../../../api/auth";
 import "./affiliatecommissisonrequest.scss";
+import { useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import { TbAlertSquare } from "react-icons/tb";
+import { MdManageSearch } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
@@ -31,7 +37,7 @@ interface CommissionRequestData {
 }
 
 const AffiliateCommissionRequest: React.FC = () => {
-  const [currentCommission, setCurrentCommission] = useState<number>(20);
+  const { subscriptionPlan } = useSelector((state: IState) => state.user);
   const [request, setRequest] = useState<CommissionRequestData | null>(null);
   const [form, setForm] = useState({ hotmartUsername: "", hotmartEmail: "" });
   const [loading, setLoading] = useState(false);
@@ -40,8 +46,13 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const navigate = useNavigate()
 
   const prevRequestRef = React.useRef<CommissionRequestData | null>(null);
+
+  // Determinar si es plan FREE
+  const isFreePlan = subscriptionPlan === "FREE" || !subscriptionPlan;
 
   const loadData = async () => {
     setInitialLoading(true);
@@ -51,18 +62,12 @@ const AffiliateCommissionRequest: React.FC = () => {
         getMyCommissionRequestApi().catch(() => null),
       ]);
 
-      setCurrentCommission(commission);
-
       if (myRequest) {
         setRequest(myRequest);
         setForm({
           hotmartUsername: myRequest.hotmartUsername,
           hotmartEmail: myRequest.hotmartEmail,
         });
-
-        if (myRequest.status === "APPROVED" && myRequest.approvedCommission) {
-          setCurrentCommission(myRequest.approvedCommission);
-        }
 
         if (
           prevRequestRef.current?.status === "PENDING" &&
@@ -111,7 +116,6 @@ const AffiliateCommissionRequest: React.FC = () => {
       });
 
       if (request?.status === "APPROVED" && updatedRequest.status === "PENDING") {
-        setCurrentCommission(20);
         setMessage("Actualización de datos solicitada.");
       } else if (!request || ["CANCELLED", "REJECTED"].includes(request.status)) {
         setMessage("¡Solicitud enviada con éxito!");
@@ -129,7 +133,6 @@ const AffiliateCommissionRequest: React.FC = () => {
 
     setLoading(true);
     try {
-      // Validación fresca del estado
       const freshRequest = await getMyCommissionRequestApi().catch(() => null);
 
       if (!freshRequest || freshRequest.status !== "PENDING") {
@@ -138,7 +141,6 @@ const AffiliateCommissionRequest: React.FC = () => {
         return;
       }
 
-      // Si sigue pendiente, procedemos a cancelar
       await cancelCommissionRequestApi(request.id);
       setMessage("Solicitud cancelada exitosamente.");
       setTimeout(() => window.location.reload(), 1500);
@@ -150,12 +152,28 @@ const AffiliateCommissionRequest: React.FC = () => {
     }
   };
 
+  // Verificar si ambos campos están completos
+  const bothFieldsFilled = form.hotmartUsername.trim() !== "" && form.hotmartEmail.trim() !== "";
+
+  // Manejo del clic en el botón principal
+  const handleRequestClick = () => {
+    if (!bothFieldsFilled) {
+      setMessage("Por favor, completa ambos campos antes de continuar.");
+      setTimeout(() => setMessage(null), 6000);
+      return;
+    }
+
+    if (isFreePlan) {
+      setShowUpgradeModal(true);
+    } else {
+      setShowSubmitConfirm(true);
+    }
+  };
+
   const isPending = request?.status === "PENDING";
   const isApproved = request?.status === "APPROVED";
   const isRejected = request?.status === "REJECTED" && request.previousHotmartUsername === null;
   const isCancelled = request?.status === "CANCELLED" && request.previousHotmartUsername === null;
-
-  const showSubmitButton = !isPending && (form.hotmartUsername.trim() || form.hotmartEmail.trim() || !request);
 
   const getSubmitButtonText = () => {
     if (!request || isCancelled || isRejected) {
@@ -195,7 +213,7 @@ const AffiliateCommissionRequest: React.FC = () => {
                 onChange={handleChange}
                 placeholder="tu_usuario_hotmart"
                 required
-                disabled={loading || isPending} // Deshabilitado mientras esté pendiente
+                disabled={loading || isPending}
               />
             </div>
           </div>
@@ -272,20 +290,20 @@ const AffiliateCommissionRequest: React.FC = () => {
         )}
 
         <div className="affiliate-commission-request__actions">
-          {/* Botón de enviar/actualizar: SOLO si NO está pending */}
-          {!isPending && showSubmitButton && (
+          {/* Botón SIEMPRE visible si no está pendiente */}
+          {!isPending && (
             <button
               type="button"
               disabled={loading}
               className="btn btn--primary"
-              onClick={() => setShowSubmitConfirm(true)}
+              onClick={handleRequestClick}
             >
               <RiMailSendFill />
               {getSubmitButtonText()}
             </button>
           )}
 
-          {/* Botón de cancelar: SOLO si está pending */}
+          {/* Botón de cancelar si está pendiente */}
           {isPending && (
             <button
               type="button"
@@ -298,12 +316,14 @@ const AffiliateCommissionRequest: React.FC = () => {
           )}
 
           {message && (
-            <div className="toast toast--info">{message}</div>
+            <div className={`toast ${message.includes("completa ambos campos") ? "toast--warning" : "toast--info"}`}>
+              {message}
+            </div>
           )}
         </div>
       </form>
 
-      {/* Modal de confirmación para enviar solicitud */}
+      {/* Modal de confirmación para usuarios con plan pago */}
       {showSubmitConfirm && (
         <div className="modal-overlay">
           <div className="modal">
@@ -332,7 +352,35 @@ const AffiliateCommissionRequest: React.FC = () => {
         </div>
       )}
 
-      {/* Modal de confirmación para cancelar */}
+      {/* Popup exclusivo para usuarios FREE */}
+      {showUpgradeModal && (
+        <div className="modal-overlay">
+          <div className="modal modal--upgrade">
+            <TbAlertSquare size={40} className="upgrade-icon" />
+            <p>Solo los usuarios que han adquirido un <strong>plan mensual o anual</strong> pueden solicitar el incremento de comisión al 50%.</p>
+
+            <div className="modal-actions">
+              <button
+                className="btn btn--secondary"
+                onClick={() => setShowUpgradeModal(false)}
+              >
+                Cerrar
+              </button>
+              <button
+                className="btn btn--primary"
+                onClick={() => {
+                  setShowUpgradeModal(false);
+                  navigate("/pricing")
+                }}
+              >
+                <MdManageSearch size={22} /> Explorar Planes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de cancelación */}
       {showCancelConfirm && (
         <div className="modal-overlay">
           <div className="modal">

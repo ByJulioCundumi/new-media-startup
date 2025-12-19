@@ -1,12 +1,15 @@
 import React from "react";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdManageSearch } from "react-icons/md";
 import { FaPercentage, FaUser, FaCrown } from "react-icons/fa";
 import { HiOutlineSearch, HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { MdCancel } from "react-icons/md";
 import "./GeneralInfoForm.scss";
 import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { FiExternalLink, FiLink } from "react-icons/fi";
+import { FiAlertTriangle, FiExternalLink, FiLink } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { IoCardOutline } from "react-icons/io5";
+import { TbAlertSquare } from "react-icons/tb";
 
 const GeneralInfoForm: React.FC = () => {
   const { userName, email, affiliateCommission, subscriptionPlan, subscriptionStatus, subscriptionExpiresAt } = useSelector((state: IState) => state.user);
@@ -67,8 +70,8 @@ const GeneralInfoForm: React.FC = () => {
               value={`${affiliateCommission ?? 20}%`}
               disabled
             />
-             <a href="#"><FiExternalLink />Enalce Afiliado</a>
           </div>
+             <a className="affiliate-link" href="#"><FiExternalLink /> Mi Enalce De Afiliado</a>
         </div>
       </div>
 
@@ -87,7 +90,7 @@ const GeneralInfoForm: React.FC = () => {
               </span>
             )}
             {!isPremium && (
-              <span className="label">Acceso gratuito ilimitado</span>
+              <span className="label free-info"><TbAlertSquare /> Acceso A Funciones Limitadas</span>
             )}
           </div>
 
@@ -100,10 +103,10 @@ const GeneralInfoForm: React.FC = () => {
               </button>
             )}
 
-              <button className="general-info-form__plan-change">
-                <HiOutlineSearch />
+              <Link to={"/pricing"} className="general-info-form__plan-change">
+                <MdManageSearch size={22} />
                 Explorar Planes
-              </button>
+              </Link>
             </div>
 
           {/* Si está cancelado o delayed, mostrar estado */}

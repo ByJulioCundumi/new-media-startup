@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import type { IState } from "../../interfaces/IState";
+import { FiAlertTriangle } from "react-icons/fi";
+import { LuBadgeInfo } from "react-icons/lu";
+import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -240,31 +243,28 @@ function PricingPage() {
 
             <div className="email-modal-icon">
               <div className="email-modal-icon-circle">
-                <Sparkles size={32} />
+                <TbMessageFilled size={32} />
               </div>
             </div>
 
             <h2>¡Antes de continuar!</h2>
 
             <p className="email-modal-text">
-              Para que tu plan se active <strong>correctamente</strong>, al realizar la compra debes usar <strong style={{textDecoration: "underline"}}>el mismo email</strong> de tu cuenta de <strong>￫ CVRemoto ￩</strong>
+              Usa <strong style={{textDecoration: "underline"}}>el mismo email</strong> de tu cuenta <strong style={{textDecoration: "underline"}}>CV Remoto</strong> en el checkout al comprar.
             </p>
 
             <div className="email-modal-highlight">
-              <strong>Tu email actual:</strong>
+              <strong>Tu email:</strong>
               <span>{user.email}</span>
             </div>
 
             <p className="email-modal-text">
-              Si utilizas un email diferente al comprar, no podremos vincular automáticamente el plan seleccionado a tu cuenta.
+              Si usas un email diferente, no sera posible vincular el plan seleccionado a tu cuenta.
             </p>
 
             <div className="email-modal-buttons">
-              <button className="email-modal-btn-secondary" onClick={closeModal}>
-                Cancelar
-              </button>
               <button className="email-modal-btn-primary" onClick={proceedToCheckout}>
-                Continuar como {user.email}
+                Continuar
               </button>
             </div>
           </div>
