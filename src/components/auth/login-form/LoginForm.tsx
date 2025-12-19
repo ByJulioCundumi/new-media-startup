@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./LoginForm.scss";
 import { IoMailOutline, IoLockClosedOutline, IoEye, IoEyeOff } from "react-icons/io5";
-import { login } from "../../../api/auth";
+import { login, type AuthUser } from "../../../api/auth";
 
 interface Props {
   goSignup: () => void;
   goRecovery: () => void;
-  onLoginSuccess?: (user: { id: string; email: string; userName: string; favoriteTemplates: string[] }) => void;
+  onLoginSuccess?: (user: AuthUser) => void;
 }
 
 export default function LoginForm({ goSignup, goRecovery, onLoginSuccess }: Props) {

@@ -80,6 +80,25 @@
     height: 46px;
     transition: all 0.25s ease;
 
+    a{
+      color: rgb(122, 122, 122);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      white-space: nowrap;
+      gap: 0.5rem;
+      font-weight: 500;
+
+      &:hover{
+        color: #0b2357;
+      }
+
+      svg{
+        margin-right: 0rem;
+      }
+    }
+
     svg {
       color: #9ca3af;
       margin-right: 0.7rem;
@@ -94,11 +113,6 @@
       height: 100%;
       font-size: 0.95rem;
       color: #111827;
-    }
-
-    &:focus-within {
-      background: #0b2357;
-    color: white;
     }
   }
 

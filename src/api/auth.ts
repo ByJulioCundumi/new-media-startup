@@ -2,7 +2,10 @@ export interface AuthUser {
   id: string;
   email: string;
   userName: string;
-  favoriteTemplates: string[]
+  favoriteTemplates: string[],
+  subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
+  subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
+  subscriptionExpiresAt?: string | null; // ISO string
 }
 
 interface AuthResponse {
@@ -22,6 +25,9 @@ const normalizeAuthUser = (user: any): AuthUser => ({
   favoriteTemplates: Array.isArray(user.favoriteTemplates)
     ? user.favoriteTemplates
     : [],
+    subscriptionPlan: user.subscriptionPlan,
+  subscriptionStatus: user.subscriptionStatus,
+  subscriptionExpiresAt: user.subscriptionExpiresAt,
 });
 
 

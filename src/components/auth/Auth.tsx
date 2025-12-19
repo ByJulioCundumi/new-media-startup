@@ -8,6 +8,7 @@ import RecoveryForm from "./recovery-form/RecoveryForm";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reducers/userSlice"; // tu slice de usuario
 import { addFavoriteTemplateApi } from "../../api/user";
+import type { AuthUser } from "../../api/auth";
 
 type Section = "login" | "signup" | "recovery";
 
@@ -43,7 +44,7 @@ export default function Auth({ isOpen, onClose, initialSection }: Props) {
   }, [isOpen]);
 
   // Función común para manejar login/signup exitoso
-  const handleSuccess = async (user: { id: string; email: string; userName: string; favoriteTemplates: string[] }) => {
+  const handleSuccess = async (user: AuthUser) => {
     dispatch(setUser(user)); // guardamos en Redux
 
     // Después de login exitoso

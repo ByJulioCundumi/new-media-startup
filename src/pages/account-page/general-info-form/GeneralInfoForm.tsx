@@ -1,31 +1,50 @@
 import React from "react";
 import { MdEmail } from "react-icons/md";
 import { FaPercentage, FaUser, FaCrown } from "react-icons/fa";
-import { HiOutlineSwitchHorizontal } from "react-icons/hi";
+import { HiOutlineSearch, HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { MdCancel } from "react-icons/md";
 import "./GeneralInfoForm.scss";
+import { useSelector } from "react-redux";
+import type { IState } from "../../../interfaces/IState";
+import { FiExternalLink, FiLink } from "react-icons/fi";
 
 const GeneralInfoForm: React.FC = () => {
-  // 👉 Normalmente vendría de Redux / backend
-  const userData = {
-    username: "Julio Pérez",
-    email: "julio@email.com",
-    affiliateCommission: 20,
-    plan: "Mensual", // Gratuito | Mensual | Anual
-    planExpiresAt: "15 de enero de 2026",
+  const { userName, email, affiliateCommission, subscriptionPlan, subscriptionStatus, subscriptionExpiresAt } = useSelector((state: IState) => state.user);
+
+  // Formatear plan para mostrar en español
+  const planDisplayName = () => {
+    if (!subscriptionPlan || subscriptionPlan === "FREE") return "Gratuito";
+    if (subscriptionPlan === "MONTHLY") return "Mensual";
+    if (subscriptionPlan === "ANNUAL") return "Anual";
+    return "Gratuito";
   };
+
+  // Formatear fecha de expiración
+  const formatExpirationDate = () => {
+    if (!subscriptionExpiresAt) return "—";
+
+    const date = new Date(subscriptionExpiresAt);
+    return date.toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  // Determinar si mostrar sección de plan premium
+  const isPremium = subscriptionPlan === "MONTHLY" || subscriptionPlan === "ANNUAL";
 
   return (
     <div className="general-info-form">
       <h3>Información General</h3>
 
       <div className="general-info-form__grid">
-        {/* Nombre */}
+        {/* Nombre de usuario */}
         <div className="general-info-form__field">
           <label>Nombre de usuario</label>
           <div className="general-info-form__input-icon">
             <FaUser />
-            <input type="text" value={userData.username} disabled />
+            <input type="text" value={userName || "—"} disabled />
           </div>
         </div>
 
@@ -34,20 +53,21 @@ const GeneralInfoForm: React.FC = () => {
           <label>Email</label>
           <div className="general-info-form__input-icon">
             <MdEmail />
-            <input type="email" value={userData.email} disabled />
+            <input type="email" value={email || "—"} disabled />
           </div>
         </div>
 
-        {/* Comisión */}
+        {/* Comisión de afiliado */}
         <div className="general-info-form__field">
-          <label>Comisión de afiliado</label>
+          <label>Comisión de afiliado (Hasta 50%)</label>
           <div className="general-info-form__input-icon">
             <FaPercentage />
             <input
               type="text"
-              value={`${userData.affiliateCommission}%`}
+              value={`${affiliateCommission ?? 20}%`}
               disabled
             />
+             <a href="#"><FiExternalLink />Enalce Afiliado</a>
           </div>
         </div>
       </div>
@@ -60,21 +80,48 @@ const GeneralInfoForm: React.FC = () => {
 
         <div className="general-info-form__plan-grid">
           <div className="general-info-form__plan-item">
-            <span className="value">Plan Mensual</span>
-            <span className="label">Fecha de caducidad: 03/05/2025</span>
+            <span className="value">Plan {planDisplayName()}</span>
+            {isPremium && (
+              <span className="label">
+                Fecha de caducidad: {formatExpirationDate()}
+              </span>
+            )}
+            {!isPremium && (
+              <span className="label">Acceso gratuito ilimitado</span>
+            )}
           </div>
 
+          {/* Acciones solo si tiene plan premium activo */}
           <div className="general-info-form__plan-actions">
-          <button className="general-info-form__plan-cancel">
-            <MdCancel />
-            Cancelar Suscripcion
-          </button>
-          
-          <button className="general-info-form__plan-change">
-            <HiOutlineSwitchHorizontal />
-            Cambiar plan
-          </button>
-        </div>
+            {isPremium && subscriptionStatus === "ACTIVE" && (
+              <button className="general-info-form__plan-cancel">
+                <MdCancel />
+                Cancelar Suscripción
+              </button>
+            )}
+
+              <button className="general-info-form__plan-change">
+                <HiOutlineSearch />
+                Explorar Planes
+              </button>
+            </div>
+
+          {/* Si está cancelado o delayed, mostrar estado */}
+          {isPremium && subscriptionStatus === "CANCELED" && (
+            <div className="general-info-form__plan-actions">
+              <span style={{ color: "#dc2626", fontWeight: "600" }}>
+                Suscripción cancelada
+              </span>
+            </div>
+          )}
+
+          {isPremium && subscriptionStatus === "DELAYED" && (
+            <div className="general-info-form__plan-actions">
+              <span style={{ color: "#f59e0b", fontWeight: "600" }}>
+                Pago en mora
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

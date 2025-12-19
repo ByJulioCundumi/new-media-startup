@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./signupform.scss";
-import { signup } from "../../../api/auth";
+import { signup, type AuthUser } from "../../../api/auth";
 
 interface Props {
   goLogin: () => void;
-  onSignupSuccess?: (user: { id: string; email: string; userName: string; favoriteTemplates: string[] }) => void;
+  onSignupSuccess?: (user: AuthUser) => void;
 }
 
 function SignupForm({ goLogin, onSignupSuccess }: Props) {
