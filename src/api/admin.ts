@@ -31,7 +31,25 @@ const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 export const getTodayStatsApi = async () => apiFetch("/stats/today");
 export const getLast7DaysStatsApi = async () => apiFetch("/stats/last-7-days");
 export const getUsersWithTodayActivityApi = async () => apiFetch("/users/today-activity");
+export const getUserLast7DaysActivityApi = async (userId: string) => apiFetch(`/users/${userId}/last-7-days`);
 export const getGeneralMetricsApi = async () => apiFetch("/metrics/general");
+
+// === NUEVAS APIs PARA RESTRICCIONES Y LOGOUT ===
+export const updateUserRestrictionsApi = async (
+  userId: string,
+  restrictions: { loginsPerDay: boolean; passwordRecoveriesPerDay: boolean }
+) => {
+  return await apiFetch(`/users/${userId}/restrictions`, {
+    method: "PUT",
+    body: JSON.stringify(restrictions),
+  });
+};
+
+export const logoutUserApi = async (userId: string) => {
+  return await apiFetch(`/users/${userId}/logout`, {
+    method: "POST",
+  });
+};
 
 // === APIs para AdminActions (Control del Sistema) ===
 export const getSystemSettingsApi = async () => {
