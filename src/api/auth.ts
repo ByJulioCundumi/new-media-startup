@@ -6,6 +6,8 @@ export interface AuthUser {
   subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
   subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
   subscriptionExpiresAt?: string | null; // ISO string
+  logged: boolean;
+  affiliateCommission: number;
 }
 
 interface AuthResponse {
@@ -28,6 +30,8 @@ const normalizeAuthUser = (user: any): AuthUser => ({
     subscriptionPlan: user.subscriptionPlan,
   subscriptionStatus: user.subscriptionStatus,
   subscriptionExpiresAt: user.subscriptionExpiresAt,
+  logged: user.isCurrentlyLoggedIn,
+  affiliateCommission: user.affiliateCommission
 });
 
 

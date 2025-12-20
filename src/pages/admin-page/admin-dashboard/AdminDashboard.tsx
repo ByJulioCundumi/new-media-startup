@@ -221,7 +221,13 @@ function AdminDashboard() {
             <tbody>
               {last7Days.map((dia) => (
                 <tr key={dia.date}>
-                  <td className="date">{dia.date}</td>
+                  <td className="date">
+                    {new Date(dia.date + "T00:00:00").toLocaleDateString("es-ES", {
+                      weekday: "short",
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </td>
                   <td className="num">{dia.logins.toLocaleString()}</td>
                   <td className="num">{dia.signups}</td>
                   <td className="num">{dia.cvsCreated}</td>

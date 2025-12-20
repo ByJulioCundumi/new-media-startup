@@ -40,12 +40,13 @@ const userSlice = createSlice({
         subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
         subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
         subscriptionExpiresAt?: string | null;
+        logged: boolean;
       }>
     ) => {
       state.id = action.payload.id;
       state.email = action.payload.email;
       state.userName = action.payload.userName;
-      state.logged = true;
+      state.logged = action.payload.logged;
       state.affiliateCommission = action.payload.affiliateCommission;
       state.favoriteTemplates = action.payload.favoriteTemplates ?? [];
       state.subscriptionPlan = action.payload.subscriptionPlan;
