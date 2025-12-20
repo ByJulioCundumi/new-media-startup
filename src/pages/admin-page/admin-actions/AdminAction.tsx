@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./adminactions.scss";
+import {
+  getSystemSettingsApi,
+  updateSystemSettingsApi,
+  forceLogoutAllApi,
+  verifyAdminPasswordApi,
+} from "../../../api/admin";
 
 type ProtectedAction = "edit" | "logout" | null;
 
 function AdminActions() {
-  const [actions, setActions] = useState({
+  const [settings, setSettings] = useState({
     loginEnabled: true,
-    accountCreationEnabled: true,
+    signupEnabled: true,
     passwordRecoveryEnabled: true,
   });
 
@@ -14,47 +20,72 @@ function AdminActions() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
-  const [pendingAction, setPendingAction] =
-    useState<ProtectedAction>(null);
+  const [pendingAction, setPendingAction] = useState<ProtectedAction>(null);
+  const [loading, setLoading] = useState(true);
 
-  const toggleAction = (key: keyof typeof actions) => {
+  // Cargar configuración real al montar el componente
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        setLoading(true);
+        const data = await getSystemSettingsApi();
+        setSettings(data);
+      } catch (err: any) {
+        alert("Error cargando configuración: " + (err.message || "Intenta recargar"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  const toggleSetting = (key: keyof typeof settings) => {
     if (!isEditing) return;
-    setActions((prev) => ({ ...prev, [key]: !prev[key] }));
+    setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   const requestAuth = (action: ProtectedAction) => {
     setPendingAction(action);
     setShowAuthModal(true);
-  };
-
-  const handleAuthConfirm = () => {
-    // ⚠️ Validación simulada (backend real aquí)
-    if (password !== "admin123") {
-      setAuthError("Contraseña incorrecta");
-      return;
-    }
-
-    if (pendingAction === "edit") setIsEditing(true);
-    if (pendingAction === "logout") handleForceLogout();
-
-    resetAuthModal();
-  };
-
-  const handleSaveChanges = () => {
-    // 👉 Enviar flags al backend
-    setIsEditing(false);
-  };
-
-  const handleForceLogout = () => {
-    console.log("🚨 Sesión cerrada para todos los usuarios");
-  };
-
-  const resetAuthModal = () => {
-    setShowAuthModal(false);
-    setPassword("");
     setAuthError("");
-    setPendingAction(null);
+    setPassword("");
   };
+
+  const handleAuthConfirm = async () => {
+    try {
+      await verifyAdminPasswordApi(password);
+
+      if (pendingAction === "edit") {
+        setIsEditing(true);
+      } else if (pendingAction === "logout") {
+        const res = await forceLogoutAllApi();
+        alert(res.message);
+      }
+
+      setShowAuthModal(false);
+    } catch (err: any) {
+      setAuthError(err.message || "Error de autenticación");
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      await updateSystemSettingsApi(settings);
+      setIsEditing(false);
+      alert("Configuración guardada correctamente");
+    } catch (err: any) {
+      alert("Error al guardar: " + (err.message || "Intenta nuevamente"));
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="admin-actions">
+        <p>Cargando configuración del sistema...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="admin-actions">
@@ -69,37 +100,34 @@ function AdminActions() {
         <AdminSwitch
           label="Inicio de sesión"
           description="Permite el acceso de usuarios"
-          checked={actions.loginEnabled}
+          checked={settings.loginEnabled}
           disabled={!isEditing}
-          onChange={() => toggleAction("loginEnabled")}
+          onChange={() => toggleSetting("loginEnabled")}
         />
 
         <AdminSwitch
           label="Creación de cuentas"
           description="Permite que nuevos usuarios se registren"
-          checked={actions.accountCreationEnabled}
+          checked={settings.signupEnabled}
           disabled={!isEditing}
-          onChange={() => toggleAction("accountCreationEnabled")}
+          onChange={() => toggleSetting("signupEnabled")}
         />
 
         <AdminSwitch
           label="Recuperación de contraseñas"
-          description="Permite restablecer contraseñas"
-          checked={actions.passwordRecoveryEnabled}
+          description="Permite restablecer contraseñas olvidadas"
+          checked={settings.passwordRecoveryEnabled}
           disabled={!isEditing}
-          onChange={() => toggleAction("passwordRecoveryEnabled")}
+          onChange={() => toggleSetting("passwordRecoveryEnabled")}
         />
       </div>
 
-      
-
-      {/* ACCIONES NORMALES */}
       <div className="admin-actions__actions">
         <button
           className="admin-actions__logout-all-btn"
           onClick={() => requestAuth("logout")}
         >
-          Cerrar sesión de todos los usuarios
+          Cerrar sesión de usuarios conectados
         </button>
 
         {!isEditing ? (
@@ -119,15 +147,13 @@ function AdminActions() {
         )}
       </div>
 
-      
-
       {/* MODAL DE AUTENTICACIÓN */}
       {showAuthModal && (
         <div className="admin-actions__modal-overlay">
           <div className="admin-actions__modal admin-actions__modal--auth">
             <div className="admin-actions__modal-header">
-              <h3>Confirmación de seguridad</h3>
-              <p>Esta acción requiere validación administrativa</p>
+              <h3>Confirmación requerida</h3>
+              <p>Ingrese su contraseña de administrador</p>
             </div>
 
             <input
@@ -135,23 +161,19 @@ function AdminActions() {
               placeholder="Contraseña de administrador"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleAuthConfirm()}
               autoFocus
             />
 
-            {authError && (
-              <div className="admin-actions__error">
-                {authError}
-              </div>
-            )}
+            {authError && <div className="admin-actions__error">{authError}</div>}
 
             <div className="admin-actions__modal-actions">
               <button
                 className="admin-actions__cancel-btn"
-                onClick={resetAuthModal}
+                onClick={() => setShowAuthModal(false)}
               >
                 Cancelar
               </button>
-
               <button
                 className="admin-actions__confirm-btn"
                 onClick={handleAuthConfirm}
@@ -174,24 +196,12 @@ interface AdminSwitchProps {
   onChange: () => void;
 }
 
-function AdminSwitch({
-  label,
-  description,
-  checked,
-  disabled,
-  onChange,
-}: AdminSwitchProps) {
+function AdminSwitch({ label, description, checked, disabled, onChange }: AdminSwitchProps) {
   return (
-    <div
-      className={`admin-actions__item ${
-        disabled ? "admin-actions__item--disabled" : ""
-      }`}
-    >
+    <div className={`admin-actions__item ${disabled ? "admin-actions__item--disabled" : ""}`}>
       <div className="admin-actions__info">
         <span className="admin-actions__label">{label}</span>
-        <small className="admin-actions__description">
-          {description}
-        </small>
+        <small className="admin-actions__description">{description}</small>
       </div>
 
       <label className="admin-actions__switch">

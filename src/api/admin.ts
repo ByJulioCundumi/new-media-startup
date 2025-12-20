@@ -2,39 +2,65 @@
 
 const BASE_URL = "http://localhost:4000/api/admin";
 
-const apiFetch = async (endpoint: string) => {
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    method: "GET",
-    credentials: "include", // Necesario para enviar la cookie con el token
+// Helper robusto para todas las peticiones
+const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    credentials: "include",
+    ...options,
     headers: {
       "Content-Type": "application/json",
+      ...options.headers,
     },
   });
 
-  const data = await res.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
 
-  if (!res.ok) {
-    throw new Error(data.message || "Error al cargar datos del admin");
+  if (!response.ok) {
+    throw new Error(data?.message || `Error ${response.status}`);
   }
 
   return data;
 };
 
-// Estadísticas del día actual
-export const getTodayStatsApi = async () => {
-  return await apiFetch("/stats/today");
+// === Estadísticas existentes ===
+export const getTodayStatsApi = async () => apiFetch("/stats/today");
+export const getLast7DaysStatsApi = async () => apiFetch("/stats/last-7-days");
+export const getUsersWithTodayActivityApi = async () => apiFetch("/users/today-activity");
+export const getGeneralMetricsApi = async () => apiFetch("/metrics/general");
+
+// === APIs para AdminActions (Control del Sistema) ===
+export const getSystemSettingsApi = async () => {
+  return await apiFetch("/settings");
 };
 
-// Estadísticas de los últimos 7 días (por día)
-export const getLast7DaysStatsApi = async () => {
-  return await apiFetch("/stats/last-7-days");
+export const updateSystemSettingsApi = async (settings: {
+  loginEnabled: boolean;
+  signupEnabled: boolean;
+  passwordRecoveryEnabled: boolean;
+}) => {
+  return await apiFetch("/settings", {
+    method: "PUT",
+    body: JSON.stringify(settings),
+  });
 };
 
-// Lista de usuarios con su actividad de hoy (para futuros usos, como tabla de usuarios)
-export const getUsersWithTodayActivityApi = async () => {
-  return await apiFetch("/users/today-activity");
+export const forceLogoutAllApi = async () => {
+  return await apiFetch("/force-logout-all", {
+    method: "POST",
+  });
 };
 
-export const getGeneralMetricsApi = async () => {
-  return await apiFetch("/metrics/general");
+export const verifyAdminPasswordApi = async (password: string) => {
+  if (!password?.trim()) {
+    throw new Error("La contraseña es requerida");
+  }
+  return await apiFetch("/verify-password", {
+    method: "POST",
+    body: JSON.stringify({ password: password.trim() }),
+  });
 };
