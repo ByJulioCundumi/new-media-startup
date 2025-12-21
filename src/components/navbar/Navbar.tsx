@@ -1,17 +1,19 @@
 import "./navbar.scss";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSidebar } from "../../reducers/sidebarSlice";
-import type { IState } from "../../interfaces/IState";
 import { Link } from "react-router-dom";
 
-import Auth from "../auth/Auth";
+import { setSidebar } from "../../reducers/sidebarSlice";
+import type { IState } from "../../interfaces/IState";
+
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import { TbLogout2, TbPencilPlus, TbSettingsCode } from "react-icons/tb";
+import { TbPencilPlus, TbSettingsCode } from "react-icons/tb";
 import { HiHome, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
-import { MdAdminPanelSettings, MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
-import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
+import {
+  MdAdminPanelSettings,
+  MdOutlineDiamond,
+  MdOutlineWorkOutline,
+} from "react-icons/md";
 import { openAuthModal } from "../../reducers/authModalSlice";
 
 function Navbar() {
@@ -20,105 +22,128 @@ function Navbar() {
   const { logged, role } = useSelector((state: IState) => state.user);
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar__content">
+    <nav className="navbar">
+      <div className="navbar__content">
 
-          {/* LOGO */}
-          <Link to={"/"} className="navbar__logo" onClick={() => dispatch(setSidebar("home"))}>
-            <div className="logo-icon"><TbPencilPlus /></div>
-            <span className="logo-text">CvRemoto</span>
+        {/* LOGO */}
+        <Link
+          to="/"
+          className="navbar__logo"
+          onClick={() => dispatch(setSidebar("home"))}
+        >
+          <div className="logo-icon">
+            <TbPencilPlus />
+          </div>
+          <span className="logo-text">CvRemoto</span>
+        </Link>
+
+        {/* LINKS */}
+        <ul className="navbar__links">
+
+          <Link
+            to="/"
+            className={`link link--home ${
+              sidebarOption === "home" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("home"))}
+          >
+            <HiHome />
           </Link>
 
-          {/* DESKTOP MENU */}
-          <ul className="navbar__links">
-            <Link
-              to={"/"}
-              className={sidebarOption === "home" ? "active link" : " link"}
-              onClick={() => dispatch(setSidebar("home"))}
-            >
-             <HiHome />
-            </Link>
+          <Link
+            to="/cvs"
+            className={`link ${
+              sidebarOption === "cvs" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("cvs"))}
+          >
+            <LuPencilLine />
+            {logged ? "Mis CV" : "Crea un CV"}
+          </Link>
 
-            <Link
-              to={"/cvs"}
-              className={sidebarOption === "cvs" ? "active link" : " link"}
-              onClick={() => dispatch(setSidebar("cvs"))}
-            >
-             <LuPencilLine /> {logged ? "Mis CV" : "Crea un CV"}
-            </Link>
+          <Link
+            to="/templates"
+            className={`link ${
+              sidebarOption === "templates" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("templates"))}
+          >
+            <LuFileSearch />
+            Plantillas
+          </Link>
 
-            <Link
-              to={"/templates"}
-              className={sidebarOption === "templates" ? "active link" : " link"}
-              onClick={() => dispatch(setSidebar("templates"))}
-            >
-              <LuFileSearch /> Plantillas
-            </Link>
+          <Link
+            to="/pricing"
+            className={`link ${
+              sidebarOption === "pricing" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("pricing"))}
+          >
+            <MdOutlineDiamond className="navbar__pricing" />
+            Planes
+          </Link>
 
-            <Link
-              to={"/pricing"}
-              className={sidebarOption === "pricing" ? "active link" : " link"}
-              onClick={() => dispatch(setSidebar("pricing"))}
-            >
-              <MdOutlineDiamond className="navbar__pricing"/> Planes
-            </Link>
+          <Link
+            to="/affiliate"
+            className={`link jobs-pulse ${
+              sidebarOption === "affiliate" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("affiliate"))}
+          >
+            <MdOutlineWorkOutline />
+            {logged ? "Trabajo" : "Gana en USD"}
+          </Link>
 
+          {logged && role === "USER" && (
             <Link
-              to={"/affiliate"}
-              className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
-              onClick={() => dispatch(setSidebar("affiliate"))}
-            >
-              <MdOutlineWorkOutline /> {logged ? "Trabajo" : "Trabajo Sin Experiencia"} 
-            </Link>
-
-            {
-              logged && role === "USER" && <Link
-              to={"/account"}
-              className={sidebarOption === "account" ? "active link" : " link"}
+              to="/account"
+              className={`link ${
+                sidebarOption === "account" ? "active" : ""
+              }`}
               onClick={() => dispatch(setSidebar("account"))}
             >
-               <TbSettingsCode className="navbar__settings"/>
+              <TbSettingsCode />
             </Link>
-            }
+          )}
 
-            {
-              logged && role === "ADMIN" && <Link
-              to={"/admin"}
-              className={sidebarOption === "admin" ? "active link" : " link"}
+          {logged && role === "ADMIN" && (
+            <Link
+              to="/admin"
+              className={`link ${
+                sidebarOption === "admin" ? "active" : ""
+              }`}
               onClick={() => dispatch(setSidebar("admin"))}
             >
-               <MdAdminPanelSettings className="navbar__settings"/> Admin
+              <MdAdminPanelSettings />
+              Admin
             </Link>
-            }
+          )}
+        </ul>
 
-          </ul>
-
-          {/* ACTION BUTTONS */}
-          { logged === true ?
-            <>
-              <ProfileAvatar/> 
-            </>
-            :
-            <div className="navbar__actions">
+        {/* ACTIONS */}
+        {logged ? (
+          <ProfileAvatar />
+        ) : (
+          <div className="navbar__actions">
             <button
               className="login"
               onClick={() => dispatch(openAuthModal({}))}
             >
-              <HiOutlineArrowRightEndOnRectangle size={20} />
+              <HiOutlineArrowRightEndOnRectangle size={30} />
             </button>
 
             <button
               className="signup"
-              onClick={() => dispatch(openAuthModal({ section: 'signup' }))}
+              onClick={() =>
+                dispatch(openAuthModal({ section: "signup" }))
+              }
             >
               Crear Cuenta
             </button>
           </div>
-          }
-        </div>
-      </nav>
-    </>
+        )}
+      </div>
+    </nav>
   );
 }
 

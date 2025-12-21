@@ -216,7 +216,7 @@ function PricingPage() {
         {/* SECCIÓN DE AFILIADOS */}
         <div className="affiliate-invitation">
           <h2>
-            ¿Te Interesa Generar <br /> <span>Ingresos Extras?</span>
+            ¿Buscas Trabajo Remoto <br /> <span>Sin Experiencia?</span>
           </h2>
 
           <p className="affiliate-subtitle">

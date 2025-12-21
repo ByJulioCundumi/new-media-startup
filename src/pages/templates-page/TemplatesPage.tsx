@@ -19,6 +19,12 @@ import {
 } from "../../api/user";
 import { setFavorites, setUser } from "../../reducers/userSlice";
 import Footer from "../../components/footer/Footer";
+import { MdOutlineDiamond } from "react-icons/md";
+import { BsPatchCheck } from "react-icons/bs";
+import { HiCheck } from "react-icons/hi2";
+import { TbEdit } from "react-icons/tb";
+import { BiEditAlt } from "react-icons/bi";
+import { RiFileEditLine } from "react-icons/ri";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -182,13 +188,23 @@ export default function TemplatesPage() {
                     {isFavorite ? <IoStar /> : <IoStarOutline />}
                   </button>
 
+                  {
+                    tpl.categories.includes("Premium") && <span className="tag-p"><MdOutlineDiamond size={15}/> Premium</span>
+                  }
+                  
+                  {
+                    tpl.categories.includes("Gratis") && <span className="tag-p"><RiFileEditLine size={14}/> Gratis</span>
+                  }
+
                   <div className="tpl-preview">
                     <Component {...mockTemplateData} />
                   </div>
                 </div>
 
-                <h3 className="tpl-title">{tpl.label}</h3>
-                <p className="tpl-category">{tpl.categories.join(" • ")}</p>
+                <div className="tpl-preview__data">
+                  <h3 className="tpl-title">{tpl.label}</h3>
+                  <p className="tpl-category">{tpl.categories.join(" • ")}</p>
+                </div>
               </div>
             );
           })

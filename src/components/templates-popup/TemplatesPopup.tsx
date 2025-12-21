@@ -4,7 +4,7 @@ import "./templatespopup.scss";
 
 import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
-import { IoClose, IoStar, IoStarOutline } from "react-icons/io5";
+import { IoClose, IoShieldCheckmarkOutline, IoStar, IoStarOutline } from "react-icons/io5";
 import SearchBar from "../search-bar/SearchBar";
 import { CategorySelector } from "../category-selector/CategorySelector";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,9 @@ import {
   removeFavoriteTemplateApi,
 } from "../../api/user";
 import { setFavorites } from "../../reducers/userSlice";
+import { MdOutlineCheck, MdOutlineCreditCardOff, MdOutlineDiamond } from "react-icons/md";
+import { Sparkles } from "lucide-react";
+import { BsPatchCheck } from "react-icons/bs";
 
 export default function TemplatesPopup() {
   const dispatch = useDispatch();
@@ -193,16 +196,26 @@ export default function TemplatesPopup() {
                         {isFavorite ? <IoStar /> : <IoStarOutline />}
                       </button>
 
+                      {
+                        tpl.categories.includes("Premium") && <span className="tag"><MdOutlineDiamond size={15}/> Premium</span>
+                      }
+
+                      {
+                        tpl.categories.includes("Gratis") && <span className="tag"><BsPatchCheck size={14}/> Gratis</span>
+                      }
+
                       {/* Preview */}
                       <div className="template-popup-preview">
                         <Component {...mockTemplateData} />
                       </div>
                     </div>
 
-                    <h3 className="template-popup-title">{tpl.label}</h3>
-                    <p className="template-popup-category">
-                      {tpl.categories.join(" • ")}
-                    </p>
+                    <div className="template-preview__data">
+                      <h3 className="template-popup-title">{tpl.label}</h3>
+                      <p className="template-popup-category">
+                        {tpl.categories.join(" • ")}
+                      </p>
+                    </div>
                   </div>
                 );
               })
