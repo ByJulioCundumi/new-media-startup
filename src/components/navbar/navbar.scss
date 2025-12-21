@@ -98,8 +98,9 @@
       color: #333;
       transition: 0.25s;
       border-left: 1px solid rgba(0, 0, 0, 0.093);
-      padding-left: 1rem;
-      margin-left: -2rem;
+      padding-left: 0.7rem;
+      display: flex;
+      align-items: center;
 
       &:hover {
         color: #0073ff;

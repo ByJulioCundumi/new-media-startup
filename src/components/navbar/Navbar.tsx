@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import Auth from "../auth/Auth";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
 import { TbLogout2, TbPencilPlus, TbSettingsCode } from "react-icons/tb";
-import { HiHome } from "react-icons/hi2";
+import { HiHome, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
 import { MdAdminPanelSettings, MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
 import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
@@ -110,7 +110,7 @@ function Navbar() {
                 setAuthOpen(true);
               }}
             >
-              Iniciar sesión
+              <HiOutlineArrowRightEndOnRectangle size={20} />
             </button>
 
             <button

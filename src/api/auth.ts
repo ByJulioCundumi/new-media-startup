@@ -2,7 +2,7 @@ export interface AuthUser {
   id: string;
   email: string;
   userName: string;
-  favoriteTemplates: string[],
+  favoriteTemplates?: string[],
   subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
   subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
   subscriptionExpiresAt?: string | null; // ISO string
@@ -19,21 +19,6 @@ interface CheckSessionResponse {
   logged: boolean;
   user?: AuthUser;
 }
-
-const normalizeAuthUser = (user: any): AuthUser => ({
-  id: user.id,
-  email: user.email,
-  userName: user.userName,
-  favoriteTemplates: Array.isArray(user.favoriteTemplates)
-    ? user.favoriteTemplates
-    : [],
-    subscriptionPlan: user.subscriptionPlan,
-  subscriptionStatus: user.subscriptionStatus,
-  subscriptionExpiresAt: user.subscriptionExpiresAt,
-  logged: user.isCurrentlyLoggedIn,
-  affiliateCommission: user.affiliateCommission
-});
-
 
 const BASE_URL = "http://localhost:4000/api";
 

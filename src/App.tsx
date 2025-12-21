@@ -1,4 +1,4 @@
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import './App.scss'
 import Navbar from './components/navbar/Navbar'
 import HomePage from './pages/home-page/HomePage'
@@ -14,7 +14,7 @@ import PricingPage from './pages/pricing-page/PricingPage'
 import Footer from './components/footer/Footer'
 import TemplatesPopup from './components/templates-popup/TemplatesPopup'
 import { useEffect, useState } from 'react'
-import { checkSession } from './api/auth'
+import { checkSession, logout } from './api/auth'
 import { clearUser, setUser } from './reducers/userSlice'
 import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
 import { addFavoriteTemplateApi } from './api/user'
@@ -25,6 +25,7 @@ function App() {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+  const user = useSelector((state:IState)=>state.user)
   const {isOpen} = useSelector((state:IState)=>state.cvCreation)
   const { templatesPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
@@ -34,7 +35,7 @@ function App() {
     const verifySession = async () => {
       try {
         const res = await checkSession();
-        if (res.logged && res.user) {
+        if (res.user && res.user.logged) {
           dispatch(setUser(res.user)); // guarda usuario en Redux
           
           // Después de login exitoso
@@ -45,9 +46,13 @@ function App() {
           }
             localStorage.removeItem("localFavorites");
           };
+        } else if (res.user && res.user.email !== "" && res.user.logged === false) {
+          await logout()
+          dispatch(clearUser()); // limpia si no hay sesión
         } else {
           dispatch(clearUser()); // limpia si no hay sesión
         }
+
         setIsLoading(false)
       } catch (err) {
         console.error("Error al verificar sesión:", err);
