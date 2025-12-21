@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { FiAlertTriangle, FiExternalLink, FiLink } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { IoCardOutline } from "react-icons/io5";
+import { IoCardOutline, IoDiamondOutline } from "react-icons/io5";
 import { TbAlertSquare } from "react-icons/tb";
 
 const GeneralInfoForm: React.FC = () => {
@@ -78,12 +78,12 @@ const GeneralInfoForm: React.FC = () => {
       {/* ===== PLAN ACTUAL ===== */}
       <div className="general-info-form__plan">
         <h4>
-          <FaCrown /> Plan actual
+          <IoDiamondOutline /> Plan actual
         </h4>
 
         <div className="general-info-form__plan-grid">
           <div className="general-info-form__plan-item">
-            <span className="value">Plan {planDisplayName()}</span>
+            <span className="value"> {planDisplayName()}</span>
             {isPremium && (
               <span className="label">
                 Fecha de caducidad: {formatExpirationDate()}

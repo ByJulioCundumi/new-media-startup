@@ -94,6 +94,18 @@ const ProfileAvatar: React.FC = () => {
         </div>
       )}
 
+      {!logged && (
+        <div className={`subscription-badge free`}>
+          <IoWaterOutline className="subscription-badge__icon" />
+
+          <div className="subscription-badge__text">
+            <p className="subscription-badge__subtitle">
+              Funciones Limitadas
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Botón avatar - Login / Logout */}
       <button
         className="profile-avatar-btn"
