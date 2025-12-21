@@ -12,14 +12,12 @@ import { HiHome, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
 import { LuFileSearch, LuPencilLine } from "react-icons/lu";
 import { MdAdminPanelSettings, MdOutlineAdminPanelSettings, MdOutlineDiamond, MdOutlineWorkOutline } from "react-icons/md";
 import { RiAccountCircleFill, RiCopperDiamondLine } from "react-icons/ri";
+import { openAuthModal } from "../../reducers/authModalSlice";
 
 function Navbar() {
   const dispatch = useDispatch();
   const { sidebarOption } = useSelector((state: IState) => state.sidebar);
-  const { logged } = useSelector((state: IState) => state.user);
-
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authSection, setAuthSection] = useState<"login" | "signup">("login");
+  const { logged, role } = useSelector((state: IState) => state.user);
 
   return (
     <>
@@ -71,11 +69,11 @@ function Navbar() {
               className={sidebarOption === "affiliate" ? "active link jobs-pulse" : " link jobs-pulse"}
               onClick={() => dispatch(setSidebar("affiliate"))}
             >
-              <MdOutlineWorkOutline /> Trabajo Remoto
+              <MdOutlineWorkOutline /> {logged ? "Trabajo" : "Trabajo Sin Experiencia"} 
             </Link>
 
             {
-              logged && <Link
+              logged && role === "USER" && <Link
               to={"/account"}
               className={sidebarOption === "account" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("account"))}
@@ -85,7 +83,7 @@ function Navbar() {
             }
 
             {
-              logged && <Link
+              logged && role === "ADMIN" && <Link
               to={"/admin"}
               className={sidebarOption === "admin" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("admin"))}
@@ -105,20 +103,14 @@ function Navbar() {
             <div className="navbar__actions">
             <button
               className="login"
-              onClick={() => {
-                setAuthSection("login");
-                setAuthOpen(true);
-              }}
+              onClick={() => dispatch(openAuthModal({}))}
             >
               <HiOutlineArrowRightEndOnRectangle size={20} />
             </button>
 
             <button
               className="signup"
-              onClick={() => {
-                setAuthSection("signup");
-                setAuthOpen(true);
-              }}
+              onClick={() => dispatch(openAuthModal({ section: 'signup' }))}
             >
               Crear Cuenta
             </button>
@@ -126,13 +118,6 @@ function Navbar() {
           }
         </div>
       </nav>
-
-      {/* Popup Auth */}
-      <Auth
-        isOpen={authOpen}
-        onClose={() => setAuthOpen(false)}
-        initialSection={authSection}
-      />
     </>
   );
 }

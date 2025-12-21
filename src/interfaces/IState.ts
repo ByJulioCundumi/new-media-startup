@@ -1,3 +1,4 @@
+import type { IAuthModalState } from "./IAuthModal";
 import type { IAwardEntry } from "./IAward";
 import type { ICategories } from "./ICategory";
 import type { IColorFontState } from "./IColorFont";
@@ -44,5 +45,6 @@ export interface IState{
     template: ITemplate,
     user: IUserState,
     cvCreation: ICvCreationState,
-    cvSave: ICvSaveState
+    cvSave: ICvSaveState,
+    authModal: IAuthModalState
 }

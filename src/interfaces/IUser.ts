@@ -8,4 +8,5 @@ export interface IUserState {
   subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
   subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
   subscriptionExpiresAt?: string | null; // ISO string
+  role: "USER" | "ADMIN"
 }

@@ -8,6 +8,7 @@ export interface AuthUser {
   subscriptionExpiresAt?: string | null; // ISO string
   logged: boolean;
   affiliateCommission: number;
+  role: "USER" | "ADMIN"
 }
 
 interface AuthResponse {

@@ -20,12 +20,13 @@ import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
 import { addFavoriteTemplateApi } from './api/user'
 import AdminPage from './pages/admin-page/AdminPage'
 import { TbPencilPlus } from 'react-icons/tb'
+import Auth from './components/auth/Auth'
 
 function App() {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  const user = useSelector((state:IState)=>state.user)
+  const authModal = useSelector((state:IState)=>state.authModal)
   const {isOpen} = useSelector((state:IState)=>state.cvCreation)
   const { templatesPopupOpen } = useSelector(
     (state: IState) => state.toolbarOption
@@ -89,6 +90,7 @@ function App() {
 
         {/* popups globales */}
         <RemoteInfoBubble/>
+        {authModal.isOpen && <Auth/>}
         {templatesPopupOpen && <TemplatesPopup/>}
         {isOpen && <CreateNewCvPopup/>}
 

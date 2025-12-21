@@ -1,63 +1,110 @@
 import React from "react";
-import { IoCardOutline, IoDiamond, IoDiamondOutline, IoWater } from "react-icons/io5";
-import { LuShoppingBasket } from "react-icons/lu";
-import { BsCalendar2Check, BsCreditCard2Front } from "react-icons/bs";
+import {
+  IoCardOutline,
+  IoDiamondOutline,
+  IoWaterOutline,
+} from "react-icons/io5";
 import "./profileavatar.scss";
 import { TbLogout2 } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { RiLogoutBoxRLine, RiLogoutCircleRLine } from "react-icons/ri";
-import { BiLogOutCircle } from "react-icons/bi";
 import { clearUser } from "../../reducers/userSlice";
 import { logout } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineArrowLeftStartOnRectangle, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
-import { MdOutlineDiamond } from "react-icons/md";
-import { FaRegCreditCard } from "react-icons/fa6";
+import {
+  HiOutlineArrowLeftStartOnRectangle,
+  HiOutlineArrowRightEndOnRectangle,
+} from "react-icons/hi2";
+import { openAuthModal } from "../../reducers/authModalSlice";
 
 const ProfileAvatar: React.FC = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const {logged} = useSelector((state:IState)=> state.user)
-  const mockIsVip = true;
-  const mockEndDate = "20 Dic 2025";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLogout = async()=>{
+  const {
+    logged,
+    subscriptionPlan,
+    subscriptionStatus,
+    subscriptionExpiresAt,
+  } = useSelector((state: IState) => state.user);
+
+  // Determinar si es VIP (tiene plan de pago activo)
+  const isVip =
+    logged &&
+    subscriptionPlan !== "FREE" &&
+    subscriptionStatus === "ACTIVE" &&
+    subscriptionExpiresAt;
+
+  // Formatear fecha de expiración (ej: "20 Dic 2025")
+  const formatExpirationDate = (dateString: string | null | undefined): string => {
+    if (!dateString) return "Sin fecha";
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Inválida";
+
+    return date.toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const expirationDate = formatExpirationDate(subscriptionExpiresAt as string | null | undefined);
+
+  const planTitle = isVip
+    ? subscriptionPlan === "MONTHLY"
+      ? "Plan Mensual"
+      : "Plan Anual"
+    : "Plan Gratuito";
+
+  const handleLogout = async () => {
     try {
-      await logout()
-      navigate("/")
+      await logout();
+      navigate("/");
     } catch (error) {
-      console.log(error)
+      console.error("Error al cerrar sesión:", error);
+    } finally {
+      dispatch(clearUser());
     }
-    dispatch(clearUser())
-  }
+  };
+
+  const handleOpenLogin = () => {
+    dispatch(openAuthModal({}));
+  };
 
   return (
     <div className="profile-avatar-wrapper">
-      {/* Indicador de suscripción refinado */}
-      <div className={`subscription-badge ${mockIsVip ? "vip" : "free"}`}>
-        {mockIsVip ? 
-        <IoCardOutline className="subscription-badge__icon" />
-        :
-        <IoWater className="subscription-badge__icon"/>
-      }
+      {/* Indicador de suscripción */}
+      {logged && (
+        <div className={`subscription-badge ${isVip ? "vip" : "free"}`}>
+          {isVip ? (
+            <IoDiamondOutline className="subscription-badge__icon" />
+          ) : (
+            <IoWaterOutline className="subscription-badge__icon" />
+          )}
 
-        <div className="subscription-badge__text">
-          <span className="subscription-badge__title">
-            {mockIsVip ? "Plan Mensual" : "Plan Gratuito"}
-          </span>
+          <div className="subscription-badge__text">
 
-          <p className="subscription-badge__subtitle">
-            {mockIsVip ? `Caducidad: ${mockEndDate}` : "Marca de agua visible"}
-          </p>
+            <p className="subscription-badge__subtitle">
+              {isVip
+                ? `${planTitle}: ${expirationDate}`
+                : "Marca de agua visible"}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Botón avatar */}
-      <button className="profile-avatar-btn">
-        {
-          logged ? <HiOutlineArrowLeftStartOnRectangle onClick={handleLogout}/> : <HiOutlineArrowRightEndOnRectangle />
-        }
+      {/* Botón avatar - Login / Logout */}
+      <button
+        className="profile-avatar-btn"
+        onClick={logged ? handleLogout : handleOpenLogin}
+        title={logged ? "Cerrar sesión" : "Iniciar sesión"}
+      >
+        {logged ? (
+          <HiOutlineArrowLeftStartOnRectangle size={20} />
+        ) : (
+          <HiOutlineArrowRightEndOnRectangle size={20} />
+        )}
       </button>
     </div>
   );

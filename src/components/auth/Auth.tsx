@@ -1,35 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+// Auth.tsx
+
+import { useEffect, useRef } from "react";
 import "./auth.scss";
 
 import LoginForm from "./login-form/LoginForm";
 import SignupForm from "./signup-form/SignupForm";
 import RecoveryForm from "./recovery-form/RecoveryForm";
 
-import { useDispatch } from "react-redux";
-import { setUser } from "../../reducers/userSlice"; // tu slice de usuario
+import { useDispatch, useSelector } from "react-redux";
+import { closeAuthModal, setSection } from "../../reducers/authModalSlice";
+import { setUser } from "../../reducers/userSlice";
 import { addFavoriteTemplateApi } from "../../api/user";
 import type { AuthUser } from "../../api/auth";
+import type { IState } from "../../interfaces/IState";
 
-type Section = "login" | "signup" | "recovery";
-
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  initialSection: Section;
-}
-
-export default function Auth({ isOpen, onClose, initialSection }: Props) {
+export default function Auth() {
   const popupRef = useRef<HTMLDivElement>(null);
-  const [section, setSection] = useState<Section>("login");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isOpen) setSection(initialSection);
-  }, [isOpen, initialSection]);
+  const { isOpen, section } = useSelector((state: IState) => state.authModal);
 
   const handleClose = () => {
-    setSection("login");
-    onClose();
+    dispatch(closeAuthModal());
   };
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -43,11 +35,9 @@ export default function Auth({ isOpen, onClose, initialSection }: Props) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  // Función común para manejar login/signup exitoso
   const handleSuccess = async (user: AuthUser) => {
-    dispatch(setUser(user)); // guardamos en Redux
+    dispatch(setUser(user));
 
-    // Después de login exitoso
     const localFavs = JSON.parse(localStorage.getItem("localFavorites") || "[]");
     if (localFavs.length > 0) {
       for (const id of localFavs) {
@@ -55,7 +45,11 @@ export default function Auth({ isOpen, onClose, initialSection }: Props) {
       }
       localStorage.removeItem("localFavorites");
     }
-    handleClose(); // cerramos el popup
+    handleClose();
+  };
+
+  const changeSection = (newSection: "login" | "signup" | "recovery") => {
+    dispatch(setSection(newSection));
   };
 
   if (!isOpen) return null;
@@ -67,21 +61,21 @@ export default function Auth({ isOpen, onClose, initialSection }: Props) {
 
         {section === "login" && (
           <LoginForm
-            goSignup={() => setSection("signup")}
-            goRecovery={() => setSection("recovery")}
+            goSignup={() => changeSection("signup")}
+            goRecovery={() => changeSection("recovery")}
             onLoginSuccess={handleSuccess}
           />
         )}
 
         {section === "signup" && (
           <SignupForm
-            goLogin={() => setSection("login")}
+            goLogin={() => changeSection("login")}
             onSignupSuccess={handleSuccess}
           />
         )}
 
         {section === "recovery" && (
-          <RecoveryForm goLogin={() => setSection("login")} />
+          <RecoveryForm goLogin={() => changeSection("login")} />
         )}
       </div>
     </div>

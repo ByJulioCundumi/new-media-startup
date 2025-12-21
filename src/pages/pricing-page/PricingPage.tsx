@@ -11,6 +11,7 @@ import type { IState } from "../../interfaces/IState";
 import { FiAlertTriangle } from "react-icons/fi";
 import { LuBadgeInfo } from "react-icons/lu";
 import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
+import { openAuthModal } from "../../reducers/authModalSlice";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function PricingPage() {
     }
 
     if (!user.logged) {
-      navigate("/cvs", { state: { from: "/pricing" } });
+      dispatch(openAuthModal({}))
       return;
     }
 
