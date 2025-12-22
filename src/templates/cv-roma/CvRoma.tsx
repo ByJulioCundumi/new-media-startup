@@ -6,10 +6,11 @@ import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 
-import { setOrder, toggleSectionEditor } from "../../reducers/cvSectionsSlice";
+import { setOrder } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 import { CvRomaSectionsRender } from "./sections-render/CvRomaSectionsRender";
+import { toggleSectionEditor } from "../../reducers/editorsSlice";
 
 export const cvRomaDefaults = {
   textColor: "#494949ff",
@@ -67,12 +68,18 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   } = props;
   
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
+  const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
    // MAPA de secciones
   // ---------------------------------------------------------------------------
   const sectionInfo = React.useMemo(
     () => Object.fromEntries(cvSections.map((s) => [s.name, s])),
     [cvSections]
+  );
+
+  const sectionInfoEditor = React.useMemo(
+    () => Object.fromEntries(cvSectionsEditor.map((s) => [s.name, s])),
+    [cvSectionsEditor]
   );
 
   const dispatch = useDispatch()
@@ -119,7 +126,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   }, [ sectionsOrder, sectionInfo, contactSection, personalInfo, profileSection, experienceSection, educationSection, skillSection, languageSection, linkSection, courseSection, hobbieSection, awardSection, referenceSection, customSection, sectionsConfig]);
 
   const isEditorOpen = (sectionName: string): boolean => {
-    return sectionInfo[sectionName]?.isEditorOpen ?? false;
+    return sectionInfoEditor[sectionName]?.isEditorOpen ?? false;
   };
   
   const headerSection = romaSections.filter((s) => s.orientation === "header");

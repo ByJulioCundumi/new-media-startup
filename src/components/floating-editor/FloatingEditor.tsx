@@ -19,7 +19,7 @@ import ContactSection from "../../pages/create-cv/contact-section/ContactSection
 
 import { useSelector, useDispatch } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { toggleSectionEditor } from "../../reducers/cvSectionsSlice";
+import { toggleSectionEditor } from "../../reducers/editorsSlice";
 
 const FloatingEditor: React.FC = () => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -27,6 +27,7 @@ const FloatingEditor: React.FC = () => {
 
   // ---------------- HOOKS ----------------
   const sections = useSelector((state: IState) => state.cvSections.sections);
+  const sectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
 
   const [position, setPosition] = useState({ x: 1000, y: 100 });
   const [dragging, setDragging] = useState(false);
@@ -58,7 +59,7 @@ const FloatingEditor: React.FC = () => {
   }, [dragging]);
 
   // ---------------- ACTIVE SECTION ----------------
-  const activeSection = sections.find((s) => s.isEditorOpen);
+  const activeSection = sectionsEditor.find((s) => s.isEditorOpen);
 
   // ---------------- RENDER ----------------
   const renderSection = () => {

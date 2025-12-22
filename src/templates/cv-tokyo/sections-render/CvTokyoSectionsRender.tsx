@@ -1,7 +1,7 @@
 // templates/components/CvTokyoSectionsRender.tsx
 import React, { useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { disableSection, toggleSectionEditor, toggleSectionOpen } from "../../../reducers/cvSectionsSlice";
+import { disableSection } from "../../../reducers/cvSectionsSlice";
 import "./cvtokyosectionsrender.scss"
 import { TbArrowBadgeRight, TbGitBranchDeleted, TbTrashX } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";

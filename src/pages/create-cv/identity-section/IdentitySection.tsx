@@ -15,9 +15,9 @@ import {
 
 import {
   setSectionProgress,
-  toggleSectionOpen,
 } from "../../../reducers/cvSectionsSlice";
 import { FaRegUserCircle } from "react-icons/fa";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const IdentitySection = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,11 @@ const IdentitySection = () => {
     state.cvSections.sections.find((s) => s.name === "identitySection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "identitySection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
 
   // --------------------------
   //  CALCULAR PROGRESO (sin foto)

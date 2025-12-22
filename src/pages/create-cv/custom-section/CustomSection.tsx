@@ -12,12 +12,12 @@ import {
   updateCustomEntry,
 } from "../../../reducers/customSlice";
 import {
-  toggleSectionOpen,
   setSectionProgress,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const CustomSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,11 @@ const CustomSection: React.FC = () => {
     state.cvSections.sections.find((s) => s.name === "customSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "customSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Campo Personalizado";
   const [editingTitle, setEditingTitle] = useState(false);
 

@@ -12,10 +12,10 @@ import {
   updateContactEntry,
 } from "../../../reducers/contactSlice";
 import {
-  toggleSectionOpen,
   setSectionProgress,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const ContactSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,11 @@ const ContactSection: React.FC = () => {
     state.cvSections.sections.find((s) => s.name === "contactSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "contactSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Contacto";
 
   const [editingTitle, setEditingTitle] = useState(false);

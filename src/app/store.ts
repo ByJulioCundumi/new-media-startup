@@ -22,6 +22,7 @@ import userSlice from "../reducers/userSlice"
 import cvCreationSlice from "../reducers/cvCreationSlice";
 import cvSaveSlice from "../reducers/cvSaveSlice";
 import authModalReducer from "../reducers/authModalSlice";
+import cvSectionsEditorSlice from "../reducers/editorsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -48,6 +49,7 @@ export const store = configureStore({
         cvCreation: cvCreationSlice,
         cvSave: cvSaveSlice,
         authModal: authModalReducer,
+        cvSectionsEditors: cvSectionsEditorSlice
     }
 })
 

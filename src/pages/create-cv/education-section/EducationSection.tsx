@@ -13,10 +13,10 @@ import {
 } from "../../../reducers/educationSlice";
 import {
   setSectionProgress,
-  toggleSectionOpen,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const months = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -34,7 +34,11 @@ const EducationSection: React.FC = () => {
     state.cvSections.sections.find((s) => s.name === "educationSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "educationSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Educación";
 
   const [editingTitle, setEditingTitle] = useState(false);

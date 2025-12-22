@@ -12,7 +12,8 @@ import {
   updateReferenceEntry,
 } from "../../../reducers/referencesSlice";
 import { MdOutlineRateReview } from "react-icons/md";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const ReferencesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,12 @@ const ReferencesSection: React.FC = () => {
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "referenceSection")
   );
+
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "referenceSection")
+  );
             
-    const isOpen = sectionState?.isOpen ?? false;
+    const isOpen = sectionEditorState?.isOpen ?? false;
 
   // Inicializar si viene vacío
   useEffect(() => {

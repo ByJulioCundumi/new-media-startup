@@ -5,7 +5,8 @@ import "./linkssection.scss";
 import type { ILinkEntry } from "../../../interfaces/ILinks";
 import type { IState } from "../../../interfaces/IState";
 import { addLinkEntry, removeLinkEntry, setLinksEntries, updateLinkEntry } from "../../../reducers/linksSlice";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 interface LinksSectionProps {
   initialData?: ILinkEntry[];
@@ -19,8 +20,12 @@ const LinksSection: React.FC<LinksSectionProps> = ({ initialData, onChange }) =>
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "linkSection")
   );
+
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "linkSection")
+  );
           
-      const isOpen = sectionState?.isOpen ?? false;
+      const isOpen = sectionEditorState?.isOpen ?? false;
 
   // Si viene initialData, se sincroniza solo 1 vez
   useEffect(() => {

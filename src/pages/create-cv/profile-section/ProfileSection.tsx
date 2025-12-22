@@ -7,10 +7,10 @@ import type { IState } from "../../../interfaces/IState";
 import { setProfileContent } from "../../../reducers/profileSlice";
 import {
   setSectionProgress,
-  toggleSectionOpen,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 export default function ProfileSection() {
   const dispatch = useDispatch();
@@ -19,7 +19,11 @@ export default function ProfileSection() {
     state.cvSections.sections.find((s) => s.name === "profileSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "profileSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Perfil";
 
   // Contenido del perfil desde Redux

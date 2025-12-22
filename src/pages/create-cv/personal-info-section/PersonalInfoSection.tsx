@@ -12,13 +12,13 @@ import {
 } from "../../../reducers/personalInfoSlice";
 
 import {
-  toggleSectionOpen,
   setSectionProgress,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 import type { IPersonalInfoEntry } from "../../../interfaces/IPersonalInfo";
 import { PiIdentificationBadge } from "react-icons/pi";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const SUGGESTIONS = [
   "Ubicación",
@@ -55,7 +55,11 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
     state.cvSections.sections.find((s) => s.name === "personalInfoSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "personalInfoSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
 
   // Sincronización inicial
   useEffect(() => {

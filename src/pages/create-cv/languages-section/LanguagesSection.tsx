@@ -6,7 +6,8 @@ import "./languagessection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addLanguageEntry, removeLanguageEntry, updateLanguageEntry } from "../../../reducers/languagesSlice";
 import { HiOutlineLanguage } from "react-icons/hi2";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const levels = ["A1", "A2", "B1", "B2", "C1", "C2", "Nativo"] as const;
 
@@ -17,8 +18,12 @@ const LanguagesSection: React.FC = () => {
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "languageSection")
   );
+
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "languageSection")
+  );
         
-    const isOpen = sectionState?.isOpen ?? false;
+    const isOpen = sectionEditorState?.isOpen ?? false;
 
   const addLanguage = () => {
     dispatch(

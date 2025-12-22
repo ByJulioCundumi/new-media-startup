@@ -17,11 +17,11 @@ import {
 } from "../../../reducers/experienceSlice";
 import {
   setSectionProgress,
-  toggleSectionOpen,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
 import type { IExperienceEntry } from "../../../interfaces/IExperience";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const months = [
   "Enero","Febrero","Marzo","Abril","Mayo","Junio",
@@ -38,7 +38,11 @@ const ExperienceSection: React.FC = () => {
     state.cvSections.sections.find((s) => s.name === "experienceSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "experienceSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Experiencia";
 
   const [editingTitle, setEditingTitle] = useState(false);

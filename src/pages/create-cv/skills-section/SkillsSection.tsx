@@ -5,7 +5,8 @@ import "./skillssection.scss";
 import type { IState } from "../../../interfaces/IState";
 import { addSkillEntry, removeSkillEntry, updateSkillEntry } from "../../../reducers/skillsSlice";
 import { FaRegHandBackFist } from "react-icons/fa6";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const levels = ["Principiante", "Intermedio", "Bueno", "Profesional", "Experto"] as const;
 
@@ -16,8 +17,12 @@ const SkillsSection: React.FC = () => {
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "skillSection")
   );
+
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "skillSection")
+  );
               
-      const isOpen = sectionState?.isOpen ?? false;
+      const isOpen = sectionEditorState?.isOpen ?? false;
 
   const add = () => {
     dispatch(

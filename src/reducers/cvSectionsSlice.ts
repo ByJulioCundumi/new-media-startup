@@ -9,8 +9,6 @@ export const initialSections: ICvSection[] = [
     title: "Sobre Mi",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "header",
   },
   {
@@ -18,8 +16,6 @@ export const initialSections: ICvSection[] = [
     title: "Contacto",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -27,8 +23,6 @@ export const initialSections: ICvSection[] = [
     title: "Perfil",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -36,8 +30,6 @@ export const initialSections: ICvSection[] = [
     title: "Educación",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -45,8 +37,6 @@ export const initialSections: ICvSection[] = [
     title: "Experiencia",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -54,8 +44,6 @@ export const initialSections: ICvSection[] = [
     title: "Habilidades",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -63,8 +51,6 @@ export const initialSections: ICvSection[] = [
     title: "Idiomas",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -72,8 +58,6 @@ export const initialSections: ICvSection[] = [
     title: "Detalles",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -81,8 +65,6 @@ export const initialSections: ICvSection[] = [
     title: "Enlaces",
     enabled: false,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -90,8 +72,6 @@ export const initialSections: ICvSection[] = [
     title: "Cursos y Certificados",
     enabled: false,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -99,8 +79,6 @@ export const initialSections: ICvSection[] = [
     title: "Pasatiempos",
     enabled: false,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "vertical",
   },
   {
@@ -108,8 +86,6 @@ export const initialSections: ICvSection[] = [
     title: "Referencias Laborales",
     enabled: false,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -117,8 +93,6 @@ export const initialSections: ICvSection[] = [
     title: "Premios",
     enabled: false,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
   {
@@ -126,8 +100,6 @@ export const initialSections: ICvSection[] = [
     title: "Campo Personalizado",
     enabled: true,
     progress: 0,
-    isOpen: false,
-    isEditorOpen: false,
     orientation: "horizontal",
   },
 ];
@@ -155,8 +127,6 @@ const cvSectionsSlice = createSlice({
       const section = state.sections.find((s) => s.name === action.payload);
       if (section) {
         section.enabled = false;
-        section.isEditorOpen = false; // ← cerrar editor al desactivar
-        section.isOpen = false;       // (opcional) también cerrar el panel si quieres
       }
     },
 
@@ -190,20 +160,6 @@ const cvSectionsSlice = createSlice({
       if (section) section.title = action.payload.title;
     },
 
-    toggleSectionOpen: (state, action: PayloadAction<string>) => {
-      const target = action.payload;
-
-      state.sections.forEach((s) => {
-        s.isOpen = s.name === target ? !s.isOpen : false;
-      });
-    },
-
-    setOnlySectionOpen: (state, action: PayloadAction<string>) => {
-      state.sections.forEach((s) => {
-        s.isOpen = s.name === action.payload;
-      });
-    },
-
     reorderSections: (state, action: PayloadAction<{ from: number; to: number }>) => {
       const { from, to } = action.payload;
       const current = [...state.order];
@@ -233,18 +189,6 @@ const cvSectionsSlice = createSlice({
       state.order = incoming;
     },
 
-    // ---------------------- EDITOR ----------------------
-    toggleSectionEditor: (state, action: PayloadAction<string>) => {
-      state.sections.forEach((s) => {
-        s.isEditorOpen = s.name === action.payload ? !s.isEditorOpen : false;
-      });
-    },
-
-    closeAllEditors: (state) => {
-      state.sections.forEach((s) => {
-        s.isEditorOpen = false;
-      });
-    },
     setCvSections(state, action: PayloadAction<ICvSectionsState>) {
   return { ...action.payload };
 },
@@ -260,13 +204,9 @@ export const {
   disableSection,
   setSectionProgress,
   updateSection,
-  toggleSectionOpen,
-  setOnlySectionOpen,
   reorderSections,
   setOrder,
   updateSectionTitle,
-  toggleSectionEditor,
-  closeAllEditors,
   resetCvSections,
   setCvSections
 } = cvSectionsSlice.actions;

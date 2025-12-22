@@ -14,12 +14,12 @@ import {
 } from "../../../reducers/coursesSlice";
 import {
   setSectionProgress,
-  toggleSectionOpen,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 // Importamos el RichTextEditor
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 interface CoursesSectionProps {
   initialData?: ICourseEntry[];
@@ -34,7 +34,11 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
     state.cvSections.sections.find((s) => s.name === "courseSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "courseSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Cursos y Certificados";
 
   const [editingTitle, setEditingTitle] = useState(false);

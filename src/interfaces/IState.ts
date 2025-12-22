@@ -16,6 +16,7 @@ import type { ILanguageEntry } from "./ILanguages";
 import type { ILinkEntry } from "./ILinks";
 import type { IPersonalInfoEntry } from "./IPersonalInfo";
 import type { IReferenceEntry } from "./IReferences";
+import type { ICvSectionEditors, ICvSectionsEditorState } from "./ISectionsEditors";
 import type { ISidebar } from "./ISidebar";
 import type { ISkillEntry } from "./ISkills";
 import type { ITemplate } from "./ITemplate";
@@ -47,4 +48,5 @@ export interface IState{
     cvCreation: ICvCreationState,
     cvSave: ICvSaveState,
     authModal: IAuthModalState
+    cvSectionsEditors: ICvSectionsEditorState
 }

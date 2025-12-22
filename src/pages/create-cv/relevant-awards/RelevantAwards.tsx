@@ -13,13 +13,13 @@ import {
 } from "../../../reducers/awardsSlice";
 import {
   setSectionProgress,
-  toggleSectionOpen,
   updateSectionTitle,
 } from "../../../reducers/cvSectionsSlice";
 
 // RichTextEditor
 import RichTextEditor from "../../../components/rich-text-editor/RichTextEditor";
 import type { IAwardEntry } from "../../../interfaces/IAward";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const RelevantAwards: React.FC = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,11 @@ const RelevantAwards: React.FC = () => {
     state.cvSections.sections.find((s) => s.name === "awardSection")
   );
 
-  const isOpen = sectionState?.isOpen ?? false;
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "awardSection")
+  );
+
+  const isOpen = sectionEditorState?.isOpen ?? false;
   const title = sectionState?.title ?? "Premios";
 
   const [editingTitle, setEditingTitle] = useState(false);

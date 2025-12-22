@@ -8,8 +8,8 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { RiDraggable } from "react-icons/ri";
 import "./sortablesection.scss";
-import { toggleSectionEditor } from "../../../reducers/cvSectionsSlice";
 import { useDispatch } from "react-redux";
+import { toggleSectionEditor } from "../../../reducers/editorsSlice";
 
 interface Props {
   id: string;

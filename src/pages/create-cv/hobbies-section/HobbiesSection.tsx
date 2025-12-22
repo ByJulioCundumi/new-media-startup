@@ -10,7 +10,8 @@ import {
   updateHobbyEntry,
 } from "../../../reducers/hobbiesSlice";
 import { PiMaskHappy } from "react-icons/pi";
-import { setOnlySectionOpen, setSectionProgress, toggleSectionOpen, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { setSectionProgress, updateSectionTitle } from "../../../reducers/cvSectionsSlice";
+import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 
 const HobbiesSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,12 @@ const HobbiesSection: React.FC = () => {
   const sectionState = useSelector((state: IState) =>
     state.cvSections.sections.find((s) => s.name === "hobbieSection")
   );
+
+  const sectionEditorState = useSelector((state: IState) =>
+    state.cvSectionsEditors.sections.find((s) => s.name === "hobbieSection")
+  );
       
-  const isOpen = sectionState?.isOpen ?? false;
+  const isOpen = sectionEditorState?.isOpen ?? false;
 
   const lastProgressRef = useRef<number>(-1); // para evitar despachos repetidos
 

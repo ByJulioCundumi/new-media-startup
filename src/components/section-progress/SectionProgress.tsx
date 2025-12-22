@@ -15,10 +15,11 @@ import {
 import AddSections from "../../pages/create-cv/add-sections/AddSection";
 import SortableSection from "../../pages/create-cv/sortable-section/SortableSection";
 import type { IState } from "../../interfaces/IState";
-import { reorderSections, toggleSectionOpen } from "../../reducers/cvSectionsSlice";
+import { reorderSections } from "../../reducers/cvSectionsSlice";
 import { BiEditAlt } from "react-icons/bi";
 import { FaSave } from "react-icons/fa";
 import { setSelectedCvTitle } from "../../reducers/cvCreationSlice";
+import { toggleSectionOpen } from "../../reducers/editorsSlice";
 
 function SectionProgress() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,7 @@ function SectionProgress() {
 
   /* ⭐ Datos reales del store */
   const sections = useSelector((state: IState) => state.cvSections.sections);
+  const sectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const order = useSelector((state: IState) => state.cvSections.order);
   const {selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
 
@@ -175,7 +177,8 @@ const progressColorClass = useMemo(() => {
           <div className="section-progress__list" ref={containerRef}>
             {order.map((name) => {
               const sec = sections.find((s) => s.name === name);
-              if (!sec || !sec.enabled) return null;
+              const secEditor = sectionsEditor.find((s) => s.name === name);
+              if (!sec || !secEditor || !sec.enabled) return null;
 
               return (
                 <SortableSection key={sec.name} id={sec.name}>
@@ -185,7 +188,7 @@ const progressColorClass = useMemo(() => {
                     {
                       sec.progress === 100 ? (
                         <LuCheck className="section-progress__eye" />
-                      ) : sec.isEditorOpen ? (
+                      ) : secEditor.isEditorOpen ? (
                         <BiEditAlt
                           className="section-progress__eye"
                           onClick={() => dispatch(toggleSectionOpen(sec.name))}
