@@ -11,7 +11,8 @@ export interface IUserState {
   subscriptionPlan: "FREE" | "MONTHLY" | "ANNUAL";
   subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
   subscriptionExpiresAt?: string | null; // ISO string
-  role: "USER" | "ADMIN"
+  role: "USER" | "ADMIN";
+  cvCount: number;
 }
 
 const initialState: IUserState = {
@@ -24,7 +25,8 @@ const initialState: IUserState = {
   subscriptionPlan: "FREE",
   subscriptionStatus: null,
   subscriptionExpiresAt: null,
-  role: "USER"
+  role: "USER",
+  cvCount: 0
 };
 
 const userSlice = createSlice({
@@ -43,7 +45,8 @@ const userSlice = createSlice({
         subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
         subscriptionExpiresAt?: string | null;
         logged: boolean;
-        role: "USER" | "ADMIN"
+        role: "USER" | "ADMIN";
+        cvCount: number
       }>
     ) => {
       state.id = action.payload.id;
@@ -55,7 +58,8 @@ const userSlice = createSlice({
       state.subscriptionPlan = action.payload.subscriptionPlan;
       state.subscriptionStatus = action.payload.subscriptionStatus ?? null;
       state.subscriptionExpiresAt = action.payload.subscriptionExpiresAt ?? null;
-      state.role = action.payload.role
+      state.role = action.payload.role;
+      state.cvCount = action.payload.cvCount
     },
     clearUser: (state) => {
       return initialState;

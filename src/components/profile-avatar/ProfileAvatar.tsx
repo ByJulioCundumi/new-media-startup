@@ -17,6 +17,7 @@ import {
 } from "react-icons/hi2";
 import { openAuthModal } from "../../reducers/authModalSlice";
 import { FiAlertOctagon } from "react-icons/fi";
+import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,14 +28,11 @@ const ProfileAvatar: React.FC = () => {
     subscriptionPlan,
     subscriptionStatus,
     subscriptionExpiresAt,
+    cvCount
   } = useSelector((state: IState) => state.user);
 
   // Determinar si es VIP (tiene plan de pago activo)
-  const isVip =
-    logged &&
-    subscriptionPlan !== "FREE" &&
-    subscriptionStatus === "ACTIVE" &&
-    subscriptionExpiresAt;
+  const isVip = hasValidSubscriptionTime(subscriptionExpiresAt)
 
   // Formatear fecha de expiración (ej: "20 Dic 2025")
   const formatExpirationDate = (dateString: string | null | undefined): string => {
@@ -89,7 +87,7 @@ const ProfileAvatar: React.FC = () => {
             <p className="subscription-badge__subtitle">
               {isVip
                 ? `${planTitle}: ${expirationDate}`
-                : "Plan Gratuito: 1 CV Online"}
+                : `Plan Gratuito: ${cvCount}/1 CV Online`}
             </p>
           </div>
         </div>

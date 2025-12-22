@@ -37,11 +37,12 @@ import { clearAllReferences } from "../../reducers/referencesSlice";
 import { clearAllAwards } from "../../reducers/awardsSlice";
 import { clearAllCustom } from "../../reducers/customSlice";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LuSave } from "react-icons/lu";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const { hasUnsavedChanges, isSaving } = useSelector((state: IState) => state.cvSave);
   const cvSections = useSelector((state: IState) => state.cvSections);
@@ -83,6 +84,21 @@ const ToolbarCV: React.FC = () => {
     setProgress(Math.round(total / enabledSections.length));
   }, [cvSections]);
 
+  const handleBackClick = () => {
+    if (hasUnsavedChanges) {
+      const confirmLeave = window.confirm(
+        "Se estan guardando los cambios realizados ¿Estás seguro de que quieres volver ahora?"
+      );
+
+      if (!confirmLeave) {
+        return; // Cancela la navegación
+      }
+    }
+
+    // Si no hay cambios o el usuario confirma → navegar
+    navigate("/cvs");
+  };
+
   const progressColorClass = useMemo(() => {
     if (progress < 50) return "progress-red";
     if (progress < 100) return "progress-yellow";
@@ -122,9 +138,13 @@ const ToolbarCV: React.FC = () => {
   return (
     <div className="toolbar-cv-wrapper">
       {/* ===== BOTÓN RETROCESO ===== */}
-      <Link to={"/cvs"} className="toolbar-cv-btn ghost toolbar-cv-btn__back">
+      <button
+        onClick={handleBackClick}
+        className="toolbar-cv-btn ghost toolbar-cv-btn__back"
+        title="Volver a mis CVs"
+      >
         <IoChevronBackOutline />
-      </Link>
+      </button>
 
       {/* ===== BOTONES IZQUIERDA ===== */}
       <div className="toolbar-cv-buttons">

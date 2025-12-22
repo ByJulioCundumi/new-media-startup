@@ -76,3 +76,21 @@ export const deleteCvApi = async (id: string) => {
 
   return res.json();
 };
+
+// api/cv.ts
+
+export const getCvCountApi = async (): Promise<number> => {
+  const res = await fetch(`${BASE_URL}/count`, {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error obteniendo conteo de CVs");
+  }
+
+  return data.cvCount; // → número entero
+};

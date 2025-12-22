@@ -216,6 +216,19 @@ function CreateCv() {
       return () => clearTimeout(timer);
     }
   }, [hasUnsavedChanges, currentData, cvId]);
+  
+  // 1. Advertencia al cerrar o recargar la pestaña
+useEffect(() => {
+  if (!hasUnsavedChanges) return;
+
+  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = ''; // Necesario para algunos navegadores
+  };
+
+  window.addEventListener('beforeunload', handleBeforeUnload);
+  return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+}, [hasUnsavedChanges]);
 
   // ----------------------------------------------------------------------------------
   // Selectores para el template
