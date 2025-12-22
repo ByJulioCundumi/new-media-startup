@@ -88,15 +88,14 @@ function PricingPage() {
     {
       name: "Plan Gratuito",
       price: "$0",
-      period: "Funciones Limitadas",
+      period: "Hasta 1 CV online",
       highlight: true,
       isFree: true,
       popular: false,
       benefits: [
-        "Crea CVs",
-        "Guarda hasta 11 CVs online",
-        "Plantilas con marca de agua",
-        "Descargas en PDF ilimitadas",
+        "Acceso a Plantillas Gratis",
+        "Plantillas Premium con marca de agua",
+        "Descargas en PDF",
         "Programa de afiliados",
         "Comisión de afiliado +20%",
       ],
@@ -111,7 +110,7 @@ function PricingPage() {
       benefits: [
         "Crea CVs ilimitados",
         "Guarda CVs ilimitados online",
-        "Acceso a todas las plantillas",
+        "Acceso a plantillas Premium",
         "Plantillas sin marca de agua",
         "Descargas en PDF ilimitadas",
         "Programa de afiliados",
@@ -130,7 +129,7 @@ function PricingPage() {
       benefits: [
         "Crea CVs ilimitados",
         "Guarda CVs ilimitados online",
-        "Acceso a todas las plantillas",
+        "Acceso a plantillas Premium",
         "Plantillas sin marca de agua",
         "Descargas en PDF ilimitadas",
         "Programa de afiliados",
@@ -144,7 +143,7 @@ function PricingPage() {
       <section className="pricing-page">
         <div className="pricing-header">
           <h1>
-            Elige un plan Y <span>Consigue Empleo</span>
+            Elige Tu Plan <span>Para Consigue Empleo</span>
           </h1>
           <p>
             Crea CVs profesionales que aumentan tus probabilidades de ser contratado. Sorprende a los reclutadores.

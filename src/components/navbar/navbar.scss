@@ -40,6 +40,7 @@
     display: flex;
     gap: 14px;
     list-style: none;
+    margin-right: -2rem;
 
     @media (max-width: 950px) {
       display: none;
@@ -127,6 +128,9 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
 
       color: #0099ff;
       border-color: rgba(0, 153, 255, 0.5);

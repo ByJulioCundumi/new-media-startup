@@ -16,6 +16,7 @@ import {
   HiOutlineArrowRightEndOnRectangle,
 } from "react-icons/hi2";
 import { openAuthModal } from "../../reducers/authModalSlice";
+import { FiAlertOctagon } from "react-icons/fi";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const ProfileAvatar: React.FC = () => {
           {isVip ? (
             <IoDiamondOutline className="subscription-badge__icon" />
           ) : (
-            <IoWaterOutline className="subscription-badge__icon" />
+            <FiAlertOctagon className="subscription-badge__icon" />
           )}
 
           <div className="subscription-badge__text">
@@ -88,7 +89,7 @@ const ProfileAvatar: React.FC = () => {
             <p className="subscription-badge__subtitle">
               {isVip
                 ? `${planTitle}: ${expirationDate}`
-                : "Marca de agua visible"}
+                : "Plan Gratuito: 1 CV Online"}
             </p>
           </div>
         </div>

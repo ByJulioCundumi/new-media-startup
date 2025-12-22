@@ -8,7 +8,7 @@ import type { IState } from "../../interfaces/IState";
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
 import { TbPencilPlus, TbSettingsCode } from "react-icons/tb";
 import { HiHome, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
-import { LuFileSearch, LuPencilLine } from "react-icons/lu";
+import { LuFileSearch, LuPencilLine, LuUserRoundPlus } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdOutlineDiamond,
@@ -138,7 +138,7 @@ function Navbar() {
                 dispatch(openAuthModal({ section: "signup" }))
               }
             >
-              Crear Cuenta
+              <LuUserRoundPlus /> Crear Cuenta
             </button>
           </div>
         )}
