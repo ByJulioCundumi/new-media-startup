@@ -25,6 +25,7 @@ import { HiCheck } from "react-icons/hi2";
 import { TbEdit } from "react-icons/tb";
 import { BiEditAlt } from "react-icons/bi";
 import { RiFileEditLine } from "react-icons/ri";
+import Invitation from "../../components/invitation/Invitation";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -210,6 +211,7 @@ export default function TemplatesPage() {
           })
         )}
       </div>
+      <Invitation/>
     </section>
       <Footer/>
     </>

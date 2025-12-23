@@ -104,7 +104,7 @@ function App() {
             <Route path="create/:cvId?" element={<CreateCv />} />
             <Route path='templates' element={<TemplatesPage/>} />
             <Route path='pricing' element={<PricingPage/>} />
-            <Route path='affiliate' element={<JobOffer/>} />
+            <Route path='affiliate' element={<JobPage/>} />
             <Route path='account' element={<AccountPage/>} />
             <Route path='admin' element={<AdminPage/>} />
         </Routes>

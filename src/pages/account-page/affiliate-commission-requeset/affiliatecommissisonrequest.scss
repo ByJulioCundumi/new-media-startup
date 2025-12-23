@@ -7,6 +7,9 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__header {
     margin-bottom: 1.8rem;

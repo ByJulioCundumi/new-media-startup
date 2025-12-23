@@ -26,6 +26,7 @@ import RemoteAffiliateOffer from "../../components/job-offer/JobOffer";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { MdWork, MdWorkOutline } from "react-icons/md";
 import Invitation from "../../components/invitation/Invitation";
+import AffiliateCommissionRequest from "../account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 
@@ -425,12 +426,13 @@ export default function DashboardCVs() {
                   </span>
                 </p>
               </div>
-                <p className="job-btn"><MdWork /> Postular a Trabajo Remoto</p>
             </div>
           );
         })}
     </div>
-    <Invitation/>
+    <div className="dashboard-info">
+        <Invitation/>
+    </div>
     </>
   );
 }

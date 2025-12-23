@@ -12,6 +12,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import Footer from "../../components/footer/Footer";
+import AdminCommissionRequest from "../admin-page/admin-commission-request/AdminCommissionRequest";
+import AffiliateCommissionRequest from "../account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
+import JobOffer from "../../components/job-offer/JobOffer";
+import { RiArrowDownWideLine } from "react-icons/ri";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -54,7 +58,7 @@ function JobPage() {
 
         <h1 className="job-page__hero-title">
           Trabaja En Remoto, Sin Experiencia
-          <span>Gana Dinero Promocionando Nuestras Herramientas</span>
+          <span>Gana Dinero Promocionando Nuestro Creador De CVs</span>
         </h1>
 
         <p className="job-page__hero-subtitle">
@@ -62,17 +66,15 @@ function JobPage() {
           Gana un <strong>20% de comisiones recurrentes desde el primer día</strong> y solicita
           un aumento al <strong>50%</strong> si tienes una suscripción activa.
         </p>
-
-        <div className="job-page__cta-container">
-          <button className="job-page__cta-button">
-            Afiliarme Gratis <ArrowRight size={18} />
-          </button>
-
-          <button className="job-page__cta-button outline">
-            Solicitar 50%
-          </button>
-        </div>
       </section>
+
+      <RiArrowDownWideLine  className="job-arrow"/>
+
+       <div className="job-page__commission">
+        <JobOffer/>
+      </div>
+
+      <RiArrowDownWideLine  className="job-arrow"/>
 
       {/* ---------- BENEFICIOS ---------- */}
       <section className="job-page__benefits">

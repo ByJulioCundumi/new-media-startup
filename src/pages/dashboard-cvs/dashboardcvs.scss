@@ -84,6 +84,22 @@
    INFO CV
 -------------------------- */
 .cv-info {
+  .job-btn{
+  background: #ffffff;
+  color: #0bc2f5;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin: 0 auto;
+  }
+
   h3 {
     font-size: 18px;
     font-weight: 600;
@@ -245,7 +261,7 @@
 /* Etiqueta Borrador */
 .draft-tag {
   position: absolute;
-  bottom: 65px;
+  bottom: 35px;
   right: 16px;
   z-index: 12;
   background: #f8b43f;
@@ -259,7 +275,7 @@
 
 .not-draft-tag {
   position: absolute;
-  bottom: 65px;
+  bottom: 35px;
   right: 16px;
   z-index: 12;
   background: #0bc2f5;
@@ -274,7 +290,7 @@
 /* Botón Guardar en nube */
 .cv-save-cloud-btn {
   position: absolute;
-  bottom: 102px;
+  bottom: 71px;
   right: 16px;
   z-index: 11;
   background: #f8b43f;
@@ -429,7 +445,7 @@
 
 .cv-pending-tag {
   position: absolute;
-  bottom: 110px;
+  bottom: 71px;
   right: 16px;
   background: #fffbeb;
   color: #d97706;
@@ -465,19 +481,3 @@
   font-weight: 500;
 }
 
-.job-btn{
-  background: #ffffff;
-  color: #0bc2f5;
-  padding: 6px 15px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: -0.5rem;
-  width: fit-content;
-  margin: 0 auto;
-}

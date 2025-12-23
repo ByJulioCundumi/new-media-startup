@@ -10,13 +10,13 @@ function Invitation() {
           </h2>
 
           <p className="affiliate-subtitle">
-            Crea y Envianos Tu CV!{" "}
+            Envianos Tu CV.{" "}
             <Link to={"/affiliate"}>
               <strong className="affiliate-link">
                  Únete A Nosotros
               </strong> 
             </Link>{" "}
-            y gana comisiones recurrentes de hasta el <strong>50%</strong> por cada venta realizada.
+            y gana comisiones recurrentes de hasta el <strong>70%</strong> por cada venta realizada.
           </p>
         </div>
     </div>
