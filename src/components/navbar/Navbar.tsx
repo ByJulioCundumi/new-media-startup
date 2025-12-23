@@ -41,16 +41,6 @@ function Navbar() {
         <ul className="navbar__links">
 
           <Link
-            to="/"
-            className={`link link--home ${
-              sidebarOption === "home" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("home"))}
-          >
-            <HiHome />
-          </Link>
-
-          <Link
             to="/cvs"
             className={`link ${
               sidebarOption === "cvs" ? "active" : ""
@@ -58,7 +48,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("cvs"))}
           >
             <LuPencilLine />
-            {logged ? "Mis CV" : "Crea un CV"}
+            Crea un CV
           </Link>
 
           <Link
@@ -91,7 +81,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("affiliate"))}
           >
             <MdOutlineWorkOutline />
-            {logged ? "Trabajo" : "Gana en USD"}
+            Gana en USD
           </Link>
 
           {logged && role === "USER" && (
@@ -102,7 +92,7 @@ function Navbar() {
               }`}
               onClick={() => dispatch(setSidebar("account"))}
             >
-              <TbSettingsCode />
+              <TbSettingsCode /> Cuenta
             </Link>
           )}
 

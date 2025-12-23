@@ -12,9 +12,9 @@ import {
   deleteCvApi,
   updateCvApi,
   createCvApi,
-  getCvCountApi, // ← Importado
+  getCvCountApi,
 } from "../../api/cv";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { IState } from "../../interfaces/IState";
 import { IoCloudOfflineSharp } from "react-icons/io5";
 import { BsFillCloudCheckFill } from "react-icons/bs";
@@ -22,6 +22,10 @@ import { BiCloudUpload, BiSync } from "react-icons/bi";
 import { BiLoaderAlt } from "react-icons/bi";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import RemoteAffiliateOffer from "../../components/job-offer/JobOffer";
+import JobOffer from "../../components/job-offer/JobOffer";
+import { MdWorkOutline } from "react-icons/md";
+import Invitation from "../../components/invitation/Invitation";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 
@@ -37,51 +41,47 @@ export default function DashboardCVs() {
   const [filterType, setFilterType] = useState<CvFilter>("all");
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [syncingPending, setSyncingPending] = useState(false);
 
-  // Validación de suscripción (solo para lógica rápida)
   const hasActiveSubscription = hasValidSubscriptionTime(subscriptionExpiresAt);
-
-  // Mensaje de restricción
   const restrictedMessage = "Con el plan actual no puedes guardar más de 1 CV online.";
+
+  const loadCvs = async (showLoading = false) => {
+    if (showLoading) setLoading(true);
+    try {
+      let backendCvs: any[] = [];
+      if (isLogged) {
+        try {
+          backendCvs = await getAllCvsApi();
+        } catch (err) {
+          console.warn("Error cargando CVs del backend:", err);
+        }
+      }
+
+      const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+
+      const localBackendIds = new Set(
+        localDrafts.filter((d: any) => d.backendId).map((d: any) => d.backendId)
+      );
+
+      const finalCvs: any[] = [...localDrafts];
+
+      if (isLogged) {
+        const backendWithoutLocal = backendCvs.filter((cv) => !localBackendIds.has(cv.id));
+        finalCvs.push(...backendWithoutLocal);
+      }
+
+      setCvs(finalCvs);
+    } catch (error) {
+      console.error("Error cargando CVs:", error);
+    } finally {
+      if (showLoading) setLoading(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(setSidebar("cvs"));
-
-    const loadCvs = async () => {
-      try {
-        setLoading(true);
-
-        let backendCvs: any[] = [];
-        if (isLogged) {
-          try {
-            backendCvs = await getAllCvsApi();
-          } catch (err) {
-            console.warn("Error cargando CVs del backend:", err);
-          }
-        }
-
-        const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-
-        const localBackendIds = new Set(
-          localDrafts.filter((d: any) => d.backendId).map((d: any) => d.backendId)
-        );
-
-        const finalCvs: any[] = [...localDrafts];
-
-        if (isLogged) {
-          const backendWithoutLocal = backendCvs.filter((cv) => !localBackendIds.has(cv.id));
-          finalCvs.push(...backendWithoutLocal);
-        }
-
-        setCvs(finalCvs);
-      } catch (error) {
-        console.error("Error cargando CVs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadCvs();
+    loadCvs(true);
   }, [dispatch, isLogged]);
 
   const handleCreateClick = () => {
@@ -95,30 +95,20 @@ export default function DashboardCVs() {
       return;
     }
 
+    const cvId = cv.id || cv.backendId || cv.localId;
+    setDeletingId(cvId);
+
     try {
-      const cvId = cv.id || cv.backendId || cv.localId;
-
       if (cv.id && isLogged) {
-        setDeletingId(cvId);
         await deleteCvApi(cv.id);
-        const freshBackendCvs = await getAllCvsApi();
-        const currentDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-        setCvs([...currentDrafts, ...freshBackendCvs]);
-        return;
+      } else {
+        const existingDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
+        const updatedDrafts = existingDrafts.filter(
+          (d: any) => d.localId !== cv.localId && d.backendId !== cvId
+        );
+        localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
       }
-
-      const existingDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-      const updatedDrafts = existingDrafts.filter(
-        (d: any) => d.localId !== cv.localId && d.backendId !== cvId
-      );
-      localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
-
-      setCvs((prev) =>
-        prev.filter((item) => {
-          const itemKey = item.id || item.backendId || item.localId;
-          return itemKey !== cvId;
-        })
-      );
+      await loadCvs();
     } catch (error: any) {
       console.error("Error eliminando CV:", error);
       alert("No se pudo eliminar el CV.");
@@ -127,7 +117,6 @@ export default function DashboardCVs() {
     }
   };
 
-  // === GUARDAR UN CV LOCAL NUEVO EN LA NUBE ===
   const handleSaveToCloud = async (draftCv: any, e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -136,7 +125,6 @@ export default function DashboardCVs() {
       return;
     }
 
-    // Consultar conteo real justo antes de intentar guardar
     let currentOnlineCount: number;
     try {
       currentOnlineCount = await getCvCountApi();
@@ -146,14 +134,14 @@ export default function DashboardCVs() {
       return;
     }
 
-    // Validar límite
     if (!hasActiveSubscription && currentOnlineCount >= 1) {
       alert(restrictedMessage);
       return;
     }
 
+    setSavingId(draftCv.localId);
+
     try {
-      setSavingId(draftCv.localId);
       const created = await createCvApi(draftCv.cvTitle, draftCv.templateId);
       const { localId, isDraft, ...cvData } = draftCv;
       await updateCvApi(created.id, cvData);
@@ -162,8 +150,7 @@ export default function DashboardCVs() {
       const updatedDrafts = existingDrafts.filter((d: any) => d.localId !== localId);
       localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
 
-      const freshBackendCvs = await getAllCvsApi();
-      setCvs([...updatedDrafts, ...freshBackendCvs]);
+      await loadCvs();
     } catch (error) {
       console.error("Error guardando en nube:", error);
       alert("Error al guardar en la nube");
@@ -172,10 +159,9 @@ export default function DashboardCVs() {
     }
   };
 
-  // Filtrado + búsqueda
   const filteredCvs = useMemo(() => {
     return cvs.filter((cv) => {
-      const isLocalOnly = !!cv.localId && !cv.id;
+      const isLocalOnly = !!cv.localId && !cv.id && !cv.backendId;
       const isPendingSync = !!cv.backendId && !!cv.localId;
       const isOnline = !!cv.id && !cv.localId;
 
@@ -192,16 +178,13 @@ export default function DashboardCVs() {
 
   const totalCvs = cvs.length;
 
-  // Detectar si hay cambios pendientes
   const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
-  const hasPendingSync = isLogged && localDrafts.some((d: any) => d.backendId);
-  const [syncingPending, setSyncingPending] = useState(false);
+  const pendingSyncCount = localDrafts.filter((d: any) => d.backendId).length;
+  const hasPendingSync = isLogged && pendingSyncCount > 0;
 
-  // === SINCRONIZAR TODOS LOS CAMBIOS PENDIENTES ===
   const handleSyncPending = async () => {
     if (!isLogged) return;
 
-    // Consultar conteo real antes de sincronizar
     let currentOnlineCount: number;
     try {
       currentOnlineCount = await getCvCountApi();
@@ -211,7 +194,6 @@ export default function DashboardCVs() {
       return;
     }
 
-    // Validar límite
     if (!hasActiveSubscription && currentOnlineCount > 1) {
       alert(restrictedMessage);
       return;
@@ -243,8 +225,7 @@ export default function DashboardCVs() {
     );
     localStorage.setItem("draftCvs", JSON.stringify(remainingDrafts));
 
-    const backendCvs = await getAllCvsApi();
-    setCvs([...remainingDrafts, ...backendCvs]);
+    await loadCvs();
 
     setSyncingPending(false);
 
@@ -256,8 +237,8 @@ export default function DashboardCVs() {
   };
 
   return (
-    <div className="dashboard-cvs">
-      {/* HEADER CON FILTROS */}
+    <>
+      <div className="dashboard-cvs">
       <div className="dashboard-header">
         <div className="header-left">
           <h1>
@@ -289,7 +270,6 @@ export default function DashboardCVs() {
         </div>
       </div>
 
-      {/* BOTÓN CREAR NUEVO + BOTÓN SINCRONIZAR */}
       <div className="cv-info-box">
         <div className="cv-item create-new" onClick={handleCreateClick}>
           <div className="create-box">
@@ -318,7 +298,7 @@ export default function DashboardCVs() {
             ) : (
               <>
                 <BiSync />
-                Sincronizar cambios pendientes ({localDrafts.filter((d: any) => d.backendId).length})
+                Sincronizar cambios pendientes ({pendingSyncCount})
               </>
             )}
           </button>
@@ -334,13 +314,12 @@ export default function DashboardCVs() {
         </p>
       )}
 
-      {/* GRID DE CVs */}
       {!loading &&
         filteredCvs.map((cv) => {
           const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
           const Component = tpl.component;
 
-          const isLocalOnly = !!cv.localId && !cv.id;
+          const isLocalOnly = !!cv.localId && !cv.id && !cv.backendId;
           const isPendingSync = !!cv.backendId && !!cv.localId;
           const isOnline = !!cv.id && !cv.localId;
 
@@ -359,7 +338,7 @@ export default function DashboardCVs() {
             ? "#f59f0b88"
             : "#0bc2f5";
 
-          const showSaveButton = isLocalOnly && !cv.backendId;
+          const showSaveButton = isLocalOnly;
 
           return (
             <div key={cvKey} className={`cv-item ${isLocalOnly || isPendingSync ? "draft" : ""}`}>
@@ -371,7 +350,7 @@ export default function DashboardCVs() {
                 onClick={(e) => handleDelete(cv, e)}
                 title="Eliminar CV"
               >
-                {deletingId === cv.id ? (
+                {deletingId === (cv.id || cv.localId) ? (
                   <span className="spinner">⟳</span>
                 ) : (
                   <svg viewBox="0 0 24 24" width="18" height="18">
@@ -450,5 +429,7 @@ export default function DashboardCVs() {
           );
         })}
     </div>
+    <Invitation/>
+    </>
   );
 }

@@ -21,6 +21,7 @@ import { addFavoriteTemplateApi } from './api/user'
 import AdminPage from './pages/admin-page/AdminPage'
 import { TbPencilPlus } from 'react-icons/tb'
 import Auth from './components/auth/Auth'
+import JobOffer from './components/job-offer/JobOffer'
 
 function App() {
   const dispatch = useDispatch()
@@ -89,7 +90,6 @@ function App() {
         {sidebarOption !== "create" && <Navbar/>}
 
         {/* popups globales */}
-        <RemoteInfoBubble/>
         {authModal.isOpen && <Auth/>}
         {templatesPopupOpen && <TemplatesPopup/>}
         {isOpen && <CreateNewCvPopup/>}
@@ -104,7 +104,7 @@ function App() {
             <Route path="create/:cvId?" element={<CreateCv />} />
             <Route path='templates' element={<TemplatesPage/>} />
             <Route path='pricing' element={<PricingPage/>} />
-            <Route path='affiliate' element={<JobPage/>} />
+            <Route path='affiliate' element={<JobOffer/>} />
             <Route path='account' element={<AccountPage/>} />
             <Route path='admin' element={<AdminPage/>} />
         </Routes>

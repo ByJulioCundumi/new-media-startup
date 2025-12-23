@@ -29,7 +29,6 @@ function AccountPage() {
   return (
     <section className="account-page">
       <GeneralInfoForm />
-      <AffiliateCommissionRequest />
       <PasswordSettings />
 
       {/* ===== ACCIONES DE CUENTA ===== */}

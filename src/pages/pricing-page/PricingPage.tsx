@@ -12,6 +12,7 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { LuBadgeInfo } from "react-icons/lu";
 import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
 import { openAuthModal } from "../../reducers/authModalSlice";
+import Invitation from "../../components/invitation/Invitation";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -143,7 +144,7 @@ function PricingPage() {
       <section className="pricing-page">
         <div className="pricing-header">
           <h1>
-            Elige Tu Plan <span>Para Consigue Empleo</span>
+            Elige Tu Plan Y <span>Crea Tus CVs</span>
           </h1>
           <p>
             Crea CVs profesionales que aumentan tus probabilidades de ser contratado. Sorprende a los reclutadores.
@@ -213,22 +214,7 @@ function PricingPage() {
         </div>
 
         {/* SECCIÓN DE AFILIADOS */}
-        <div className="affiliate-invitation">
-          <h2>
-            ¿Buscas Trabajo Remoto <br /> <span>Sin Experiencia?</span>
-          </h2>
-
-          <p className="affiliate-subtitle">
-            Únete a nuestro{" "}
-            <Link to={"/affiliate"}>
-              <strong className="affiliate-link">
-                <MdWorkOutline /> Programa de Afiliados
-              </strong>
-            </Link>{" "}
-            y obtén comisiones recurrentes de hasta el <strong>50%</strong> cada
-            vez que alguien compre con tu enlace.
-          </p>
-        </div>
+        <Invitation/>
       </section>
 
       <Footer />
