@@ -24,7 +24,7 @@ import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import RemoteAffiliateOffer from "../../components/job-offer/JobOffer";
 import JobOffer from "../../components/job-offer/JobOffer";
-import { MdWorkOutline } from "react-icons/md";
+import { MdWork, MdWorkOutline } from "react-icons/md";
 import Invitation from "../../components/invitation/Invitation";
 
 type CvFilter = "all" | "local" | "pending" | "online";
@@ -380,7 +380,7 @@ export default function DashboardCVs() {
                   onClick={(e) => handleSaveToCloud(cv, e)}
                 >
                   <BiCloudUpload />
-                  {savingId === cv.localId ? "Guardando..." : "Guardar Online"}
+                  {savingId === cv.localId ? "Guardando..." : "Guardar CV"}
                 </button>
               )}
 
@@ -418,13 +418,14 @@ export default function DashboardCVs() {
                 <h3>{cv.cvTitle}</h3>
                 <p>
                   {tpl.label}
-                  {isLocalOnly && <span className="status-local"> (Local)</span>}
+                  {isLocalOnly && <span className="status-local"> (Borrador)</span>}
                   <span> - </span>
                   <span className="date">
                     {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
                   </span>
                 </p>
               </div>
+                <p className="job-btn"><MdWork /> Postular a Trabajo Remoto</p>
             </div>
           );
         })}

@@ -195,15 +195,15 @@
 /* Tag de QR Code - bonito y discreto */
 .cv-qr-tag {
   position: absolute;
-  bottom: 35px;
-  right: 56px;
+  top: 18px;
+  right: 65px;
   z-index: 10;
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -213,7 +213,7 @@
   }
 
   &.enabled {
-    background: #bebebe; // verde esmeralda
+    background: #0bc2f5; // verde esmeralda
   }
 }
 
@@ -245,7 +245,7 @@
 /* Etiqueta Borrador */
 .draft-tag {
   position: absolute;
-  bottom: 35px;
+  bottom: 65px;
   right: 16px;
   z-index: 12;
   background: #f8b43f;
@@ -259,7 +259,7 @@
 
 .not-draft-tag {
   position: absolute;
-  bottom: 35px;
+  bottom: 65px;
   right: 16px;
   z-index: 12;
   background: #0bc2f5;
@@ -274,7 +274,7 @@
 /* Botón Guardar en nube */
 .cv-save-cloud-btn {
   position: absolute;
-  bottom: 71px;
+  bottom: 102px;
   right: 16px;
   z-index: 11;
   background: #f8b43f;
@@ -429,7 +429,7 @@
 
 .cv-pending-tag {
   position: absolute;
-  bottom: 71px;
+  bottom: 110px;
   right: 16px;
   background: #fffbeb;
   color: #d97706;
@@ -465,3 +465,19 @@
   font-weight: 500;
 }
 
+.job-btn{
+  background: #ffffff;
+  color: #0bc2f5;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: -0.5rem;
+  width: fit-content;
+  margin: 0 auto;
+}
