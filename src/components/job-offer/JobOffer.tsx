@@ -86,10 +86,12 @@ const JobOffer = () => {
               <FaTimes />
             </button>
 
-            <h2>¡Selecciona tu CV para postularte!</h2>
-            <p className="modal-subtitle">
-              CVs <strong>guardados</strong> (sin marca de agua).
-            </p>
+            <div>
+              <h2>¡Selecciona tu CV para postularte!</h2>
+              <p className="modal-subtitle">
+                CVs <strong>guardados</strong> (sin marca de agua).
+              </p>
+            </div>
 
             {!isLogged ? (
               <div className="modal-message-center">
@@ -102,7 +104,7 @@ const JobOffer = () => {
               <p className="loading-text modal-message-center">Cargando tus CVs guardados en la nube...</p>
             ) : onlineCvs.length === 0 ? (
               <div className="modal-message-center no-cvs">
-                <p>No tienes CVs guardados en la nube todavía.</p>
+                <p>Aun no tienes CVs guardados sin marca de agua.</p>
                 <a
                   href="https://cvremoto.com/crear-cv"
                   target="_blank"
