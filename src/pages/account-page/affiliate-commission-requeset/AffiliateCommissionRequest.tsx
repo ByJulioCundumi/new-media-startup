@@ -188,18 +188,13 @@ const AffiliateCommissionRequest: React.FC = () => {
   if (initialLoading) {
     return (
       <div className="affiliate-commission-request">
-        <p className="loading-text">Cargando tu información de comisión...</p>
+        <p className="loading-text">Cargando tu información...</p>
       </div>
     );
   }
 
   return (
     <div className="affiliate-commission-request">
-      <header className="affiliate-commission-request__header">
-        <h3>Incremento de Comisión al 50%</h3>
-        <p>Envía tus datos de afiliado en Hotmart para solicitar o gestionar tu incremento de comisión.</p>
-      </header>
-
       <form onSubmit={(e) => e.preventDefault()} className="affiliate-commission-request__form">
         <div className="affiliate-commission-request__fields">
           <div className="affiliate-commission-request__field">
