@@ -16,6 +16,7 @@ import AdminCommissionRequest from "../admin-page/admin-commission-request/Admin
 import AffiliateCommissionRequest from "../account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { RiArrowDownWideLine } from "react-icons/ri";
+import JobFaq from "../../components/job-faq/JobFaq";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -72,6 +73,7 @@ function JobPage() {
 
        <div className="job-page__commission">
         <JobOffer/>
+        <JobFaq/>
       </div>
 
       <RiArrowDownWideLine  className="job-arrow"/>

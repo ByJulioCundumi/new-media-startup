@@ -1,5 +1,5 @@
 .job-offer-card-container {
-  padding: 0 1rem;
+  padding: 2rem 1rem;
   display: flex;
   justify-content: center;
 }
@@ -14,7 +14,7 @@
   padding: 2rem;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -56,6 +56,12 @@
   font-size: 1.2rem;
   font-weight: 600;
   color: #0f172a;
+
+  span{
+    font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f172a;
+  }
 }
 
 .company-tagline {
@@ -176,7 +182,7 @@
 
 /* CTA */
 .job-action {
-  width: 260px;
+  width: 280px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 14px;

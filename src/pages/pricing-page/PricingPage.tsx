@@ -13,6 +13,7 @@ import { LuBadgeInfo } from "react-icons/lu";
 import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
 import { openAuthModal } from "../../reducers/authModalSlice";
 import Invitation from "../../components/invitation/Invitation";
+import JobOffer from "../../components/job-offer/JobOffer";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -89,16 +90,15 @@ function PricingPage() {
     {
       name: "Plan Gratuito",
       price: "$0",
-      period: "Hasta 1 CV online",
+      period: "Prueba La Plataforma Gratis",
       highlight: true,
       isFree: true,
       popular: false,
       benefits: [
-        "Acceso a Plantillas Gratis",
-        "Plantillas Premium con marca de agua",
+        "Plantillas con marca de agua",
+        "Guardado de CVs en local",
         "Descargas en PDF",
-        "Programa de afiliados",
-        "Comisión de afiliado +20%",
+        "Funciones Avanzadas Limitadas",
       ],
     },
     {
@@ -109,13 +109,13 @@ function PricingPage() {
       isFree: false,
       popular: false,
       benefits: [
-        "Crea CVs ilimitados",
-        "Guarda CVs ilimitados online",
         "Acceso a plantillas Premium",
-        "Plantillas sin marca de agua",
-        "Descargas en PDF ilimitadas",
-        "Programa de afiliados",
-        "Comisión de afiliado +50%",
+        "Guardado de CVs en la nube",
+        "Respaldo de CVs como borradores",
+        "Sincronizacion de CVs (borradores) en la nube",
+        "Descargas en PDF",
+        "Oferta De Trabajo Remoto",
+        "Comisiones de hasta el 70%",
       ],
     },
     {
@@ -128,13 +128,13 @@ function PricingPage() {
       isFree: false,
       popular: true,
       benefits: [
-        "Crea CVs ilimitados",
-        "Guarda CVs ilimitados online",
         "Acceso a plantillas Premium",
-        "Plantillas sin marca de agua",
-        "Descargas en PDF ilimitadas",
-        "Programa de afiliados",
-        "Comisión de afiliado +50%",
+        "Guardado de CVs en la nube",
+        "Respaldo de CVs como borradores",
+        "Sincronizacion de CVs (borradores) en la nube",
+        "Descargas en PDF",
+        "Oferta De Trabajo Remoto",
+        "Comisiones de hasta el 70%",
       ],
     },
   ];
@@ -214,7 +214,7 @@ function PricingPage() {
         </div>
 
         {/* SECCIÓN DE AFILIADOS */}
-        <Invitation/>
+        <JobOffer/>
       </section>
 
       <Footer />

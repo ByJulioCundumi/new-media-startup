@@ -208,8 +208,6 @@ export default function TemplatesPopup() {
                       <div className="template-popup-preview">
                         <Component {...mockTemplateData} />
                       </div>
-                    </div>
-
                     <div className="template-preview__data">
                       <h3 className="template-popup-title">{tpl.label}</h3>
                       <p className="template-popup-category">
@@ -217,6 +215,8 @@ export default function TemplatesPopup() {
                       </p>
                     </div>
                   </div>
+                    </div>
+
                 );
               })
             )}

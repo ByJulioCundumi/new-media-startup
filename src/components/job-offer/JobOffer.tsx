@@ -23,12 +23,13 @@ const JobOffer = () => {
               <FaBriefcase />
             </div>
             <div className="company-info">
-              <h3 className="company-name">Promotor - Sin Experiencia</h3>
-              <p className="company-tagline">www.cvremoto.com</p>
+              <h3 className="company-name">Trabajo <span>(Remoto)</span> - Sin Experiencia</h3>
+              <p className="company-tagline">cvremoto.com / Promotor, Vendedor</p>
             </div>
           </header>
 
-          <p className="job-offer__info">Trabaja desde casa sin horarios, postula enviando un cv sin marca de agua creado desde nuestra plataforma y comienza a ganar comisiones de hasta el 70%.</p>
+          <p className="job-offer__info">Trabaja desde casa sin horarios promocionando nuestro creador de CVs. Postula enviandonos tu cv creado en nuestra 
+            plataforma y comienza a ganar comisiones recurrentes de hasta el 70% .</p>
 
           {/* Estadísticas */}
           <div className="job-stats">
@@ -45,7 +46,7 @@ const JobOffer = () => {
             Envia tu CV <FaArrowRight />
           </button>
           <p className="action-note">
-            Crea y envia un cv premium para postular
+            *Solo CVs creados en cvremoto.com / Sin Marca De Agua
           </p>
         </aside>
       </article>

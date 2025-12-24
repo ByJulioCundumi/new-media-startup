@@ -431,7 +431,7 @@ export default function DashboardCVs() {
         })}
     </div>
     <div className="dashboard-info">
-        <Invitation/>
+        <JobOffer/>
     </div>
     </>
   );

@@ -26,6 +26,7 @@ import { TbEdit } from "react-icons/tb";
 import { BiEditAlt } from "react-icons/bi";
 import { RiFileEditLine } from "react-icons/ri";
 import Invitation from "../../components/invitation/Invitation";
+import JobOffer from "../../components/job-offer/JobOffer";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -200,18 +201,18 @@ export default function TemplatesPage() {
                   <div className="tpl-preview">
                     <Component {...mockTemplateData} />
                   </div>
+                  <div className="tpl-preview__data">
+                    <h3 className="tpl-title">{tpl.label}</h3>
+                    <p className="tpl-category">{tpl.categories.join(" • ")}</p>
+                  </div>
                 </div>
 
-                <div className="tpl-preview__data">
-                  <h3 className="tpl-title">{tpl.label}</h3>
-                  <p className="tpl-category">{tpl.categories.join(" • ")}</p>
-                </div>
               </div>
             );
           })
         )}
       </div>
-      <Invitation/>
+      <JobOffer/>
     </section>
       <Footer/>
     </>

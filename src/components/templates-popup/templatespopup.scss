@@ -317,13 +317,16 @@
   border-radius: 10px;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.062);
   width: 340px;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
 }
 
 .tag{
   position: absolute;
-  bottom: 1rem;
+  bottom: 5rem;
   right: 1rem;
-  z-index: 20;
+  z-index: 1;
   color: rgb(0, 140, 255);
   border: 1px solid rgba(0, 119, 255, 0.158);
   box-shadow: 0px 2px 20px rgba(0, 153, 255, 0.07);
