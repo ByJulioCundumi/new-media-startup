@@ -39,6 +39,13 @@ function Navbar() {
 
         {/* LINKS */}
         <ul className="navbar__links">
+          <Link
+              to={"/"}
+              className={sidebarOption === "home" ? "active link" : " link"}
+              onClick={() => dispatch(setSidebar("home"))}
+            >
+             <HiHome />
+            </Link>
 
           <Link
             to="/cvs"
