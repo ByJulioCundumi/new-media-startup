@@ -180,7 +180,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       return "Enviar Solicitud A Revision";
     }
     if (isApproved) {
-      return "Actualizar Mis Datos De Afiliado";
+      return "Actualizar Mis Datos De Hotmart";
     }
     return "Enviar Solicitud A Revision";
   };

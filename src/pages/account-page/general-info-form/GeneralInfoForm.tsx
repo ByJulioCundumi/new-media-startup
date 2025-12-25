@@ -10,6 +10,7 @@ import { FiAlertTriangle, FiExternalLink, FiLink } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { IoCardOutline, IoDiamondOutline } from "react-icons/io5";
 import { TbAlertSquare } from "react-icons/tb";
+import { hasValidSubscriptionTime } from "../../../util/checkSubscriptionTime";
 
 const GeneralInfoForm: React.FC = () => {
   const { userName, email, affiliateCommission, subscriptionPlan, subscriptionStatus, subscriptionExpiresAt } = useSelector((state: IState) => state.user);
@@ -61,37 +62,68 @@ const GeneralInfoForm: React.FC = () => {
         </div>
 
         {/* Comisión de afiliado */}
-        <div className="general-info-form__field">
-          <label>Comisión de afiliado (Hasta 50%)</label>
+        {
+          affiliateCommission > 0 ? <div className="general-info-form__field">
+          <label>Tu Comision Actual (Hasta 70%)</label>
           <div className="general-info-form__input-icon">
             <FaPercentage />
             <input
               type="text"
-              value={`${affiliateCommission ?? 20}%`}
+              value={`${affiliateCommission ?? 0}%`}
               disabled
             />
           </div>
              <a className="affiliate-link" href="#"><FiExternalLink /> Mi Enalce De Afiliado</a>
+        </div> 
+        : 
+        <div className="general-info-form__field">
+          <label>Tu Comision Actual</label>
+          <div className="general-info-form__input-icon">
+            <FaPercentage />
+            <input
+              type="text"
+              value={`0% De Comision`}
+              disabled
+            />
+          </div>
+             <a className="affiliate-link" href="#"><FiExternalLink /> Trabaja Con Nosotros y gana hasta el 70%</a>
         </div>
+        }
       </div>
 
       {/* ===== PLAN ACTUAL ===== */}
       <div className="general-info-form__plan">
         <h4>
-          <IoDiamondOutline /> Plan actual
+          <IoDiamondOutline /> Plan {planDisplayName()}
         </h4>
 
         <div className="general-info-form__plan-grid">
           <div className="general-info-form__plan-item">
-            <span className="value"> {planDisplayName()}</span>
+            <span className="value">{hasValidSubscriptionTime(subscriptionExpiresAt) ? "Fecha de Caducidad:" : "Sobre este plan:"} </span>
             {isPremium && (
               <span className="label">
-                Fecha de caducidad: {formatExpirationDate()}
+                {formatExpirationDate()}
               </span>
             )}
             {!isPremium && (
               <span className="label free-info"><TbAlertSquare /> Acceso A Funciones Limitadas</span>
             )}
+            {/* Si está cancelado o delayed, mostrar estado */}
+          {isPremium && subscriptionStatus === "CANCELED" && (
+            <div className="general-info-form__plan-actions">
+              <span style={{ color: "#f79f9fff", fontWeight: "600" }}>
+                Suscripción cancelada
+              </span>
+            </div>
+          )}
+
+          {isPremium && subscriptionStatus === "DELAYED" && (
+            <div className="general-info-form__plan-actions">
+              <span style={{ color: "#ffcb70ff", fontWeight: "600" }}>
+                Pago en mora
+              </span>
+            </div>
+          )}
           </div>
 
           {/* Acciones solo si tiene plan premium activo */}
@@ -108,23 +140,6 @@ const GeneralInfoForm: React.FC = () => {
                 Explorar Planes
               </Link>
             </div>
-
-          {/* Si está cancelado o delayed, mostrar estado */}
-          {isPremium && subscriptionStatus === "CANCELED" && (
-            <div className="general-info-form__plan-actions">
-              <span style={{ color: "#dc2626", fontWeight: "600" }}>
-                Suscripción cancelada
-              </span>
-            </div>
-          )}
-
-          {isPremium && subscriptionStatus === "DELAYED" && (
-            <div className="general-info-form__plan-actions">
-              <span style={{ color: "#f59e0b", fontWeight: "600" }}>
-                Pago en mora
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>

@@ -9,5 +9,6 @@ export interface IUserState {
   subscriptionStatus?: "ACTIVE" | "CANCELED" | "DELAYED" | null;
   subscriptionExpiresAt?: string | null; // ISO string
   role: "USER" | "ADMIN",
-  cvCount: number
+  cvCount: number,
+  commissionRequestStatus: string;
 }

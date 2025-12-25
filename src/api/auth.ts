@@ -10,6 +10,7 @@ export interface AuthUser {
   affiliateCommission: number;
   role: "USER" | "ADMIN";
   cvCount: number;
+  commissionRequestStatus: string;
 }
 
 interface AuthResponse {

@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
+import { HiOutlineCheckBadge } from "react-icons/hi2";
+import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { MdOutlineTimelapse } from "react-icons/md";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +21,7 @@ const JobOffer = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isLogged = useSelector((state: IState) => state.user.logged);
+  const {commissionRequestStatus} = useSelector((state: IState) => state.user);
 
   const openModal = async () => {
     // Caso 1: No está logueado
@@ -74,8 +78,8 @@ const JobOffer = () => {
             </header>
 
             <p className="job-offer__info">
-              Trabaja desde casa sin horarios promocionando nuestro creador de CVs. Postula enviandonos tu cv creado en nuestra
-              plataforma y comienza a ganar comisiones recurrentes de hasta el 70%.
+              Trabaja desde casa En Remoto y Sin Horarios promocionando nuestro creador de CVs. Postula luego de familiarizarte con nuestras
+              herramientas y comienza a ganar comisiones de hasta el 70% por compartir.
             </p>
 
             <div className="job-stats">
@@ -87,9 +91,21 @@ const JobOffer = () => {
           </div>
 
           <aside className="job-action">
-            <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
+            {
+              (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
               {loadingCvs ? "Verificando..." : "Postular"} <FaArrowRight />
             </button>
+            }
+            {
+              commissionRequestStatus === "PENDING" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
+              Postulando <MdOutlineTimelapse />
+            </button>
+            }
+            {
+              commissionRequestStatus === "APPROVED" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
+              Aceptado <TbRosetteDiscountCheckFilled size={20}/>
+            </button>
+            }
             <p className="action-note">
               *Requisito: Crea un CV Sin Marca De Agua en <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>

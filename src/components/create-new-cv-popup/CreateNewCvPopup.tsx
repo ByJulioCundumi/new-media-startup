@@ -10,7 +10,7 @@ import {
 } from "../../reducers/cvCreationSlice";
 import { IoClose } from "react-icons/io5";
 import type { IState } from "../../interfaces/IState";
-import { createCvApi, getCvCountApi } from "../../api/cv";
+import { createCvApi } from "../../api/cv"; // Ya no necesitamos getCvCountApi
 import { useNavigate } from "react-router-dom";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
@@ -58,42 +58,19 @@ export default function CreateNewCvPopup() {
   const isOpen = useSelector((state: IState) => state.cvCreation.isOpen);
   const selectedTemplateId = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
   const isLogged = useSelector((state: IState) => state.user.logged);
-  const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);
+  const { subscriptionExpiresAt, subscriptionPlan } = useSelector((state: IState) => state.user);
 
   const [cvTitle, setCvTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [onlineCvCount, setOnlineCvCount] = useState<number | null>(null); // null = aún no consultado
-  const [fetchingCount, setFetchingCount] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   if (!isOpen) return null;
 
-  const hasSubscriptionTime = hasValidSubscriptionTime(subscriptionExpiresAt);
-  const isFreeLimitReached = onlineCvCount !== null && !hasSubscriptionTime && onlineCvCount >= 1;
+  const hasValidSubscription = hasValidSubscriptionTime(subscriptionExpiresAt);
+  const canCreateInCloud = isLogged && hasValidSubscription && isOnline;
 
-  // Cargar conteo de CVs online al abrir el popup (si está logueado)
-  useEffect(() => {
-    if (isLogged && isOpen) {
-      const fetchCvCount = async () => {
-        setFetchingCount(true);
-        try {
-          const count = await getCvCountApi();
-          setOnlineCvCount(count);
-        } catch (err) {
-          console.error("Error obteniendo conteo de CVs:", err);
-          setOnlineCvCount(0); // Permitir crear en caso de error de red
-        } finally {
-          setFetchingCount(false);
-        }
-      };
-
-      fetchCvCount();
-    } else if (!isLogged) {
-      // Si no está logueado, no hay límite online
-      setOnlineCvCount(0);
-    }
-  }, [isLogged, isOpen]);
-
-  const createLocalDraft = (title: string, templateId: string) => {
+  // Función para crear borrador local
+  const createLocalDraft = (title: string, templateId: string): string => {
     const localId = crypto.randomUUID();
 
     const draftCv = {
@@ -128,46 +105,64 @@ export default function CreateNewCvPopup() {
     return localId;
   };
 
+  // Detectar cambios en la conexión
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
   const handleCreate = async () => {
     if (!cvTitle.trim() || !selectedTemplateId) return;
 
     const title = cvTitle.trim();
+    setLoading(true);
 
     try {
-      setLoading(true);
-
       let cvIdToNavigate: string;
 
-      if (!isLogged) {
-        cvIdToNavigate = createLocalDraft(title, selectedTemplateId);
-        alert("CV creado como borrador local (sin iniciar sesión). Se guardará solo en este navegador.");
-      } else if (hasSubscriptionTime) {
+      if (canCreateInCloud) {
+        // Solo intenta crear en la nube si todo está OK
         const created = await createCvApi(title, selectedTemplateId);
         cvIdToNavigate = created.id;
-      } else if (isFreeLimitReached) {
-        cvIdToNavigate = createLocalDraft(title, selectedTemplateId);
-        alert(
-          "Has alcanzado el límite del plan gratuito (1 CV online).\n\n" +
-          "Este nuevo CV se ha guardado como borrador local en tu navegador.\n" +
-          "Actualiza tu plan para guardar CVs ilimitados en la nube."
-        );
       } else {
-        const created = await createCvApi(title, selectedTemplateId);
-        cvIdToNavigate = created.id;
+        // En todos los demás casos → local
+        cvIdToNavigate = createLocalDraft(title, selectedTemplateId);
+
+        let message = "El CV se ha creado como borrador local en tu navegador.";
+
+        if (!isLogged) {
+          message += "\nInicia sesión para guardar en la nube.";
+        } else if (!hasValidSubscription) {
+          message += "\nNecesitas una suscripción activa para guardar CVs en la nube.";
+        } else if (!isOnline) {
+          message += "\nNo hay conexión a internet. Se guardó localmente.";
+        }
+
+        alert(message + "\n\nPodrás editarlo ahora y subirlo más tarde cuando tengas suscripción y conexión.");
       }
 
+      // Navegación
       dispatch(setCreateCvPopup(false));
       dispatch(setTemplatePopupOpen(false));
       dispatch(setSelectedCvTitle(title));
       dispatch(setSelectedTemplateId(selectedTemplateId));
       navigate(`/create/${cvIdToNavigate}`);
     } catch (err: any) {
-      console.error("Error al crear CV:", err);
+      console.error("Error al crear CV en la nube:", err);
 
+      // Fallback seguro: siempre crear local si falla la nube
       const localId = createLocalDraft(title, selectedTemplateId);
       alert(
         "No se pudo guardar en la nube (error de conexión o servidor).\n\n" +
-        "El CV se ha creado como borrador local y podrás seguir editándolo."
+        "El CV se ha creado como borrador local. Podrás seguir editándolo."
       );
 
       dispatch(setCreateCvPopup(false));
@@ -180,8 +175,7 @@ export default function CreateNewCvPopup() {
     }
   };
 
-  // El botón está deshabilitado hasta que tengamos el conteo real
-  const isButtonDisabled = !cvTitle.trim() || loading || fetchingCount || onlineCvCount === null;
+  const isButtonDisabled = !cvTitle.trim() || loading;
 
   return (
     <div className="createcv-overlay">
@@ -194,21 +188,21 @@ export default function CreateNewCvPopup() {
 
         <p className="subtitle">
           {isLogged ? (
-            fetchingCount ? (
-              "Verificando tu límite de CVs..."
-            ) : onlineCvCount === null ? (
-              "Cargando estado de tu cuenta..."
-            ) : isFreeLimitReached ? (
-              <span style={{ color: "#e74c3c", fontWeight: "500", fontSize: "0.9rem" }}>
-                Has alcanzado el límite (1/1 CV online)
-              </span>
-            ) : hasSubscriptionTime ? (
-              "Acceso completo: crea todos los CVs que quieras en la nube."
+            hasValidSubscription ? (
+              isOnline ? (
+                `Plan ${subscriptionPlan === "MONTHLY" ? "Mensual:": subscriptionPlan === "ANNUAL" && "Anual:"} CVs ilimitados en la nube.`
+              ) : (
+                <span style={{ color: "#e67e22", fontWeight: "500" }}>
+                  Sin conexión → el CV se guardará localmente
+                </span>
+              )
             ) : (
-              `Puedes guardar hasta 1 CV en la nube (${onlineCvCount}/1 usado)`
+              <span style={{ color: "#e74c3c", fontWeight: "500" }}>
+                Suscripción requerida para guardar en la nube
+              </span>
             )
           ) : (
-            "Puedes crear un borrador sin iniciar sesión. Se guardará solo en este navegador."
+            "Puedes crear un borrador sin iniciar sesión."
           )}
         </p>
 
@@ -219,26 +213,24 @@ export default function CreateNewCvPopup() {
             placeholder="Ej: CV Desarrollador Frontend"
             value={cvTitle}
             onChange={(e) => setCvTitle(e.target.value)}
-            disabled={loading || fetchingCount}
+            disabled={loading}
           />
         </div>
 
         <button
-          className={`create-btn ${loading || fetchingCount ? "loading" : ""}`}
+          className={`create-btn ${loading ? "loading" : ""}`}
           disabled={isButtonDisabled}
           onClick={handleCreate}
         >
-          {fetchingCount
-            ? "Verificando límite..."
-            : loading
-            ? "Creando..."
-            : "Crear CV"}
+          {loading ? "Creando..." : "Crear CV"}
         </button>
 
-        {isFreeLimitReached && (
+        {!canCreateInCloud && (
           <p style={{ fontSize: "0.9em", marginTop: "1rem", color: "#7f8c8d", textAlign: "center" }}>
-            (Este CV se guardará localmente)<br />
-            Actualiza tu plan para CVs ilimitados, backups y acceso desde cualquier lugar.
+            Este CV se guardará localmente en tu navegador.<br />
+            {isLogged
+              ? "Necesitas una suscripción activa y conexión para guardar en la nube."
+              : "Inicia sesión para respaldos en la nube."}
           </p>
         )}
       </div>

@@ -13,6 +13,7 @@ export interface IUserState {
   subscriptionExpiresAt?: string | null; // ISO string
   role: "USER" | "ADMIN";
   cvCount: number;
+  commissionRequestStatus: string;
 }
 
 const initialState: IUserState = {
@@ -20,13 +21,14 @@ const initialState: IUserState = {
   email: null,
   userName: null,
   logged: false,
-  affiliateCommission: 20,
+  affiliateCommission: 0,
   favoriteTemplates: [],
   subscriptionPlan: "FREE",
   subscriptionStatus: null,
   subscriptionExpiresAt: null,
   role: "USER",
-  cvCount: 0
+  cvCount: 0,
+  commissionRequestStatus: ""
 };
 
 const userSlice = createSlice({
@@ -46,7 +48,8 @@ const userSlice = createSlice({
         subscriptionExpiresAt?: string | null;
         logged: boolean;
         role: "USER" | "ADMIN";
-        cvCount: number
+        cvCount: number;
+        commissionRequestStatus: string;
       }>
     ) => {
       state.id = action.payload.id;
@@ -60,6 +63,7 @@ const userSlice = createSlice({
       state.subscriptionExpiresAt = action.payload.subscriptionExpiresAt ?? null;
       state.role = action.payload.role;
       state.cvCount = action.payload.cvCount
+      state.commissionRequestStatus = action.payload.commissionRequestStatus
     },
     clearUser: (state) => {
       return initialState;
