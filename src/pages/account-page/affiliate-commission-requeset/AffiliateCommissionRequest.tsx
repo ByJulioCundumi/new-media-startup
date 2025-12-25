@@ -177,12 +177,12 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   const getSubmitButtonText = () => {
     if (!request || isCancelled || isRejected) {
-      return "Solicitar Incremento de Comisión";
+      return "Enviar Solicitud A Revision";
     }
     if (isApproved) {
       return "Actualizar Mis Datos De Afiliado";
     }
-    return "Solicitar Incremento de Comisión";
+    return "Enviar Solicitud A Revision";
   };
 
   if (initialLoading) {
@@ -243,7 +243,6 @@ const AffiliateCommissionRequest: React.FC = () => {
                 <>
                   <strong>Solicitud en revisión</strong>
                   <p>Recibirás una respuesta dentro de poco.</p>
-                  <p className="status-card__note">Mientras tanto, puedes cancelar la solicitud si lo deseas.</p>
                 </>
               )}
 
@@ -269,8 +268,8 @@ const AffiliateCommissionRequest: React.FC = () => {
 
               {request.status === "CANCELLED" && (
                 <>
-                  <strong>Solicitud cancelada</strong>
-                  <p>Puedes solicitar el incremento nuevamente cuando lo desees.</p>
+                  <strong>Postulacion cancelada</strong>
+                  <p>Puedes intentarlo nuevamente cuando lo desees.</p>
                 </>
               )}
             </div>
@@ -322,7 +321,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       {showSubmitConfirm && (
         <div className="modal-overlay">
           <div className="modal">
-            <p>¿Tus nuevos datos son correctos?</p>
+            <p>¿Tus datos son correctos?</p>
             <p>{form.hotmartUsername} <br /> {form.hotmartEmail}</p>
             <div className="modal-actions">
               <button

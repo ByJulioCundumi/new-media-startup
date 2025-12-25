@@ -9,35 +9,44 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 import { getAllCvsApi } from "../../api/cv";
-import { templates } from "../../templates/templates";
-import { BsFillCloudCheckFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
+import { Link } from "react-router-dom";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [onlineCvs, setOnlineCvs] = useState<any[]>([]);
   const [loadingCvs, setLoadingCvs] = useState(false);
-  const [showCommissionForm, setShowCommissionForm] = useState(false); // Nuevo estado
-  const [selectedCv, setSelectedCv] = useState<any | null>(null); // Opcional: guardar el CV enviado
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isLogged = useSelector((state: IState) => state.user.logged);
 
   const openModal = async () => {
-    setIsModalOpen(true);
-    setShowCommissionForm(false); // Reiniciar al abrir
-    setSelectedCv(null);
+    // Caso 1: No está logueado
+    if (!isLogged) {
+      setErrorMessage("Debes iniciar sesión para postularte.");
+      return;
+    }
 
-    if (!isLogged) return;
-
+    // Caso 2: Está logueado → verificar CVs online
     setLoadingCvs(true);
     try {
       const backendCvs = await getAllCvsApi();
       const trulyOnline = backendCvs.filter((cv: any) => cv.id && !cv.localId);
+
+      if (trulyOnline.length === 0) {
+        setErrorMessage(
+          "Necesitas tener al menos un CV guardado sin marca de agua para postular."
+        );
+        return;
+      }
+
+      // Caso 3: Todo OK → abrir modal
       setOnlineCvs(trulyOnline);
+      setIsModalOpen(true);
+      setErrorMessage(null);
     } catch (err) {
       console.warn("Error cargando CVs online:", err);
-      setOnlineCvs([]);
+      setErrorMessage("Hubo un error al verificar tus CVs. Inténtalo más tarde.");
     } finally {
       setLoadingCvs(false);
     }
@@ -45,14 +54,10 @@ const JobOffer = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setShowCommissionForm(false);
   };
 
-  const handleSendCv = (cv: any) => {
-    setSelectedCv(cv);
-    setShowCommissionForm(true);
-    // Aquí puedes llamar a una API real para registrar la postulación si lo necesitas
-    // await applyToAffiliateJob(cv.id);
+  const closeError = () => {
+    setErrorMessage(null);
   };
 
   return (
@@ -84,15 +89,25 @@ const JobOffer = () => {
           </div>
 
           <aside className="job-action">
-            <button className="apply-button" onClick={openModal}>
-              Envia tu CV <FaArrowRight />
+            <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
+              {loadingCvs ? "Verificando..." : "Postular"} <FaArrowRight />
             </button>
             <p className="action-note">
-              *Solo CVs creados en cvremoto.com / Sin Marca De Agua
+              *Requisito: Crea un CV Sin Marca De Agua en <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>
           </aside>
         </article>
       </section>
+
+      {/* Mensaje de error flotante */}
+      {errorMessage && (
+        <div className="error-toast">
+          <p>{errorMessage}</p>
+          <button className="error-close" onClick={closeError}>
+            <FaTimes />
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {isModalOpen && (
@@ -102,133 +117,24 @@ const JobOffer = () => {
               <FaTimes />
             </button>
 
-            {/* Título dinámico según el estado */}
             <div>
-              <h2>
-                {showCommissionForm
-                  ? "¡Completa tu postulación!"
-                  : "¡Selecciona tu CV para postularte!"}
-              </h2>
+              <h2>¡Completa tu postulación!</h2>
               <p className="modal-subtitle">
-                {showCommissionForm
-                  ? "Envia tu solicitud de afiliacion desde hotmart y envianos los datos de la cuenta solicitante, nombre y email (en hotmart)."
-                  : "CVs guardados (sin marca de agua)"}
+                <strong>Nro. (1) </strong> <a href="#">Haz clic aqui</a> y solicita tu afiliacion desde hotmart. (Crea una cuenta si no tienes). <br />
+                <strong>Nro. (2) </strong> Completa los campos <span>Nombre y Email</span> de la cuenta que solicitó la afiliacion y envia a revision.
               </p>
             </div>
 
-            {/* Contenido principal del modal */}
-            {showCommissionForm ? (
-              // Aquí se muestra el formulario de comisión
+            {/* Formulario de comisión solo si hay CVs online */}
+            {onlineCvs.length > 0 && (
               <div className="commission-form-container">
                 <AffiliateCommissionRequest />
               </div>
-            ) : (
-              <>
-                {/* Estados iniciales: login, loading, sin CVs o lista */}
-                {!isLogged ? (
-                  <div className="modal-message-center">
-                    <p>Debes iniciar sesión para ver y enviar tus CVs.</p>
-                    <a href="/login" className="modal-btn primary">
-                      Iniciar sesión
-                    </a>
-                  </div>
-                ) : loadingCvs ? (
-                  <p className="loading-text modal-message-center">
-                    Cargando tus CVs guardados en la nube...
-                  </p>
-                ) : onlineCvs.length === 0 ? (
-                  <div className="modal-message-center no-cvs">
-                    <p>Aún no tienes CVs guardados sin marca de agua.</p>
-                    <Link
-                      to={"/cvs"}
-                      className="modal-btn primary"
-                      onClick={() => setIsModalOpen(false)}
-                    >
-                      Crear mi CV ahora
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="cvs-grid">
-                    {onlineCvs.map((cv) => {
-                      const tpl = templates.find((t) => t.id === cv.templateId) || templates[0];
-                      const Component = tpl.component;
-
-                      const sections = cv.cvSections?.sections || [];
-                      const enabledSections = sections.filter((s: any) => s.enabled);
-                      const totalProgress = enabledSections.length > 0
-                        ? Math.round(
-                            enabledSections.reduce((sum: number, s: any) => sum + s.progress, 0) /
-                              enabledSections.length
-                          )
-                        : 0;
-
-                      const progressColor =
-                        totalProgress < 30
-                          ? "#ef4444ad"
-                          : totalProgress < 70
-                          ? "#f59f0b88"
-                          : "#0bc2f5";
-
-                      return (
-                        <div key={cv.id} className="cv-item preview-only">
-                          <div className="not-draft-tag">
-                            <BsFillCloudCheckFill />
-                          </div>
-
-                          <div className="cv-progress-tag" style={{ backgroundColor: progressColor }}>
-                            <span className="progress-text">{totalProgress}%</span>
-                          </div>
-
-                          <div className="cv-preview">
-                            <div className="cv-preview-scale">
-                              <Component
-                                personalInfo={cv.personalInfoEntries || []}
-                                identitySection={cv.identity || {}}
-                                contactSection={cv.contactEntries || []}
-                                profileSection={cv.profileContent || ""}
-                                educationSection={cv.educationEntries || []}
-                                experienceSection={cv.experienceEntries || []}
-                                skillSection={cv.skillsEntries || []}
-                                languageSection={cv.languagesEntries || []}
-                                linkSection={cv.linksEntries || []}
-                                courseSection={cv.coursesEntries || []}
-                                hobbieSection={cv.hobbiesEntries || []}
-                                referenceSection={cv.referencesEntries || []}
-                                awardSection={cv.awardsEntries || []}
-                                customSection={cv.customEntries || []}
-                                sectionsConfig={cv.cvSections?.sections || []}
-                                sectionsOrder={cv.cvSections?.order || []}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="cv-info">
-                            <h3>{cv.cvTitle}</h3>
-                            <p>
-                              {tpl.label} - {new Date(cv.updatedAt || cv.createdAt).toLocaleDateString("es-ES")}
-                            </p>
-                          </div>
-
-                          <button
-                            className="select-cv-btn"
-                            onClick={() => handleSendCv(cv)}
-                          >
-                            Enviar CV
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
             )}
 
-            {/* Footer opcional */}
-            {!showCommissionForm && (
-              <p className="modal-footer">
-                ¡Trabaja Con Nosotros! Ya hay más de 1.248 personas aceptadas.
-              </p>
-            )}
+            <p className="modal-footer">
+              ¡Trabaja Con Nosotros! Ya hay más de 1.248 personas aceptadas.
+            </p>
           </div>
         </div>
       )}
