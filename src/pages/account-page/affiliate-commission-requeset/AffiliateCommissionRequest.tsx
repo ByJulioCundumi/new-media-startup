@@ -261,7 +261,7 @@ const AffiliateCommissionRequest: React.FC = () => {
                   <strong>Solicitud rechazada</strong>
                   <p>Motivo: {request.denyReason || "No especificado."}</p>
                   <p className="status-card__note">
-                    <strong>¡Puedes reintentar!</strong> Envía nuevamente tus datos.
+                    <strong>¡Puedes reintentar!</strong> 
                   </p>
                 </>
               )}
