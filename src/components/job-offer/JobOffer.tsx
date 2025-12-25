@@ -8,13 +8,12 @@ import {
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { getAllCvsApi } from "../../api/cv";
+import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
-import { Link } from "react-router-dom";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [onlineCvs, setOnlineCvs] = useState<any[]>([]);
+  const [onlineCvs, setOnlineCvs] = useState(0);
   const [loadingCvs, setLoadingCvs] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -30,18 +29,17 @@ const JobOffer = () => {
     // Caso 2: Está logueado → verificar CVs online
     setLoadingCvs(true);
     try {
-      const backendCvs = await getAllCvsApi();
-      const trulyOnline = backendCvs.filter((cv: any) => cv.id && !cv.localId);
+      const count = await getCvCountApi();
 
-      if (trulyOnline.length === 0) {
+      if (count === 0) {
         setErrorMessage(
-          "Necesitas tener al menos un CV guardado sin marca de agua para postular."
+          "Necesitas tener al menos un CV creado sin marca de agua para postular."
         );
         return;
       }
 
       // Caso 3: Todo OK → abrir modal
-      setOnlineCvs(trulyOnline);
+      setOnlineCvs(count);
       setIsModalOpen(true);
       setErrorMessage(null);
     } catch (err) {
@@ -126,7 +124,7 @@ const JobOffer = () => {
             </div>
 
             {/* Formulario de comisión solo si hay CVs online */}
-            {onlineCvs.length > 0 && (
+            {onlineCvs > 0 && (
               <div className="commission-form-container">
                 <AffiliateCommissionRequest />
               </div>
