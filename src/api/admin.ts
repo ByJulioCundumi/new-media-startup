@@ -82,3 +82,23 @@ export const verifyAdminPasswordApi = async (password: string) => {
     body: JSON.stringify({ password: password.trim() }),
   });
 };
+
+
+// src/api/user.ts
+
+export const updateUserCommissionApi = async (
+  userId: string,
+  commission: number
+): Promise<void> => {
+  const res = await fetch(`http://localhost:4000/api/admin/users/${userId}/commission`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ affiliateCommission: commission }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message || "No se pudo actualizar la comisión");
+  }
+};

@@ -8,6 +8,8 @@ import {
   logoutUserApi,
   verifyAdminPasswordApi,
 } from "../../../api/admin";
+import { hasValidSubscriptionTime } from "../../../util/checkSubscriptionTime";
+import AdminSetUserCommissionButton from "../admin-commission-request/set-user-commission/AdminSetUserCommissionButton";
 
 /* ===================== TYPES ===================== */
 
@@ -30,6 +32,8 @@ interface AdminUser {
   email: string;
   plan: "Gratuito" | "Mensual" | "Anual";
   isLoggedIn: boolean;
+  affiliateCommission: number;
+  subscriptionExpiresAt: string;
   metrics: {
     loginsPerDay: number;
     cvsCreatedPerDay: number;
@@ -80,6 +84,8 @@ export default function AdminUsers() {
           metrics: u.metrics,
           restrictions: u.restrictions,
           history: [],
+          affiliateCommission: u.affiliateCommission,
+          subscriptionExpiresAt: u.subscriptionExpiresAt
         }));
 
         setUsers(mappedUsers);
@@ -273,7 +279,7 @@ export default function AdminUsers() {
                   <span className="admin-users__email">{user.email}</span>
                 </div>
                 <span className={`admin-users__plan admin-users__plan--${user.plan.toLowerCase().replace("á", "a")}`}>
-                  {user.plan}
+                  {user.plan}: {hasValidSubscriptionTime(user.subscriptionExpiresAt) ? "Activo" : "Inactivo"} / {user.affiliateCommission}%
                 </span>
               </div>
 
@@ -447,6 +453,8 @@ export default function AdminUsers() {
           </div>
         </div>
       )}
+
+      <AdminSetUserCommissionButton />
     </section>
   );
 }
