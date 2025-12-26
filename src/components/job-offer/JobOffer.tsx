@@ -12,7 +12,10 @@ import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { MdOutlineTimelapse } from "react-icons/md";
+import { MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
+import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
+import { LuTimer } from "react-icons/lu";
+import { BsEnvelopeArrowUpFill } from "react-icons/bs";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,17 +96,17 @@ const JobOffer = () => {
           <aside className="job-action">
             {
               (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              {loadingCvs ? "Verificando..." : "Postular"} <FaArrowRight />
+              {loadingCvs ? "Verificando..." : "Postular"} <BsEnvelopeArrowUpFill />
             </button>
             }
             {
               commissionRequestStatus === "PENDING" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              Postulando <MdOutlineTimelapse />
+              Postulando... <MdPendingActions />
             </button>
             }
             {
               commissionRequestStatus === "APPROVED" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              Aceptado <TbRosetteDiscountCheckFilled size={20}/>
+              ¡Fuiste Aceptado! 
             </button>
             }
             <p className="action-note">

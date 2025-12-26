@@ -6,6 +6,7 @@ import Footer from "../../components/footer/Footer";
 import Hero from "./hero/Hero";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import JobOffer from "../../components/job-offer/JobOffer";
+import ColorFontPopup from "../../components/color-font-popup/ColorFontPopup";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch()
