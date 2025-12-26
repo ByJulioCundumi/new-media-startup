@@ -1,7 +1,9 @@
-import { mockTemplateData } from "../../../templates/mockTemplateData";
+import { MdOutlineDiamond } from "react-icons/md";
 import { templates } from "../../../templates/templates";
 import "./hero.scss";
 import { FaFileAlt, FaBolt, FaCheckCircle } from "react-icons/fa";
+import { mockHomeTemplateData } from "../../../templates/mockHomeTemplateData";
+import { Link } from "react-router-dom";
 
 function Hero() {
   // Tomamos una plantilla cualquiera para el preview (ej: la primera)
@@ -26,12 +28,12 @@ function Hero() {
           </p>
 
           <div className="hero__actions">
-            <button className="hero__button hero__button--primary">
+            <Link to={"/cvs"} className="hero__button hero__button--primary">
               Crear mi CV gratis
-            </button>
-            <button className="hero__button hero__button--secondary">
+            </Link>
+            <Link to={"/templates"} className="hero__button hero__button--secondary">
               Ver plantillas
-            </button>
+            </Link>
           </div>
 
           <ul className="hero__features">
@@ -48,13 +50,13 @@ function Hero() {
         </div>
 
         {/* ================= RIGHT CV PREVIEW ================= */}
-        <div className="hero__visual">
           <div className="hero__cv-preview">
+            <span className="tag-h"><MdOutlineDiamond size={15}/> Premium</span>
             <div className="hero__cv-scale">
-              <TemplateComponent {...mockTemplateData} />
+              <TemplateComponent {...mockHomeTemplateData} />
             </div>
+            <div className="hero__cv-line"></div>
           </div>
-        </div>
       </div>
     </section>
   );

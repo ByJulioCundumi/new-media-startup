@@ -11,6 +11,8 @@ import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 import { CvRomaSectionsRender } from "./sections-render/CvRomaSectionsRender";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
+import WaterMark from "../../components/water-mark/WaterMark";
+import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 
 export const cvRomaDefaults = {
   textColor: "#494949ff",
@@ -67,6 +69,8 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
     sectionsOrder,
   } = props;
   
+  const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
+  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
@@ -226,11 +230,10 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
 
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-roma__page">
+        
         {/* MARCA DE AGUA */}
-        {true && (
-          <div className="cv-roma__watermark">
-            <p>CREADO CON TUAPP.COM</p>
-          </div>
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+          <WaterMark/>
         )}
 
         {/* HEADER */}
@@ -278,12 +281,11 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
       {/* PAGE 2 */}
       {(page2Vertical.length > 0) && (
         <div className="cv-roma__page">
+          
           {/* MARCA DE AGUA */}
-        {true && (
-          <div className="cv-roma__watermark">
-            <p>CREADO CON TUAPP.COM</p>
-          </div>
-        )}
+          {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+            <WaterMark/>
+          )}
 
           <div className="cv-roma__limit-line-overflowed">
             {previewPopupOpen === false && <p className="cv-roma__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}

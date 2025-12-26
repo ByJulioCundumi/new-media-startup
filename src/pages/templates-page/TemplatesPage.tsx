@@ -27,6 +27,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { RiFileEditLine } from "react-icons/ri";
 import Invitation from "../../components/invitation/Invitation";
 import JobOffer from "../../components/job-offer/JobOffer";
+import { setAllowQrCode } from "../../reducers/identitySlice";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -128,6 +129,14 @@ export default function TemplatesPage() {
   useEffect(() => {
     dispatch(setSidebar("templates"));
   }, [dispatch]);
+
+  useEffect(()=>{
+    dispatch(setAllowQrCode(true))
+  
+    return ()=>{
+      dispatch(setAllowQrCode(false))
+    }
+  },[])
 
   return (
     <>

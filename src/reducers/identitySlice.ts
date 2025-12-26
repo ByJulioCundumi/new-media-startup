@@ -8,7 +8,7 @@ const initialState: IIdentityData = {
   jobTitle: "",
   allowCvPhoto: true,
   allowQrCode: false,
-  qrCodeUrl: "http://localhost:5173/"
+  qrCodeUrl: "www.cvremoto.com"
 };
 
 const identitySlice = createSlice({

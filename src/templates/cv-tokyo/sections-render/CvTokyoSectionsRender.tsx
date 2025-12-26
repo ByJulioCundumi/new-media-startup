@@ -127,9 +127,6 @@ const getProgressColorClass = (progress: number) => {
               bgColor="#ffffff"
               fgColor={styles.qrColor}
             />
-            <p className="cv-tokyo__identitySection--qr-text">
-              Ver CV Online
-            </p>
           </div>
         )}
         </>

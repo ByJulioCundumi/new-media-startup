@@ -11,6 +11,8 @@ import { setOrder } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
+import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import WaterMark from "../../components/water-mark/WaterMark";
 
 export const cvTokyoDefaults = {
   textColor: "#494949ff",
@@ -67,7 +69,8 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     sectionsConfig,
     sectionsOrder,
   } = props;
-  
+  const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
+  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
@@ -262,10 +265,6 @@ useEffect(() => {
   return () => observer.disconnect();
 }, []);
 
-
-
-
-
   // ---------------------------------------------------------------------------
   // RENDER de secciones
   // ---------------------------------------------------------------------------
@@ -327,11 +326,10 @@ useEffect(() => {
 
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
+        
         {/* MARCA DE AGUA */}
-        {true && (
-          <div className="cv-tokyo__watermark">
-            <p>CREADO CON TUAPP.COM</p>
-          </div>
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+          <WaterMark/>
         )}
 
         {/* HEADER */}
@@ -402,11 +400,10 @@ useEffect(() => {
       {/* PAGE 2 */}
       {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
         <div className="cv-tokyo__page">
-          {/* MARCA DE AGUA */}
-        {true && (
-          <div className="cv-tokyo__watermark">
-            <p>CREADO CON TUAPP.COM</p>
-          </div>
+
+        {/* MARCA DE AGUA */}
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+          <WaterMark/>
         )}
 
           <div className="cv-tokyo__limit-line-overflowed">

@@ -72,20 +72,20 @@ const JobOffer = () => {
                 <FaBriefcase />
               </div>
               <div className="company-info">
-                <h3 className="company-name">Promotor - Sin Experiencia</h3>
+                <h3 className="company-name">Trabajo Remoto - Sin Experiencia</h3>
                 <p className="company-tagline">www.cvremoto.com</p>
               </div>
             </header>
 
             <p className="job-offer__info">
-              Trabaja desde casa En Remoto y Sin Horarios promocionando nuestro creador de CVs. Postula luego de familiarizarte con nuestras
+              Trabaja Desde Casa y Sin Horarios promocionando nuestro creador de CVs. Postula luego de familiarizarte con nuestras
               herramientas y comienza a ganar comisiones de hasta el 70% por compartir.
             </p>
 
             <div className="job-stats">
               <span>
                 <FaUsers />
-                <strong>1.248</strong> Postulados Aceptados
+                <strong>1.248</strong> Postulantes Aceptados
               </span>
             </div>
           </div>
@@ -147,7 +147,7 @@ const JobOffer = () => {
             )}
 
             <p className="modal-footer">
-              ¡Trabaja Con Nosotros! Ya hay más de 1.248 personas aceptadas.
+              ¡Trabaja Con Nosotros! Ya hay más de 1.248 Postulantes aceptadas.
             </p>
           </div>
         </div>

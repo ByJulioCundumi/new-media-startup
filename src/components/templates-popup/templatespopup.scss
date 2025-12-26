@@ -206,7 +206,7 @@
 /* FAVORITO */
 .template-popup-fav-icon {
   position: absolute;
-  top: 14px;
+  top: 60px;
   right: 14px;
   font-size: 25px; /* Más grande y visible */
   cursor: pointer;
@@ -266,7 +266,7 @@
   font-weight: 600;
   margin-left: 0.5rem;
   margin-bottom: -1rem;
-  color: rgb(11, 34, 102);
+  color: #cfa808;
 }
 
 .template-popup-category {
@@ -320,6 +320,8 @@
   position: absolute;
   bottom: 0;
   background-color: white;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .tag{
