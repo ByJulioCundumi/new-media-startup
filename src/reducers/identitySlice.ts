@@ -8,7 +8,7 @@ const initialState: IIdentityData = {
   jobTitle: "",
   allowCvPhoto: true,
   allowQrCode: false,
-  qrCodeUrl: "www.cvremoto.com"
+  qrCodeUrl: "https://www.cvremoto.com"
 };
 
 const identitySlice = createSlice({
@@ -36,6 +36,9 @@ const identitySlice = createSlice({
     setAllowQrCode(state, action: PayloadAction<boolean>){
       state.allowQrCode = action.payload
     },
+    setQrCodeUrl(state, action: PayloadAction<string>){
+      state.qrCodeUrl = action.payload
+    },
     setIdentity(_, action: PayloadAction<IIdentityData>) {
       return { ...action.payload };
     },
@@ -54,7 +57,8 @@ export const {
   setAllowCvPhoto, 
   setAllowQrCode,
   resetIdentity,
-  setIdentity
+  setIdentity,
+  setQrCodeUrl
 } = identitySlice.actions;
 
 export default identitySlice.reducer;

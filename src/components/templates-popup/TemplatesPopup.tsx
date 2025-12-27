@@ -20,6 +20,7 @@ import { setFavorites } from "../../reducers/userSlice";
 import { MdOutlineCheck, MdOutlineCreditCardOff, MdOutlineDiamond } from "react-icons/md";
 import { Sparkles } from "lucide-react";
 import { BsPatchCheck } from "react-icons/bs";
+import { setAllowQrCode } from "../../reducers/identitySlice";
 
 export default function TemplatesPopup() {
   const dispatch = useDispatch();
@@ -46,6 +47,14 @@ export default function TemplatesPopup() {
       setLocalFavorites([]);
     }
   }, [isLogged]);
+
+  useEffect(()=>{
+      dispatch(setAllowQrCode(true))
+    
+      return ()=>{
+        dispatch(setAllowQrCode(false))
+      }
+    },[])
 
   // Cargar favoritos del backend al abrir el popup (solo logueado)
   useEffect(() => {

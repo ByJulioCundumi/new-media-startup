@@ -17,7 +17,7 @@ import { setCustomEntries } from "../reducers/customSlice";
 import { setPersonalInfoEntries } from "../reducers/personalInfoSlice";
 import { setCvSections } from "../reducers/cvSectionsSlice";
 import { loadTemplateDefaults, loadStoredValues } from "../reducers/colorFontSlice";
-import { setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
+import { setPublicId, setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
 import type { AppDispatch } from "../app/store";
 import { getCvByIdApi } from "../api/cv";
 import { setOriginalData } from "../reducers/cvSaveSlice";
@@ -30,10 +30,10 @@ export const loadCvForEditing =
       // Opcional: podrías dispatch un estado de "loading" global aquí
 
       const cvData = await getCvByIdApi(cvId);
-      console.log(cvData)
 
       // --- 1. Datos básicos del CV ---
       dispatch(setSelectedCvId(cvData.id || cvId));
+      dispatch(setPublicId(cvData.publicId || ""))
       if (cvData.templateId) {
         dispatch(setSelectedTemplateId(cvData.templateId));
         dispatch(setSelectedCvTitle(cvData.cvTitle));
@@ -76,9 +76,6 @@ export const loadCvForEditing =
           dispatch(loadStoredValues(cvData.colorFont.selected));
         }
       }
-
-      // --- Final ---
-      console.log(`CV "${cvData.cvTitle || cvId}" cargado correctamente para edición`);
       
       // ← GUARDAR ESTADO ORIGINAL
       dispatch(setOriginalData(cvData));

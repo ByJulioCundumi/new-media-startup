@@ -12,7 +12,6 @@ import {
   deleteCvApi,
   updateCvApi,
   createCvApi,
-  getCvCountApi,
 } from "../../api/cv";
 import { Link, useNavigate } from "react-router-dom";
 import type { IState } from "../../interfaces/IState";
@@ -22,11 +21,7 @@ import { BiCloudUpload, BiSync } from "react-icons/bi";
 import { BiLoaderAlt } from "react-icons/bi";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import RemoteAffiliateOffer from "../../components/job-offer/JobOffer";
 import JobOffer from "../../components/job-offer/JobOffer";
-import { MdWork, MdWorkOutline } from "react-icons/md";
-import Invitation from "../../components/invitation/Invitation";
-import AffiliateCommissionRequest from "../account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 
@@ -45,7 +40,7 @@ export default function DashboardCVs() {
   const [syncingPending, setSyncingPending] = useState(false);
 
   const hasActiveSubscription = hasValidSubscriptionTime(subscriptionExpiresAt);
-  const restrictedMessage = "Con el plan actual no puedes guardar más de 1 CV online.";
+  const restrictedMessage = "Con el plan actual no puedes guardar o sincronizar CVs en la nube. Actualiza tu plan";
 
   const loadCvs = async (showLoading = false) => {
     if (showLoading) setLoading(true);
@@ -126,16 +121,7 @@ export default function DashboardCVs() {
       return;
     }
 
-    let currentOnlineCount: number;
-    try {
-      currentOnlineCount = await getCvCountApi();
-    } catch (err) {
-      alert("Error al verificar tu límite de CVs. Inténtalo más tarde.");
-      console.error(err);
-      return;
-    }
-
-    if (!hasActiveSubscription && currentOnlineCount >= 1) {
+    if (!hasActiveSubscription) {
       alert(restrictedMessage);
       return;
     }
@@ -186,16 +172,7 @@ export default function DashboardCVs() {
   const handleSyncPending = async () => {
     if (!isLogged) return;
 
-    let currentOnlineCount: number;
-    try {
-      currentOnlineCount = await getCvCountApi();
-    } catch (err) {
-      alert("Error al verificar tu límite de CVs. Inténtalo más tarde.");
-      console.error(err);
-      return;
-    }
-
-    if (!hasActiveSubscription && currentOnlineCount > 1) {
+    if (!hasActiveSubscription) {
       alert(restrictedMessage);
       return;
     }
@@ -364,11 +341,12 @@ export default function DashboardCVs() {
               </button>
 
               {hasQrCode && (
-                <div className="cv-qr-tag enabled">
+                <Link to={cv.publicId ? `https://www.cvremoto.com/cv/${cv.publicId}` : "https://www.cvremoto.com"} target="blank" className="cv-qr-tag enabled">
+                  QR 
                   <svg viewBox="0 0 24 24" width="14" height="14">
                     <path fill="currentColor" d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM16 16h2v2h-2zM18 18h2v2h-2zM14 14h2v2h-2zM20 14h2v2h-2zM16 20h2v2h-2zM14 18h2v2h-2z" />
                   </svg>
-                </div>
+                </Link>
               )}
 
               <div className="cv-progress-tag" style={{ backgroundColor: progressColor }}>

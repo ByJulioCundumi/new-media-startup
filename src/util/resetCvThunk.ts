@@ -46,6 +46,4 @@ export const resetCvEditor = () => (dispatch: AppDispatch) => {
 
   // Opcional: limpiar colorFont
   dispatch(restoreDefaults());
-
-  console.log("Estado del editor CV limpiado completamente");
 };

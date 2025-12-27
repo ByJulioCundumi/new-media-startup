@@ -61,14 +61,18 @@ export const CvTokyoSectionsRender: React.FC<SectionRenderProps> = ({
   const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const dispatch = useDispatch()
   
-  const { qrCodeUrl, photo, firstName, lastName, jobTitle } = identitySection
+  const {
+    qrCodeUrl,
+    allowQrCode,
+    photo,
+    firstName,
+    lastName,
+    jobTitle,
+    allowCvPhoto
+  } = useSelector((state: IState) => state.identity);
 
-  const { allowQrCode, allowCvPhoto } = useSelector(
-    (state: IState) => state.identity
-  );
-  
-  const fullName = `${firstName || ""} ${lastName || ""}`.trim();
-  const occupation = jobTitle || "";
+  const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();
+  const occupation = jobTitle || identitySection.jobTitle || "";
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {
@@ -107,7 +111,7 @@ const getProgressColorClass = (progress: number) => {
               className="cv-tokyo__identitySection--title"
               style={{ color: styles.nameColor }}
             >
-              {fullName.length > 0 ? <>{firstName} <br />{lastName} </> : "Mi CV"}
+              {fullName.length > 0 ? <>{firstName || identitySection.firstName} <br />{lastName || identitySection.lastName} </> : "Mi CV"}
             </h1>
             <p
               className="cv-tokyo__identitySection--occupation"
@@ -122,7 +126,7 @@ const getProgressColorClass = (progress: number) => {
           <div className="cv-tokyo__identitySection--qr-wrapper">
             <QRCodeSVG
               value={qrCodeUrl}
-              size={80}
+              size={85}
               level="Q"
               bgColor="#ffffff"
               fgColor={styles.qrColor}

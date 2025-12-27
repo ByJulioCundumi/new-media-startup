@@ -6,7 +6,6 @@ import {
   reviewCommissionRequestApi,
 } from "../../../api/commission";
 import "./admincommissionrequest.scss";
-import AdminSetUserCommissionButton from "./set-user-commission/AdminSetUserCommissionButton";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 

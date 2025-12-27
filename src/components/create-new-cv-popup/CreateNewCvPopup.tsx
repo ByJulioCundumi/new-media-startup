@@ -140,13 +140,11 @@ export default function CreateNewCvPopup() {
 
         if (!isLogged) {
           message += "\nInicia sesión para guardar en la nube.";
-        } else if (!hasValidSubscription) {
-          message += "\nNecesitas una suscripción activa para guardar CVs en la nube.";
         } else if (!isOnline) {
           message += "\nNo hay conexión a internet. Se guardó localmente.";
         }
 
-        alert(message + "\n\nPodrás editarlo ahora y subirlo más tarde cuando tengas suscripción y conexión.");
+        alert(message);
       }
 
       // Navegación
@@ -198,7 +196,6 @@ export default function CreateNewCvPopup() {
               )
             ) : (
               <span style={{ color: "#e74c3c", fontWeight: "500" }}>
-                Suscripción requerida para guardar en la nube
               </span>
             )
           ) : (
@@ -227,9 +224,9 @@ export default function CreateNewCvPopup() {
 
         {!canCreateInCloud && (
           <p style={{ fontSize: "0.9em", marginTop: "1rem", color: "#7f8c8d", textAlign: "center" }}>
-            Este CV se guardará localmente en tu navegador.<br />
+            Este CV se guardará localmente.<br />
             {isLogged
-              ? "Necesitas una suscripción activa y conexión para guardar en la nube."
+              ? "Necesitas una suscripción activa para guardar en la nube."
               : "Inicia sesión para respaldos en la nube."}
           </p>
         )}

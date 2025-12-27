@@ -3,4 +3,5 @@ export interface ICvCreationState {
   selectedTemplateId: string,
   selectedCvTitle: string,
   selectedCvId: string
+  publicId: string
 }

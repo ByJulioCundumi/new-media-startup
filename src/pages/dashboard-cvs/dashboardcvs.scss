@@ -217,9 +217,9 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -229,7 +229,7 @@
   }
 
   &.enabled {
-    background: #0bc2f5; // verde esmeralda
+    background: #0a0f5f; // verde esmeralda
   }
 }
 

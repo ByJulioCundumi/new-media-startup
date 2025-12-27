@@ -6,7 +6,6 @@ import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
 import { CategorySelector } from "../../components/category-selector/CategorySelector";
 import { useDispatch, useSelector } from "react-redux";
-import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { IoStar, IoStarOutline } from "react-icons/io5";
 import { setSidebar } from "../../reducers/sidebarSlice";
@@ -20,12 +19,7 @@ import {
 import { setFavorites, setUser } from "../../reducers/userSlice";
 import Footer from "../../components/footer/Footer";
 import { MdOutlineDiamond } from "react-icons/md";
-import { BsPatchCheck } from "react-icons/bs";
-import { HiCheck } from "react-icons/hi2";
-import { TbEdit } from "react-icons/tb";
-import { BiEditAlt } from "react-icons/bi";
 import { RiFileEditLine } from "react-icons/ri";
-import Invitation from "../../components/invitation/Invitation";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 

@@ -21,7 +21,7 @@ import type { AppDispatch } from "../../app/store";
 import { resetCvEditor } from "../../util/resetCvThunk";
 import { setHasUnsavedChanges, setIsSaving, setOriginalData } from "../../reducers/cvSaveSlice";
 import { updateCvApi } from "../../api/cv";
-import { setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../../reducers/cvCreationSlice";
+import { setPublicId, setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../../reducers/cvCreationSlice";
 import { setIdentity } from "../../reducers/identitySlice";
 import { setContactEntries } from "../../reducers/contactSlice";
 import { setProfileContent } from "../../reducers/profileSlice";
@@ -39,6 +39,7 @@ import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
 import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
 import { TbPencilPlus } from "react-icons/tb";
+import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +47,7 @@ function CreateCv() {
   const { cvId } = useParams<{ cvId: string }>();
   const { selectedTemplateId, selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
   const { previewPopupOpen } = useSelector((state: IState) => state.toolbarOption);
+  const { allowQrCode } = useSelector((state: IState) => state.identity);
 
   const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
 
@@ -55,7 +57,6 @@ function CreateCv() {
   useEffect(() => {
     // Si no hay cvId → redirigir inmediatamente
     if (!cvId) {
-      console.warn("[CreateCv] No hay cvId en la URL → redirigiendo a /cvs");
       navigate("/cvs", { replace: true });
       return;
     }
@@ -71,8 +72,6 @@ function CreateCv() {
         );
 
         if (draftCv) {
-          console.log("[CreateCv] CV encontrado en borradores locales");
-
           dispatch(setSelectedCvId(draftCv.localId || draftCv.backendId));
           dispatch(setSelectedTemplateId(draftCv.templateId));
           dispatch(setSelectedCvTitle(draftCv.cvTitle));
@@ -105,13 +104,11 @@ function CreateCv() {
         }
 
         // 2. No encontrado en local → cargar desde backend
-        console.log("[CreateCv] No encontrado en local → cargando desde backend");
         await dispatch(loadCvForEditing(cvId));
 
         // Si llega aquí, loadCvForEditing tuvo éxito → CV existe
         setIsLoading(false);
       } catch (err) {
-        console.error("[CreateCv] CV no encontrado o error de conexión:", err);
         // Redirigir si no existe o falla la carga
         navigate("/cvs", { replace: true });
       }
@@ -121,7 +118,6 @@ function CreateCv() {
 
     // Cleanup al salir del componente
     return () => {
-      console.log("[CreateCv] Saliendo del editor → limpiando estado");
       dispatch(resetCvEditor());
     };
   }, [cvId, dispatch, navigate]);
@@ -185,9 +181,8 @@ function CreateCv() {
 
       dispatch(setOriginalData(currentData));
       dispatch(setHasUnsavedChanges(false));
-      console.log("Cambios guardados");
     } catch (err: any) {
-      console.warn("No se pudo guardar en backend → guardando como borrador local");
+      alert("No se pudo guardar en backend → guardando como borrador local");
 
       const draftToSave = {
         backendId: cvId,
@@ -255,6 +250,13 @@ useEffect(() => {
   useEffect(() => {
     dispatch(setSidebar("create"));
   }, [dispatch]);
+
+  useEffect(() => {
+    return ()=>{
+      dispatch(setPublicId(""))
+    }
+  }, []);
+
 
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplateId)?.component;
 
@@ -336,7 +338,8 @@ useEffect(() => {
           />
         </PreviewPopup>
       )}
-
+      
+      {allowQrCode && <QrBoxEditor />}
       <FloatingEditor />
       <ColorFontPopup />
     </div>

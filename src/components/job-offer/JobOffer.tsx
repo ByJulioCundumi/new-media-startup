@@ -16,6 +16,7 @@ import { MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
 import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
 import { LuTimer } from "react-icons/lu";
 import { BsEnvelopeArrowUpFill } from "react-icons/bs";
+import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +25,7 @@ const JobOffer = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isLogged = useSelector((state: IState) => state.user.logged);
-  const {commissionRequestStatus} = useSelector((state: IState) => state.user);
+  const {commissionRequestStatus, subscriptionExpiresAt} = useSelector((state: IState) => state.user);
 
   const openModal = async () => {
     // Caso 1: No está logueado
@@ -40,7 +41,7 @@ const JobOffer = () => {
 
       if (count === 0) {
         setErrorMessage(
-          "Necesitas tener al menos un CV creado sin marca de agua para postular."
+          "Necesitas tener al menos (Un CV Sin Marca De Agua) para postular."
         );
         return;
       }

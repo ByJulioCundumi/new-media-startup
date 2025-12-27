@@ -39,6 +39,8 @@ import { clearAllCustom } from "../../reducers/customSlice";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { LuSave } from "react-icons/lu";
+import { TbArrowAutofitContent } from "react-icons/tb";
+import { RiArrowLeftRightFill } from "react-icons/ri";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
@@ -148,18 +150,17 @@ const ToolbarCV: React.FC = () => {
 
       {/* ===== BOTONES IZQUIERDA ===== */}
       <div className="toolbar-cv-buttons">
+        <button onClick={clearCv} title="Limpiar cv" className="toolbar-cv-btn ghost">
+          <GiBroom />
+        </button>
         <button
           onClick={() => dispatch(toggleTemplatePopup())}
           className="toolbar-cv-btn ghost"
         >
-          <FaSyncAlt />
+          <RiArrowLeftRightFill />
           Plantillas
         </button>
 
-        <button onClick={clearCv} className="toolbar-cv-btn ghost">
-          <GiBroom />
-          Limpiar
-        </button>
 
         <button onClick={clearCv} className="toolbar-cv-btn ghost">
           <LuSave /> 
