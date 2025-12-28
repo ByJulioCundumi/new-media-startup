@@ -5,5 +5,5 @@ export interface IIdentityData {
   jobTitle?: string;
   allowCvPhoto?: boolean;
   allowQrCode: boolean,
-  qrCodeUrl: string
+  qrCodeUrl: string,
 }

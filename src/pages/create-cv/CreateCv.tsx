@@ -38,8 +38,31 @@ import { setCustomEntries } from "../../reducers/customSlice";
 import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
 import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
-import { TbPencilPlus } from "react-icons/tb";
+import { TbAlertSquareRounded, TbPencilPlus } from "react-icons/tb";
 import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
+import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import { IoCloudDone } from "react-icons/io5";
+
+const getCurrentData = (state: IState) => ({
+  cvTitle: state.cvCreation.selectedCvTitle,
+  templateId: state.cvCreation.selectedTemplateId,
+  identity: state.identity,
+  profileContent: state.profileSection,
+  contactEntries: state.contactEntries,
+  educationEntries: state.educationEntries,
+  experienceEntries: state.experienceEntries,
+  skillsEntries: state.skillsEntries,
+  languagesEntries: state.languagesEntries,
+  linksEntries: state.linksEntries,
+  coursesEntries: state.coursesEntries,
+  hobbiesEntries: state.hobbiesEntries,
+  referencesEntries: state.referencesEntries,
+  awardsEntries: state.awardsEntries,
+  customEntries: state.customEntries,
+  personalInfoEntries: state.personalInfo,
+  cvSections: state.cvSections,
+  colorFont: state.colorFont,
+});
 
 function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -48,8 +71,10 @@ function CreateCv() {
   const { selectedTemplateId, selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
   const { previewPopupOpen } = useSelector((state: IState) => state.toolbarOption);
   const { allowQrCode } = useSelector((state: IState) => state.identity);
+  const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);
 
   const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
+  const [isFromBackend, setIsFromBackend] = useState(false);
 
   // ----------------------------------------------------------------------------------
   // Validación de cvId y carga del CV (local o backend)
@@ -99,6 +124,7 @@ function CreateCv() {
           }
 
           dispatch(setOriginalData(draftCv));
+          setIsFromBackend(false);
           setIsLoading(false);
           return;
         }
@@ -107,6 +133,7 @@ function CreateCv() {
         await dispatch(loadCvForEditing(cvId));
 
         // Si llega aquí, loadCvForEditing tuvo éxito → CV existe
+        setIsFromBackend(true);
         setIsLoading(false);
       } catch (err) {
         // Redirigir si no existe o falla la carga
@@ -123,6 +150,35 @@ function CreateCv() {
   }, [cvId, dispatch, navigate]);
 
   // ----------------------------------------------------------------------------------
+  // Validación de suscripción después de cargar desde backend y guardado local automático si es inválida
+  // ----------------------------------------------------------------------------------
+  useEffect(() => {
+    if (!isLoading && isFromBackend) {
+      if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
+        const currentData = useSelector(getCurrentData);
+        const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+
+        // Evitar duplicados
+        if (localDrafts.some((d: any) => d.backendId === cvId)) return;
+
+        const draftToSave = {
+          backendId: cvId,
+          localId: crypto.randomUUID(),
+          isDraft: true,
+          ...currentData,
+          updatedAt: new Date().toISOString(),
+        };
+
+        localDrafts.push(draftToSave);
+        localStorage.setItem('draftCvs', JSON.stringify(localDrafts));
+
+        // Opcional: Notificar al usuario
+        // alert("Tu suscripción ha expirado. El CV se ha guardado localmente automáticamente.");
+      }
+    }
+  }, [isLoading, isFromBackend, cvId]);
+
+  // ----------------------------------------------------------------------------------
   // Lógica de guardado (mantiene todo lo que ya tenías)
   // ----------------------------------------------------------------------------------
 
@@ -130,33 +186,14 @@ function CreateCv() {
   const hasUnsavedChanges = useSelector((state: IState) => state.cvSave.hasUnsavedChanges);
   const isSaving = useSelector((state: IState) => state.cvSave.isSaving);
 
-  const currentData = {
-    cvTitle: selectedCvTitle,
-    templateId: selectedTemplateId,
-    identity: useSelector((state: IState) => state.identity),
-    profileContent: useSelector((state: IState) => state.profileSection),
-    contactEntries: useSelector((state: IState) => state.contactEntries),
-    educationEntries: useSelector((state: IState) => state.educationEntries),
-    experienceEntries: useSelector((state: IState) => state.experienceEntries),
-    skillsEntries: useSelector((state: IState) => state.skillsEntries),
-    languagesEntries: useSelector((state: IState) => state.languagesEntries),
-    linksEntries: useSelector((state: IState) => state.linksEntries),
-    coursesEntries: useSelector((state: IState) => state.coursesEntries),
-    hobbiesEntries: useSelector((state: IState) => state.hobbiesEntries),
-    referencesEntries: useSelector((state: IState) => state.referencesEntries),
-    awardsEntries: useSelector((state: IState) => state.awardsEntries),
-    customEntries: useSelector((state: IState) => state.customEntries),
-    personalInfoEntries: useSelector((state: IState) => state.personalInfo),
-    cvSections: useSelector((state: IState) => state.cvSections),
-    colorFont: useSelector((state: IState) => state.colorFont),
-  };
+  const currentDataSelector = useSelector(getCurrentData);
 
   // Detectar cambios
   useEffect(() => {
     if (!originalData || !cvId) return;
-    const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentData);
+    const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentDataSelector);
     dispatch(setHasUnsavedChanges(hasChanges));
-  }, [currentData, originalData, dispatch, cvId]);
+  }, [currentDataSelector, originalData, dispatch, cvId]);
 
   // Función de guardado (exactamente como la tenías)
   const handleSave = async () => {
@@ -171,15 +208,19 @@ function CreateCv() {
       if (isLocalDraft) {
         const updatedDrafts = localDrafts.map((d: any) => 
           (d.localId === cvId || d.backendId === cvId) 
-            ? { ...d, ...currentData, updatedAt: new Date().toISOString() } 
+            ? { ...d, ...currentDataSelector, updatedAt: new Date().toISOString() } 
             : d
         );
         localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
       } else {
-        await updateCvApi(cvId, currentData);
+        // Verificar suscripción antes de guardar en backend
+        if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
+          throw new Error("Suscripción inválida"); // Forzar el guardado local
+        }
+        await updateCvApi(cvId, currentDataSelector);
       }
 
-      dispatch(setOriginalData(currentData));
+      dispatch(setOriginalData(currentDataSelector));
       dispatch(setHasUnsavedChanges(false));
     } catch (err: any) {
       alert("No se pudo guardar en backend → guardando como borrador local");
@@ -188,7 +229,7 @@ function CreateCv() {
         backendId: cvId,
         localId: crypto.randomUUID(),
         isDraft: true,
-        ...currentData,
+        ...currentDataSelector,
         updatedAt: new Date().toISOString(),
       };
 
@@ -196,9 +237,9 @@ function CreateCv() {
       updatedDrafts.push(draftToSave);
       localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
 
-      dispatch(setOriginalData(currentData));
+      dispatch(setOriginalData(currentDataSelector));
       dispatch(setHasUnsavedChanges(false));
-      alert("Sin conexión. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online.");
+      alert("Sin conexión o suscripción expirada. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online o renueves la suscripción.");
     } finally {
       dispatch(setIsSaving(false));
     }
@@ -210,7 +251,7 @@ function CreateCv() {
       const timer = setTimeout(handleSave, 5000);
       return () => clearTimeout(timer);
     }
-  }, [hasUnsavedChanges, currentData, cvId]);
+  }, [hasUnsavedChanges, currentDataSelector, cvId]);
   
   // 1. Advertencia al cerrar o recargar la pestaña
 useEffect(() => {
@@ -259,6 +300,11 @@ useEffect(() => {
 
 
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplateId)?.component;
+
+  // Indicador de modo de guardado
+const isSubscriptionValid = hasValidSubscriptionTime(subscriptionExpiresAt);
+const isSavingInCloud = isFromBackend && isSubscriptionValid;
+const isSavingLocallyOnly = isFromBackend && !isSubscriptionValid;
 
   // ----------------------------------------------------------------------------------
   // Render: Loading full-screen mientras se valida
@@ -342,6 +388,26 @@ useEffect(() => {
       {allowQrCode && <QrBoxEditor />}
       <FloatingEditor />
       <ColorFontPopup />
+
+      {/* Indicador visual de modo de guardado */}
+<div className="save-mode-indicator">
+  {isSavingInCloud ? (
+    <span className="save-mode-indicator__cloud">
+      <IoCloudDone />
+      Guardado en la nube
+    </span>
+  ) : (
+    <span className="save-mode-indicator__local">
+      <TbAlertSquareRounded/>
+      Guardado localmente
+      {!isSubscriptionValid && isFromBackend && (
+        <span className="save-mode-indicator__hint">
+          (suscripción expirada)
+        </span>
+      )}
+    </span>
+  )}
+</div>
     </div>
   );
 }

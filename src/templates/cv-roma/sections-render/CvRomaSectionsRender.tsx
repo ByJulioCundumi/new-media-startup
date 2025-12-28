@@ -72,6 +72,7 @@ export const CvRomaSectionsRender: React.FC<SectionRenderProps> = ({
   
   const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();
   const occupation = jobTitle || identitySection.jobTitle || "";
+  const qrUrl = qrCodeUrl || identitySection.qrCodeUrl || "";
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {
@@ -125,7 +126,7 @@ const getProgressColorClass = (progress: number) => {
         {allowQrCode && (
           <div className="cv-roma__identitySection--qr-wrapper">
             <QRCodeSVG
-              value={qrCodeUrl}
+              value={qrUrl}
               size={85}
               level="Q"
               bgColor="#ffffff"

@@ -153,6 +153,7 @@ const ToolbarCV: React.FC = () => {
         <button onClick={clearCv} title="Limpiar cv" className="toolbar-cv-btn ghost">
           <GiBroom />
         </button>
+        
         <button
           onClick={() => dispatch(toggleTemplatePopup())}
           className="toolbar-cv-btn ghost"

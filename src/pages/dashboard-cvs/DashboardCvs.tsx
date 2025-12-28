@@ -341,7 +341,7 @@ export default function DashboardCVs() {
               </button>
 
               {hasQrCode && (
-                <Link to={cv.publicId ? `https://www.cvremoto.com/cv/${cv.publicId}` : "https://www.cvremoto.com"} target="blank" className="cv-qr-tag enabled">
+                <Link to={cv.publicId ? `https://www.cvremoto.com/cv/${cv.publicId}` : cv.identity.qrCodeUrl} target="blank" className="cv-qr-tag enabled">
                   QR 
                   <svg viewBox="0 0 24 24" width="14" height="14">
                     <path fill="currentColor" d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM16 16h2v2h-2zM18 18h2v2h-2zM14 14h2v2h-2zM20 14h2v2h-2zM16 20h2v2h-2zM14 18h2v2h-2z" />
