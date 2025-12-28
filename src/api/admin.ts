@@ -102,3 +102,28 @@ export const updateUserCommissionApi = async (
     throw new Error(data.message || "No se pudo actualizar la comisión");
   }
 };
+
+// NUEVA API PAGINADA (esta es la que usaremos en el componente)
+export const getUsersPaginatedApi = async ({
+  page = 1,
+  search = "",
+  plan = "Todos",
+  restrictedOnly = false,
+  limit = 50,
+}: {
+  page?: number;
+  search?: string;
+  plan?: "Todos" | "Gratuito" | "Mensual" | "Anual";
+  restrictedOnly?: boolean;
+  limit?: number;
+}) => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    ...(search && { search }),
+    ...(plan !== "Todos" && { plan }),
+    ...(restrictedOnly && { restrictedOnly: "true" }),
+  });
+
+  return await apiFetch(`/users/paginated?${params}`);
+};

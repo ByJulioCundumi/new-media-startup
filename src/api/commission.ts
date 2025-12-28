@@ -124,3 +124,36 @@ export const getCommissionRequestByIdApi = async (requestId: string): Promise<an
 
   return await res.json();
 };
+
+
+export const getCommissionRequestsPaginatedApi = async ({
+  page = 1,
+  search = "",
+  status = "ALL",
+  limit = 50,
+}: {
+  page?: number;
+  search?: string;
+  status?: "ALL" | "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
+  limit?: number;
+}) => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    ...(search && { search }),
+    ...(status !== "ALL" && { status }),
+  });
+
+  const res = await fetch(`${COMMISSION_BASE_URL}/requests/paginated?${params}`, {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.message || "Error obteniendo solicitudes");
+  }
+
+  return await res.json();
+};
