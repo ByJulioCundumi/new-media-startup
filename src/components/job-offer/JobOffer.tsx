@@ -39,7 +39,7 @@ const JobOffer = () => {
     try {
       const count = await getCvCountApi();
 
-      if (count === 0) {
+      if (count === 0 || !hasValidSubscriptionTime(subscriptionExpiresAt)) {
         setErrorMessage(
           "Necesitas tener al menos (Un CV Sin Marca De Agua) para postular."
         );

@@ -26,6 +26,7 @@ export default function TemplatesPopup() {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: IState) => state.user.logged);
+  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const userFavorites = useSelector((state: IState) => state.user.favoriteTemplates || []);
   const selectedTemplateId = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
 
@@ -233,7 +234,7 @@ export default function TemplatesPopup() {
         </div>
 
         {/* BOTÓN CONTINUAR FIJO */}
-        {selectedTemplateId && (
+        {selectedTemplateId && sidebarOption !== "create" && (
           <div className="template-popup-btn-container">
             <button
               className="template-popup-continue-btn"

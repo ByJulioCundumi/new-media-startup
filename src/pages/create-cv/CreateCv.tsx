@@ -1,7 +1,8 @@
 // pages/CreateCv.tsx
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom"; // ← Añadido useNavigate
+import { useParams, useNavigate } from "react-router-dom";
+import { unwrapResult } from "@reduxjs/toolkit"; // ← NUEVO IMPORT
 
 import "./createcv.scss";
 
@@ -73,14 +74,14 @@ function CreateCv() {
   const { allowQrCode } = useSelector((state: IState) => state.identity);
   const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);
 
-  const [isLoading, setIsLoading] = useState(true); // Controla el loading full-screen
+  const [isLoading, setIsLoading] = useState(true);
   const [isFromBackend, setIsFromBackend] = useState(false);
+  const [backendLoadedData, setBackendLoadedData] = useState<any>(null); // ← NUEVO: datos crudos del backend
 
   // ----------------------------------------------------------------------------------
-  // Validación de cvId y carga del CV (local o backend)
+  // Carga del CV (local o backend)
   // ----------------------------------------------------------------------------------
   useEffect(() => {
-    // Si no hay cvId → redirigir inmediatamente
     if (!cvId) {
       navigate("/cvs", { replace: true });
       return;
@@ -90,7 +91,7 @@ function CreateCv() {
       setIsLoading(true);
 
       try {
-        // 1. Buscar en borradores locales (incluye tanto localId como backendId)
+        // 1. Buscar en localStorage
         const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
         const draftCv = localDrafts.find((draft: any) => 
           draft.localId === cvId || draft.backendId === cvId
@@ -129,93 +130,88 @@ function CreateCv() {
           return;
         }
 
-        // 2. No encontrado en local → cargar desde backend
-        await dispatch(loadCvForEditing(cvId));
+        // 2. Cargar desde backend
+        const actionResult:any = await dispatch(loadCvForEditing(cvId));
+        const loadedData = unwrapResult(actionResult); // ← Datos completos directamente del thunk
 
-        // Si llega aquí, loadCvForEditing tuvo éxito → CV existe
+        setBackendLoadedData(loadedData); // Guardamos los datos crudos
         setIsFromBackend(true);
         setIsLoading(false);
       } catch (err) {
-        // Redirigir si no existe o falla la carga
         navigate("/cvs", { replace: true });
       }
     };
 
     validateAndLoadCv();
 
-    // Cleanup al salir del componente
     return () => {
       dispatch(resetCvEditor());
     };
   }, [cvId, dispatch, navigate]);
 
   // ----------------------------------------------------------------------------------
-  // Validación de suscripción después de cargar desde backend y guardado local automático si es inválida
+  // Migración automática a local si la suscripción expiró
   // ----------------------------------------------------------------------------------
   useEffect(() => {
-    if (!isLoading && isFromBackend) {
+    if (!isLoading && isFromBackend && backendLoadedData) {
       if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
-        const currentData = useSelector(getCurrentData);
-        const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+        const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
 
         // Evitar duplicados
-        if (localDrafts.some((d: any) => d.backendId === cvId)) return;
+        if (localDrafts.some((d: any) => d.backendId === cvId)) {
+          return;
+        }
 
         const draftToSave = {
           backendId: cvId,
           localId: crypto.randomUUID(),
           isDraft: true,
-          ...currentData,
+          ...backendLoadedData, // ← Usamos los datos seguros, no useSelector
           updatedAt: new Date().toISOString(),
         };
 
         localDrafts.push(draftToSave);
-        localStorage.setItem('draftCvs', JSON.stringify(localDrafts));
+        localStorage.setItem("draftCvs", JSON.stringify(localDrafts));
 
-        // Opcional: Notificar al usuario
-        // alert("Tu suscripción ha expirado. El CV se ha guardado localmente automáticamente.");
+        // Feedback sutil (opcional, puedes activarlo si quieres)
+        // console.log("CV migrado automáticamente a almacenamiento local (suscripción expirada)");
       }
     }
-  }, [isLoading, isFromBackend, cvId]);
+  }, [isLoading, isFromBackend, backendLoadedData, cvId, subscriptionExpiresAt]);
 
   // ----------------------------------------------------------------------------------
-  // Lógica de guardado (mantiene todo lo que ya tenías)
+  // Lógica de guardado (sin cambios)
   // ----------------------------------------------------------------------------------
-
   const originalData = useSelector((state: IState) => state.cvSave.originalData);
   const hasUnsavedChanges = useSelector((state: IState) => state.cvSave.hasUnsavedChanges);
   const isSaving = useSelector((state: IState) => state.cvSave.isSaving);
-
   const currentDataSelector = useSelector(getCurrentData);
 
-  // Detectar cambios
   useEffect(() => {
     if (!originalData || !cvId) return;
     const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentDataSelector);
     dispatch(setHasUnsavedChanges(hasChanges));
   }, [currentDataSelector, originalData, dispatch, cvId]);
 
-  // Función de guardado (exactamente como la tenías)
   const handleSave = async () => {
     if (!cvId || isSaving || !hasUnsavedChanges) return;
 
     dispatch(setIsSaving(true));
 
-    const localDrafts = JSON.parse(localStorage.getItem('draftCvs') || '[]');
+    const localDrafts = JSON.parse(localStorage.getItem("draftCvs") || "[]");
     const isLocalDraft = localDrafts.some((d: any) => d.localId === cvId || d.backendId === cvId);
 
     try {
       if (isLocalDraft) {
-        const updatedDrafts = localDrafts.map((d: any) => 
-          (d.localId === cvId || d.backendId === cvId) 
-            ? { ...d, ...currentDataSelector, updatedAt: new Date().toISOString() } 
+        const updatedDrafts = localDrafts.map((d: any) =>
+          (d.localId === cvId || d.backendId === cvId)
+            ? { ...d, ...currentDataSelector, updatedAt: new Date().toISOString() }
             : d
         );
-        localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
+        localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
       } else {
-        // Verificar suscripción antes de guardar en backend
         if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
-          throw new Error("Suscripción inválida"); // Forzar el guardado local
+          throw new Error("Suscripción expirada");
         }
         await updateCvApi(cvId, currentDataSelector);
       }
@@ -223,7 +219,11 @@ function CreateCv() {
       dispatch(setOriginalData(currentDataSelector));
       dispatch(setHasUnsavedChanges(false));
     } catch (err: any) {
-      alert("No se pudo guardar en backend → guardando como borrador local");
+      if(hasValidSubscriptionTime(subscriptionExpiresAt)){
+        alert("Cambios guardados localmente.");
+      } else{
+        alert("Cambios guardados localmente. Actualiza tu plan para guardar en la nube.");
+      }
 
       const draftToSave = {
         backendId: cvId,
@@ -235,39 +235,36 @@ function CreateCv() {
 
       const updatedDrafts = localDrafts.filter((d: any) => d.backendId !== cvId);
       updatedDrafts.push(draftToSave);
-      localStorage.setItem('draftCvs', JSON.stringify(updatedDrafts));
+      localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
 
       dispatch(setOriginalData(currentDataSelector));
       dispatch(setHasUnsavedChanges(false));
-      alert("Sin conexión o suscripción expirada. Tus cambios se guardaron localmente y se sincronizarán cuando vuelvas a estar online o renueves la suscripción.");
     } finally {
       dispatch(setIsSaving(false));
     }
   };
 
-  // Auto-guardado cada 5 segundos si hay cambios
   useEffect(() => {
     if (hasUnsavedChanges && cvId) {
       const timer = setTimeout(handleSave, 5000);
       return () => clearTimeout(timer);
     }
   }, [hasUnsavedChanges, currentDataSelector, cvId]);
-  
-  // 1. Advertencia al cerrar o recargar la pestaña
-useEffect(() => {
-  if (!hasUnsavedChanges) return;
 
-  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = ''; // Necesario para algunos navegadores
-  };
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
 
-  window.addEventListener('beforeunload', handleBeforeUnload);
-  return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-}, [hasUnsavedChanges]);
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [hasUnsavedChanges]);
 
   // ----------------------------------------------------------------------------------
-  // Selectores para el template
+  // Selectores para renderizado
   // ----------------------------------------------------------------------------------
   const cvSectionsState = useSelector((state: IState) => state.cvSections) as ICvSectionsState;
   const sections = cvSectionsState.sections;
@@ -293,46 +290,36 @@ useEffect(() => {
   }, [dispatch]);
 
   useEffect(() => {
-    return ()=>{
-      dispatch(setPublicId(""))
-    }
+    return () => {
+      dispatch(setPublicId(""));
+    };
   }, []);
-
 
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplateId)?.component;
 
-  // Indicador de modo de guardado
-const isSubscriptionValid = hasValidSubscriptionTime(subscriptionExpiresAt);
-const isSavingInCloud = isFromBackend && isSubscriptionValid;
-const isSavingLocallyOnly = isFromBackend && !isSubscriptionValid;
+  // Indicador de guardado
+  const isSubscriptionValid = hasValidSubscriptionTime(subscriptionExpiresAt);
+  const isSavingInCloud = isFromBackend && isSubscriptionValid;
 
   // ----------------------------------------------------------------------------------
-  // Render: Loading full-screen mientras se valida
+  // Render
   // ----------------------------------------------------------------------------------
   if (isLoading) {
-  return (
-    <div className="create-cv__loading-overlay">
-      <div className="create-cv__loading-container">
-        <h2 className="create-cv__loading-title"><TbPencilPlus /> CvRemoto</h2>
-        <div className="create-cv__loading-dots">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
+    return (
+      <div className="create-cv__loading-overlay">
+        <div className="create-cv__loading-container">
+          <h2 className="create-cv__loading-title"><TbPencilPlus /> CvRemoto</h2>
+          <div className="create-cv__loading-dots">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
         </div>
-      </div>
-        <button
-          onClick={() => navigate("/cvs")}
-          className="create-cv__loading-back-button"
-        >
+        <button onClick={() => navigate("/cvs")} className="create-cv__loading-back-button">
           ← Volver a mis CVs
         </button>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 
-  // Si por algún motivo llegamos aquí sin carga exitosa (aunque ya redirigimos), no renderizamos nada
   return (
     <div className="create-cv">
       <ToolbarCV />
@@ -384,30 +371,25 @@ const isSavingLocallyOnly = isFromBackend && !isSubscriptionValid;
           />
         </PreviewPopup>
       )}
-      
+
       {allowQrCode && <QrBoxEditor />}
       <FloatingEditor />
       <ColorFontPopup />
 
       {/* Indicador visual de modo de guardado */}
-<div className="save-mode-indicator">
-  {isSavingInCloud ? (
-    <span className="save-mode-indicator__cloud">
-      <IoCloudDone />
-      Guardado en la nube
-    </span>
-  ) : (
-    <span className="save-mode-indicator__local">
-      <TbAlertSquareRounded/>
-      Guardado localmente
-      {!isSubscriptionValid && isFromBackend && (
-        <span className="save-mode-indicator__hint">
-          (suscripción expirada)
-        </span>
-      )}
-    </span>
-  )}
-</div>
+      <div className="save-mode-indicator">
+        {isSavingInCloud ? (
+          <span className="save-mode-indicator__cloud">
+            <IoCloudDone />
+            Guardado en la nube
+          </span>
+        ) : (
+          <span className="save-mode-indicator__local">
+            <TbAlertSquareRounded />
+            Guardado localmente
+          </span>
+        )}
+      </div>
     </div>
   );
 }
