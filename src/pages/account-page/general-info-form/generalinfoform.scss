@@ -353,8 +353,14 @@
     white-space: nowrap;
 
     &:hover {
-      background: #fee2e2;
       transform: translateY(-1px);
     }
   }
+}
+
+.general-row{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
 }

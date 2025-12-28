@@ -174,7 +174,7 @@ function AdminDashboard() {
           </article>
 
           <article className="admin-dashboard__metric-card admin-dashboard__metric-card--neutral">
-            <span className="admin-dashboard__metric-label">Solicitudes de comisión +50% (hoy)</span>
+            <span className="admin-dashboard__metric-label">Solicitudes de trabajo (hoy)</span>
             <strong className="admin-dashboard__metric-value">
               {todayStats.commissionRequests.toLocaleString()}
             </strong>
@@ -184,10 +184,10 @@ function AdminDashboard() {
 
       {/* SOLICITUDES DE COMISIÓN */}
       <section className="admin-dashboard__section">
-        <h2 className="admin-dashboard__section-title">Incremento de comisión +50%</h2>
+        <h2 className="admin-dashboard__section-title">Solicitudes de trabajo</h2>
         <div className="admin-dashboard__grid admin-dashboard__grid--compact">
           <article className="admin-dashboard__metric-card admin-dashboard__metric-card--warning">
-            <span className="admin-dashboard__metric-label">Solicitudes Recibidas (totales)</span>
+            <span className="admin-dashboard__metric-label">Solicitudes Pendientes (totales)</span>
             <strong className="admin-dashboard__metric-value">
               {general.commissions.totalRequests}
             </strong>

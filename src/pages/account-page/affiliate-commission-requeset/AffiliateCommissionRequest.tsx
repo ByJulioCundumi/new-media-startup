@@ -38,6 +38,7 @@ interface CommissionRequestData {
 
 const AffiliateCommissionRequest: React.FC = () => {
   const { subscriptionPlan } = useSelector((state: IState) => state.user);
+  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
   const [request, setRequest] = useState<CommissionRequestData | null>(null);
   const [form, setForm] = useState({ hotmartUsername: "", hotmartEmail: "" });
   const [loading, setLoading] = useState(false);
@@ -195,6 +196,7 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   return (
     <div className="affiliate-commission-request">
+      {sidebarOption === "account" && <h3>Tabajo Remoto - Postulacion</h3>}
       <form onSubmit={(e) => e.preventDefault()} className="affiliate-commission-request__form">
         <div className="affiliate-commission-request__fields">
           <div className="affiliate-commission-request__field">

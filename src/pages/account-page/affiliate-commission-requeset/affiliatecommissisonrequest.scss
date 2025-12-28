@@ -10,29 +10,15 @@
   display: flex;
   flex-direction: column;
 
-  &__header {
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    border-left: 4px solid #0b2357;
+    padding-left: 0.6rem;
     margin-bottom: 1.8rem;
-
-    h3 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 0.5rem;
-      border-left: 4px solid #0b2357;
-      padding-left: 0.6rem;
-
-      strong {
-        color: #0b2357;
-        font-weight: 800;
-      }
-    }
-
-    p {
-      color: #64748b;
-      font-size: 0.98rem;
-      line-height: 1.5;
-    }
-  }
+   }
 
   &__form {
     display: flex;

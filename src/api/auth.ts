@@ -139,3 +139,23 @@ export const getMyCommissionApi = async (): Promise<number> => {
   const data = await res.json();
   return data.commission; // → número como 20 o 50
 };
+
+// auth.ts
+export const deleteAccount = async (password: string): Promise<{ message: string }> => {
+  const res = await fetch(`${BASE_URL}/auth/delete-account`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al eliminar la cuenta");
+  }
+
+  return data; // { message: "Cuenta eliminada permanentemente" }
+};

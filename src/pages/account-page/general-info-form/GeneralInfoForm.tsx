@@ -64,7 +64,7 @@ const GeneralInfoForm: React.FC = () => {
         {/* Comisión de afiliado */}
         {
           affiliateCommission > 0 ? <div className="general-info-form__field">
-          <label>Tu Comision Actual (Hasta 70%)</label>
+          <label className="general-row">Tu Comision Actual </label>
           <div className="general-info-form__input-icon">
             <FaPercentage />
             <input
@@ -73,7 +73,7 @@ const GeneralInfoForm: React.FC = () => {
               disabled
             />
           </div>
-             <a className="affiliate-link" href="#"><FiExternalLink /> Mi Enalce De Afiliado</a>
+             <a href="#" className="affiliate-link" style={{fontWeight: 300}}><FiExternalLink /> Logra 20 ventas para ganar un 70%</a>
         </div> 
         : 
         <div className="general-info-form__field">
@@ -86,7 +86,7 @@ const GeneralInfoForm: React.FC = () => {
               disabled
             />
           </div>
-             <a className="affiliate-link" href="#"><FiExternalLink /> Trabaja Con Nosotros y gana hasta el 70%</a>
+             <a className="affiliate-link" style={{fontWeight: 300}} href="#"><FiExternalLink /> Trabaja Con Nosotros y gana hasta el 70%</a>
         </div>
         }
       </div>
@@ -99,7 +99,8 @@ const GeneralInfoForm: React.FC = () => {
 
         <div className="general-info-form__plan-grid">
           <div className="general-info-form__plan-item">
-            <span className="value">{hasValidSubscriptionTime(subscriptionExpiresAt) ? "Fecha de Caducidad:" : "Sobre este plan:"} </span>
+            {isPremium && <span className="value">Fecha de Caducidad </span>}
+            {(!isPremium) && <span className="value">Sobre Este Plan </span>}
             {isPremium && (
               <span className="label">
                 {formatExpirationDate()}
@@ -109,29 +110,26 @@ const GeneralInfoForm: React.FC = () => {
               <span className="label free-info"><TbAlertSquare /> Acceso A Funciones Limitadas</span>
             )}
             {/* Si está cancelado o delayed, mostrar estado */}
-          {isPremium && subscriptionStatus === "CANCELED" && (
-            <div className="general-info-form__plan-actions">
-              <span style={{ color: "#f79f9fff", fontWeight: "600" }}>
-                Suscripción cancelada
-              </span>
-            </div>
-          )}
-
-          {isPremium && subscriptionStatus === "DELAYED" && (
-            <div className="general-info-form__plan-actions">
-              <span style={{ color: "#ffcb70ff", fontWeight: "600" }}>
-                Pago en mora
-              </span>
-            </div>
-          )}
+          
           </div>
 
           {/* Acciones solo si tiene plan premium activo */}
           <div className="general-info-form__plan-actions">
+            {isPremium && subscriptionStatus === "CANCELED" && (
+            <button style={{ color: "#f79f9fff", fontWeight: "600" }} className="general-info-form__plan-cancel">
+                Renovacion cancelada
+              </button>
+          )}
+
+          {isPremium && subscriptionStatus === "DELAYED" && (
+            <button style={{ color: "#fcd058ff",  borderColor: "#ffdc7bff", fontWeight: "600" }} className="general-info-form__plan-cancel">
+                Pago en mora
+              </button>
+          )}
+
             {isPremium && subscriptionStatus === "ACTIVE" && (
-              <button className="general-info-form__plan-cancel">
-                <MdCancel />
-                Cancelar Suscripción
+              <button style={{ color: "#9fdef7ff", fontWeight: "600", borderColor: "#9fdef7ff"}} className="general-info-form__plan-cancel">
+                Renovacion Activa
               </button>
             )}
 

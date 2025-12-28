@@ -77,3 +77,101 @@
     }
   }
 }
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 90%;
+  width: 480px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+
+  h3 {
+    margin: 0 0 1rem;
+    color: #d32f2f;
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin: 0.8rem 0;
+    line-height: 1.5;
+  }
+
+  ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    line-height: 1.6;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 0.9rem;
+    margin: 1rem 0 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .error-text {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .danger-btn {
+      background: #d32f2f;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background: #b71c1c;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
