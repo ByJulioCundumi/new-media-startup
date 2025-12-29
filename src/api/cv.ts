@@ -94,3 +94,25 @@ export const getCvCountApi = async (): Promise<number> => {
 
   return data.cvCount; // → número entero
 };
+
+export const getPublicCvById = async (publicId: string) => {
+  if (!publicId?.trim()) {
+    throw new Error("publicId inválido");
+  }
+
+  const res = await fetch(`${BASE_URL}/public/${publicId}`, {
+    method: "GET",
+    // NO enviamos credentials → es público
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "No se pudo cargar el CV");
+  }
+
+  return data; // Todo el objeto CV completo
+};

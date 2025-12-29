@@ -232,7 +232,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
       <div className="cv-roma__page">
         
         {/* MARCA DE AGUA */}
-        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
           <WaterMark/>
         )}
 
@@ -283,7 +283,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
         <div className="cv-roma__page">
           
           {/* MARCA DE AGUA */}
-          {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+          {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
             <WaterMark/>
           )}
 

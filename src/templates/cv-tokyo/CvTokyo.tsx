@@ -328,7 +328,7 @@ useEffect(() => {
       <div className="cv-tokyo__page">
         
         {/* MARCA DE AGUA */}
-        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
           <WaterMark/>
         )}
 
@@ -402,7 +402,7 @@ useEffect(() => {
         <div className="cv-tokyo__page">
 
         {/* MARCA DE AGUA */}
-        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home") && (
+        {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
           <WaterMark/>
         )}
 
