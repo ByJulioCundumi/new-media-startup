@@ -17,6 +17,7 @@ import AffiliateCommissionRequest from "../account-page/affiliate-commission-req
 import JobOffer from "../../components/job-offer/JobOffer";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import JobFaq from "../../components/job-faq/JobFaq";
+import { Typewriter } from "react-simple-typewriter";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -27,8 +28,8 @@ function JobPage() {
   },[])
 
   const floatingUsers = [
-    { id: 1, name: "María G.", earnings: "+50% de comisión" },
-    { id: 2, name: "Carlos L.", earnings: "+50% de comisión" },
+    { id: 1, name: "María G.", earnings: "+70% de comisión" },
+    { id: 2, name: "Carlos L.", earnings: "+70% de comisión" },
     { id: 3, name: "Ana P.", earnings: "+50% de comisión" },
   ];
   
@@ -58,7 +59,6 @@ function JobPage() {
       <section className="job-page__hero">
 
         <h1 className="job-page__hero-title">
-          Trabaja En Remoto, Sin Experiencia
           <span>Gana Dinero Promocionando Nuestro Creador De CVs</span>
         </h1>
 
@@ -71,8 +71,27 @@ function JobPage() {
 
       <RiArrowDownWideLine  className="job-arrow"/>
 
-       <div className="job-page__commission">
-        <JobOffer/>
+       <div className="job-page__commissions">
+        {/* ===== OFERTA LABORAL ===== */}
+              <div className="home-page__offer">
+                <h2 className="home-page__job">
+                  Trabaja En Remoto {""}
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                      <Typewriter
+                        words={[", Sin Experiencia"]}
+                        loop={0}
+                        cursor
+                        cursorStyle="|"
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={1500}
+                      />
+                    </span>
+                </h2>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
+                <JobOffer />
+              </div>
+
         <JobFaq/>
       </div>
 

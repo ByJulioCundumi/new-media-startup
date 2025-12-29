@@ -30,6 +30,7 @@ import { RiDraggable } from "react-icons/ri";
 
 const ColorFontPopup: React.FC = () => {
   const dispatch = useDispatch();
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   const { isOpen, selected, defaults } = useSelector(
     (state: IState) => state.colorFont
   );
@@ -53,9 +54,12 @@ const fontOptions = [
   "Inter",
 ];
 
+const isDraggable = sidebarOption === "home";
+const canClose = sidebarOption !== "home";
+
   // Iniciar drag
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDragging(true);
+    setDragging(!isDraggable);
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       offsetRef.current = {
@@ -102,9 +106,9 @@ const fontOptions = [
 
   const handleOverlayClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) dispatch(closePopup());
+      if (canClose && e.target === e.currentTarget) dispatch(closePopup());
     },
-    [dispatch]
+    [dispatch, canClose]
   );
 
   const hasChanges = useMemo(() => {
@@ -140,19 +144,21 @@ const fontOptions = [
   );
 
   return (
-    <div className="cfp-overlay" onMouseDown={handleOverlayClick}>
+    <div className={sidebarOption !== "home" ? "cfp-overlay" : ""} onMouseDown={handleOverlayClick}>
       <div
         ref={containerRef}
         className="cfp-container"
-        style={{ top: position.y, left: position.x, position: "absolute" }}
+        style={sidebarOption !== "home" ? { top: position.y, left: position.x, position: "absolute" } :{ top: position.y, left: position.x } }
         onMouseDown={(e) => e.stopPropagation()}
       >
         {/* HEADER draggable */}
-        <div className="cfp-header" onMouseDown={handleMouseDown} style={{ cursor: "move" }}>
-          <h3> <RiDraggable /> Personaliza Tu CV</h3>
-          <button className="cfp-close" onClick={() => dispatch(closePopup())}>
-            <FiX />
-          </button>
+        <div className="cfp-header" onMouseDown={handleMouseDown} style={{ cursor: isDraggable ? "move" : "default" }}>
+          {sidebarOption !== "home" && <h3> <RiDraggable /> Personaliza Tu CV</h3>}
+          {canClose && (
+            <button className="cfp-close" onClick={() => dispatch(closePopup())}>
+              <FiX />
+            </button>
+          )}
         </div>
 
         {/* resto del contenido... */}

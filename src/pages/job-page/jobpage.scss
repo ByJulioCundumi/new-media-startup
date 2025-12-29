@@ -19,7 +19,7 @@
 .job-arrow{
   margin: 0 auto;
   font-size: 1.2rem;
-  color: rgb(180, 180, 180);
+  color: #1f0d3f;
 }
 /* ============================================================
     ANIMACIONES
@@ -80,7 +80,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: #4f46e5;
+  background: #ffc014;
   color: #fff;
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
 
 .job-page__user-earn {
   font-size: 14px;
-  color: #4f46e5;
+  color: #ffc014;
   font-weight: 500;
 }
 
@@ -130,10 +130,11 @@
   span {
     display: block;
     margin-top: 15px;
-    background: linear-gradient(90deg, #4f46e5, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    //background: linear-gradient(90deg, #4f46e5, #818cf8);
+    //-webkit-background-clip: text;
+    //-webkit-text-fill-color: transparent;
     font-family: monospace;
+    font-weight: 800;
   }
 }
 
@@ -233,8 +234,8 @@
 
   h3 {
     font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
+    font-weight: 500;
+    color: #f3b304;
     margin-bottom: 8px;
   }
 

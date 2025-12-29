@@ -14,6 +14,7 @@ import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
 import { openAuthModal } from "../../reducers/authModalSlice";
 import Invitation from "../../components/invitation/Invitation";
 import JobOffer from "../../components/job-offer/JobOffer";
+import { Typewriter } from "react-simple-typewriter";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -213,8 +214,25 @@ function PricingPage() {
           ))}
         </div>
 
-        {/* SECCIÓN DE AFILIADOS */}
-        <JobOffer/>
+        {/* ===== OFERTA LABORAL ===== */}
+              <div className="home-page__offer">
+                <h2 className="home-page__job">
+                  Trabaja En Remoto {""}
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                      <Typewriter
+                        words={[", Sin Experiencia"]}
+                        loop={0}
+                        cursor
+                        cursorStyle="|"
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={1500}
+                      />
+                    </span>
+                </h2>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
+                <JobOffer />
+              </div>
       </section>
 
       <Footer />

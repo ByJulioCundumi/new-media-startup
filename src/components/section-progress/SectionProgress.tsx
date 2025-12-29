@@ -33,6 +33,7 @@ function SectionProgress() {
   const sectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const order = useSelector((state: IState) => state.cvSections.order);
   const {selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
+  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
 
   /* ⭐ Secciones opcionales (solo estas cuentan 0–7) */
   const OPTIONAL_SECTIONS = [
@@ -128,7 +129,7 @@ const progressColorClass = useMemo(() => {
 
 
   return (
-    <div ref={mainRef} className="section-progress">
+    <div ref={mainRef} className={sidebarOption !== "home" ? "section-progress" : "section-progress-home"}>
       
       <div className="section-progress__header">
       <div className="toolbar-cv-header">
@@ -143,7 +144,7 @@ const progressColorClass = useMemo(() => {
           />
         ) : (
           <h2 className="toolbar-cv-title">
-            {selectedCvTitle}{" "}
+            {selectedCvTitle || "Titulo del cv"}{" "}
           </h2>
         )}
 

@@ -41,7 +41,7 @@ const JobOffer = () => {
 
       if (count === 0 || !hasValidSubscriptionTime(subscriptionExpiresAt)) {
         setErrorMessage(
-          "Necesitas tener al menos (Un CV Sin Marca De Agua) para postular."
+          "Crea al menos Un CV (Sin Marca De Agua) para postular."
         );
         return;
       }

@@ -149,7 +149,7 @@
   z-index: 1;
   color: rgb(0, 140, 255);
   border: 1px solid rgba(0, 119, 255, 0.158);
-  box-shadow: 0px 2px 20px rgba(0, 153, 255, 0.07);
+  box-shadow: 0px 2px 20px rgba(255, 196, 0, 0.07);
   border-radius: 8px;
   font-size: 0.9rem;
   padding: 0.2rem 0.5rem;
@@ -168,7 +168,7 @@
   }
   50% {
     transform: translateY(-12px) scale(1.01);
-    box-shadow: 0 0px 80px rgba(49, 179, 255, 0.12);
+    box-shadow: 0 0px 80px rgba(255, 187, 39, 0.09);
   }
   100% {
     transform: translateY(0) scale(1);
@@ -205,5 +205,123 @@
   }
   100% {
     left: 120%;
+  }
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffbb00;
+  margin-bottom: 0.5rem;
+
+  svg {
+    font-size: 0.9rem;
+  }
+}
+
+.hero__badge {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  width: fit-content;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 207, 51, 0.15),
+    rgba(255, 207, 51, 0.05)
+  );
+  border: 1px solid rgba(255, 207, 51, 0.4);
+  animation: fadeSlideDown 0.8s ease forwards;
+
+  .hero__typewriter {
+    margin-left: 0.25rem;
+    color: #ffbb00;
+    font-weight: 700;
+  }
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  animation: fadeSlideUp 0.9s ease forwards;
+
+  span {
+    position: relative;
+    color: #ffcf33;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0.15em;
+      width: 100%;
+      height: 0.3em;
+      background: rgba(255, 207, 51, 0.25);
+      z-index: -1;
+      border-radius: 4px;
+    }
+  }
+}
+
+.hero__description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #6b7280;
+  max-width: 540px;
+  animation: fadeSlideUp 1s ease forwards;
+}
+
+.hero__features {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.9rem;
+    color: #374151;
+    opacity: 0.9;
+    transition: transform 0.2s ease;
+
+    svg {
+      color: #ffbb00;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

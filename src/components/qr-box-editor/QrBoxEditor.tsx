@@ -20,6 +20,10 @@ const MAX_QR_URL_LENGTH = 65;
 const QrBoxEditor = () => {
   const dispatch = useDispatch();
 
+  const { sidebarOption } = useSelector(
+    (state: IState) => state.sidebar
+  );
+
   const qrCodeUrl = useSelector(
     (state: IState) => state.identity.qrCodeUrl ?? ""
   );
@@ -58,7 +62,7 @@ const QrBoxEditor = () => {
   };
 
   return (
-    <aside className={`qr-box ${isCollapsed ? "qr-box--collapsed" : ""}`}>
+    <aside className={`${sidebarOption !== "home" ? "fixed" : ""} qr-box ${isCollapsed ? "qr-box--collapsed" : ""}`}>
       <header className="qr-box__header">
         <div className="qr-box__title">
           <FaQrcode />
