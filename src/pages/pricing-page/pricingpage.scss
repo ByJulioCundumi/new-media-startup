@@ -70,7 +70,7 @@
     &.pricing-highlight {
       transform: scale(1.05);
       background: linear-gradient(180deg, #ffffff 0%, #fbfafe 100%);
-      border: 1px solid #5586f7;
+      border: 1px solid #fcd56a;
       box-shadow: 0 20px 40px rgba(106, 90, 249, 0.082);
       z-index: 2;
       margin-right: 0.6rem;
@@ -80,7 +80,7 @@
       }
 
       .pricing-btn-select {
-        background: linear-gradient(90deg, #6a5af9, #5586f7);
+        background-color: #ffc014;
       }
     }
 
@@ -89,7 +89,7 @@
       top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      background: linear-gradient(90deg, #6a5af9, #5586f7);
+      background-color: #ffc014;
       color: white;
       padding: 0.5rem 1.2rem;
       border-radius: 30px;
@@ -120,7 +120,7 @@
 
         .icon {
           font-size: 1.8rem;
-          color: #5586f7;
+          color: #ffc014;
         }
       }
     }
@@ -160,7 +160,7 @@
           display: block;
           font-size: 1rem;
           font-weight: 600;
-          color: #10b981;
+          color: #ffc014;
           background: #ecfdf500;
           padding: 0.4rem 1rem;
           border-radius: 30px;
@@ -183,7 +183,7 @@
         line-height: 1.5;
 
         svg {
-          color: #6a5af9;
+          color: #ffc014;
           margin-top: 0.2rem;
           flex-shrink: 0;
         }
@@ -211,7 +211,7 @@
       }
 
       &.pricing-free-btn {
-        background: linear-gradient(90deg, #6a5af9, #5586f7);
+        background-color: #555;
       }
     }
   }

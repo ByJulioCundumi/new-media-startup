@@ -7,7 +7,7 @@ import Hero from "./hero/Hero";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import JobOffer from "../../components/job-offer/JobOffer";
 import ColorFontPopup from "../../components/color-font-popup/ColorFontPopup";
-import { openPopup, restoreDefaults } from "../../reducers/colorFontSlice";
+import { closePopup, openPopup, restoreDefaults } from "../../reducers/colorFontSlice";
 import SectionProgress from "../../components/section-progress/SectionProgress";
 import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
@@ -28,6 +28,7 @@ const HomePage: React.FC = () => {
       dispatch(setAllowQrCode(false));
       dispatch(restoreDefaults());
       dispatch(resetCvSections());
+      dispatch(closePopup())
     };
   }, []);
 
@@ -38,26 +39,13 @@ const HomePage: React.FC = () => {
       {/* ===== CONTENIDO PRINCIPAL ===== */}
       <div className="home-page__content">
         <div className="home-page__content--text">
-          <span className="eyebrow">Editor inteligente</span>
           <h2>
-            Crea{" "}
+            Personaliza  {" "}
             <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-              <Typewriter
-                words={["CVs profesionales"]}
-                loop={0}
-                cursor
-                cursorStyle="|"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
+              Tus CVs
             </span>
           </h2>
-          <p>
-            Personaliza colores, tipografías y estructura. Visualiza tu progreso
-            en tiempo real y añade funciones modernas como QR, todo sin
-            conocimientos técnicos.
-          </p>
+          <p>Puedes Modificar el orden de las secciones en tu cv, elejir los colores de tu preferencia, asignar un QR para ver tus cvs en linea y mucho màs.</p>
         </div>
 
         <div className="home-page__content--tools">
@@ -210,10 +198,10 @@ const HomePage: React.FC = () => {
       {/* ===== OFERTA LABORAL ===== */}
       <div className="home-page__offer">
         <h2 className="home-page__job">
-          Trabaja En Remoto {""}
+          Trabaja {""}
           <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
               <Typewriter
-                words={[", Sin Experiencia"]}
+                words={["En Remoto"]}
                 loop={0}
                 cursor
                 cursorStyle="|"

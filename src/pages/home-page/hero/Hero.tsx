@@ -32,7 +32,7 @@ function Hero() {
   </h1>
 
   <h2 className="hero__title">
-    Diseña <span>Currículums Moderno</span> Que Destaque Tu Perfil
+    Diseña <span>Currículums Modernos</span> Que Destaquen Tu Perfil
   </h2>
 
   <p className="hero__description">

@@ -412,10 +412,10 @@ export default function DashboardCVs() {
     {/* ===== OFERTA LABORAL ===== */}
           <div className="home-page__offer">
             <h2 className="home-page__job">
-              Trabaja En Remoto {""}
+              Trabaja {""}
               <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                   <Typewriter
-                    words={[", Sin Experiencia"]}
+                    words={["En Remoto"]}
                     loop={0}
                     cursor
                     cursorStyle="|"
