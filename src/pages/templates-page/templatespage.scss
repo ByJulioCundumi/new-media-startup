@@ -23,6 +23,8 @@
 
     p{
       margin-bottom: 0.8rem;
+      
+  padding: 0 2rem
     }
 
     button{
@@ -62,6 +64,11 @@
   align-items: center;
   gap: 18px;
   }
+}
+
+.tp-tools{
+  display: flex;
+  gap: 0.5rem;
 }
 
 /* ------------------------------
@@ -284,4 +291,68 @@
   align-items: center;
   gap: 0.3rem;
   background-color: rgb(255, 255, 255);
+}
+
+// ------------- responsive - movile ----------------------------
+@media (max-width: 1200px) {
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+}
+
+/* Tablets pequeñas / phablets */
+@media (max-width: 800px) {
+  .tp-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  z-index: 10;
+  position: sticky;
+  top: 4.5rem;
+  padding: 0.5rem 2rem;
+
+  flex-direction: column;
+  
+
+  &__main{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__box{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  }
+}
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .tp-grid{
+    padding: 0 2rem;
+    margin: 0;
+  }
+.tp-tools{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  .tpl-preview {
+  transform: scale(0.4);
+}
+
+.tpl-preview-wrapper {
+  width: 315px;
+  height: 470px;  // 680px
+  margin: 0 auto;
+}
+}
+
+/* Mobile pequeño */
+@media (max-width: 400px) {
 }

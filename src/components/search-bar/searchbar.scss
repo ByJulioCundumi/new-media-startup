@@ -5,7 +5,9 @@
     border: 1px solid rgba(0, 0, 0, 0.1); // borde negro suave
     border-radius: 8px;
     padding: 0.4rem 1rem;
-    min-width: 300px;
+    min-width: 200px;
+    width: 100%;
+    max-width: 400px;
     height: fit-content;
   
     .icon {

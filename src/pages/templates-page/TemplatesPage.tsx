@@ -147,7 +147,8 @@ export default function TemplatesPage() {
           selectedCategories={selectedCategories}
           onCategoryChange={setSelectedCategories}
         />
-        <SearchBar
+        <div className="tp-tools">
+          <SearchBar
           textHolder="Buscar plantillas..."
           value={searchQuery}
           onChange={setSearchQuery}
@@ -159,6 +160,7 @@ export default function TemplatesPage() {
           <IoStar className={showFavorites ? "filled" : ""} />
           {showFavorites ? "Todas" : "Favoritos"}
         </button>
+        </div>
       </div>
 
       {/* GRID DE PLANTILLAS */}
