@@ -14,7 +14,7 @@
   &__container {
     margin: 0 auto;
     display: flex;
-    gap: 4rem;
+    gap: 2rem;
     width: 100%;
     max-width: 1200px;
     align-items: center;
@@ -325,4 +325,60 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+
+// ----------------------- Responsive - movile --------------------
+
+/* Tablets */
+@media (max-width: 999px) {
+  .hero{
+    &__container {
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  &__content {
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 700px;
+    text-align: center;
+  }
+
+  &__cv-preview {
+    width: fit-content;
+    max-width: 560px;
+  }
+  }
+
+  .hero__features {
+  justify-content: center;
+}
+}
+
+/* Tablets pequeñas / phablets */
+@media (max-width: 768px) {
+
+}
+
+/* Mobile */
+@media (max-width: 620px) {
+  .hero{
+    &__cv-preview {
+      max-width: 400px;
+      height: 500px;
+      width: fit-content;
+  }
+
+  &__cv-scale{
+    transform: scale(0.5);
+    margin: -17rem 0;
+    height: fit-content;
+  }
+  }
+}
+
+/* Mobile pequeño */
+@media (max-width: 400px) {
+
 }
