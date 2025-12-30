@@ -179,3 +179,45 @@
     opacity: 1;
   }
 }
+
+
+// ----------------------- responsive - movile ------------------------------------
+@media (max-width: 1200px) {
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+}
+
+/* Tablets pequeñas / phablets */
+@media (max-width: 650px) {
+  .cfp-container {
+  max-height: 100%;
+}
+
+  .cfp-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+}
+
+/* Mobile pequeño */
+@media (max-width: 450px) {
+  .cfp-container {
+ scale: 0.85;
+ margin: -3rem -2rem;
+}
+
+}
+
+@media (max-width: 400px) {
+  .cfp-container {
+ scale: 0.75;
+ margin: -3rem -3rem;
+}
+
+}

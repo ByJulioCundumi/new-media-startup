@@ -87,7 +87,7 @@ const JobOffer = () => {
             </p>
 
             <div className="job-stats">
-              <span>
+              <span className="job-stat-info">
                 <FaUsers />
                 <strong>1.248</strong> Postulantes Aceptados
               </span>

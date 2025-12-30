@@ -379,6 +379,21 @@
 }
 
 /* Mobile pequeño */
-@media (max-width: 400px) {
+@media (max-width: 450px) {
+  .hero{
+    &__actions{
+      flex-direction: column;
+    }
 
+    &__cv-preview {
+      max-width: 330px;
+      height: 500px;
+      width: fit-content;
+  }
+
+    &__cv-scale{
+    transform: scale(0.4);
+    margin: -19.5rem 0;
+  }
+  }
 }
