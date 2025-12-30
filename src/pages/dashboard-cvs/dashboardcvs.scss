@@ -18,8 +18,15 @@
   h1 {
     font-size: 32px;
     font-weight: 700;
+    width: 100%;
     color: #111827;
-    margin-bottom: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    strong{
+      font-weight: 700;
+    }
   }
 
   p {
@@ -39,6 +46,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 300px;
   position: relative;
   transition: 0.25s ease;
   cursor: pointer;
@@ -481,3 +489,61 @@
   font-weight: 500;
 }
 
+// ----------------------- responsive - movile ----------------------
+@media (max-width: 1227px) {
+  .dashboard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+}
+
+/* Tablets */
+@media (max-width: 800px) {
+  .dashboard-cvs{
+    padding: 6rem 2rem;
+  }
+}
+
+/* Tablets pequeñas / phablets */
+@media (max-width: 660px) {
+  .dashboard-cvs{
+    padding: 6rem 0rem;
+  }
+  .header-right{
+    flex-direction: column;
+  }
+
+  .header-left {
+    
+    h1 {
+      line-height: 0rem;
+      font-size: 1rem;
+      width: 380px;
+    }
+
+    .cv-count {
+      line-height: 2rem;
+    }
+  }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+}
+
+/* Mobile pequeño */
+@media (max-width: 420px) {
+  .cv-item{
+    margin: 0 auto;
+  }
+  .header-left {
+    padding: 0 1rem;
+    scale: 0.85;
+    margin: 0 -3rem;
+
+    p{
+     scale: 0.9;
+    }
+  }
+}
