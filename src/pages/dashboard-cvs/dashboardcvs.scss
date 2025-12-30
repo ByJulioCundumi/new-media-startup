@@ -491,6 +491,9 @@
 
 // ----------------------- responsive - movile ----------------------
 @media (max-width: 1227px) {
+  .dashboard-cvs{
+    padding: 6rem 2rem;
+  }
   .dashboard-header {
   display: flex;
   flex-direction: column;
@@ -506,9 +509,12 @@
 }
 
 /* Tablets pequeñas / phablets */
-@media (max-width: 660px) {
+@media (max-width: 665px) {
+  .cv-item{
+    margin: 0 auto;
+  }
   .dashboard-cvs{
-    padding: 6rem 0rem;
+    padding: 6rem 2rem;
   }
   .header-right{
     flex-direction: column;
