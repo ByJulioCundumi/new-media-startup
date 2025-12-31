@@ -409,6 +409,7 @@ export default function DashboardCVs() {
           );
         })}
     </div>
+    <div className="line"></div>
     {/* ===== OFERTA LABORAL ===== */}
           <div className="home-page__offer">
             <h2 className="home-page__job">

@@ -77,7 +77,7 @@ function CreateCv() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFromBackend, setIsFromBackend] = useState(false);
   const [backendLoadedData, setBackendLoadedData] = useState<any>(null); // ← NUEVO: datos crudos del backend
-
+const [showSections, setShowSections] = useState(true)
   // ----------------------------------------------------------------------------------
   // Carga del CV (local o backend)
   // ----------------------------------------------------------------------------------
@@ -323,7 +323,7 @@ function CreateCv() {
   return (
     <div className="create-cv">
       <ToolbarCV />
-      <SectionProgress />
+      <div className={showSections ? "create-cv__sections" : "create-cv__sections-hidden"}><SectionProgress /></div>
       <VerticalToolbarCV />
 
       <div className="create-cv__template">

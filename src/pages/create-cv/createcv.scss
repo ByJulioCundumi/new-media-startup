@@ -202,3 +202,40 @@
     }
   }
 }
+
+
+.create-cv__sections-hidden{
+  background-color: #475569;
+  }
+
+  .create-cv__sections{
+    display: block;
+  }
+
+
+@media (max-width: 1380px) { 
+  .create-cv{
+    &__template{
+      scale: 0.7;
+      margin: -10rem 0;
+    }
+  }
+}
+
+@media (max-width: 1210px) { 
+  .create-cv{
+    &__template{
+      scale: 0.5;
+      margin: -16rem 0;
+    }
+  }
+}
+
+@media (max-width: 500px) { 
+  .create-cv{
+    &__template{
+      scale: 0.4;
+      margin: -18rem 0;
+    }
+  }
+}
