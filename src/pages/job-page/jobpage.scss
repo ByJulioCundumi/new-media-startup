@@ -8,6 +8,7 @@
   color: #111;
   animation: fadeIn 0.8s ease;
   padding-bottom: 2rem;
+  position: relative;
 
   &__commission{
     width: 100%;
@@ -20,6 +21,7 @@
   margin: 0 auto;
   font-size: 1.2rem;
   color: #1f0d3f;
+  width: fit-content;
 }
 /* ============================================================
     ANIMACIONES
@@ -47,7 +49,6 @@
   gap: 3rem;
   padding-inline: 20px;
   padding-bottom: 4rem;
-  overflow: hidden;
 }
 
 /* ========================================================
@@ -64,7 +65,6 @@
 }
 
 .job-page__floating-card {
-  position: absolute;
   background: #ffffff;
   padding: 14px 20px;
   border-radius: 18px;
@@ -76,7 +76,7 @@
   border: 1px solid #eef1ff;
 }
 
-.job-page__floating-card .job-page__avatar {
+.job-page__avatar {
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -102,9 +102,10 @@
 }
 
 /* posiciones */
-.job-page__card-1 { top: 5rem; left: 4rem;  }
-.job-page__card-2 { top: 5rem; right: -9rem;  }
-.job-page__card-3 { top: 25rem; left: 5rem;  }
+.job-page__card-1 { position: absolute; margin-left: 4rem; top: 2rem; left: 0rem;  }
+.job-page__card-2 { position: absolute; margin-right: 4rem; top: 28rem; right: -15.5rem;  }
+.job-page__card-3 { position: absolute; margin-right: 4rem; top: 2rem; right: -15.5rem;  }
+.job-page__card-4 { position: absolute; margin-left: 4rem; top: 28rem; left: 0rem;  }
 
 @keyframes float {
   0% { transform: translateY(0px) }
@@ -118,7 +119,7 @@
   text-align: center;
   max-width: 850px;
   margin: 0 auto;
-  padding-top: 10rem;
+  padding-top: 13rem;
 }
 
 .job-page__hero-title {
@@ -128,13 +129,8 @@
   line-height: 1.15;
 
   span {
-    display: block;
-    margin-top: 15px;
-    //background: linear-gradient(90deg, #4f46e5, #818cf8);
-    //-webkit-background-clip: text;
-    //-webkit-text-fill-color: transparent;
-    font-family: monospace;
-    font-weight: 800;
+    color: #ffc014;
+  font-weight: 600;
   }
 }
 
@@ -144,6 +140,7 @@
   max-width: 720px;
   margin-inline: auto;
   margin-top: 1.5rem;
+  margin-bottom: -2rem;
   line-height: 1.7;
 }
 
@@ -281,3 +278,93 @@
 .job-page__benefit-card:nth-child(4) { --index: 3; }
 
 
+.job-page__commission{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .job-page__floating-users {
+    display: none;
+  }
+
+  .job-page__floating-users::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .job-page__floating-card {
+    position: relative !important;
+    min-width: 220px;
+    animation: floatMobile 4s ease-in-out infinite alternate;
+    scroll-snap-align: center;
+  }
+
+  .job-page__card-1,
+  .job-page__card-2,
+  .job-page__card-3,
+  .job-page__card-4 {
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+}
+
+@keyframes floatMobile {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+@media (max-width: 768px) {
+  .job-page__hero {
+    padding-top: 8rem;
+  }
+
+  .job-page__hero-title {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+
+  .job-page__hero-subtitle {
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .job-page__benefit-grid {
+    gap: 20px;
+  }
+
+  .job-page__benefit-card {
+    width: 100%;
+    max-width: 340px;
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-page__floating-card {
+    min-width: 200px;
+    padding: 12px 16px;
+  }
+
+  .job-page__avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .job-page__benefits-title {
+    font-size: 26px;
+  }
+}

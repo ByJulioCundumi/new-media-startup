@@ -30,7 +30,8 @@ function JobPage() {
   const floatingUsers = [
     { id: 1, name: "María G.", earnings: "+70% de comisión" },
     { id: 2, name: "Carlos L.", earnings: "+70% de comisión" },
-    { id: 3, name: "Ana P.", earnings: "+50% de comisión" },
+     { id: 3, name: "Pedro M.", earnings: "+70% de comisión" },
+     { id: 4, name: "Juan S.", earnings: "+70% de comisión" },
   ];
   
 
@@ -59,19 +60,20 @@ function JobPage() {
       <section className="job-page__hero">
 
         <h1 className="job-page__hero-title">
-          <span>Gana Dinero Promocionando Nuestro Creador De CVs</span>
+          <span>Gana Dinero</span> Promocionando Nuestro Creador De CVs
         </h1>
 
         <p className="job-page__hero-subtitle">
           Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
-          Gana un <strong>20% de comisiones recurrentes desde el primer día</strong> y solicita
-          un aumento al <strong>50%</strong> si tienes una suscripción activa.
+          Gana un <strong>50% de comisiones desde el primer día,</strong> con aumento hasta el <strong>70%</strong> de comision luego de 20 ventas.
         </p>
       </section>
 
-      <RiArrowDownWideLine  className="job-arrow"/>
 
        <div className="job-page__commissions">
+        <JobFaq/>
+      
+
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
@@ -89,13 +91,11 @@ function JobPage() {
                     </span>
                 </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
+                
                 <JobOffer />
               </div>
 
-        <JobFaq/>
       </div>
-
-      <RiArrowDownWideLine  className="job-arrow"/>
 
       {/* ---------- BENEFICIOS ---------- */}
       <section className="job-page__benefits">
