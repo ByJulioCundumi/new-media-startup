@@ -162,7 +162,7 @@ function AdminCommissionRequest() {
     <section className="admin-commission-request">
       <header className="admin-commission-request__header">
         <div>
-          <h2 className="admin-commission-request__title">Gestión de Incremento de Comisiones</h2>
+          <h2 className="admin-commission-request__title">Afiliacion Y Actualizacion De Datos</h2>
           <span className="admin-commission-request__total">
             Total: {totalRequests} solicitudes • Página {page} de {totalPages}
           </span>

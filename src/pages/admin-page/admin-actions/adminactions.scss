@@ -271,3 +271,13 @@
     transform: translateY(0) scale(1);
   }
 }
+
+
+@media (max-width: 660px) {
+  .admin-actions{
+    &__actions{
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

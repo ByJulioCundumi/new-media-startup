@@ -29,9 +29,7 @@ function JobPage() {
 
   const floatingUsers = [
     { id: 1, name: "María G.", earnings: "+70% de comisión" },
-    { id: 2, name: "Carlos L.", earnings: "+70% de comisión" },
-     { id: 3, name: "Pedro M.", earnings: "+70% de comisión" },
-     { id: 4, name: "Juan S.", earnings: "+70% de comisión" },
+     { id: 2, name: "Juan S.", earnings: "+70% de comisión" },
   ];
   
 
@@ -59,6 +57,7 @@ function JobPage() {
       {/* ---------- HERO SECTION ---------- */}
       <section className="job-page__hero">
 
+
         <h1 className="job-page__hero-title">
           <span>Gana Dinero</span> Promocionando Nuestro Creador De CVs
         </h1>
@@ -67,7 +66,19 @@ function JobPage() {
           Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
           Gana un <strong>50% de comisiones desde el primer día,</strong> con aumento hasta el <strong>70%</strong> de comision luego de 20 ventas.
         </p>
+
+        <div
+            className={`job-page__floating-card hidden-card job-page__card-${5}`}
+          >
+            <div className="job-page__avatar">{floatingUsers[0].name.charAt(0)}</div>
+            <div>
+              <p className="job-page__user-name">{floatingUsers[0].name}</p>
+              <span className="job-page__user-earn">{floatingUsers[0].earnings}</span>
+            </div>
+          </div>
       </section>
+
+      
 
 
        <div className="job-page__commissions">

@@ -364,3 +364,124 @@
   gap: 1rem;
   justify-content: space-between;
 }
+
+@media (max-width: 1150px) {
+  .general-info-form__plan-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 1rem;
+  }
+ }
+
+@media (max-width: 950px) {
+.general-info-form__plan-grid {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .general-info-form__plan-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 1rem;
+  }
+
+  .general-info-form__plan-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+
+    button,
+    a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .general-info-form__plan-change,
+  .general-info-form__plan-cancel {
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .general-info-form {
+    padding: 1.5rem 1.3rem;
+    gap: 1.5rem;
+    width: 100%;
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+
+    &__field {
+      label {
+        font-size: 0.85rem;
+      }
+    }
+
+    &__input-icon {
+      height: 48px;
+
+      svg {
+        font-size: 1rem;
+      }
+
+      input {
+        font-size: 0.9rem;
+      }
+    }
+
+    .affiliate-link {
+      justify-content: flex-start;
+      white-space: normal;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* ===== PLAN ===== */
+
+  .general-info-form__plan {
+    padding-top: 1.2rem;
+
+    h4 {
+      font-size: 1rem;
+    }
+  }
+}
+
+
+@media (max-width: 480px) {
+  .general-info-form {
+    padding: 1.2rem 1rem;
+
+    h3 {
+      font-size: 1.15rem;
+    }
+  }
+
+  .general-info-form__plan h4 {
+    flex-wrap: wrap;
+  }
+
+  .general-info-form__plan-item {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .general-info-form {
+    border-radius: 14px;
+    box-shadow: none;
+    border: 1px solid #e5e7eb;
+  }
+}

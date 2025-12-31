@@ -54,6 +54,7 @@
 
   &__metric-card {
     background-color: #ffffff;
+    
     border-radius: 12px;
     padding: 1.1rem 1.8rem;
     display: flex;
@@ -280,3 +281,89 @@
   }
 }
 
+
+
+
+/* ===========================
+   MOBILE OPTIMIZATIONS
+   Desktop first ✅
+=========================== */
+
+@media (max-width: 640px) {
+  .admin-dashboard {
+    gap: 1rem;
+
+    &__section {
+      padding: 1.25rem 1rem;
+      border-radius: 8px;
+    }
+
+    &__section-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Grid en una columna */
+    &__grid,
+    &__grid--compact {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    /* Cards más compactas */
+    &__metric-card {
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+    }
+
+    &__metric-label {
+      font-size: 0.65rem;
+    }
+
+    &__metric-value {
+      font-size: 1.35rem;
+    }
+  }
+}
+
+
+@media (max-width: 640px) {
+  .admin-dashboard {
+    &__table-wrapper {
+      border-radius: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &__table {
+      font-size: 0.72rem;
+      min-width: 720px; // fuerza scroll horizontal real
+
+      thead th {
+        padding: 0.6rem 0.7rem;
+        font-size: 0.6rem;
+      }
+
+      tbody td {
+        padding: 0.55rem 0.7rem;
+      }
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      padding: 0.2rem 0.45rem;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-dashboard__metric-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .admin-dashboard__metric-label {
+      max-width: 65%;
+      line-height: 1.2;
+    }
+  }
+}

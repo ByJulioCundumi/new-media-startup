@@ -102,10 +102,10 @@
 }
 
 /* posiciones */
-.job-page__card-1 { position: absolute; margin-left: 4rem; top: 2rem; left: 0rem;  }
-.job-page__card-2 { position: absolute; margin-right: 4rem; top: 28rem; right: -15.5rem;  }
-.job-page__card-3 { position: absolute; margin-right: 4rem; top: 2rem; right: -15.5rem;  }
-.job-page__card-4 { position: absolute; margin-left: 4rem; top: 28rem; left: 0rem;  }
+.job-page__card-1 { position: absolute; margin-left: 7rem; top: 1.5rem; left: 2rem;  }
+.job-page__card-2 { position: absolute; margin-right: -7rem; top: 21rem; right: 2rem;  }
+.job-page__card-3 { position: absolute; margin-right: -7rem; top: 2rem; right: 2rem;  }
+.job-page__card-4 { position: absolute; margin-left: 7rem; top: 28rem; left: 2rem;  }
 
 @keyframes float {
   0% { transform: translateY(0px) }
@@ -284,8 +284,15 @@
   align-items: center;
 }
 
+.hidden-card{
+  display: none;
+  width: fit-content;top: 4rem;
+}
 
-
+.hidden-card-one{
+  display: none;
+  width: fit-content;top: 8rem;
+}
 
 
 
@@ -296,6 +303,22 @@
 @media (max-width: 768px) {
   .job-page__floating-users {
     display: none;
+  }
+
+  .hidden-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .hidden-card-one{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: center;
+    margin: 0 auto;
   }
 
   .job-page__floating-users::-webkit-scrollbar {
@@ -329,10 +352,6 @@
 @media (max-width: 768px) {
   .job-page__hero {
     padding-top: 8rem;
-  }
-
-  .job-page__hero-title {
-    font-size: clamp(28px, 6vw, 36px);
   }
 
   .job-page__hero-subtitle {
