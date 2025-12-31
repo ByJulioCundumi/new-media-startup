@@ -309,3 +309,101 @@
   margin-bottom: -0.3em;
   margin-right: -0.3rem;
 }
+
+
+
+
+
+
+
+
+/* ========================================= */
+/*            BOTÓN FLOTANTE MÓVIL            */
+/* ========================================= */
+.section-progress__fab {
+  display: none; // Solo visible en móvil
+  position: fixed;
+  bottom: 6rem;
+  right: 1.5rem;
+  width: 56px;
+  height: 56px;
+  background: #0073ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 115, 255, 0.4);
+  z-index: 100;
+  cursor: pointer;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-content: center;
+
+  .section-progress__fab-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ffffff;
+    color: rgb(0, 110, 255);
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 0.5rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ========================================= */
+/*        RESPONSIVE: MÓVIL (max-width 768px) */
+/* ========================================= */
+@media (max-width: 768px) {
+  /* Mostrar botón flotante */
+  .section-progress__fab {
+    display: flex;
+  }
+
+  /* Panel lateral completo → oculto por defecto */
+  .section-progress {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 5rem);
+    background: white;
+    z-index: 99;
+    border-radius: 16px 16px 0 0;
+    padding: 1rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Cuando está expandido → sube */
+  .section-progress--expanded {
+    transform: translateY(0);
+  }
+
+  /* Cuando está colapsado → permanece abajo (oculto) */
+  .section-progress--collapsed {
+    transform: translateY(100%);
+  }
+
+  /* En modo home (pantalla principal) mantener comportamiento original si quieres */
+  .section-progress-home {
+    position: relative;
+    width: 100%;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* En desktop mantener el comportamiento original */
+@media (min-width: 769px) {
+  .section-progress {
+    transform: none !important;
+  }
+}

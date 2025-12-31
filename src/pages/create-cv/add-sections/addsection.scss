@@ -165,3 +165,12 @@
   font-weight: 600;
   opacity: 0.85;
 }
+
+
+@media (max-width: 500px){
+  .add-sections{
+    right: -0rem;
+    bottom: 0rem;
+    z-index: 10;
+  }
+}

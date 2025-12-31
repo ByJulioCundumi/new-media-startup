@@ -2,6 +2,8 @@
 import "./sectionprogress.scss";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { LuCheck, LuEyeClosed } from "react-icons/lu";
+import { BiEditAlt } from "react-icons/bi";
+import { FaSave } from "react-icons/fa";
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,8 +18,6 @@ import AddSections from "../../pages/create-cv/add-sections/AddSection";
 import SortableSection from "../../pages/create-cv/sortable-section/SortableSection";
 import type { IState } from "../../interfaces/IState";
 import { reorderSections } from "../../reducers/cvSectionsSlice";
-import { BiEditAlt } from "react-icons/bi";
-import { FaSave } from "react-icons/fa";
 import { setSelectedCvTitle } from "../../reducers/cvCreationSlice";
 import { toggleSectionOpen } from "../../reducers/editorsSlice";
 
@@ -27,15 +27,15 @@ function SectionProgress() {
   const dispatch = useDispatch();
 
   const [addSections, setAddSections] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // ← Nuevo estado para móvil
 
-  /* ⭐ Datos reales del store */
+  /* Datos reales del store */
   const sections = useSelector((state: IState) => state.cvSections.sections);
   const sectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const order = useSelector((state: IState) => state.cvSections.order);
-  const {selectedCvTitle} = useSelector((state: IState) => state.cvCreation);
-  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
+  const { selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
+  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
 
-  /* ⭐ Secciones opcionales (solo estas cuentan 0–7) */
   const OPTIONAL_SECTIONS = [
     "personalInfoSection",
     "linkSection",
@@ -54,7 +54,6 @@ function SectionProgress() {
     [sections]
   );
 
-  /* ⭐ Secciones habilitadas totales (header) */
   const enabledSectionsCount = sections.filter((s) => s.enabled).length;
 
   const scrollUp = () =>
@@ -63,7 +62,6 @@ function SectionProgress() {
   const scrollDown = () =>
     containerRef.current?.scrollBy({ top: 150, behavior: "smooth" });
 
-  /* ⭐ Scroll automático al agregar */
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTo({
@@ -73,7 +71,6 @@ function SectionProgress() {
     }
   }, [enabledSectionsCount]);
 
-  /* Cerrar AddSection al hacer clic fuera */
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (mainRef.current && !mainRef.current.contains(e.target as Node)) {
@@ -85,7 +82,6 @@ function SectionProgress() {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /* ⭐ Drag & Drop para ordenar secciones */
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -103,16 +99,19 @@ function SectionProgress() {
     return "section-progress-blue";
   };
 
-  const totalEnabledSections = sections.filter(s => s.enabled);
-const overallProgress = totalEnabledSections.length
-  ? Math.round(totalEnabledSections.reduce((acc, s) => acc + s.progress, 0) / totalEnabledSections.length)
-  : 0;
+  const totalEnabledSections = sections.filter((s) => s.enabled);
+  const overallProgress = totalEnabledSections.length
+    ? Math.round(
+        totalEnabledSections.reduce((acc, s) => acc + s.progress, 0) /
+          totalEnabledSections.length
+      )
+    : 0;
 
-const progressColorClass = useMemo(() => {
-  if (overallProgress < 50) return "progress-red";
-  if (overallProgress < 100) return "progress-yellow";
-  return "progress-blue";
-}, [overallProgress]);
+  const progressColorClass = useMemo(() => {
+    if (overallProgress < 50) return "progress-red";
+    if (overallProgress < 100) return "progress-yellow";
+    return "progress-blue";
+  }, [overallProgress]);
 
   const [editing, setEditing] = useState(false);
 
@@ -127,67 +126,93 @@ const progressColorClass = useMemo(() => {
     setEditing(false);
   };
 
+  // Toggle para móvil: botón flotante ↔ panel expandido
+  const toggleMobilePanel = () => setIsExpanded((prev) => !prev);
 
   return (
-    <div ref={mainRef} className={sidebarOption !== "home" ? "section-progress" : "section-progress-home"}>
-      
-      <div className="section-progress__header">
-      <div className="toolbar-cv-header">
-        <div className="toolbar-cv-header__main">
-          {editing ? (
-          <input
-            className="toolbar-cv-title-input editing"
-            value={selectedCvTitle}
-            onChange={(e) => dispatch(setSelectedCvTitle(e.target.value))}
-            onBlur={handleTitleBlur}
-            autoFocus
-          />
-        ) : (
-          <h2 className="toolbar-cv-title">
-            {selectedCvTitle || "Titulo del cv"}{" "}
-          </h2>
-        )}
+    <>
+      {/* Botón flotante visible SOLO en móvil */}
+      {
+        sidebarOption !== "home" && <button
+        className="section-progress__fab"
+        onClick={toggleMobilePanel}
+        aria-label="Gestionar secciones"
+      >
+        <MdFormatListBulletedAdd />
+        <span className="section-progress__fab-count">
+          {enabledSectionsCount}/14
+        </span>
+      </button>
+      }
 
-        {editing ? (
-          <button
-            className="toolbar-cv-edit-btn save"
-            onClick={handleSaveTitle}
-            title="Guardar título"
-          >
-            <FaSave />
-          </button>
-        ) : (
-          <button
-            className="toolbar-cv-edit-btn"
-            onClick={handleEditTitle}
-            title="Editar título"
-          >
-            <BiEditAlt />
-          </button>
-        )}
+      {/* Panel completo (desktop siempre visible, móvil solo cuando isExpanded) */}
+      <div
+        ref={mainRef}
+        className={
+          sidebarOption !== "home"
+            ? `section-progress ${isExpanded ? "section-progress--expanded" : "section-progress--collapsed"}`
+            : "section-progress-home"
+        }
+      >
+        {/* Header con título editable */}
+        <div className="section-progress__header">
+          <div className="toolbar-cv-header">
+            <div className="toolbar-cv-header__main">
+              {editing ? (
+                <input
+                  className="toolbar-cv-title-input editing"
+                  value={selectedCvTitle}
+                  onChange={(e) => dispatch(setSelectedCvTitle(e.target.value))}
+                  onBlur={handleTitleBlur}
+                  autoFocus
+                />
+              ) : (
+                <h2 className="toolbar-cv-title">
+                  {selectedCvTitle || "Titulo del cv"}
+                </h2>
+              )}
+
+              {editing ? (
+                <button
+                  className="toolbar-cv-edit-btn save"
+                  onClick={handleSaveTitle}
+                  title="Guardar título"
+                >
+                  <FaSave />
+                </button>
+              ) : (
+                <button
+                  className="toolbar-cv-edit-btn"
+                  onClick={handleEditTitle}
+                  title="Editar título"
+                >
+                  <BiEditAlt />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-      
-</div>
 
+        {/* Lista de secciones */}
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={order} strategy={verticalListSortingStrategy}>
+            <div className="section-progress__list" ref={containerRef}>
+              {order.map((name) => {
+                const sec = sections.find((s) => s.name === name);
+                const secEditor = sectionsEditor.find((s) => s.name === name);
+                if (!sec || !secEditor || !sec.enabled) return null;
 
-
-      {/* LISTA DE SECCIONES */}
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={order} strategy={verticalListSortingStrategy}>
-          <div className="section-progress__list" ref={containerRef}>
-            {order.map((name) => {
-              const sec = sections.find((s) => s.name === name);
-              const secEditor = sectionsEditor.find((s) => s.name === name);
-              if (!sec || !secEditor || !sec.enabled) return null;
-
-              return (
-                <SortableSection key={sec.name} id={sec.name}>
-                  <div className={`section-progress__item ${getProgressClass(sec.progress)}`}>
-                    <span className={`section-progress__label`}>{sec.title}</span>
-                    {/* 🔹 Íconos actualizados en base a isEditorOpen */}
-                    {
-                      sec.progress === 100 ? (
+                return (
+                  <SortableSection key={sec.name} id={sec.name}>
+                    <div
+                      className={`section-progress__item ${getProgressClass(
+                        sec.progress
+                      )}`}
+                    >
+                      <span className="section-progress__label">
+                        {sec.title}
+                      </span>
+                      {sec.progress === 100 ? (
                         <LuCheck className="section-progress__eye" />
                       ) : secEditor.isEditorOpen ? (
                         <BiEditAlt
@@ -199,30 +224,31 @@ const progressColorClass = useMemo(() => {
                           className="section-progress__eye"
                           onClick={() => dispatch(toggleSectionOpen(sec.name))}
                         />
-                      )
-                    }                   
-                  </div>
-                </SortableSection>
-              );
-            })}
-          </div>
-        </SortableContext>
-      </DndContext>
+                      )}
+                    </div>
+                  </SortableSection>
+                );
+              })}
+            </div>
+          </SortableContext>
+        </DndContext>
 
-      {/* ⭐ FOOTER — solo las 7 opcionales */}
-      <div
-        className="section-progress__arrow-container section-progress__arrow-container--down to-click"
-        onClick={() => setAddSections(!addSections)}
-      >
-        <span className="section-progress__arrow-text">
-          <MdFormatListBulletedAdd /> Secciones
-        </span>
+        {/* Botón de agregar secciones (dentro del panel) */}
+        <div
+          className="section-progress__arrow-container section-progress__arrow-container--down to-click"
+          onClick={() => setAddSections(!addSections)}
+        >
+          <span className="section-progress__arrow-text">
+            <MdFormatListBulletedAdd /> Secciones
+          </span>
+          <span className="section-progress__count">
+            {enabledSectionsCount}/14
+          </span>
+        </div>
 
-        <span className="section-progress__count">{enabledSectionsCount}/14</span>
+        {addSections && <AddSections />}
       </div>
-
-      {addSections && <AddSections />}
-    </div>
+    </>
   );
 }
 
