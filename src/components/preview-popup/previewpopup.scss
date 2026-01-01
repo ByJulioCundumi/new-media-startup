@@ -65,3 +65,26 @@
     padding: 0 !important;
   }
 }
+
+
+
+
+@media (max-width: 1050px) { 
+  .preview-popup__content{
+    scale: 0.8;
+  }
+}
+
+@media (max-width: 700px) { 
+  .preview-popup__content{
+    scale: 0.6;
+    margin: -5rem 0;
+  }
+}
+
+@media (max-width: 550px) { 
+  .preview-popup__content{
+    scale: 0.4;
+    margin: -10rem 0;
+  }
+}

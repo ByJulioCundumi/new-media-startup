@@ -231,6 +231,16 @@
   }
 }
 
+@media (max-width: 1100px) { 
+  .create-cv{
+    padding-top: 10rem;
+  }
+  .save-mode-indicator{
+    top: 50.5rem;
+    z-index: 1;
+  }
+}
+
 @media (max-width: 500px) { 
   .create-cv{
     &__template{

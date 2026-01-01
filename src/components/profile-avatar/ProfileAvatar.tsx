@@ -100,7 +100,7 @@ const ProfileAvatar: React.FC = () => {
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              Funciones Limitadas
+              Marca de agua visible
             </p>
           </div>
         </div>
