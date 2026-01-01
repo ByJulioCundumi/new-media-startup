@@ -277,7 +277,7 @@
   .toolbar-cv-wrapper{
     gap: 0;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem 2rem;
   }
 
   .toolbar-cv-progress { 
@@ -290,6 +290,10 @@
 
   .toolbar-cv-buttons {
     margin-right: -4rem;
+}
+
+.toolbar-cv-end{
+  display: none;
 }
 
 }

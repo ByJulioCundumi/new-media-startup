@@ -31,6 +31,8 @@ import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
 
 import { getPublicCvById } from "../../api/cv"; //
+import { TbArrowBackUp, TbWorldWww } from "react-icons/tb";
+import { IoDiamondOutline } from "react-icons/io5";
 
 function OnlineCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -175,14 +177,17 @@ function OnlineCv() {
 
   return (
     <div className="online-cv">
-        <div className="online-cv__head">
-            <Link to={"/"}>Volver</Link>
+        <div className="online-cv__container">
+          <div className="online-cv__head">
+            <Link className="online-cv__back" to={"/"}><TbArrowBackUp /> Volver</Link>
             <div className="online-cv__head--data">
                 <p>{formatDate(cvUpdate)}</p>
             </div>
         </div>
+        </div>
 
-      <div className="online-cv__template">
+      <div className="online-cv__content">
+        <div className="online-cv__template">
         {SelectedTemplate && (
           <SelectedTemplate
             personalInfo={personalInfo}
@@ -204,8 +209,8 @@ function OnlineCv() {
           />
         )}
       </div>
-
-      <p className="created-with">CVRemoto.com</p>
+      <p className="created-with"><TbWorldWww className="icon" /> Creado con <strong>cvremoto.com</strong></p>
+      </div>
     </div>
   );
 }

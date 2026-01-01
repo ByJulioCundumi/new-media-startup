@@ -197,9 +197,6 @@ const ToolbarCV: React.FC = () => {
 
       {/* ===== PERFIL + VIP ===== */}
       <div className="toolbar-cv-end">
-        {/* ===== TÍTULO DEL CV ===== */}
-      
-
         <ProfileAvatar />
       </div>
     </div>

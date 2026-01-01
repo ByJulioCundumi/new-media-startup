@@ -126,6 +126,9 @@
     font-weight: 600;
     color: #2563eb;
     transition: color 0.25s ease;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1.5rem;
 
     &:hover {
       color: #1e40af;
@@ -184,4 +187,16 @@
   font-size: 0.9rem;
   margin-top: 0px;
   text-align: center;
+}
+
+
+
+@media (max-width: 550px) { 
+  .recoveryform{
+    padding: 0rem;
+    &__container{
+    padding: 0;
+    box-shadow: none;
+  }
+  }
 }

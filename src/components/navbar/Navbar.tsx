@@ -44,7 +44,7 @@ function Navbar() {
               className={sidebarOption === "home" ? "active link" : " link"}
               onClick={() => dispatch(setSidebar("home"))}
             >
-             <HiHome />
+             <HiHome /> <span>Inicio</span>
             </Link>
 
           <Link
@@ -55,7 +55,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("cvs"))}
           >
             <LuPencilLine />
-            Crea un CV
+            <span>Crea un CV</span>
           </Link>
 
           <Link
@@ -66,7 +66,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("templates"))}
           >
             <LuFileSearch />
-            Plantillas
+            <span>Plantillas</span>
           </Link>
 
           <Link
@@ -77,7 +77,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("pricing"))}
           >
             <MdOutlineDiamond className="navbar__pricing" />
-            Planes
+            <span>Planes</span>
           </Link>
 
           <Link
@@ -88,7 +88,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("affiliate"))}
           >
             <MdOutlineWorkOutline />
-            Gana en USD
+            <span>Gana en USD</span>
           </Link>
 
           {logged && role === "USER" && (
@@ -99,7 +99,7 @@ function Navbar() {
               }`}
               onClick={() => dispatch(setSidebar("account"))}
             >
-              <TbSettingsCode /> Cuenta
+              <TbSettingsCode /> <span>Cuenta</span>
             </Link>
           )}
 
@@ -112,33 +112,13 @@ function Navbar() {
               onClick={() => dispatch(setSidebar("admin"))}
             >
               <MdAdminPanelSettings />
-              Admin
+              <span>Admin</span>
             </Link>
           )}
         </ul>
 
         {/* ACTIONS */}
-        {logged ? (
-          <ProfileAvatar />
-        ) : (
-          <div className="navbar__actions">
-            <button
-              className="login"
-              onClick={() => dispatch(openAuthModal({}))}
-            >
-              <HiOutlineArrowRightEndOnRectangle size={30} />
-            </button>
-
-            <button
-              className="signup"
-              onClick={() =>
-                dispatch(openAuthModal({ section: "signup" }))
-              }
-            >
-              <LuUserRoundPlus /> Crear Cuenta
-            </button>
-          </div>
-        )}
+        <ProfileAvatar />
       </div>
     </nav>
   );

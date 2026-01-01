@@ -165,3 +165,23 @@
     color: #555;
   }
 }
+
+
+@media (max-width: 550px) { 
+  .loginform{
+    .card{
+    padding: 0;
+    box-shadow: none;
+  }
+  }
+}
+
+@media (max-width: 450px) { 
+  .loginform{
+    padding: 0rem;
+    .card{
+    padding: 0;
+    box-shadow: none;
+  }
+  }
+}

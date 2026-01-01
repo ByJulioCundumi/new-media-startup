@@ -1,12 +1,8 @@
 import React from "react";
 import {
-  IoCardOutline,
   IoDiamondOutline,
-  IoWater,
-  IoWaterOutline,
 } from "react-icons/io5";
 import "./profileavatar.scss";
-import { TbLogout2 } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 import { clearUser } from "../../reducers/userSlice";
@@ -17,8 +13,8 @@ import {
   HiOutlineArrowRightEndOnRectangle,
 } from "react-icons/hi2";
 import { openAuthModal } from "../../reducers/authModalSlice";
-import { FiAlertOctagon } from "react-icons/fi";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import { LuUserRoundPlus } from "react-icons/lu";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,9 +23,7 @@ const ProfileAvatar: React.FC = () => {
   const {
     logged,
     subscriptionPlan,
-    subscriptionStatus,
     subscriptionExpiresAt,
-    cvCount
   } = useSelector((state: IState) => state.user);
 
   // Determinar si es VIP (tiene plan de pago activo)
@@ -68,56 +62,51 @@ const ProfileAvatar: React.FC = () => {
     }
   };
 
-  const handleOpenLogin = () => {
-    dispatch(openAuthModal({}));
-  };
-
   return (
     <div className="profile-avatar-wrapper">
       {/* Indicador de suscripción */}
-      {logged && (
-        <div className={`subscription-badge ${isVip ? "vip" : "free"}`}>
-          {isVip ? (
-            <IoDiamondOutline className="subscription-badge__icon" />
-          ) : (
-            <IoWater className="subscription-badge__icon" />
-          )}
-
-          <div className="subscription-badge__text">
-
-            <p className="subscription-badge__subtitle">
-              {isVip
-                ? `${planTitle}: ${expirationDate}`
-                : `Marca de agua visible`}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {!logged && (
-        <div className={`subscription-badge free`}>
-          <IoWaterOutline className="subscription-badge__icon" />
+      {
+        logged && <>
+          <div className={`subscription-badge ${isVip ? "vip" : "free"}`}>
+          {isVip && <IoDiamondOutline className="subscription-badge__icon" />}
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              Marca de agua visible
+              {isVip && `${planTitle}: ${expirationDate}`}
             </p>
           </div>
         </div>
-      )}
 
       {/* Botón avatar - Login / Logout */}
       <button
         className="profile-avatar-btn"
-        onClick={logged ? handleLogout : handleOpenLogin}
-        title={logged ? "Cerrar sesión" : "Iniciar sesión"}
+        onClick={handleLogout}
+        title={"Cerrar sesión"}
       >
-        {logged ? (
-          <HiOutlineArrowLeftStartOnRectangle size={20} />
-        ) : (
-          <HiOutlineArrowRightEndOnRectangle size={20} />
-        )}
+        <HiOutlineArrowLeftStartOnRectangle size={20} />
       </button>
+        </>
+      }
+
+      {
+        !logged && <div className="navbar__actions">
+                    <button
+                      className="login"
+                      onClick={() => dispatch(openAuthModal({}))}
+                    >
+                      <HiOutlineArrowRightEndOnRectangle size={30} />
+                    </button>
+        
+                    <button
+                      className="signup"
+                      onClick={() =>
+                        dispatch(openAuthModal({ section: "signup" }))
+                      }
+                    >
+                      <LuUserRoundPlus /> Crear Cuenta
+                    </button>
+                  </div>
+      }
     </div>
   );
 };

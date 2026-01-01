@@ -46,3 +46,13 @@
     transform: scale(1);
   }
 }
+
+
+
+@media (max-width: 450px) { 
+  .auth{
+    &__content{
+    padding: 3rem 2rem;
+  }
+  }
+}
