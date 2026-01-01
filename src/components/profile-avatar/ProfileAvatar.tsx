@@ -2,6 +2,7 @@ import React from "react";
 import {
   IoCardOutline,
   IoDiamondOutline,
+  IoWater,
   IoWaterOutline,
 } from "react-icons/io5";
 import "./profileavatar.scss";
@@ -79,7 +80,7 @@ const ProfileAvatar: React.FC = () => {
           {isVip ? (
             <IoDiamondOutline className="subscription-badge__icon" />
           ) : (
-            <FiAlertOctagon className="subscription-badge__icon" />
+            <IoWater className="subscription-badge__icon" />
           )}
 
           <div className="subscription-badge__text">
