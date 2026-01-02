@@ -158,7 +158,7 @@ export default function TemplatesPage() {
           onClick={() => setShowFavorites(!showFavorites)}
         >
           <IoStar className={showFavorites ? "filled" : ""} />
-          {showFavorites ? "Todas" : "Favoritos"}
+          <span className="fav-text">{showFavorites ? "Todas" : "Favoritos"}</span>
         </button>
         </div>
       </div>

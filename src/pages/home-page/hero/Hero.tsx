@@ -20,7 +20,7 @@ function Hero() {
     <span className="hero__typewriter" style={{fontWeight: 300}}>Crea</span>{" "}
     <span className="hero__typewriter">
       <Typewriter
-        words={["Tus CVs profesionales en minutos"]}
+        words={["CVs Profesionales"]}
         loop={0}
         cursor
         cursorStyle="|"
@@ -59,7 +59,7 @@ function Hero() {
 
         {/* ================= RIGHT CV PREVIEW ================= */}
           <div className="hero__cv-preview">
-            <span className="tag-h"><MdOutlineDiamond size={15}/> Premium</span>
+            <span className="tag-h"><MdOutlineDiamond/> Premium</span>
             <div className="hero__cv-scale">
               <TemplateComponent {...mockHomeTemplateData} />
             </div>

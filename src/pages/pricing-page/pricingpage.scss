@@ -398,8 +398,31 @@
 
 
 @media (max-width: 450px) {
+  .pricing-page{
+    padding: 0;
+
+    .pricing-header{
+      padding:  0 2rem;
+      padding-top: 5rem;
+  }
+  }
+  .pricing-grid{
+    padding: 0;
+  }
   .pricing-card {
     scale: 0.8;
-    margin: -5rem auto;
+    margin: -4.5rem auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .pricing-page{
+    .pricing-header{
+      padding:  0 2rem;
+      padding-top: 5rem;
+    h1{
+      font-size: 2.2rem;
+    }
+  }
   }
 }

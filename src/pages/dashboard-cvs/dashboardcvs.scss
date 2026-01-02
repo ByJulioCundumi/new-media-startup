@@ -541,13 +541,21 @@
 }
 
 /* Mobile */
-@media (max-width: 520px) {
+@media (max-width: 500px) {
+  .dashboard-header{
+    scale: 0.9;
+    margin: -0.5rem -2rem;
+  }
 }
 
 /* Mobile pequeño */
 @media (max-width: 420px) {
   .cv-item{
     margin: 0 auto;
+  }
+  .dashboard-header{
+    scale: 0.85;
+    margin: -0.5rem -2rem;
   }
   .header-left {
     padding: 0 1rem;

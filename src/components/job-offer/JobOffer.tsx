@@ -76,7 +76,7 @@ const JobOffer = () => {
                 <FaBriefcase />
               </div>
               <div className="company-info">
-                <h3 className="company-name">Trabajo Remoto | Sin Experiencia</h3>
+                <h3 className="company-name">Trabajo | Sin Experiencia</h3>
                 <p className="company-tagline">www.cvremoto.com</p>
               </div>
             </header>

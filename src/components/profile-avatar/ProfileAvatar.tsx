@@ -89,7 +89,7 @@ const ProfileAvatar: React.FC = () => {
       }
 
       {
-        !logged && <div className="navbar__actions">
+        !logged && <div className="profile-avatar__actions">
                     <button
                       className="login"
                       onClick={() => dispatch(openAuthModal({}))}

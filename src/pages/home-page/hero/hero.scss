@@ -376,6 +376,13 @@
     height: fit-content;
   }
   }
+
+  .tag-h{
+  position: absolute;
+  top: 6rem;
+  right: 1.5rem;
+  font-size: 0.7rem;
+}
 }
 
 /* Mobile pequeño */
@@ -385,15 +392,30 @@
       flex-direction: column;
     }
 
+    &__title{
+      font-size: 1.8rem;
+    }
+
     &__cv-preview {
-      max-width: 330px;
-      height: 500px;
+      max-width: 310px;
+      height: 450px;
       width: fit-content;
   }
 
     &__cv-scale{
-    transform: scale(0.4);
-    margin: -19.5rem 0;
+    transform: scale(0.38);
+    margin: -20.5rem auto;
   }
   }
+
+  .tag-h{
+  position: absolute;
+  top: 5.5rem;
+  right: 1rem;
+  font-size: 0.55rem;
+  
+  svg{
+    font-size: 0.7rem;
+  }
+}
 }
