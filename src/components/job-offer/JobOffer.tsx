@@ -70,29 +70,10 @@ const JobOffer = () => {
     <>
       <section className="job-offer-card-container">
         <article className="job-offer-card">
-          <div className="job-content">
-            <header className="company-header">
-              <div className="company-logo">
-                <FaBriefcase />
-              </div>
-              <div className="company-info">
-                <h3 className="company-name">Trabajo | Sin Experiencia</h3>
-                <p className="company-tagline">www.cvremoto.com</p>
-              </div>
-            </header>
-
-            <p className="job-offer__info">
-              Trabaja Desde Casa y Sin Horarios promocionando nuestro creador de CVs. Postula luego de familiarizarte con nuestras
-              herramientas y comienza a ganar comisiones de hasta el 70% por compartir.
-            </p>
-
-            <div className="job-stats">
               <span className="job-stat-info">
                 <FaUsers />
                 <strong>1.248</strong> Postulantes Aceptados
               </span>
-            </div>
-          </div>
 
           <aside className="job-action">
             {

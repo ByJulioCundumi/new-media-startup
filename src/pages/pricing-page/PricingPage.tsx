@@ -217,10 +217,10 @@ function PricingPage() {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
-                  Trabaja {""}
+                  Trabaja En Remoto {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                       <Typewriter
-                        words={["En Remoto"]}
+                        words={[", Sin Experiencia"]}
                         loop={0}
                         cursor
                         cursorStyle="|"

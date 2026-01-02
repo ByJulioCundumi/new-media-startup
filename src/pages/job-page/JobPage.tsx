@@ -18,6 +18,9 @@ import JobOffer from "../../components/job-offer/JobOffer";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import JobFaq from "../../components/job-faq/JobFaq";
 import { Typewriter } from "react-simple-typewriter";
+import { TbChevronsUp } from "react-icons/tb";
+import { BsFillNodePlusFill } from "react-icons/bs";
+import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -30,6 +33,8 @@ function JobPage() {
   const floatingUsers = [
     { id: 1, name: "María G.", earnings: "+70% de comisión" },
      { id: 2, name: "Juan S.", earnings: "+70% de comisión" },
+     { id: 3, name: "María G.", earnings: "+70% de comisión" },
+     { id: 4, name: "Juan S.", earnings: "+70% de comisión" },
   ];
   
 
@@ -45,7 +50,7 @@ function JobPage() {
             key={u.id}
             className={`job-page__floating-card job-page__card-${index + 1}`}
           >
-            <div className="job-page__avatar">{u.name.charAt(0)}</div>
+            <div className="job-page__avatar"><GiLaurelsTrophy /></div>
             <div>
               <p className="job-page__user-name">{u.name}</p>
               <span className="job-page__user-earn">{u.earnings}</span>
@@ -59,7 +64,7 @@ function JobPage() {
 
 
         <h1 className="job-page__hero-title">
-          <span>Gana Dinero</span> Promocionando Nuestro Creador De CVs
+          <span>Gana $USD</span> Promocionando Nuestro Creador De CVs
         </h1>
 
         <p className="job-page__hero-subtitle">
@@ -82,9 +87,6 @@ function JobPage() {
 
 
        <div className="job-page__commissions">
-        <JobFaq/>
-      
-
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
@@ -106,6 +108,7 @@ function JobPage() {
                 <JobOffer />
               </div>
 
+        <JobFaq/>
       </div>
 
       {/* ---------- BENEFICIOS ---------- */}

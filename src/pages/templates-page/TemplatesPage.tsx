@@ -222,19 +222,19 @@ export default function TemplatesPage() {
       {/* ===== OFERTA LABORAL ===== */}
             <div className="home-page__offer">
               <h2 className="home-page__job">
-                Trabaja {""}
-                <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                    <Typewriter
-                      words={["En Remoto"]}
-                      loop={0}
-                      cursor
-                      cursorStyle="|"
-                      typeSpeed={70}
-                      deleteSpeed={50}
-                      delaySpeed={1500}
-                    />
-                  </span>
-              </h2>
+                  Trabaja En Remoto {""}
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                      <Typewriter
+                        words={[", Sin Experiencia"]}
+                        loop={0}
+                        cursor
+                        cursorStyle="|"
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={1500}
+                      />
+                    </span>
+                </h2>
               <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
               <JobOffer />
             </div>
