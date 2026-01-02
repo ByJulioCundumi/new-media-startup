@@ -57,6 +57,7 @@
   transition: 0.25s ease;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.045);
+  justify-self: start;
 
   &:hover {
     transform: translateY(-4px);

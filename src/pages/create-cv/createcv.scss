@@ -163,7 +163,7 @@
   bottom: calc(100vh - 8.5rem);
   right: 20px; /* Ajusta según tu layout, para que esté visible pero no tape botones */
   z-index: 100;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0);
   color: white;
   padding: 8px 14px;
   border-radius: 8px;
@@ -171,8 +171,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.079);
   width: fit-content;
   white-space: nowrap;
 
@@ -189,7 +187,7 @@
   }
 
   &__local {
-    color: #fbbf24; /* ámbar */
+    color: #3d3d3d; /* ámbar */
     display: flex;
     align-items: center;
     gap: 5px;
@@ -217,7 +215,7 @@
   .create-cv{
     &__template{
       scale: 0.7;
-      margin: -11rem 0;
+      margin: -10.5rem 0;
     }
   }
 }
@@ -226,7 +224,7 @@
   .create-cv{
     &__template{
       scale: 0.5;
-      margin: -18rem 0;
+      margin: -14.5rem 0;
     }
   }
 }
@@ -236,16 +234,18 @@
     padding-top: 8rem;
   }
   .save-mode-indicator{
-    bottom: 4.5rem;
-    z-index: 1;
+    bottom: 47.5rem;
   }
 }
 
 @media (max-width: 500px) { 
   .create-cv{
     &__template{
-      scale: 0.4;
-      margin: -21.5rem 0;
+      scale: 0.38;
+      margin: -17.5rem 0;
     }
+  }
+  .save-mode-indicator{
+    bottom: 46.8rem;
   }
 }

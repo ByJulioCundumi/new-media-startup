@@ -302,6 +302,9 @@
 
 
 @media (max-width: 950px) {
+  .job-page__hero {
+    padding-top: 8rem;
+  }
   .job-page__floating-users {
     display: none;
   }
@@ -309,15 +312,15 @@
   .hidden-card{
     display: flex;
     justify-content: start;
-    text-align: center;
     margin: 0 auto;
+    text-align: start;
   }
 
   .hidden-card-one{
     display: flex;
     justify-content: start;
-    text-align: center;
     margin: 0 auto;
+    text-align: start;
   }
 
   .job-page__floating-users::-webkit-scrollbar {
