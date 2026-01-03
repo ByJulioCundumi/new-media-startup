@@ -12,11 +12,12 @@ import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
 import { TbNumber, TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { MdOutlineNumbers, MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
+import { MdKeyboardDoubleArrowDown, MdOutlineNumbers, MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
 import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
 import { LuExternalLink, LuTimer } from "react-icons/lu";
 import { BsEnvelopeArrowUpFill } from "react-icons/bs";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import { IoFootstepsSharp } from "react-icons/io5";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,15 +72,14 @@ const JobOffer = () => {
       <section className="job-offer-card-container">
         <article className="job-offer-card">
               <a href="#" style={{textDecoration: "underline"}} className="job-stat-info">
-                <strong><TbNumber />1.</strong>
-                Solicitar Afiliacion
+                <IoFootstepsSharp /> Solicitar Afiliacion
                 <LuExternalLink />
               </a>
 
           <aside className="job-action">
             {
               (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              {!loadingCvs && <strong><TbNumber />2.</strong>} {loadingCvs ? "Verificando..." : "Enviar Datos"} <BsEnvelopeArrowUpFill />
+               <IoFootstepsSharp /> {loadingCvs ? "Verificando..." : "Enviar Datos"} <BsEnvelopeArrowUpFill />
             </button>
             }
             {

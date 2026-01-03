@@ -81,7 +81,7 @@ function JobPage() {
         </h1>
 
         <p className="job-page__hero-subtitle">
-          Gana el <strong>50% de comisiones</strong> Por Promocionar Nuestra Plataforma con posibilidad de incremento hasta el <strong>70%</strong> luego de 20 ventas.
+          Gana el <strong>50% de comisiones Desde El Primer Dia</strong> Por Promocionar Nuestra Plataforma, con posibilidad de incremento hasta el <strong>70%</strong> luego de 20 ventas.
         </p>
 
         <div

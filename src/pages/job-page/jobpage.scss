@@ -9,6 +9,7 @@
   animation: fadeIn 0.8s ease;
   padding-bottom: 2rem;
   position: relative;
+  overflow-x: hidden;
 
   &__commission{
     width: 100%;
@@ -141,6 +142,8 @@
   margin-top: 1.5rem;
   margin-bottom: -2rem;
   line-height: 1.7;
+  font-size: 1.4rem;
+  scale: 0.95;
 }
 
 .job-page__cta-container {
@@ -381,6 +384,7 @@
 
   .job-page__hero-subtitle {
     line-height: 1.6;
+    font-size: 1.2rem;
   }
 }
 

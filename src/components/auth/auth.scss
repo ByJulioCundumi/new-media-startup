@@ -52,8 +52,10 @@
 @media (max-width: 450px) { 
   .auth{
     &__content{
+      scale: 0.9;
     padding: 3rem 1.5rem;
     width: 98%;
+    margin-top: -4rem;
   }
   }
 }

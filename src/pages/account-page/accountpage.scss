@@ -175,3 +175,10 @@
   from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+
+@media (max-width: 770px) {
+  .account-page{
+    padding: 6rem 2rem;
+  }
+}
