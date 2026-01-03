@@ -61,10 +61,23 @@ function JobPage() {
 
       {/* ---------- HERO SECTION ---------- */}
       <section className="job-page__hero">
-
+        <h1 className="job-page__badge">
+          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Gana</span>{" "}
+          <span className="job-page__typewriter">
+            <Typewriter
+              words={["En Dolares Hoy!"]}
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
+          </span>
+        </h1>
 
         <h1 className="job-page__hero-title">
-          <span>Gana $USD</span> Promocionando Nuestro Creador De CVs
+          <span>Quédate Hasta El 70%</span> De Comision.
         </h1>
 
         <p className="job-page__hero-subtitle">

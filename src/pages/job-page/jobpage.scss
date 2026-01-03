@@ -117,7 +117,7 @@
   text-align: center;
   max-width: 850px;
   margin: 0 auto;
-  padding-top: 13rem;
+  padding-top: 9rem;
 }
 
 .job-page__hero-title {
@@ -299,6 +299,29 @@
   margin-top: 4rem;
 }
 
+.job-page__badge {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  width: fit-content;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 207, 51, 0.15),
+    rgba(255, 207, 51, 0.05)
+  );
+  border: 1px solid rgba(255, 207, 51, 0.4);
+  animation: fadeSlideDown 0.8s ease forwards;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+
+  .job-page__typewriter {
+    margin-left: 0.25rem;
+    color: #ffbb00;
+    font-weight: 700;
+  }
+}
+
 
 
 @media (max-width: 950px) {
@@ -379,7 +402,8 @@
     padding-bottom: 0;
   }
   .job-page__hero-title{
-    font-size: 1.8rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
   }
   .job-page__floating-card {
     min-width: 200px;

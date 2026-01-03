@@ -23,6 +23,7 @@ import { TbPencilPlus } from 'react-icons/tb'
 import Auth from './components/auth/Auth'
 import JobOffer from './components/job-offer/JobOffer'
 import OnlineCv from './pages/online-cv/OnlineCv'
+import MobileNav from './components/mobile-nav/MobileNav'
 
 function App() {
   const dispatch = useDispatch()
@@ -94,6 +95,7 @@ function App() {
         {authModal.isOpen && <Auth/>}
         {templatesPopupOpen && <TemplatesPopup/>}
         {isOpen && <CreateNewCvPopup/>}
+        <MobileNav/>
 
         {/* paginas */}
         <Outlet/>
