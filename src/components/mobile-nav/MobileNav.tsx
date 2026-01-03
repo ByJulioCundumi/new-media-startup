@@ -8,8 +8,14 @@ import {
   FaUsers,
   FaUser,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import type { IState } from "../../interfaces/IState";
+import { MdSettingsSuggest } from "react-icons/md";
+import { TbSettingsCode } from "react-icons/tb";
 
 const MobileNav = () => {
+  const {logged} = useSelector((state:IState)=>state.user)
+
   return (
     <nav className="mobile-nav">
       <NavLink to="/" className="mobile-nav__item">
@@ -33,10 +39,16 @@ const MobileNav = () => {
         <span>Trabajo</span>
       </NavLink>
 
+      {
+        logged ? <NavLink to="/account" className="mobile-nav__item">
+        <TbSettingsCode />
+        <span>Cuenta</span>
+      </NavLink>: 
       <NavLink to="/pricing" className="mobile-nav__item">
         <FaUser />
         <span>Planes</span>
       </NavLink>
+      }
     </nav>
   );
 };

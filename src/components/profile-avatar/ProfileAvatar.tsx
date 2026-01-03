@@ -1,6 +1,7 @@
 import React from "react";
 import {
   IoDiamondOutline,
+  IoWater,
 } from "react-icons/io5";
 import "./profileavatar.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -68,11 +69,11 @@ const ProfileAvatar: React.FC = () => {
       {
         logged && <>
           <div className={`subscription-badge ${isVip ? "vip" : "free"}`}>
-          {isVip && <IoDiamondOutline className="subscription-badge__icon" />}
+          {isVip ? <IoDiamondOutline className="subscription-badge__icon" /> : <IoWater className="subscription-badge__icon"/>}
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              {isVip && `${planTitle}: ${expirationDate}`}
+              {isVip ? `${planTitle}: ${expirationDate}` : "Marca de agua visible"}
             </p>
           </div>
         </div>

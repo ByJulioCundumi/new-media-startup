@@ -11,10 +11,10 @@ import type { IState } from "../../interfaces/IState";
 import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
-import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
+import { TbNumber, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { MdOutlineNumbers, MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
 import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
-import { LuTimer } from "react-icons/lu";
+import { LuExternalLink, LuTimer } from "react-icons/lu";
 import { BsEnvelopeArrowUpFill } from "react-icons/bs";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 
@@ -70,20 +70,21 @@ const JobOffer = () => {
     <>
       <section className="job-offer-card-container">
         <article className="job-offer-card">
-              <span className="job-stat-info">
-                <FaUsers />
-                <strong>1.248</strong> Postulantes Aceptados
-              </span>
+              <a href="#" style={{textDecoration: "underline"}} className="job-stat-info">
+                <strong><TbNumber />1.</strong>
+                Solicitar Afiliacion
+                <LuExternalLink />
+              </a>
 
           <aside className="job-action">
             {
               (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              {loadingCvs ? "Verificando..." : "Postular"} <BsEnvelopeArrowUpFill />
+              {!loadingCvs && <strong><TbNumber />2.</strong>} {loadingCvs ? "Verificando..." : "Enviar Datos"} <BsEnvelopeArrowUpFill />
             </button>
             }
             {
               commissionRequestStatus === "PENDING" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              Postulando... <MdPendingActions />
+              En Revision... <MdPendingActions />
             </button>
             }
             {
@@ -92,7 +93,7 @@ const JobOffer = () => {
             </button>
             }
             <p className="action-note">
-              *Requisito: Crea un CV Sin Marca De Agua en <span style={{textDecoration: "underline"}}>cvremoto.com</span>
+              *Requisito: Ser Usuario Suscrito En <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>
           </aside>
         </article>

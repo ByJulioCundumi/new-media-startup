@@ -200,15 +200,7 @@ const HomePage: React.FC = () => {
         <h2 className="home-page__job">
                   Trabaja En Remoto {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      <Typewriter
-                        words={[", Sin Experiencia"]}
-                        loop={0}
-                        cursor
-                        cursorStyle="|"
-                        typeSpeed={70}
-                        deleteSpeed={50}
-                        delaySpeed={1500}
-                      />
+                      , Sin Experiencia
                     </span>
                 </h2>
         <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>

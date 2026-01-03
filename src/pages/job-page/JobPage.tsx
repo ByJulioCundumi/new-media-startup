@@ -81,8 +81,7 @@ function JobPage() {
         </h1>
 
         <p className="job-page__hero-subtitle">
-          Monetiza tu tiempo libre y Tabaja desde cualquier lugar sin horarios.  
-          Gana un <strong>50% de comisiones desde el primer día,</strong> con aumento hasta el <strong>70%</strong> de comision luego de 20 ventas.
+          Gana el <strong>50% de comisiones</strong> Por Promocionar Nuestra Plataforma con posibilidad de incremento hasta el <strong>70%</strong> luego de 20 ventas.
         </p>
 
         <div
@@ -105,15 +104,7 @@ function JobPage() {
                 <h2 className="home-page__job">
                   Trabaja En Remoto {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      <Typewriter
-                        words={[", Sin Experiencia"]}
-                        loop={0}
-                        cursor
-                        cursorStyle="|"
-                        typeSpeed={70}
-                        deleteSpeed={50}
-                        delaySpeed={1500}
-                      />
+                      , Sin Experiencia
                     </span>
                 </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>

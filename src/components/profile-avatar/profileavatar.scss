@@ -161,3 +161,10 @@
     }
   }
 }
+
+@media (max-width: 500px) { 
+  .subscription-badge__text{
+    display: none;
+  }
+}
+
