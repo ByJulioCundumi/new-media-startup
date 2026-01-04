@@ -77,7 +77,7 @@ function JobPage() {
         </h1>
 
         <h1 className="job-page__hero-title">
-          <span>Quédate Hasta El 70%</span> De Comision.
+          <span>Gana Hasta Un 70%</span> De Comision.
         </h1>
 
         <p className="job-page__hero-subtitle">

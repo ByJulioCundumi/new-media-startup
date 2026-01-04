@@ -405,9 +405,16 @@
     padding: 6.5rem 2rem;
     padding-bottom: 0;
   }
+  .job-page__badge{
+    display: none;
+  }
   .job-page__hero-title{
-    font-size: 2rem;
+    font-size: 2.1rem;
     line-height: 2.5rem;
+    display: none;
+  }
+  .job-page__hero-subtitle {
+    display: none;
   }
   .job-page__floating-card {
     min-width: 200px;
