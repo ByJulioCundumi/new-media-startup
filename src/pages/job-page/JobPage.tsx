@@ -93,6 +93,12 @@ function JobPage() {
        <div className="job-page__commissions">
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
+                <h2 className="home-page__job">
+                  Haz Dinero En Linea
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                      , Sin Experiencia
+                    </span>
+                </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
                 
                 <JobOffer />

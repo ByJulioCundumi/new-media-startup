@@ -312,6 +312,7 @@
 
 .job-page__commissions{
   margin-top: 4rem;
+  font-size: 1.1rem;
 }
 
 .job-page__badge {
@@ -351,7 +352,7 @@
       box-shadow: none;
       border: none;
       z-index: 10;
-      top: 0rem;
+      top: 18rem;
     }
     .job-page__avatar{
       background-color: transparent;
@@ -368,8 +369,8 @@
     }
   }
 
-  .job-page__card-1 { position: absolute; margin-left: -1.5rem; margin-top: 0rem;   }
-.job-page__card-2 { position: absolute; margin-left: 18.5rem; margin-top: 2.5rem; } 
+  .job-page__card-1 { position: absolute; margin-left: 0rem; margin-top: 0rem;   }
+.job-page__card-2 { position: absolute; margin-left: 18rem; margin-top: 0rem; } 
 .job-page__card-3 { display: none; }
 .job-page__card-4 { display: none; }
 
@@ -456,11 +457,16 @@
   font-size: 1rem;
   }
   .job-page__hero-title{
+    font-family:  Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     span{
       font-size: 2.2rem;
+      span{
+        font-size: 1.9rem;
+      }
     }
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: 1.95rem;
+    line-height: 2.5rem;
+    //color: #ffc014;
     
   }
   .job-page__hero-subtitle {

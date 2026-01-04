@@ -198,7 +198,7 @@ const HomePage: React.FC = () => {
       {/* ===== OFERTA LABORAL ===== */}
       <div className="home-page__offer">
         <h2 className="home-page__job">
-                  Trabaja En Remoto {""}
+                  Gana En USD
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                       , Sin Experiencia
                     </span>

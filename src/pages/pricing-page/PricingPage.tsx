@@ -115,7 +115,7 @@ function PricingPage() {
         "Respaldo de CVs como borradores",
         "Sincronizacion de CVs (borradores) en la nube",
         "Descargas en PDF",
-        "Oferta De Trabajo Remoto",
+        "Programa de afiliados",
         "Comisiones de hasta el 70%",
       ],
     },
@@ -134,7 +134,7 @@ function PricingPage() {
         "Respaldo de CVs como borradores",
         "Sincronizacion de CVs (borradores) en la nube",
         "Descargas en PDF",
-        "Oferta De Trabajo Remoto",
+        "Programa de afiliados",
         "Comisiones de hasta el 70%",
       ],
     },
@@ -217,7 +217,7 @@ function PricingPage() {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
-                  Trabaja En Remoto {""}
+                  Gana En USD
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                       , Sin Experiencia
                     </span>

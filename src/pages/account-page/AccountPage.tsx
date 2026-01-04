@@ -94,15 +94,14 @@ function AccountPage() {
       {showDeleteModal && (
         <div className="modal-overlay" onClick={closeDeleteModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>¿Estás completamente seguro?</h3>
+            <h3>¿Estás seguro?</h3>
             <p>
               Esta acción <strong>es irreversible</strong>. Se eliminará permanentemente:
             </p>
             <ul>
               <li>Tu cuenta y todos tus datos personales</li>
               <li>Todos tus CVs guardados en la nube</li>
-              <li>Actualizacion de datos de afiliado</li>
-              <li>Cualquier otra información asociada</li>
+              <li>Datos de afiliado</li>
             </ul>
 
             <p>Para confirmar, ingresa tu contraseña actual:</p>
@@ -127,7 +126,7 @@ function AccountPage() {
                 onClick={confirmDeleteAccount}
                 disabled={loading}
               >
-                {loading ? "Eliminando..." : "Eliminar cuenta permanentemente"}
+                {loading ? "Eliminando..." : "Eliminar cuenta"}
               </button>
             </div>
           </div>

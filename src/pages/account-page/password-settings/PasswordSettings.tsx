@@ -60,7 +60,7 @@ const PasswordSettings: React.FC = () => {
       <header className="password-settings__header">
         <h3>Cambiar Contraseña</h3>
         <p>
-          Actualiza la contraseña de tu cuenta para mantener tu información segura.
+          Actualiza la contraseña de tu cuenta.
         </p>
       </header>
 
@@ -75,7 +75,7 @@ const PasswordSettings: React.FC = () => {
               name="currentPassword"
               value={passwordForm.currentPassword}
               onChange={handleChange}
-              placeholder="Ingresa tu contraseña actual"
+              placeholder="Tu contraseña actual"
               required
               disabled={loading}
             />
@@ -99,7 +99,7 @@ const PasswordSettings: React.FC = () => {
               name="newPassword"
               value={passwordForm.newPassword}
               onChange={handleChange}
-              placeholder="Ingresa nueva contraseña"
+              placeholder="Nueva contraseña"
               required
               disabled={loading}
             />
@@ -123,7 +123,7 @@ const PasswordSettings: React.FC = () => {
               name="confirmPassword"
               value={passwordForm.confirmPassword}
               onChange={handleChange}
-              placeholder="Repite la nueva contraseña"
+              placeholder="Repite la contraseña"
               required
               disabled={loading}
             />

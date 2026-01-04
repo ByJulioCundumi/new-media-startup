@@ -73,7 +73,7 @@ const GeneralInfoForm: React.FC = () => {
               disabled
             />
           </div>
-             <a href="#" className="affiliate-link" style={{fontWeight: 300}}><FiExternalLink /> Logra 20 ventas para ganar un 70%</a>
+             <a href="#" className="affiliate-link" style={{fontWeight: 300}}><FiExternalLink /> Comparte tu enlace de afiliado</a>
         </div> 
         : 
         <div className="general-info-form__field">
