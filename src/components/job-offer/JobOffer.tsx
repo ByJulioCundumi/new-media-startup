@@ -72,14 +72,14 @@ const JobOffer = () => {
       <section className="job-offer-card-container">
         <article className="job-offer-card">
               <a href="#" style={{textDecoration: "underline"}} className="job-stat-info">
-                <IoFootstepsSharp /> Solicitar Afiliacion
+                 Solicitar Mi Afiliacion
                 <LuExternalLink />
               </a>
 
           <aside className="job-action">
             {
               (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-               <IoFootstepsSharp /> {loadingCvs ? "Verificando..." : "Enviar Datos"} <BsEnvelopeArrowUpFill />
+                {loadingCvs ? "Verificando..." : "Validar Solicitud"} 
             </button>
             }
             {
@@ -93,7 +93,7 @@ const JobOffer = () => {
             </button>
             }
             <p className="action-note">
-              *Requisito: Ser Usuario Suscrito En <span style={{textDecoration: "underline"}}>cvremoto.com</span>
+              *Solo Para Usuarios con suscripcion activa en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>
           </aside>
         </article>

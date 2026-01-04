@@ -73,6 +73,7 @@
   animation: float 6s infinite ease-in-out alternate;
   border: 1px solid #eef1ff;
   line-height: 1.3rem;
+  width: fit-content;
 }
 
 .job-page__avatar {
@@ -140,10 +141,21 @@
   max-width: 720px;
   margin-inline: auto;
   margin-top: 1.5rem;
-  margin-bottom: -2rem;
   line-height: 1.7;
   font-size: 1.4rem;
   scale: 0.95;
+}
+
+.job-page__hero-subtitle-b {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #475569;
+  max-width: 720px;
+  margin-inline: auto;
+  margin-top: 1.5rem;
+  line-height: 1.7;
+  font-size: 1.4rem;
+  scale: 0.95;
+  display: none;
 }
 
 .job-page__cta-container {
@@ -310,13 +322,14 @@
   width: fit-content;
   background: linear-gradient(
     90deg,
-    rgba(255, 207, 51, 0.15),
-    rgba(255, 207, 51, 0.05)
+    rgb(255, 255, 255),
+    rgb(255, 255, 255)
   );
   border: 1px solid rgba(255, 207, 51, 0.4);
   animation: fadeSlideDown 0.8s ease forwards;
   margin: 0 auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: -3rem;
+  margin-top: 3rem;
 
   .job-page__typewriter {
     margin-left: 0.25rem;
@@ -332,8 +345,33 @@
     padding-top: 8rem;
   }
   .job-page__floating-users {
-    display: none;
+    position: absolute;
+    .job-page__floating-card{
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      z-index: 10;
+      top: 0rem;
+    }
+    .job-page__avatar{
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      color: #ffc014;
+      font-size: 1.2rem;
+    }
+    .job-page__user-name{
+      display: none;
+    }
+    .job-page__user-earn{
+      display: none;
+    }
   }
+
+  .job-page__card-1 { position: absolute; margin-left: -1.5rem; margin-top: 0rem;   }
+.job-page__card-2 { position: absolute; margin-left: 18.5rem; margin-top: 2.5rem; } 
+.job-page__card-3 { display: none; }
+.job-page__card-4 { display: none; }
 
   .hidden-card{
     display: flex;
@@ -385,6 +423,13 @@
   .job-page__hero-subtitle {
     line-height: 1.6;
     font-size: 1.2rem;
+    display: none;
+  }
+
+  .job-page__hero-subtitle-b {
+    line-height: 1.6;
+    font-size: 1.2rem;
+    display: block;
   }
 }
 
@@ -402,19 +447,24 @@
 
 @media (max-width: 480px) {
   .job-page__hero{
-    padding: 6.5rem 2rem;
+    padding: 6.5rem 1rem;
     padding-bottom: 0;
   }
   .job-page__badge{
-    display: none;
+    margin-bottom: -5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
   }
   .job-page__hero-title{
-    font-size: 2.1rem;
-    line-height: 2.5rem;
-    display: none;
+    span{
+      font-size: 2.2rem;
+    }
+    font-size: 2rem;
+    line-height: 3rem;
+    
   }
   .job-page__hero-subtitle {
-    display: none;
+    padding: 0;
   }
   .job-page__floating-card {
     min-width: 200px;

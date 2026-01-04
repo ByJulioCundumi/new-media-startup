@@ -12,15 +12,13 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import Footer from "../../components/footer/Footer";
-import AdminCommissionRequest from "../admin-page/admin-commission-request/AdminCommissionRequest";
-import AffiliateCommissionRequest from "../account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import JobFaq from "../../components/job-faq/JobFaq";
 import { Typewriter } from "react-simple-typewriter";
-import { TbChevronsUp } from "react-icons/tb";
-import { BsFillNodePlusFill } from "react-icons/bs";
-import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
+import { TbChevronsUp, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { BsCashCoin, BsFillNodePlusFill, BsGraphUpArrow, BsPatchCheck } from "react-icons/bs";
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
@@ -50,7 +48,7 @@ function JobPage() {
             key={u.id}
             className={`job-page__floating-card job-page__card-${index + 1}`}
           >
-            <div className="job-page__avatar"><GiLaurelsTrophy /></div>
+            <div className="job-page__avatar"><TbRosetteDiscountCheckFilled /></div>
             <div>
               <p className="job-page__user-name">{u.name}</p>
               <span className="job-page__user-earn">{u.earnings}</span>
@@ -61,11 +59,23 @@ function JobPage() {
 
       {/* ---------- HERO SECTION ---------- */}
       <section className="job-page__hero">
+        <h1 className="job-page__hero-title">
+          <span>Gana Hasta Un <span style={{textDecoration: "underline"}}>70%</span></span> De Comision
+        </h1>
+
+        <p className="job-page__hero-subtitle">
+          Recibe comisiones en USD por promocionar Nuestra Plataforma para Crear CVs. Comienza con un 50% de comision, con posibilidad de aumento hasta el <strong>70%</strong>.
+        </p>
+
+        <p className="job-page__hero-subtitle-b">
+          Recibe comisiones en USD por promocionar Nuestro Creador de CVs. Comienza con un 50%, con posibilidad de aumento hasta <strong>70%</strong>.
+        </p>
+
         <h1 className="job-page__badge">
-          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Gana</span>{" "}
+          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Solo </span>{" "}
           <span className="job-page__typewriter">
             <Typewriter
-              words={["En Dolares Hoy!"]}
+              words={["Miembros Activos!"]}
               loop={0}
               cursor
               cursorStyle="|"
@@ -75,24 +85,6 @@ function JobPage() {
             />
           </span>
         </h1>
-
-        <h1 className="job-page__hero-title">
-          <span>Gana Hasta Un 70%</span> De Comision.
-        </h1>
-
-        <p className="job-page__hero-subtitle">
-          Gana el <strong>50% de comisiones Desde El Primer Dia</strong> Por Promocionar Nuestra Plataforma, con posibilidad de incremento hasta el <strong>70%</strong> luego de 20 ventas.
-        </p>
-
-        <div
-            className={`job-page__floating-card hidden-card job-page__card-${5}`}
-          >
-            <div className="job-page__avatar">{floatingUsers[0].name.charAt(0)}</div>
-            <div>
-              <p className="job-page__user-name">{floatingUsers[0].name}</p>
-              <span className="job-page__user-earn">{floatingUsers[0].earnings}</span>
-            </div>
-          </div>
       </section>
 
       
@@ -101,12 +93,6 @@ function JobPage() {
        <div className="job-page__commissions">
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
-                <h2 className="home-page__job">
-                  Trabaja En Remoto {""}
-                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      , Sin Experiencia
-                    </span>
-                </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
                 
                 <JobOffer />

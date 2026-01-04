@@ -88,7 +88,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("affiliate"))}
           >
             <MdOutlineWorkOutline />
-            <span>Gana en USD</span>
+            <span>Gana Comisiones</span>
           </Link>
 
           {logged && role === "USER" && (

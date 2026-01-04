@@ -36,7 +36,7 @@ const MobileNav = () => {
 
       <NavLink to="/affiliate" className="mobile-nav__item">
         <FaBriefcase />
-        <span>Trabajo</span>
+        <span>Comisiones</span>
       </NavLink>
 
       {
