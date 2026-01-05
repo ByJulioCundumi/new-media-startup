@@ -216,7 +216,7 @@ export default function DashboardCVs() {
   };
 
   return (
-    <>
+    <div className="dashboard-box">
       <div className="dashboard-cvs">
       <div className="dashboard-header">
         <div className="header-left">
@@ -411,16 +411,35 @@ export default function DashboardCVs() {
     </div>
     <div className="line"></div>
     {/* ===== OFERTA LABORAL ===== */}
-          <div className="home-page__offer">
-            <h2 className="home-page__job">
-                  Gana En USD
+          <div className="job-page__commissions">
+        {/* ===== OFERTA LABORAL ===== */}
+              <div className="home-page__offer">
+                <h2 className="home-page__job">
+                  Programa {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      , Sin Experiencia
+                      De Afiliados
                     </span>
                 </h2>
-            <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
-            <JobOffer />
-          </div>
-    </>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>
+                
+                <JobOffer />
+              </div>
+
+              <h1 className="job-page__badge">
+          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Solo </span>{" "}
+          <span className="job-page__typewriter">
+            <Typewriter
+              words={["Miembros Activos!"]}
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
+          </span>
+        </h1>
+              </div>
+    </div>
   );
 }

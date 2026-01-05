@@ -222,19 +222,22 @@
 
   &__job {
     text-align: center;
-    font-size: 1.6rem;
-    font-family: Georgia, 'Times New Roman', Times, serif !important;
+    font-size: 2.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
     line-height: 2rem;
 
-    span{
-      
-    }
+    
   }
 
   &__offer {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+
+    p{
+      max-width: 450px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -294,6 +297,13 @@
   .companies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+
+  .home-page{
+    &__job{
+    font-size: 1.8rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  }
   }
 }
 

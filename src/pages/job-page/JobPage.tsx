@@ -57,21 +57,21 @@ function JobPage() {
         ))}
       </div>
 
-      {/* ---------- HERO SECTION ---------- */}
-      <section className="job-page__hero">
-        <h1 className="job-page__hero-title">
-          <span>Gana Hasta Un <span style={{textDecoration: "underline"}}>70%</span></span> De Comision
-        </h1>
+       <div className="job-page__commissions">
+        {/* ===== OFERTA LABORAL ===== */}
+              <div className="home-page__offer">
+                <h2 className="home-page__job jop-page-title-top">
+                  Haz Dinero En Linea
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                      , Sin Experiencia
+                    </span>
+                </h2>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>
+                
+                <JobOffer />
+              </div>
 
-        <p className="job-page__hero-subtitle">
-          Recibe comisiones en USD por promocionar Nuestra Plataforma para Crear CVs. Comienza con un 50% de comision, con posibilidad de aumento hasta el <strong>70%</strong>.
-        </p>
-
-        <p className="job-page__hero-subtitle-b">
-          Recibe comisiones en USD por promocionar Nuestro Creador de CVs. Comienza con un 50%, con posibilidad de aumento hasta <strong>70%</strong>.
-        </p>
-
-        <h1 className="job-page__badge">
+              <h1 className="job-page__badge">
           <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Solo </span>{" "}
           <span className="job-page__typewriter">
             <Typewriter
@@ -85,24 +85,6 @@ function JobPage() {
             />
           </span>
         </h1>
-      </section>
-
-      
-
-
-       <div className="job-page__commissions">
-        {/* ===== OFERTA LABORAL ===== */}
-              <div className="home-page__offer">
-                <h2 className="home-page__job">
-                  Haz Dinero En Linea
-                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      , Sin Experiencia
-                    </span>
-                </h2>
-                <p style={{textAlign: "center", color: "#818181ff"}}>Unete a cientos de afiliados que ya generan ingresos en linea.</p>
-                
-                <JobOffer />
-              </div>
 
         <JobFaq/>
       </div>

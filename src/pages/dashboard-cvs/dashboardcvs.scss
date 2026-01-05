@@ -8,6 +8,10 @@
   gap: 32px;
 }
 
+.dashboard-box{
+  padding-bottom: 2rem;
+}
+
 .line{
   border-bottom: 1px solid rgba(0, 0, 0, 0.053);
   margin: 0 6rem;
@@ -547,6 +551,10 @@
     scale: 0.9;
     margin: -0.5rem -2rem;
   }
+
+  .dashboard-box{
+  padding-bottom: 8rem;
+}
 }
 
 /* Mobile pequeño */

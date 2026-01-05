@@ -309,9 +309,12 @@
 }
 
 
+.jop-page-title-top{
+  margin-top: 9rem;
+}
+
 
 .job-page__commissions{
-  margin-top: 4rem;
   font-size: 1.1rem;
 }
 
@@ -321,21 +324,16 @@
   padding: 0.45rem 1rem;
   border-radius: 999px;
   width: fit-content;
-  background: linear-gradient(
-    90deg,
-    rgb(255, 255, 255),
-    rgb(255, 255, 255)
-  );
+  background-color: white;
   border: 1px solid rgba(255, 207, 51, 0.4);
   animation: fadeSlideDown 0.8s ease forwards;
   margin: 0 auto;
-  margin-bottom: -3rem;
-  margin-top: 3rem;
 
   .job-page__typewriter {
     margin-left: 0.25rem;
     color: #ffbb00;
     font-weight: 700;
+    background-color: white;
   }
 }
 
@@ -352,7 +350,7 @@
       box-shadow: none;
       border: none;
       z-index: 10;
-      top: 18rem;
+      top: 0rem;
     }
     .job-page__avatar{
       background-color: transparent;
@@ -369,8 +367,8 @@
     }
   }
 
-  .job-page__card-1 { position: absolute; margin-left: 0rem; margin-top: 0rem;   }
-.job-page__card-2 { position: absolute; margin-left: 18rem; margin-top: 0rem; } 
+  .job-page__card-1 { display: none;  }
+.job-page__card-2 { display: none;  } 
 .job-page__card-3 { display: none; }
 .job-page__card-4 { display: none; }
 
@@ -447,14 +445,23 @@
 }
 
 @media (max-width: 480px) {
-  .job-page__hero{
+  .job-page__commissions{
+  margin-top: 7rem;
+}
+
+.jop-page-title-top{
+  margin-top: 0rem;
+}
+
+.job-page__hero{
     padding: 6.5rem 1rem;
-    padding-bottom: 0;
+    
   }
   .job-page__badge{
-    margin-bottom: -5rem;
   margin-top: 2rem;
   font-size: 1rem;
+  background-color: white;
+  display: none;
   }
   .job-page__hero-title{
     font-family:  Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -487,3 +494,5 @@
     font-size: 26px;
   }
 }
+
+
