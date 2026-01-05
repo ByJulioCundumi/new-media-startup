@@ -9,7 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import Footer from "../../components/footer/Footer";
 import JobOffer from "../../components/job-offer/JobOffer";
@@ -17,12 +17,12 @@ import { RiArrowDownWideLine } from "react-icons/ri";
 import JobFaq from "../../components/job-faq/JobFaq";
 import { Typewriter } from "react-simple-typewriter";
 import { TbChevronsUp, TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { BsCashCoin, BsFillNodePlusFill, BsGraphUpArrow, BsPatchCheck } from "react-icons/bs";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import type { IState } from "../../interfaces/IState";
 
 function JobPage() {
   const [page, setPage] = useState<"info" | "affiliates" | "request">("info");
   const dispatch = useDispatch()
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
 
   useEffect(()=>{
     dispatch(setSidebar("affiliate"))
@@ -60,7 +60,7 @@ function JobPage() {
        <div className="job-page__commissions">
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
-                <h2 className="home-page__job jop-page-title-top">
+                <h2 className={`home-page__job jop-page-title-top`}>
                   Haz Dinero En Linea
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                       , Sin Experiencia

@@ -10,8 +10,10 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { MdSettingsSuggest } from "react-icons/md";
+import { MdOutlineWorkOutline, MdSettingsSuggest } from "react-icons/md";
 import { TbSettingsCode } from "react-icons/tb";
+import { LuFileSearch } from "react-icons/lu";
+import { HiHome } from "react-icons/hi2";
 
 const MobileNav = () => {
   const {logged} = useSelector((state:IState)=>state.user)
@@ -19,12 +21,12 @@ const MobileNav = () => {
   return (
     <nav className="mobile-nav">
       <NavLink to="/" className="mobile-nav__item">
-        <FaHome />
+        <HiHome />
         <span>Inicio</span>
       </NavLink>
 
       <NavLink to="/templates" className="mobile-nav__item">
-        <FaUsers />
+        <LuFileSearch />
         <span>Plantillas</span>
       </NavLink>
 
@@ -35,7 +37,7 @@ const MobileNav = () => {
 
 
       <NavLink to="/affiliate" className="mobile-nav__item">
-        <FaBriefcase />
+        <MdOutlineWorkOutline />
         <span>Comisiones</span>
       </NavLink>
 

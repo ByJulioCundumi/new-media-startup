@@ -129,8 +129,9 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 2rem;
-  max-width: 1100px;
+  max-width: 500px;
   width: 100%;
+  height: fit-content;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -151,8 +152,8 @@
 
 .modal-close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0rem;
   background: none;
   border: none;
   font-size: 1.6rem;
@@ -325,9 +326,32 @@
   }
 }
 
+.commission-form-container{
+  height: fit-content;
+}
 
+@media (max-width: 500px) { 
+  .modal-content.job-offer-modal {
+    padding: 2rem 1rem;
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+}
 
 @media (max-width: 450px) {
+  .modal-overlay{
+    padding: 0.5rem;
+  }
+
+  .modal-content.job-offer-modal {
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
   .job-stats{
     display: flex;
     justify-content: center;

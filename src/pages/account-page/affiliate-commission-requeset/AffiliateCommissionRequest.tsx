@@ -18,8 +18,6 @@ import { getMyCommissionApi } from "../../../api/auth";
 import "./affiliatecommissisonrequest.scss";
 import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { TbAlertSquare } from "react-icons/tb";
-import { MdManageSearch } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
@@ -125,7 +123,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       setMessage(err.message || "Error al procesar la solicitud.");
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage(null), 8000);
+      setTimeout(() => setMessage(null), 1500);
     }
   };
 
@@ -147,7 +145,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       setTimeout(() => window.location.reload(), 1500);
     } catch (err: any) {
       setMessage(err.message || "Error al intentar cancelar la solicitud.");
-      setTimeout(() => setMessage(null), 6000);
+      setTimeout(() => setMessage(null), 1500);
     } finally {
       setLoading(false);
     }
@@ -160,7 +158,7 @@ const AffiliateCommissionRequest: React.FC = () => {
   const handleRequestClick = () => {
     if (!bothFieldsFilled) {
       setMessage("Por favor, completa ambos campos antes de continuar.");
-      setTimeout(() => setMessage(null), 6000);
+      setTimeout(() => setMessage(null), 1500);
       return;
     }
 
@@ -178,12 +176,12 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   const getSubmitButtonText = () => {
     if (!request || isCancelled || isRejected) {
-      return "Enviar Solicitud A Revision";
+      return "Enviar Solicitud";
     }
     if (isApproved) {
-      return "Actualizar Mis Datos De Hotmart";
+      return "Actualizar cuenta de hotmart";
     }
-    return "Enviar Solicitud A Revision";
+    return "Enviar Solicitud";
   };
 
   if (initialLoading) {
@@ -196,7 +194,7 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   return (
     <div className="affiliate-commission-request">
-      {sidebarOption === "account" && <h3>Tabajo Remoto - Postulacion</h3>}
+      {sidebarOption === "account" && <h3>Programa de afiliados</h3>}
       <form onSubmit={(e) => e.preventDefault()} className="affiliate-commission-request__form">
         <div className="affiliate-commission-request__fields">
           <div className="affiliate-commission-request__field">
@@ -224,7 +222,7 @@ const AffiliateCommissionRequest: React.FC = () => {
                 name="hotmartEmail"
                 value={form.hotmartEmail}
                 onChange={handleChange}
-                placeholder="tuemail@hotmart.com"
+                placeholder="tuemailhotmart@gmail.com"
                 required
                 disabled={loading || isPending}
               />
@@ -250,7 +248,7 @@ const AffiliateCommissionRequest: React.FC = () => {
 
               {isApproved && (
                 <>
-                  <strong>¡Comisión Aumentada: {request.approvedCommission}%!</strong>
+                  <strong>¡Fuieste Aceptado!</strong>
                   <p>Estás ganando más por cada venta.</p>
                   <p className="status-card__note">
                     Si cambiaste de cuenta Hotmart, actualiza tus datos de afiliado para recuperar tu comisión del {request.approvedCommission}%.
@@ -294,8 +292,8 @@ const AffiliateCommissionRequest: React.FC = () => {
               className="btn btn--primary"
               onClick={handleRequestClick}
             >
-              <RiMailSendFill />
               {getSubmitButtonText()}
+              <RiMailSendFill />
             </button>
           )}
 
@@ -348,34 +346,6 @@ const AffiliateCommissionRequest: React.FC = () => {
         </div>
       )}
 
-      {/* Popup exclusivo para usuarios FREE */}
-      {showUpgradeModal && (
-        <div className="modal-overlay">
-          <div className="modal modal--upgrade">
-            <TbAlertSquare size={40} className="upgrade-icon" />
-            <p>Solo los usuarios que han adquirido un <strong>plan mensual o anual</strong> pueden solicitar el incremento de comisión al 50%.</p>
-
-            <div className="modal-actions">
-              <button
-                className="btn btn--secondary"
-                onClick={() => setShowUpgradeModal(false)}
-              >
-                Cerrar
-              </button>
-              <button
-                className="btn btn--primary"
-                onClick={() => {
-                  setShowUpgradeModal(false);
-                  navigate("/pricing")
-                }}
-              >
-                <MdManageSearch size={22} /> Explorar Planes
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Modal de cancelación */}
       {showCancelConfirm && (
         <div className="modal-overlay">
@@ -398,7 +368,7 @@ const AffiliateCommissionRequest: React.FC = () => {
                 }}
                 disabled={loading}
               >
-                Sí, cancelar
+                Sí
               </button>
             </div>
           </div>

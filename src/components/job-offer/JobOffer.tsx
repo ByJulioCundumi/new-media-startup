@@ -1,29 +1,23 @@
 import "./jobOffer.scss";
 import {
-  FaBriefcase,
-  FaUsers,
-  FaArrowRight,
   FaTimes,
 } from "react-icons/fa";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { getAllCvsApi, getCvCountApi } from "../../api/cv";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
-import { HiOutlineCheckBadge } from "react-icons/hi2";
-import { TbNumber, TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { MdKeyboardDoubleArrowDown, MdOutlineNumbers, MdOutlineTimelapse, MdPendingActions } from "react-icons/md";
-import { GiLaurelsTrophy, GiTrophyCup } from "react-icons/gi";
-import { LuExternalLink, LuTimer } from "react-icons/lu";
-import { BsEnvelopeArrowUpFill } from "react-icons/bs";
+import {  MdPendingActions } from "react-icons/md";
+import { LuExternalLink } from "react-icons/lu";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import { IoFootstepsSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { openAuthModal } from "../../reducers/authModalSlice";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [onlineCvs, setOnlineCvs] = useState(0);
   const [loadingCvs, setLoadingCvs] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const isLogged = useSelector((state: IState) => state.user.logged);
   const {commissionRequestStatus, subscriptionExpiresAt} = useSelector((state: IState) => state.user);
@@ -31,24 +25,23 @@ const JobOffer = () => {
   const openModal = async () => {
     // Caso 1: No está logueado
     if (!isLogged) {
-      setErrorMessage("Debes iniciar sesión para postularte.");
+      alert("Debes iniciar sesión para postularte.");
+      dispatch(openAuthModal({}))
       return;
     }
 
     // Caso 2: Está logueado → verificar CVs online
     setLoadingCvs(true);
     try {
-      const count = await getCvCountApi();
-
-      if (count === 0 || !hasValidSubscriptionTime(subscriptionExpiresAt)) {
-        setErrorMessage(
-          "Crea al menos Un CV (Sin Marca De Agua) para postular."
+      if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
+        alert(
+          "Este programa solo esta disponible para usuarios con una suscripcion activa."
         );
+        navigate("/pricing")
         return;
       }
 
       // Caso 3: Todo OK → abrir modal
-      setOnlineCvs(count);
       setIsModalOpen(true);
       setErrorMessage(null);
     } catch (err) {
@@ -120,20 +113,22 @@ const JobOffer = () => {
             <div>
               <h2>¡Completa tu postulación!</h2>
               <p className="modal-subtitle">
-                <strong>Nro. (1) </strong> <a href="#">Haz clic aqui</a> y solicita tu afiliacion desde hotmart. (Crea una cuenta si no tienes). <br />
-                <strong>Nro. (2) </strong> Completa los campos <span>Nombre y Email</span> de la cuenta que solicitó la afiliacion y envia a revision.
+                <strong>Paso. (1) </strong> <a href="#">Solicita tu afiliacion</a> desde hotmart. <br />
+              </p>
+              <p className="modal-subtitle">
+                <strong>Paso. (2) </strong> Completa los campos de la cuenta hotmart solicitante.
               </p>
             </div>
 
             {/* Formulario de comisión solo si hay CVs online */}
-            {onlineCvs > 0 && (
+            {(
               <div className="commission-form-container">
                 <AffiliateCommissionRequest />
               </div>
             )}
 
             <p className="modal-footer">
-              ¡Trabaja Con Nosotros! Ya hay más de 1.248 Postulantes aceptadas.
+              ¡únete a cientos de afiliados que ya generan ingresos en linea!
             </p>
           </div>
         </div>

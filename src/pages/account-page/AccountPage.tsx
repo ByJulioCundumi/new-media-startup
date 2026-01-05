@@ -4,11 +4,8 @@ import GeneralInfoForm from "./general-info-form/GeneralInfoForm";
 import PasswordSettings from "./password-settings/PasswordSettings";
 import { useEffect, useState } from "react";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import AffiliateCommissionRequest from "./affiliate-commission-requeset/AffiliateCommissionRequest";
 import { FiTrash2 } from "react-icons/fi";
 import { HiOutlineArrowLeftStartOnRectangle } from "react-icons/hi2";
-import type { IState } from "../../interfaces/IState";
-import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { logout, deleteAccount } from "../../api/auth"; // ← Asegúrate de importar deleteAccount
 import { clearUser } from "../../reducers/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 function AccountPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);
 
   // Estado del modal de eliminación
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -74,7 +70,6 @@ function AccountPage() {
   return (
     <section className="account-page">
       <GeneralInfoForm />
-      {hasValidSubscriptionTime(subscriptionExpiresAt) && <AffiliateCommissionRequest />}
       <PasswordSettings />
 
       {/* ===== ACCIONES DE CUENTA ===== */}
