@@ -61,12 +61,12 @@ function JobPage() {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className={`home-page__job jop-page-title-top`}>
-                  Haz Dinero En Linea
+                  Haz Dinero En Remoto, {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      , Sin Experiencia
+                       Sin Experiencia
                     </span>
                 </h2>
-                <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones en (USD) de hasta el 70% por promocionar nuestro creador de Curriculums</p>
                 
                 <JobOffer />
               </div>

@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  padding: 2rem;
 }
 
 /* ===========================
@@ -341,4 +342,38 @@
   align-items: center;
   gap: 0.3rem;
   background-color: rgb(255, 255, 255);
+}
+
+.template-filter-box{
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 1100px) { 
+
+}
+
+@media (max-width: 770px) { 
+  .template-popup{
+    height: calc(90vh - 3rem);
+  }
+  .template-popup-overlay{
+    align-items: start;
+    padding: 0.5rem;
+    padding-top: 2rem;
+  }
+
+  .template-popup-filters-fixed{
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+  }
+
+  .template-fav-text{
+    display: none;
+  }
+
+  .template-popup-item{
+    scale: 0.85;
+    margin: -2rem -3rem;
+  }
 }

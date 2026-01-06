@@ -149,7 +149,8 @@ export default function TemplatesPopup() {
             selectedCategories={selectedCategories}
             onCategoryChange={setSelectedCategories}
           />
-          <SearchBar
+          <div className="template-filter-box">
+            <SearchBar
             textHolder="Buscar plantilla..."
             value={searchQuery}
             onChange={setSearchQuery}
@@ -159,8 +160,9 @@ export default function TemplatesPopup() {
             onClick={() => setShowFavorites(!showFavorites)}
           >
             {showFavorites ? <IoStar className="filled" /> : <IoStarOutline />}
-            {showFavorites ? "Todas" : "Favoritos"}
+            <p className="template-fav-text">{showFavorites ? "Todas" : "Favoritos"}</p>
           </button>
+          </div>
         </div>
 
         {/* GRID SCROLLABLE */}

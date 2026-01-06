@@ -127,7 +127,7 @@ const getProgressColorClass = (progress: number) => {
           <div className="cv-roma__identitySection--qr-wrapper">
             <QRCodeSVG
               value={qrUrl}
-              size={85}
+              size={70}
               level="Q"
               bgColor="#ffffff"
               fgColor={styles.qrColor}
