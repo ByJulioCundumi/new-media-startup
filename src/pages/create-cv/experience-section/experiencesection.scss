@@ -47,7 +47,7 @@
     border-radius: 18px;
     padding: 20px;
     position: relative;
-    border: 2px dashed #9fadad29;
+    border: 2px dashed #00000029;
     background: #9baaaa00;
   }
 
@@ -130,4 +130,146 @@
   }
 }
 
+@media (max-width: 768px) {
+  .experience-section{
+    max-width: 280px;
+    .experience-card {
+    border-radius: 18px;
+    padding: 0;
+    position: relative;
+    border: 2px dashed #00000000;
+    background: #9baaaa00;
+    padding-top: 10px;
+      border-top: 2px dashed #00000017;
+      border-radius: 0px;
+  }
+  }
+}
 
+
+
+/* ============================= */
+/* 📱 RESPONSIVE – MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .experience-section {
+    gap: 16px;
+    padding: 0 4px;
+  }
+
+  /* HEADER */
+  .experience-section__header {
+    gap: 10px;
+
+    h2 {
+      font-size: 18px;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .experience-section__content {
+    gap: 16px;
+  }
+
+  /* CARD */
+  .experience-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  /* GRID → COLUMNA */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* CAMPOS */
+  .field {
+    label {
+      font-size: 13px;
+    }
+
+    input,
+    select,
+    textarea {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+  }
+
+  /* FECHAS */
+  .experience-section__dates {
+    gap: 14px;
+  }
+
+  .double {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .present-toggle {
+    font-size: 13px;
+  }
+
+  /* EDITOR */
+  .description-field {
+    .editor-card {
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .tiptap {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+  }
+
+  /* BOTÓN ELIMINAR */
+  .remove-btn {
+    top: 10px;
+    right: 10px;
+  }
+
+  /* BOTÓN AGREGAR */
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+    font-size: 15px;
+  }
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .experience-section__header {
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .experience-card {
+    padding: 14px;
+  }
+
+  .field input,
+  .field select {
+    border-radius: 12px;
+  }
+
+  .present-toggle {
+    font-size: 12px;
+  }
+
+  .description-field {
+    .tiptap {
+      font-size: 13px;
+    }
+  }
+}

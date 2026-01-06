@@ -323,7 +323,8 @@ useEffect(() => {
           </div>
         </div>
       </div>
-
+      
+      <div className={sidebarOption === "create" && !previewPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
         
@@ -454,6 +455,7 @@ useEffect(() => {
           <p className="cv-tokyo__page--number">Pagina 2</p>
         </div>
       )}
+      </div>
 
     </div>
   );

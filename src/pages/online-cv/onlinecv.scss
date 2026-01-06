@@ -344,6 +344,10 @@
     scale: 0.4;
     margin: -21rem -15rem;
   }
+
+  &__loading-container { 
+      flex-direction: column;
+    }
 }
 }
 

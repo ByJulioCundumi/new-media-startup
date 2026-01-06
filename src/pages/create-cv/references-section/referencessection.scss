@@ -98,3 +98,104 @@
   }
 }
 
+
+@media (max-width: 768px) {
+  .references-section{
+    max-width: 280px;
+    .reference-card {
+      padding: 0;
+      position: relative;
+      border: 2px dashed #00000000;
+      background: #9baaaa00;
+      padding-top: 10px;
+      border-top: 2px dashed #00000017;
+      border-radius: 0px;
+  }
+  }
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE – MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .references-section {
+    gap: 14px;
+    padding: 0 4px;
+  }
+
+  /* HEADER */
+  .references-section__header {
+    gap: 10px;
+
+    h2 {
+      font-size: 18px;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .references-section__content {
+    gap: 14px;
+  }
+
+  /* CARD */
+  .reference-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  /* GRID → COLUMNA */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* INPUTS */
+  .field {
+    label {
+      font-size: 13px;
+    }
+
+    input {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+  }
+
+  /* BOTÓN ELIMINAR */
+  .remove-btn {
+    top: 10px;
+    right: 10px;
+  }
+
+  /* BOTÓN AGREGAR */
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+    font-size: 15px;
+  }
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .references-section__header {
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .reference-card {
+    padding: 14px;
+  }
+
+  .field input {
+    border-radius: 12px;
+  }
+}

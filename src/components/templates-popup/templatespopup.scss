@@ -89,9 +89,12 @@
     cursor: pointer;
     font-weight: 500;
     transition: 0.2s;
+    border-color: #999999;
 
     &.active {
-      background: #ffeaa7;
+      color: #f1c40f;
+      background: #ffffff;
+    border-color: #f1c40f;
     }
   }
 }
@@ -377,3 +380,6 @@
     margin: -2rem -3rem;
   }
 }
+
+
+

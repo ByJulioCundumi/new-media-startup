@@ -138,3 +138,102 @@
     }
   }
 }
+
+
+/* ============================= */
+/* 📱 RESPONSIVE – MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .personal-info-section {
+    gap: 16px;
+    padding: 0 4px;
+    width: 100%;
+    max-width: 280px;
+
+    &__header {
+      gap: 10px;
+
+      h2 {
+        font-size: 18px;
+
+        svg {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    &__content {
+      gap: 16px;
+    }
+  }
+
+  /* CARD */
+  .info-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  /* GRID → COLUMNA */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* INPUTS */
+  .field {
+    label {
+      font-size: 13px;
+    }
+
+    input {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+  }
+
+  /* BOTÓN AGREGAR */
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+  }
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .personal-info-section__header {
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .info-card {
+    padding: 14px;
+  }
+
+  .field input {
+    border-radius: 12px;
+  }
+
+  /* SUGERENCIAS */
+  .suggestions-box {
+    padding: 12px;
+
+    .suggestions-title {
+      font-size: 13px;
+    }
+
+    .suggestions-list {
+      gap: 8px;
+    }
+
+    .suggestion-item {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+}

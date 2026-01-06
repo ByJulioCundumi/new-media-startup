@@ -124,7 +124,7 @@ const ExperienceSection: React.FC = () => {
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>
+        <div className={`progress-indicator-box ${progressColorClass}`}>
           {progress}%
         </div>
 

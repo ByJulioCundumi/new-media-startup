@@ -294,9 +294,12 @@
 
 /* Mobile */
 @media (max-width: 625px) {
-  .companies-grid {
+  .home-page{
+    .companies-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
   }
 
   .home-page{

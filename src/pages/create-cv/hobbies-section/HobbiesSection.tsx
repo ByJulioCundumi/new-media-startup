@@ -100,7 +100,7 @@ const HobbiesSection: React.FC = () => {
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>{progress}%</div>
+        <div className={`progress-indicator-box ${progressColorClass}`}>{progress}%</div>
 
         <button
           className={`toggle-btn ${isOpen ? "open" : ""}`}

@@ -92,7 +92,7 @@ const IdentitySection = () => {
           <FaRegUserCircle /> Sobre Mi
         </h2>
 
-        <div className={`progress-indicator ${progressColorClass}`}>
+        <div className={`progress-indicator-box ${progressColorClass}`}>
           {progress}%
         </div>
 

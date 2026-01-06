@@ -85,7 +85,7 @@ export default function ProfileSection() {
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>
+        <div className={`progress-indicator-box ${progressColorClass}`}>
           {progress}%
         </div>
 

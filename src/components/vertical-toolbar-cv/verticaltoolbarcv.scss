@@ -47,10 +47,15 @@
 }
 
 
-
 /* =========================
    MOBILE TOOLBAR
 ========================= */
+@media (max-width: 820px) { 
+  .vertical-preview{
+    display: none;
+  }
+}
+
 @media (max-width: 500px) {
   .toolbar-toggle {
     display: flex;

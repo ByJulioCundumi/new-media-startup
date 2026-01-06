@@ -49,7 +49,7 @@ const VerticalToolbarCV: React.FC = () => {
         </button>
 
         <button
-          className="vertical-toolbar-btn"
+          className="vertical-toolbar-btn vertical-preview"
           title="Vista previa"
           onClick={() => dispatch(togglePreviewPopup())}
         >

@@ -11,6 +11,7 @@
   justify-content: center;
   z-index: 3000;
   animation: fadeIn 0.2s ease-out;
+  padding: 0.5rem;
 }
 
 @keyframes fadeIn {
@@ -120,5 +121,12 @@ h2 {
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+}
+
+
+@media (max-width: 500px) { 
+  .createcv-modal{
+    text-align: center;
   }
 }

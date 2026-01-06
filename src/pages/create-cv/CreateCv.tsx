@@ -325,7 +325,7 @@ const [showSections, setShowSections] = useState(true)
       <ToolbarCV />
       <div className={showSections ? "create-cv__sections" : "create-cv__sections-hidden"}><SectionProgress /></div>
       <VerticalToolbarCV />
-
+    
       <div className="create-cv__template">
         {SelectedTemplate && (
           <SelectedTemplate

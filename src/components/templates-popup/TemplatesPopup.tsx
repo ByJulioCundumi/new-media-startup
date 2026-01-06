@@ -21,6 +21,7 @@ import { MdOutlineCheck, MdOutlineCreditCardOff, MdOutlineDiamond } from "react-
 import { Sparkles } from "lucide-react";
 import { BsPatchCheck } from "react-icons/bs";
 import { setAllowQrCode } from "../../reducers/identitySlice";
+import { FiStar } from "react-icons/fi";
 
 export default function TemplatesPopup() {
   const dispatch = useDispatch();
@@ -159,7 +160,7 @@ export default function TemplatesPopup() {
             className={`fav-filter ${showFavorites ? "active" : ""}`}
             onClick={() => setShowFavorites(!showFavorites)}
           >
-            {showFavorites ? <IoStar className="filled" /> : <IoStarOutline />}
+            {showFavorites ? <IoStar/> : <FiStar/>}
             <p className="template-fav-text">{showFavorites ? "Todas" : "Favoritos"}</p>
           </button>
           </div>

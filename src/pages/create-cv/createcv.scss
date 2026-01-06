@@ -211,48 +211,4 @@
   }
 
 
-@media (max-width: 1380px) { 
-  .create-cv{
-    &__template{
-      scale: 0.7;
-      margin: -10.5rem 0;
-    }
-  }
-}
 
-@media (max-width: 1210px) { 
-  .create-cv{
-    &__template{
-      scale: 0.5;
-      margin: -14.5rem 0;
-    }
-  }
-}
-
-@media (max-width: 1100px) { 
-  .create-cv{
-    padding-top: 8rem;
-  }
-
-  .save-mode-indicator{
-    top: 8rem;
-    right: 0.5rem;
-  }
-}
-
-@media (max-width: 770px) {  
-
-}
-
-@media (max-width: 500px) { 
-  .create-cv{
-    &__template{
-      scale: 0.38;
-      margin: -17.5rem 0;
-    }
-  }
-  .save-mode-indicator{
-    top: 8rem;
-    right: 0.5rem;
-  }
-}

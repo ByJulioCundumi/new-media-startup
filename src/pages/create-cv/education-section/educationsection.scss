@@ -151,3 +151,20 @@
       transform: translateY(-1px);
     }
   }
+
+
+  @media (max-width: 768px) {
+  .education-section{
+    max-width: 280px;
+    .education-card {
+    border-radius: 18px;
+    padding: 0;
+    position: relative;
+    border: 2px dashed #00000000;
+    background: #9baaaa00;
+    padding-top: 10px;
+      border-top: 2px dashed #00000017;
+      border-radius: 0px;
+  }
+  }
+}

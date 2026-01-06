@@ -164,3 +164,91 @@
     }
   }
 }
+
+
+/* ============================= */
+/* 📱 RESPONSIVE – MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .identity-section {
+    gap: 16px;
+    padding: 0 4px;
+
+    &__header {
+      h2 {
+        font-size: 18px;
+
+        svg {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .identity-flex {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  /* FOTO */
+  .identity-section__photo-wrapper {
+    min-width: unset;
+    width: 100%;
+    margin: 0;
+  }
+
+  .identity-section__photo-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .add-photo-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  /* INPUTS */
+  .identity-inputs {
+    width: 100%;
+
+    label {
+      font-size: 14px;
+
+      input {
+        font-size: 14px;
+        padding: 11px 14px;
+      }
+    }
+  }
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .identity-section__header {
+    gap: 10px;
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .identity-section__photo-container {
+    width: 105px;
+    height: 105px;
+  }
+
+  .add-photo-btn {
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  .identity-inputs label input {
+    border-radius: 12px;
+  }
+}

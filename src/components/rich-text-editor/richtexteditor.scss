@@ -85,3 +85,23 @@
     min-height: 160px;
   }
 }
+
+
+
+@media (max-width: 770px) {  
+  .rich-text-editor{
+    padding: 0;
+    border: 2px dashed #ffffff00;
+  background: #9baaaa00;
+
+  &__toolbar{
+    gap: 0;
+    &-left,
+    &-right {
+      scale: 0.9;
+      margin: 0 -0.5rem;
+      margin-left: -1rem;
+    }
+  }
+  }
+}

@@ -23,6 +23,7 @@ import { RiFileEditLine } from "react-icons/ri";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import { Typewriter } from "react-simple-typewriter";
+import { FiStar } from "react-icons/fi";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -157,7 +158,7 @@ export default function TemplatesPage() {
           className={`tp-fav-toggle ${showFavorites ? "active" : ""}`}
           onClick={() => setShowFavorites(!showFavorites)}
         >
-          <IoStar className={showFavorites ? "filled" : ""} />
+          {showFavorites ? <IoStar/> : <FiStar/>}
           <span className="fav-text">{showFavorites ? "Todas" : "Favoritos"}</span>
         </button>
         </div>

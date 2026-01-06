@@ -126,3 +126,11 @@
     }
   }
 }
+
+@media (max-width: 500px){
+  .app{
+    &__loading-container { 
+      flex-direction: column;
+    }
+  }
+}

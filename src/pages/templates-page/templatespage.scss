@@ -80,12 +80,12 @@
   box-shadow: 0 5px 18px rgba(78, 70, 229, 0.111);
   background-color: white;
   cursor: pointer;
-  border: 2px solid #5b60f59d;
+  border: 2px solid #a7a7a7;
   transition: 0.25s ease;
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
-  color: #5b5ff5;
+  color: #f1c40f;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -95,7 +95,7 @@
   }
 
   &.active {
-    background: #ffefab;
+    background: #ffffff;
     border-color: #f1c40f;
   }
 }

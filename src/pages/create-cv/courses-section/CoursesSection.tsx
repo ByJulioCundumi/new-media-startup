@@ -147,7 +147,7 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({ initialData, onChange }
           )}
         </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>
+        <div className={`progress-indicator-box ${progressColorClass}`}>
           {progress}%
         </div>
 

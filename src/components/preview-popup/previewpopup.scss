@@ -39,8 +39,13 @@
 }
 
 .preview-popup__content {
-  background: rgb(107, 107, 107);
-  padding: 0;
+  background: rgba(107, 107, 107, 0);
+  padding: 4rem;
+  margin: 0;
+}
+
+.movile-text{
+  display: none;
 }
 
 /* Evitar páginas en blanco */
@@ -63,20 +68,24 @@
   .preview-popup__content {
     margin: 0 !important;
     padding: 0 !important;
+    scale: 1;
   }
+  .movile-text{
+  display: none;
+}
 }
 
-
-@media (max-width: 700px) { 
-  .preview-popup__content{
-    scale: 0.6;
-    margin: -5rem 0;
-  }
-}
-
-@media (max-width: 550px) { 
-  .preview-popup__content{
-    scale: 0.4;
-    margin: -10rem 0;
+@media (max-width: 820px){
+  .movile-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
   }
 }

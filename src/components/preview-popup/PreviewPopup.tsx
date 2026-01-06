@@ -50,6 +50,11 @@ export const PreviewPopup: React.FC<PreviewPopupProps> = ({ children }) => {
         <div ref={printRef} className="preview-popup__content">
           {children}
         </div>
+
+        <div onClick={closePopup} className="movile-text">
+          <p>Modo Descarga...</p>
+          <p>Toca la pantalla para volver</p>
+        </div>
       </div>
     </div>
   );

@@ -194,3 +194,131 @@
   pointer-events: none;
   height: 0;
 }
+
+
+/* ============================= */
+/* 📱 RESPONSIVE – MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .profile-section {
+    gap: 16px;
+    max-width: 280px;
+  }
+
+  /* HEADER */
+  .profile-section__header {
+    gap: 10px;
+
+    h2 {
+      font-size: 17px;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .profile-section__content {
+    gap: 14px;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px;
+
+    .toolbar-left,
+    .toolbar-right {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 8px 9px;
+    }
+
+    .toolbar-save {
+      width: 100%;
+      justify-content: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+
+  /* EDITOR */
+  .editor-card {
+    padding: 14px;
+    border-radius: 14px;
+    min-height: 140px;
+  }
+
+  .tiptap {
+    font-size: 15px;
+    line-height: 1.55;
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 19px;
+    }
+
+    h3 {
+      font-size: 17px;
+    }
+  }
+
+  /* BOTÓN IA */
+  .ai-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 14px;
+  }
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .profile-section__header {
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .toolbar {
+    border-radius: 14px;
+
+    button {
+      font-size: 11px;
+      padding: 7px 8px;
+      border-radius: 10px;
+    }
+  }
+
+  .editor-card {
+    padding: 12px;
+  }
+
+  .tiptap {
+    font-size: 14px;
+
+    h1 {
+      font-size: 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    h3 {
+      font-size: 16px;
+    }
+  }
+}

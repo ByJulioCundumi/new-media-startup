@@ -9,6 +9,7 @@ import { Typewriter } from "react-simple-typewriter";
 function Hero() {
   // Tomamos una plantilla cualquiera para el preview (ej: la primera)
   const TemplateComponent = templates[0].component;
+  const year = new Date().getFullYear();
 
   return (
     <section className="hero">
@@ -32,7 +33,7 @@ function Hero() {
   </h1>
 
   <h2 className="hero__title">
-    Diseña <span>Currículums Modernos</span> Que Destaquen Tu Perfil
+    Diseña <span>Currículums Modernos</span> En {year}
   </h2>
 
   <p className="hero__description">

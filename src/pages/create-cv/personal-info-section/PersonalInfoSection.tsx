@@ -164,7 +164,7 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
         )}
       </div>
 
-        <div className={`progress-indicator ${progressColorClass}`}>
+        <div className={`progress-indicator-box ${progressColorClass}`}>
           {progress}%
         </div>
 
@@ -235,7 +235,7 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
           </div>
 
           <button className="add-btn" onClick={addEntry}>
-            <FiPlus /> Agregar Campo Personalizado
+            <FiPlus /> Campo Personalizado
           </button>
         </div>
       )}
