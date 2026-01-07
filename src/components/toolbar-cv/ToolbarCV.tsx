@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa";
 import "./toolbarcv.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { IoCheckmarkDoneOutline, IoChevronBackOutline, IoDiamond, IoSave, IoSaveOutline } from "react-icons/io5";
+import { IoCheckmarkDoneOutline, IoChevronBackOutline, IoDiamond, IoSaveOutline } from "react-icons/io5";
 import type { IState } from "../../interfaces/IState";
 import {
   FaRegFaceFrown,
@@ -44,12 +44,24 @@ import { RiArrowLeftRightFill } from "react-icons/ri";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { hasUnsavedChanges, isSaving } = useSelector((state: IState) => state.cvSave);
   const cvSections = useSelector((state: IState) => state.cvSections);
 
-  const clearCv = ()=>{
+  const [progress, setProgress] = useState(0);
+
+  // ======================
+  // FUNCIÓN PARA LIMPIAR CV CON CONFIRMACIÓN
+  // ======================
+  const handleClearCv = () => {
+    const confirmClear = window.confirm(
+      "⚠️ ¿Estás seguro de que quieres limpiar todo el CV?\n\n" +
+      "Esta acción eliminará toda la información ingresada (experiencia, educación, habilidades, etc.) " +
+      "y no se puede deshacer."
+    );
+
+    if (confirmClear) {
       dispatch(resetIdentity());
       dispatch(resetEducation());
       dispatch(resetExperience());
@@ -66,12 +78,7 @@ const ToolbarCV: React.FC = () => {
       dispatch(clearAllCustom());
       dispatch(resetCvSections());
     }
-
-  // 🔹 Perfil del usuario (AJUSTA LOS NOMBRES SI TU STORE ES DIFERENTE)
-
-  const [progress, setProgress] = useState(0);
-
-  
+  };
 
   // ======================
   // CÁLCULO DE PROGRESO
@@ -89,15 +96,13 @@ const ToolbarCV: React.FC = () => {
   const handleBackClick = () => {
     if (hasUnsavedChanges) {
       const confirmLeave = window.confirm(
-        "Se estan guardando los cambios realizados ¿Estás seguro de que quieres volver ahora?"
+        "Tienes cambios sin guardar. ¿Estás seguro de que quieres volver ahora?"
       );
 
       if (!confirmLeave) {
-        return; // Cancela la navegación
+        return;
       }
     }
-
-    // Si no hay cambios o el usuario confirma → navegar
     navigate("/cvs");
   };
 
@@ -108,33 +113,13 @@ const ToolbarCV: React.FC = () => {
   }, [progress]);
 
   const getProgressIcon = () => {
-    if (progress < 17)
-      return (
-        <FaRegFaceFrown className={`progress-icon ${progressColorClass}`} />
-      );
-    if (progress < 34)
-      return (
-        <FaRegFaceGrimace className={`progress-icon ${progressColorClass}`} />
-      );
-    if (progress < 50)
-      return (
-        <FaRegFaceRollingEyes
-          className={`progress-icon ${progressColorClass}`}
-        />
-      );
-    if (progress < 67)
-      return <FaRegFaceMeh className={`progress-icon ${progressColorClass}`} />;
-    if (progress < 84)
-      return (
-        <FaRegFaceSurprise className={`progress-icon ${progressColorClass}`} />
-      );
-    if (progress < 99)
-      return (
-        <FaRegFaceSmileBeam className={`progress-icon ${progressColorClass}`} />
-      );
-    return (
-      <BsEmojiSunglasses className={`progress-icon ${progressColorClass}`} />
-    );
+    if (progress < 17) return <FaRegFaceFrown className={`progress-icon ${progressColorClass}`} />;
+    if (progress < 34) return <FaRegFaceGrimace className={`progress-icon ${progressColorClass}`} />;
+    if (progress < 50) return <FaRegFaceRollingEyes className={`progress-icon ${progressColorClass}`} />;
+    if (progress < 67) return <FaRegFaceMeh className={`progress-icon ${progressColorClass}`} />;
+    if (progress < 84) return <FaRegFaceSurprise className={`progress-icon ${progressColorClass}`} />;
+    if (progress < 99) return <FaRegFaceSmileBeam className={`progress-icon ${progressColorClass}`} />;
+    return <BsEmojiSunglasses className={`progress-icon ${progressColorClass}`} />;
   };
 
   return (
@@ -150,30 +135,37 @@ const ToolbarCV: React.FC = () => {
 
       {/* ===== BOTONES IZQUIERDA ===== */}
       <div className="toolbar-cv-buttons">
-        <button onClick={clearCv} title="Limpiar cv" className="toolbar-cv-btn ghost">
+        {/* BOTÓN LIMPIAR CV - CON CONFIRMACIÓN */}
+        <button
+          onClick={handleClearCv}
+          title="Limpiar todo el CV"
+          className="toolbar-cv-btn ghost"
+        >
           <GiBroom />
         </button>
-        
+
+        {/* CAMBIAR PLANTILLA */}
         <button
           onClick={() => dispatch(toggleTemplatePopup())}
           className="toolbar-cv-btn ghost"
+          title="Cambiar plantilla"
         >
           <RiArrowLeftRightFill />
           Plantillas
         </button>
 
-
-        <button onClick={clearCv} className="toolbar-cv-btn ghost">
-          <LuSave /> 
-          {
-            !hasUnsavedChanges === true ? <IoCheckmarkDoneOutline />
-            :
+        {/* ESTADO DE GUARDADO (solo visual) */}
+        <button className="toolbar-cv-btn ghost" disabled>
+          <LuSave />
+          {hasUnsavedChanges ? (
             <div className="loading-dots">
               <span></span>
               <span></span>
               <span></span>
             </div>
-          }
+          ) : (
+            <IoCheckmarkDoneOutline style={{ color: "#18a077ff" }} />
+          )}
         </button>
       </div>
 
@@ -192,8 +184,6 @@ const ToolbarCV: React.FC = () => {
           <span className="toolbar-cv-progress-label">{progress}%</span>
         </div>
       </div>
-
-      
 
       {/* ===== PERFIL + VIP ===== */}
       <div className="toolbar-cv-end">

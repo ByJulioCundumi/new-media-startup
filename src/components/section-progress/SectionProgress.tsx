@@ -213,7 +213,7 @@ function SectionProgress() {
                         {sec.title}
                       </span>
                       {sec.progress === 100 ? (
-                        <LuCheck className="section-progress__eye" />
+                        <LuCheck style={{color: "#0dd1b0"}} className="section-progress__eye" />
                       ) : secEditor.isEditorOpen ? (
                         <BiEditAlt
                           className="section-progress__eye"

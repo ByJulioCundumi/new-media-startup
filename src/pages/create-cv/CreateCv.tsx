@@ -43,6 +43,7 @@ import { TbAlertSquareRounded, TbPencilPlus } from "react-icons/tb";
 import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { IoCloudDone } from "react-icons/io5";
+import { LuSave, LuSaveOff } from "react-icons/lu";
 
 const getCurrentData = (state: IState) => ({
   cvTitle: state.cvCreation.selectedCvTitle,
@@ -380,13 +381,13 @@ const [showSections, setShowSections] = useState(true)
       <div className="save-mode-indicator">
         {isSavingInCloud ? (
           <span className="save-mode-indicator__cloud">
-            <IoCloudDone />
-            Guardado en la nube
+            <LuSave />
+            En la nube
           </span>
         ) : (
           <span className="save-mode-indicator__local">
-            <TbAlertSquareRounded />
-            Guardado localmente
+            <LuSaveOff />
+            Localmente
           </span>
         )}
       </div>
