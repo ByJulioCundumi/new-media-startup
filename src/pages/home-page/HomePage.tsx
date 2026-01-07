@@ -40,16 +40,16 @@ const HomePage: React.FC = () => {
       <div className="home-page__content">
         <div className="home-page__content--text">
           <h2>
-            Personaliza  {" "}
+            Personaliza {" "}
             <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-              Tus CVs
+              Estilos Y QR {""}
             </span>
+             En Tus CVs
           </h2>
           <p>Puedes Modificar el orden de las secciones en tu cv, elejir los colores de tu preferencia, asignar un QR para ver tus cvs en linea y mucho màs.</p>
         </div>
 
         <div className="home-page__content--tools">
-          {sidebarOption === "home" && <div className="home-page__content--box-one"><SectionProgress /></div> }
           {sidebarOption === "home" && <div className="home-page__content--box-two"><ColorFontPopup /></div> }
           {sidebarOption === "home" && <div className="home-page__content--box-three"><QrBoxEditor /></div> }
         </div>

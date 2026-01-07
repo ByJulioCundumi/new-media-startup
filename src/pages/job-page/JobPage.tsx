@@ -16,7 +16,7 @@ import JobOffer from "../../components/job-offer/JobOffer";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import JobFaq from "../../components/job-faq/JobFaq";
 import { Typewriter } from "react-simple-typewriter";
-import { TbChevronsUp, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { TbChevronsUp, TbCircleArrowUpFilled, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import type { IState } from "../../interfaces/IState";
 
 function JobPage() {
@@ -48,7 +48,7 @@ function JobPage() {
             key={u.id}
             className={`job-page__floating-card job-page__card-${index + 1}`}
           >
-            <div className="job-page__avatar"><TbRosetteDiscountCheckFilled /></div>
+            <div className="job-page__avatar"><TbCircleArrowUpFilled /></div>
             <div>
               <p className="job-page__user-name">{u.name}</p>
               <span className="job-page__user-earn">{u.earnings}</span>

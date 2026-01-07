@@ -304,25 +304,21 @@
 @media (max-width: 1120px) { 
   .online-cv{
   &__template{
-    scale: 0.8;
-    margin: -7rem -5rem;
+    
   }
 }
 }
 
-@media (max-width: 950px) { 
-  .online-cv{
-  &__template{
-    scale: 0.6;
-    margin: -14rem -10rem;
-  }
-}
-}
 
 @media (max-width: 790px) { 
   .online-cv{
     padding: 1.5rem 2rem;
     flex-direction: column;
+
+    &__template{
+      margin: -3.5rem 0;
+    margin-right: -4rem;
+  }
 
     &__container{
       height: fit-content;
@@ -340,11 +336,6 @@
 
 @media (max-width: 550px) { 
   .online-cv{
-  &__template{
-    scale: 0.4;
-    margin: -21rem -15rem;
-  }
-
   &__loading-container { 
       flex-direction: column;
     }
@@ -353,11 +344,6 @@
 
 @media (max-width: 400px) { 
   .online-cv{
-  &__template{
-    scale: 0.35;
-    margin: -22.5rem -15rem;
-  }
-
   .created-with{
     padding: 0.65rem 1rem;
   }

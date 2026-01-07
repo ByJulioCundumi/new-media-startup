@@ -212,3 +212,13 @@
 
 
 
+@media (max-width: 500px){
+  .save-mode-indicator{
+    top: 7rem;
+  }
+  .create-cv{
+    &__loading-container { 
+      flex-direction: column;
+    }
+  }
+}

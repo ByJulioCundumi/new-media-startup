@@ -73,7 +73,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
-  const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
+  const {previewPopupOpen, templatesPopupOpen} = useSelector((state: IState) => state.toolbarOption);
    // MAPA de secciones
   // ---------------------------------------------------------------------------
   const sectionInfo = React.useMemo(
@@ -228,6 +228,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
           </div>
       </div>
 
+      <div className={(sidebarOption === "create" || sidebarOption === "cv") && !previewPopupOpen && !templatesPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-roma__page">
         
@@ -273,7 +274,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
         {(page2Vertical.length > 0) && (
           <>
           <p className="cv-roma__page--number">Pagina 1</p>
-          <div className="cv-roma__limit-page">{previewPopupOpen === false && <p className="cv-roma__limit-page-text">Pagina 2</p>} </div>
+          <div className="cv-roma__limit-page">{previewPopupOpen === false && sidebarOption === "create" && <p className="cv-roma__limit-page-text">Pagina 2</p>} </div>
          </>
       ) }
       </div>
@@ -288,7 +289,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
           )}
 
           <div className="cv-roma__limit-line-overflowed">
-            {previewPopupOpen === false && <p className="cv-roma__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
+            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-roma__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
           </div>
           <div className="cv-roma__vertical">
               {page2Vertical.map((name) => {
@@ -313,6 +314,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
           <p className="cv-roma__page--number">Pagina 2</p>
         </div>
       )}
+      </div>
 
     </div>
   );

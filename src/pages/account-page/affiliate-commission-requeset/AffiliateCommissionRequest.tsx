@@ -179,7 +179,7 @@ const AffiliateCommissionRequest: React.FC = () => {
       return "Enviar Solicitud";
     }
     if (isApproved) {
-      return "Actualizar cuenta de hotmart";
+      return "Actualizar Datos";
     }
     return "Enviar Solicitud";
   };
@@ -249,7 +249,6 @@ const AffiliateCommissionRequest: React.FC = () => {
               {isApproved && (
                 <>
                   <strong>¡Fuieste Aceptado!</strong>
-                  <p>Estás ganando más por cada venta.</p>
                   <p className="status-card__note">
                     Si cambiaste de cuenta Hotmart, actualiza tus datos de afiliado para recuperar tu comisión del {request.approvedCommission}%.
                   </p>

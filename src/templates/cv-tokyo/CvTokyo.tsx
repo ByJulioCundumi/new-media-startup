@@ -73,7 +73,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
-  const {previewPopupOpen} = useSelector((state: IState) => state.toolbarOption);
+  const {previewPopupOpen, templatesPopupOpen} = useSelector((state: IState) => state.toolbarOption);
    // MAPA de secciones
   // ---------------------------------------------------------------------------
   const sectionInfo = React.useMemo(
@@ -324,7 +324,7 @@ useEffect(() => {
         </div>
       </div>
       
-      <div className={sidebarOption === "create" && !previewPopupOpen ? "cv__viewer" : ""}>
+      <div className={(sidebarOption === "create" || sidebarOption === "cv") && !previewPopupOpen && !templatesPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
         
@@ -393,7 +393,7 @@ useEffect(() => {
         {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
           <>
           <p className="cv-tokyo__page--number">Pagina 1</p>
-          <div className="cv-tokyo__limit-page">{previewPopupOpen === false && <p className="cv-tokyo__limit-page-text">Pagina 2</p>} </div>
+          <div className="cv-tokyo__limit-page">{previewPopupOpen === false && sidebarOption === "create" &&  <p className="cv-tokyo__limit-page-text">Pagina 2</p>} </div>
          </>
       ) }
       </div>
@@ -408,7 +408,7 @@ useEffect(() => {
         )}
 
           <div className="cv-tokyo__limit-line-overflowed">
-            {previewPopupOpen === false && <p className="cv-tokyo__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
+            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-tokyo__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
           </div>
           <div className="cv-tokyo__split">
             <div className="cv-tokyo__split--vertical">
