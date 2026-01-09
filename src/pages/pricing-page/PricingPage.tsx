@@ -104,7 +104,7 @@ function PricingPage() {
     },
     {
       name: "Plan Mensual",
-      price: "$8.99",
+      price: "$14.99",
       period: "USD / Por Mes",
       highlight: true,
       isFree: false,
@@ -124,7 +124,7 @@ function PricingPage() {
       price: "$4.99",
       period: "USD / Por Mes",
       monthlyEquivalent: "Cobro Anual / $59.99",
-      savings: "Ahorras 44%",
+      savings: "Ahorras 66.7%",
       highlight: true,
       isFree: false,
       popular: true,
@@ -219,9 +219,9 @@ function PricingPage() {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
-                  Programa {""}
+                  Trabaja {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      De Afiliados
+                      Desde Casa
                     </span>
                 </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>

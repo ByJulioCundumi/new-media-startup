@@ -60,8 +60,8 @@ function JobPage() {
        <div className="job-page__commissions">
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
-                <h2 className={`home-page__job jop-page-title-top`}>
-                  Haz Dinero En Remoto, {""}
+                <h2 className={`jop-page-title-top`}>
+                  Trabaja Desde Casa, {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
                        Sin Experiencia
                     </span>

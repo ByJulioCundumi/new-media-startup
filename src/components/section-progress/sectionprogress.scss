@@ -417,8 +417,9 @@
 
 @media (max-width: 770px) { 
   .section-progress{
-    top: 7.5rem;
+    top: 9rem;
     height: calc(90vh - 6rem);
+    max-height: 75vh;
   } 
   
   .section-progress__fab{

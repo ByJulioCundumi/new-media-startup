@@ -6,6 +6,7 @@
   transition: all 0.25s ease;
   padding-top: 4px;
   padding-bottom: 10px;
+  
 
   &.closed {
     padding-top: 4px;
@@ -41,6 +42,7 @@
     display: flex;
     flex-direction: column;
     gap: 22px;
+    
   }
 
   .experience-card {
@@ -49,6 +51,7 @@
     position: relative;
     border: 2px dashed #00000029;
     background: #9baaaa00;
+    
   }
 
   .card-grid {

@@ -33,7 +33,7 @@ function Hero() {
   </h1>
 
   <h2 className="hero__title">
-    Diseña Tus CVs Y Genera <span> Ingresos</span> 
+    Diseña Increibles CVs <span>En Minutos</span> 
   </h2>
 
   <p className="hero__description">

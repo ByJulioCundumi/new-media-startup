@@ -200,9 +200,9 @@ const HomePage: React.FC = () => {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
-                  Programa {""}
+                  Trabaja {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      De Afiliados
+                      Desde Casa
                     </span>
                 </h2>
                 <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>

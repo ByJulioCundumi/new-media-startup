@@ -37,7 +37,7 @@ const ColorFontPopup: React.FC = () => {
   const DEFAULT_TEMPLATE = useSelector((state:IState)=>state.colorFont.defaults)
 
   // 🖱 estado para mover el popup
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 60, y: 110 });
   const [dragging, setDragging] = useState(false);
   const offsetRef = useRef({ x: 0, y: 0 });
 
