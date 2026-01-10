@@ -27,6 +27,7 @@ export default function TemplatesPopup() {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: IState) => state.user.logged);
+  const {role} = useSelector((state: IState) => state.user);
   const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const userFavorites = useSelector((state: IState) => state.user.favoriteTemplates || []);
   const selectedTemplateId = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
@@ -105,6 +106,13 @@ export default function TemplatesPopup() {
     const currentFavorites = isLogged ? userFavorites : localFavorites;
 
     return templates.filter((tpl) => {
+            // ── NUEVA REGLA DE VISIBILIDAD ───────────────────────────────
+      const isDevTemplate = tpl.categories.includes("dev");
+      const canSeeDevTemplates = role === "ADMIN";
+
+      if (isDevTemplate && !canSeeDevTemplates) {
+        return false;
+      }
       const matchesSearch =
         tpl.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tpl.categories.some((cat) => cat.toLowerCase().includes(searchQuery.toLowerCase()));

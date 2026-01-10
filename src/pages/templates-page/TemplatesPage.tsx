@@ -29,6 +29,7 @@ export default function TemplatesPage() {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: IState) => state.user.logged);
+  const {role} = useSelector((state: IState) => state.user);
   const userFavorites = useSelector((state: IState) => state.user.favoriteTemplates || []);
   const selectedTemplateId = useSelector((state: IState) => state.cvCreation.selectedTemplateId);
 
@@ -100,6 +101,13 @@ export default function TemplatesPage() {
     const currentFavorites = isLogged ? userFavorites : localFavorites;
 
     return templates.filter((tpl) => {
+      // ── NUEVA REGLA DE VISIBILIDAD ───────────────────────────────
+      const isDevTemplate = tpl.categories.includes("dev");
+      const canSeeDevTemplates = role === "ADMIN";
+
+      if (isDevTemplate && !canSeeDevTemplates) {
+        return false;
+      }
       // Búsqueda por nombre o categoría
       const matchesSearch =
         tpl.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
