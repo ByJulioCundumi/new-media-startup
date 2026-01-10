@@ -105,7 +105,7 @@ function PricingPage() {
     {
       name: "Plan Mensual",
       price: "$14.99",
-      period: "USD / Por Mes",
+      period: "USD / Mes",
       highlight: true,
       isFree: false,
       popular: false,
@@ -122,7 +122,7 @@ function PricingPage() {
     {
       name: "Plan Anual",
       price: "$4.99",
-      period: "USD / Por Mes",
+      period: "USD / Mes",
       monthlyEquivalent: "Cobro Anual / $59.99",
       savings: "Ahorras 66.7%",
       highlight: true,

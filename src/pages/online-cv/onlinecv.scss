@@ -16,6 +16,7 @@
   &__template {
     display: flex;
     justify-content: center;
+    align-items: start;
     pointer-events: none;
     
   }
@@ -276,6 +277,10 @@
   box-shadow:
     0 0px 22px #f1be2534;
   width: fit-content;
+  position: absolute;
+  bottom: 0;
+  right: -50%;
+  left: -50%;
 }
 
 
@@ -314,6 +319,7 @@
   .online-cv{
     padding: 1.5rem 2rem;
     flex-direction: column;
+    justify-content: start;
 
     &__template{
       margin: -3.5rem 0;
@@ -336,6 +342,7 @@
 
 @media (max-width: 550px) { 
   .online-cv{
+
   &__loading-container { 
       flex-direction: column;
     }

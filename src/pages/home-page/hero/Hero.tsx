@@ -18,10 +18,10 @@ function Hero() {
         <div className="hero__content">
 
   <h1 className="hero__badge">
-    <span className="hero__typewriter" style={{fontWeight: 300}}>Únete</span>{" "}
+    <span className="hero__typewriter" style={{fontWeight: 300}}>Prueba</span>{" "}
     <span className="hero__typewriter">
       <Typewriter
-        words={["A Nuestra Comunidad"]}
+        words={["Nuestras Herramientas"]}
         loop={0}
         cursor
         cursorStyle="|"
@@ -33,7 +33,7 @@ function Hero() {
   </h1>
 
   <h2 className="hero__title">
-    Diseña Increibles CVs <span>En Minutos</span> 
+    Diseña Tu CV <span>En Pocos Minutos</span> 
   </h2>
 
   <p className="hero__description">

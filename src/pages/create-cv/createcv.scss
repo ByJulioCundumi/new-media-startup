@@ -159,7 +159,7 @@
 
 //----------------------------------------------------------------
 .save-mode-indicator {
-  position: fixed;
+  position: absolute;
   top: 6rem;
   right: 20px; /* Ajusta según tu layout, para que esté visible pero no tape botones */
   z-index: 10;
