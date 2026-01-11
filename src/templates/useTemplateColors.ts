@@ -22,7 +22,7 @@ export const useTemplateColors = (defaults: any) => {
 
   useEffect(() => {
     if (isSelectedEmpty) {
-      dispatch(loadTemplateDefaults(defaults));
+      //dispatch(loadTemplateDefaults(defaults)); // causa error de colores por defecto
     }
   }, []); // solo en primer render
 

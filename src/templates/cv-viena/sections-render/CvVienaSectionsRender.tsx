@@ -139,7 +139,7 @@ const getProgressColorClass = (progress: number) => {
     case "contactSection":
       return (
         <>
-          <h2 className="cv-viena__contactSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__contactSection--title">
             {sectionByName[sectionName]?.title || "Contacto"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -153,8 +153,8 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {contactSection.map((item) => (
                 <div key={item.id} className="cv-viena__contactSection--item">
-                  <h3 className="cv-viena__contactSection--item-name" style={{ color: styles.itemColor }}>{item.type}</h3>
-                  <p className="cv-viena__contactSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value}</p>
+                  <h3 className="cv-viena__contactSection--item-name" >{item.type}</h3>
+                  <p className="cv-viena__contactSection--item-value" >{item.value}</p>
                 </div>
               ))}
         </>
@@ -163,7 +163,7 @@ const getProgressColorClass = (progress: number) => {
     case "personalInfoSection":
       return (
         <>
-          <h2 className="cv-viena__personalInfoSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__personalInfoSection--title" >
             {sectionByName[sectionName]?.title || "Detalles"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-viena__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -177,8 +177,8 @@ const getProgressColorClass = (progress: number) => {
           </h2>
               {personalInfo.map((item) => (
                 <div key={item.id} className="cv-viena__personalInfoSection--item">
-                  <h3 className="cv-viena__personalInfoSection--item-name" style={{ color: styles.itemColor }}>{item.name}</h3>
-                  <p className="cv-viena__personalInfoSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value}</p>
+                  <h3 className="cv-viena__personalInfoSection--item-name" >{item.name}</h3>
+                  <p className="cv-viena__personalInfoSection--item-value" >{item.value}</p>
                 </div>
               ))}
         </>
@@ -187,7 +187,7 @@ const getProgressColorClass = (progress: number) => {
     case "skillSection":
       return (
         <>
-          <h2 className="cv-viena__skillSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__skillSection--title" >
             {sectionByName[sectionName]?.title || "Habilidades"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-viena__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -217,8 +217,8 @@ const getProgressColorClass = (progress: number) => {
                 return (
                   <div key={skill.id} className="cv-viena__skillSection--item">
                     <div className="cv-viena__skillSection--header">
-                      <h3 className="cv-viena__skillSection--item-name" style={{ color: styles.itemColor }}>{skill.name}</h3>
-                      <p className="cv-viena__skillSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{skill.level}</p>
+                      <h3 className="cv-viena__skillSection--item-name" >{skill.name}</h3>
+                      <p className="cv-viena__skillSection--item-level" >{skill.level}</p>
                     </div>
 
                     {/* Barra de progreso */}
@@ -237,7 +237,7 @@ const getProgressColorClass = (progress: number) => {
     case "languageSection":
       return (
         <>
-          <h2 className="cv-viena__languajeSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__languajeSection--title" >
             {sectionByName[sectionName]?.title || "Idiomas"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-viena__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -269,8 +269,8 @@ const getProgressColorClass = (progress: number) => {
                 return (
                   <div key={lang.id} className="cv-viena__languajeSection--item">
                     <div className="cv-viena__languajeSection--header">
-                      <h3 className="cv-viena__languajeSection--item-name" style={{ color: styles.itemColor }}>{lang.name}</h3>
-                      <p className="cv-viena__languajeSection--item-level" style={{ color: styles.textColor, opacity: "60%" }}>{lang.level}</p>
+                      <h3 className="cv-viena__languajeSection--item-name" >{lang.name}</h3>
+                      <p className="cv-viena__languajeSection--item-level" >{lang.level}</p>
                     </div>
 
                     {/* Barra de progreso */}
@@ -289,7 +289,7 @@ const getProgressColorClass = (progress: number) => {
     case "linkSection":
       return (
         <>
-          <h2 className="cv-viena__linkSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__linkSection--title" >
             {sectionByName[sectionName]?.title || "Enlaces"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-viena__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -311,12 +311,11 @@ const getProgressColorClass = (progress: number) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="cv-viena__linkSection--item-name"
-                          style={{ color: styles.itemColor }}
                         >
                           {link.name}
                         </a>
 
-                        <p className="cv-viena__linkSection--item-url" style={{ color: styles.textColor, opacity: "60%" }}>
+                        <p className="cv-viena__linkSection--item-url" >
                           {link.url}
                         </p>
                       </>
@@ -340,7 +339,7 @@ const getProgressColorClass = (progress: number) => {
     case "hobbieSection":
       return (
         <>
-          <h2 className="cv-viena__hobbieSection--title" style={{ color: styles.sectionTitleColor }}>
+          <h2 className="cv-viena__hobbieSection--title" >
             {sectionByName[sectionName]?.title || "Pasatiempos"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-viena__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
@@ -355,7 +354,7 @@ const getProgressColorClass = (progress: number) => {
 
               <div className="cv-viena__hobbieSection--list">
                 {hobbieSection.map((hobby) => (
-                  <span key={hobby.id} className="cv-viena__hobbieSection--item" style={{ borderColor: styles.itemColor, color: styles.textColor }}>
+                  <span key={hobby.id} className="cv-viena__hobbieSection--item" >
                     {hobby.name}
                   </span>
                 ))}
