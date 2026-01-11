@@ -13,6 +13,7 @@ import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { CvVienaSectionsRender } from "./sections-render/CvVienaSectionsRender";
+import { setAllowCvPhoto } from "../../reducers/identitySlice";
 
 export const cvVienaDefaults = {
   textColor: "#494949ff",
@@ -45,8 +46,10 @@ export const cvVienaDefaultOrder: string[] = [
 export const CvViena: React.FC<ITemplateProps> = (props) => {
   // estilos
   const styles = useTemplateColors(cvVienaDefaults);
+  
   useEffect(() => {
       dispatch(setOrder(cvVienaDefaultOrder));
+      dispatch(setAllowCvPhoto(true))
     }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
