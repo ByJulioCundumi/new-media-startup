@@ -13,6 +13,7 @@ import { useTemplateColors } from "../useTemplateColors";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
+import { setAllowCvPhoto } from "../../reducers/identitySlice";
 
 export const cvTokyoDefaults = {
   textColor: "#494949ff",
@@ -45,8 +46,13 @@ export const cvTokyoDefaultOrder: string[] = [
 export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   // estilos
   const styles = useTemplateColors(cvTokyoDefaults);
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+
   useEffect(() => {
       dispatch(setOrder(cvTokyoDefaultOrder));
+      if(sidebarOption === "create"){
+              dispatch(setAllowCvPhoto(true));
+            }
     }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
@@ -70,7 +76,6 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
     sectionsOrder,
   } = props;
   const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
-  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen, templatesPopupOpen} = useSelector((state: IState) => state.toolbarOption);

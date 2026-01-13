@@ -13,6 +13,7 @@ import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { CvVienaSectionsRender } from "./sections-render/CvVienaSectionsRender";
+import { setAllowCvPhoto } from "../../reducers/identitySlice";
 
 export const cvVienaDefaults = {
   textColor: "#494949ff",
@@ -45,9 +46,13 @@ export const cvVienaDefaultOrder: string[] = [
 export const CvViena: React.FC<ITemplateProps> = (props) => {
   // estilos
   const styles = useTemplateColors(cvVienaDefaults);
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   
   useEffect(() => {
       dispatch(setOrder(cvVienaDefaultOrder));
+      if(sidebarOption === "create"){
+        dispatch(setAllowCvPhoto(true));
+      }
     }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
@@ -71,7 +76,6 @@ export const CvViena: React.FC<ITemplateProps> = (props) => {
     sectionsOrder,
   } = props;
   const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
-  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen, templatesPopupOpen} = useSelector((state: IState) => state.toolbarOption);

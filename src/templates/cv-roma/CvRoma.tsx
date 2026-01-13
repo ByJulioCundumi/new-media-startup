@@ -13,6 +13,7 @@ import { CvRomaSectionsRender } from "./sections-render/CvRomaSectionsRender";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import { setAllowCvPhoto } from "../../reducers/identitySlice";
 
 export const cvRomaDefaults = {
   textColor: "#494949ff",
@@ -43,9 +44,13 @@ export const cvRomaDefaultOrder: string[] = [
 
 export const CvRoma: React.FC<ITemplateProps> = (props) => {
   const styles = useTemplateColors(cvRomaDefaults);
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   // estilos
   useEffect(() => {
     dispatch(setOrder(cvRomaDefaultOrder));
+    if(sidebarOption === "create"){
+                  dispatch(setAllowCvPhoto(true));
+                }
   }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
@@ -70,7 +75,6 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   } = props;
   
   const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
-  const {sidebarOption} = useSelector((state: IState) => state.sidebar);
   const cvSections = useSelector((state: IState) => state.cvSections.sections);
   const cvSectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
   const {previewPopupOpen, templatesPopupOpen} = useSelector((state: IState) => state.toolbarOption);

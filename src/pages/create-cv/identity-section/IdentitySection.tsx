@@ -18,15 +18,17 @@ import {
 } from "../../../reducers/cvSectionsSlice";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toggleSectionOpen } from "../../../reducers/editorsSlice";
-import { uploadCvPhotoApi } from "../../../api/cv";
+import { deleteCvPhotoApi, uploadCvPhotoApi } from "../../../api/cv";
+import { hasValidSubscriptionTime } from "../../../util/checkSubscriptionTime";
 
 const IdentitySection = () => {
   const dispatch = useDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const identity = useSelector((state: IState) => state.identity);
+  const {subscriptionExpiresAt} = useSelector((state: IState) => state.user);
 
-  const {selectedCvId} = useSelector((state: IState) => state.cvCreation);
+  const {selectedCvId, cvPhoto} = useSelector((state: IState) => state.cvCreation);
 
   const sectionEditorState = useSelector((state: IState) =>
     state.cvSectionsEditors.sections.find((s) => s.name === "identitySection")
@@ -66,6 +68,12 @@ const IdentitySection = () => {
     return "progress-blue";
   }, [progress]);
 
+  useEffect(() => {
+      if(cvPhoto !== ""){
+        dispatch(setPhoto(cvPhoto))
+      }
+  }, []);
+
   // --------------------------
   //  SUBIR FOTO
   // --------------------------
@@ -73,16 +81,34 @@ const IdentitySection = () => {
   const file = e.target.files?.[0];
   if (!file) return;
 
-  try {
-    const { cvPhoto } = await uploadCvPhotoApi(selectedCvId, file); // cvId del estado o params
-    dispatch(setPhoto(cvPhoto));
-  } catch (err) {
-    console.error(err);
-    // Manejar error (toast?)
-  }
+  if(hasValidSubscriptionTime(subscriptionExpiresAt)){
+    try {
+      const { cvPhoto } = await uploadCvPhotoApi(selectedCvId, file); // cvId del estado o params
+      dispatch(setPhoto(cvPhoto));
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      console.error(err);
+      // Manejar error (toast?)
+    }
+  } else {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      dispatch(setPhoto(reader.result as string));
 
-  if (fileInputRef.current) fileInputRef.current.value = "";
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.readAsDataURL(file);
+  }
 };
+
+const deleteCvPhoto = async()=>{
+    if(cvPhoto !== ""){
+      await deleteCvPhotoApi(selectedCvId)
+    }
+    dispatch(removePhoto());
+}
 
   return (
     <div className={`identity-section ${!isOpen ? "closed" : ""}`}>
@@ -120,7 +146,7 @@ const IdentitySection = () => {
                     <button
                       className="identity-section__remove-btn"
                       onClick={() => {
-                        dispatch(removePhoto());
+                        deleteCvPhoto()
                         if (fileInputRef.current) {
                           fileInputRef.current.value = "";
                         }
@@ -138,7 +164,7 @@ const IdentitySection = () => {
               </div>
 
               {/* Botón debajo */}
-              {identity.allowCvPhoto && (
+              {identity.allowCvPhoto === true && (
                 <button
                   className="add-photo-btn"
                   onClick={() => fileInputRef.current?.click()}

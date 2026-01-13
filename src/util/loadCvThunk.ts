@@ -1,7 +1,7 @@
 
 
 // Importamos todas las acciones "set" de cada slice
-import { setIdentity } from "../reducers/identitySlice";
+import { setIdentity, setPhoto } from "../reducers/identitySlice";
 import { setContactEntries } from "../reducers/contactSlice";
 import { setProfileContent } from "../reducers/profileSlice";
 import { setEducationData } from "../reducers/educationSlice";
@@ -17,7 +17,7 @@ import { setCustomEntries } from "../reducers/customSlice";
 import { setPersonalInfoEntries } from "../reducers/personalInfoSlice";
 import { setCvSections } from "../reducers/cvSectionsSlice";
 import { loadTemplateDefaults, loadStoredValues } from "../reducers/colorFontSlice";
-import { setPublicId, setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
+import { setCvPhoto, setPublicId, setSelectedCvId, setSelectedCvTitle, setSelectedTemplateId } from "../reducers/cvCreationSlice";
 import type { AppDispatch } from "../app/store";
 import { getCvByIdApi } from "../api/cv";
 import { setOriginalData } from "../reducers/cvSaveSlice";
@@ -34,6 +34,8 @@ export const loadCvForEditing =
       // --- 1. Datos básicos del CV ---
       dispatch(setSelectedCvId(cvData.id || cvId));
       dispatch(setPublicId(cvData.publicId || ""))
+      dispatch(setCvPhoto(cvData.cvPhoto || ""))
+
       if (cvData.templateId) {
         dispatch(setSelectedTemplateId(cvData.templateId));
         dispatch(setSelectedCvTitle(cvData.cvTitle));

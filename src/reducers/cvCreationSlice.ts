@@ -8,6 +8,7 @@ const initialState: ICvCreationState = {
   selectedTemplateId: "",
   selectedCvTitle: "",
   publicId: "",
+  cvPhoto: ""
 };
 
 export const cvCreationSlice = createSlice({
@@ -29,8 +30,11 @@ export const cvCreationSlice = createSlice({
     setPublicId: (state, action) => {
       state.publicId = action.payload;
     },
+    setCvPhoto: (state, action) => {
+      state.cvPhoto = action.payload;
+    },
   },
 });
 
-export const { setCreateCvPopup, setSelectedTemplateId, setSelectedCvTitle, setSelectedCvId, setPublicId } = cvCreationSlice.actions;
+export const { setCreateCvPopup, setSelectedTemplateId, setSelectedCvTitle, setSelectedCvId, setPublicId, setCvPhoto } = cvCreationSlice.actions;
 export default cvCreationSlice.reducer;

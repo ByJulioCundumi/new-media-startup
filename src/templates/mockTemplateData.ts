@@ -3,7 +3,7 @@ import { initialSections, initialOrder } from "../reducers/cvSectionsSlice";
 
 export const mockTemplateData: ITemplateProps = {
    identitySection: {
-    photo: null,
+    photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyW1LFVLrTeSynKd6fZW2JFbbIwM3-jBJilg&s",
     firstName: "Julio",
     lastName: "Cundumi",
     jobTitle: "Desarrollador Web",

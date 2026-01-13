@@ -73,6 +73,7 @@ export const CvVienaSectionsRender: React.FC<SectionRenderProps> = ({
   const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();
   const occupation = jobTitle || identitySection.jobTitle || "";
   const qrUrl = qrCodeUrl || identitySection.qrCodeUrl || "";
+  const validPhoto = photo || identitySection.photo || "";
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {
@@ -99,9 +100,9 @@ const getProgressColorClass = (progress: number) => {
             </span>
           )}
 
-          {allowCvPhoto && photo && (
+          {validPhoto && (
             <img
-              src={photo}
+              src={validPhoto}
               className="cv-viena__identitySection--img"
             />
           )}
