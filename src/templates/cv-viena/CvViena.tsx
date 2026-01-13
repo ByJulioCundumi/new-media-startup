@@ -50,7 +50,7 @@ export const CvViena: React.FC<ITemplateProps> = (props) => {
   
   useEffect(() => {
       dispatch(setOrder(cvVienaDefaultOrder));
-      if(sidebarOption === "create"){
+      if(sidebarOption === "create" || sidebarOption === "home"){
         dispatch(setAllowCvPhoto(true));
       }
     }, []);
@@ -282,7 +282,7 @@ useEffect(() => {
         <div className="cv-viena__limit-line-overflowed"/>
 
         <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical page-one">
+          <div className="cv-viena__split--vertical viena-page-one">
             {verticalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -292,7 +292,7 @@ useEffect(() => {
               ))}
           </div>
 
-          <div className="cv-viena__split--horizontal page-one">
+          <div className="cv-viena__split--horizontal viena-page-one">
           </div>
         </div>
       </div>
@@ -308,10 +308,10 @@ useEffect(() => {
         ))}
 
         <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical page-one">
+          <div className="cv-viena__split--vertical viena-page-one">
           </div>
 
-          <div className="cv-viena__split--horizontal page-one">
+          <div className="cv-viena__split--horizontal viena-page-one">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -346,7 +346,7 @@ useEffect(() => {
 
         {/* PAGE 1 */}
         <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical page-one">
+          <div className="cv-viena__split--vertical viena-page-one">
             {page1Vertical.map((name) => {
               const sec = vienaSections.find((s) => s.name === name);
               if (!sec) return null;
@@ -366,7 +366,7 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-viena__split--horizontal page-one">
+          <div className="cv-viena__split--horizontal viena-page-one">
             {page1Horizontal.map((name) => {
               const sec = vienaSections.find((s) => s.name === name);
               if (!sec) return null;

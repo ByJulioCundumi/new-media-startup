@@ -112,7 +112,7 @@
 .cv-tokyo__hidden--vertical{
   min-height: 1122px;
   width: 794px;
-  padding: 40px 50px;
+  padding: 0px 50px;
   background-color: white;
   //position: relative;
   position: absolute;
@@ -122,7 +122,7 @@
 .cv-tokyo__hidden--horizontal{
   min-height: 1122px;
   width: 794px;
-  padding: 40px 50px;
+  padding: 0px 50px;
   background-color: white;
   //position: relative;
   position: absolute;
@@ -132,7 +132,7 @@
 .cv-tokyo__page{
   min-height: 1122px;
   width: 794px;
-  padding: 40px 50px;
+  padding: 0px 50px;
   background-color: white;
   margin-bottom: 1.5rem;
   position: relative;
@@ -152,7 +152,7 @@
   height: auto;
   margin-top: 0;
   padding-top: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.103);
+  height: 1122px;
 
   &--vertical {
     width: 32%;
@@ -196,6 +196,27 @@
   }
 }
 
+.tokyo-page-one{
+  padding-top: 280px;
+}
+
+.cv-tokyo__page--bg-top{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: white;
+}
+
+.cv-tokyo__page--bg-bottom{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: white;
+}
 /* ========================
     IMPRESIÓN A4 PERFECTA
    ======================== */
@@ -211,7 +232,7 @@
   .cv-tokyo__page {
     height: 1122px !important;
     width: 794px !important;
-    padding: 40px 50px !important;
+    padding: 0px 50px !important;
     box-sizing: border-box;
     background: white !important;
     page-break-after: always;

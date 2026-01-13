@@ -44,9 +44,17 @@
       cursor: pointer;
       transition: all 0.2s ease;
       min-height: 150px;
+      position: absolute;
+      left: 3rem;
+      right: 3rem;
+      top: 2rem;
+       background-color: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
 
       &:hover {
-        background-color: #00ccff09;
+        background-color: #f2fafc;
         border: 1px solid #00ccff13;
         box-shadow: 0px 0px 2px #00ccff27;
       }
@@ -81,6 +89,7 @@
         margin: auto 0;
         word-break: break-word; // rompe palabras largas
         overflow-wrap: break-word; // soporta compatibilidad
+        margin-top: 1rem;
       }
 
       &--title {
@@ -94,8 +103,8 @@
       &--occupation {
         font-size: 1.3rem;
         font-weight: 400;
-        line-height: 2.2rem;
-        margin-bottom: 1.5rem;
+        line-height: 1rem;
+        margin-bottom: 1rem;
         color: #5f5f5f; // será sobrescrito por style={{ color: styles.profession }}
       }
 
@@ -104,8 +113,8 @@
         text-align: center;
         margin-top: 0.5rem;
         position: absolute;
-        top: 2rem;
-        right: 50px;
+        top: 0rem;
+        right: 0px;
       }
 
       &--qr-text {

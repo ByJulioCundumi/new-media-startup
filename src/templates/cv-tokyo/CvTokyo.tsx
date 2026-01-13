@@ -51,7 +51,7 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   useEffect(() => {
       dispatch(setOrder(cvTokyoDefaultOrder));
       if(sidebarOption === "create"){
-              dispatch(setAllowCvPhoto(true));
+              dispatch(setAllowCvPhoto(false));
             }
     }, []);
   // ---------------------------------------------------------------------------
@@ -288,7 +288,7 @@ useEffect(() => {
         ))}
 
         <div className="cv-tokyo__split">
-          <div className="cv-tokyo__split--vertical">
+          <div className="cv-tokyo__split--vertical tokyo-page-one">
             {verticalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -298,7 +298,7 @@ useEffect(() => {
               ))}
           </div>
 
-          <div className="cv-tokyo__split--horizontal">
+          <div className="cv-tokyo__split--horizontal tokyo-page-one">
           </div>
         </div>
       </div>
@@ -314,10 +314,10 @@ useEffect(() => {
         ))}
 
         <div className="cv-tokyo__split">
-          <div className="cv-tokyo__split--vertical">
+          <div className="cv-tokyo__split--vertical tokyo-page-one">
           </div>
 
-          <div className="cv-tokyo__split--horizontal">
+          <div className="cv-tokyo__split--horizontal tokyo-page-one">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -332,6 +332,8 @@ useEffect(() => {
       <div className={(sidebarOption === "create" || sidebarOption === "cv") && !previewPopupOpen && !templatesPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
       <div className="cv-tokyo__page">
+        <div className="cv-tokyo__page--bg-top"></div>
+        <div className="cv-tokyo__page--bg-bottom"></div>
         
         {/* MARCA DE AGUA */}
         {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
@@ -352,7 +354,7 @@ useEffect(() => {
 
         {/* PAGE 1 */}
         <div className="cv-tokyo__split">
-          <div className="cv-tokyo__split--vertical">
+          <div className="cv-tokyo__split--vertical tokyo-page-one">
             {page1Vertical.map((name) => {
               const sec = tokyoSections.find((s) => s.name === name);
               if (!sec) return null;
@@ -372,7 +374,7 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-tokyo__split--horizontal">
+          <div className="cv-tokyo__split--horizontal tokyo-page-one">
             {page1Horizontal.map((name) => {
               const sec = tokyoSections.find((s) => s.name === name);
               if (!sec) return null;
@@ -406,6 +408,8 @@ useEffect(() => {
       {/* PAGE 2 */}
       {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
         <div className="cv-tokyo__page">
+          <div className="cv-tokyo__page--bg-top"></div>
+        <div className="cv-tokyo__page--bg-bottom"></div>
 
         {/* MARCA DE AGUA */}
         {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (

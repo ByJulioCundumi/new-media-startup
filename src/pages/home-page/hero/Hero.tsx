@@ -8,7 +8,7 @@ import { Typewriter } from "react-simple-typewriter";
 
 function Hero() {
   // Tomamos una plantilla cualquiera para el preview (ej: la primera)
-  const TemplateComponent = templates[0].component;
+  const TemplateComponent = templates[2].component;
   const year = new Date().getFullYear();
 
   return (
@@ -64,7 +64,7 @@ function Hero() {
             <div className="hero__cv-scale">
               <TemplateComponent {...mockHomeTemplateData} />
             </div>
-            <div className="hero__cv-line"></div>
+            {/*<div className="hero__cv-line"></div>*/}
           </div>
       </div>
     </section>

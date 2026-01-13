@@ -49,7 +49,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   useEffect(() => {
     dispatch(setOrder(cvRomaDefaultOrder));
     if(sidebarOption === "create"){
-                  dispatch(setAllowCvPhoto(true));
+                  dispatch(setAllowCvPhoto(false));
                 }
   }, []);
   // ---------------------------------------------------------------------------
