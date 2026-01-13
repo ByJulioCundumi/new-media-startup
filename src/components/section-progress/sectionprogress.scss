@@ -3,7 +3,7 @@
 /* ========================================= */
 .section-progress {
   position: fixed;
-  top: 5.5rem;
+  bottom: 2rem;
   left: 2rem;
   width: 270px;
   height: calc(100vh - 8rem);
@@ -368,7 +368,7 @@
   /* Panel lateral completo → oculto por defecto */
   .section-progress {
     position: fixed;
-    top: 12rem;
+    bottom: 0rem;
     height: calc(100vh - 12rem);
     left: 0;
     width: 100%;
@@ -403,7 +403,7 @@
 
 @media (max-width: 1100px) { 
   .section-progress{
-    top: 7.5rem;
+    bottom: 0rem;
     height: calc(90vh - 2rem);
   } 
 }
@@ -417,9 +417,9 @@
 
 @media (max-width: 770px) { 
   .section-progress{
-    top: 9rem;
     height: calc(90vh - 6rem);
     max-height: 75vh;
+    bottom: 4rem;
   } 
   
   .section-progress__fab{
