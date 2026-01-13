@@ -18,6 +18,7 @@ import {
 } from "../../../reducers/cvSectionsSlice";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toggleSectionOpen } from "../../../reducers/editorsSlice";
+import { uploadCvPhotoApi } from "../../../api/cv";
 
 const IdentitySection = () => {
   const dispatch = useDispatch();
@@ -25,9 +26,7 @@ const IdentitySection = () => {
 
   const identity = useSelector((state: IState) => state.identity);
 
-  const sectionState = useSelector((state: IState) =>
-    state.cvSections.sections.find((s) => s.name === "identitySection")
-  );
+  const {selectedCvId} = useSelector((state: IState) => state.cvCreation);
 
   const sectionEditorState = useSelector((state: IState) =>
     state.cvSectionsEditors.sections.find((s) => s.name === "identitySection")
@@ -70,20 +69,20 @@ const IdentitySection = () => {
   // --------------------------
   //  SUBIR FOTO
   // --------------------------
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      dispatch(setPhoto(reader.result as string));
+  try {
+    const { cvPhoto } = await uploadCvPhotoApi(selectedCvId, file); // cvId del estado o params
+    dispatch(setPhoto(cvPhoto));
+  } catch (err) {
+    console.error(err);
+    // Manejar error (toast?)
+  }
 
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-    };
-    reader.readAsDataURL(file);
-  };
+  if (fileInputRef.current) fileInputRef.current.value = "";
+};
 
   return (
     <div className={`identity-section ${!isOpen ? "closed" : ""}`}>

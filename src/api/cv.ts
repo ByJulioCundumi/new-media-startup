@@ -116,3 +116,34 @@ export const getPublicCvById = async (publicId: string) => {
 
   return data; // Todo el objeto CV completo
 };
+
+
+// Nueva: Subir foto
+export const uploadCvPhotoApi = async (id: string, file: File) => {
+  const formData = new FormData();
+  formData.append("photo", file);
+
+  const res = await fetch(`${BASE_URL}/${id}/photo`, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Error subiendo foto");
+
+  return data; // { message, cvPhoto }
+};
+
+// Nueva: Eliminar foto
+export const deleteCvPhotoApi = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/${id}/photo`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Error eliminando foto");
+
+  return data; // { message }
+};
