@@ -100,13 +100,6 @@ const getProgressColorClass = (progress: number) => {
             </span>
           )}
 
-          {allowCvPhoto && photo && (
-            <img
-              src={photo}
-              className="cv-tokyo__identitySection--img"
-            />
-          )}
-
           <div className="cv-tokyo__identitySection--text">
             <h1
               className="cv-tokyo__identitySection--title"
