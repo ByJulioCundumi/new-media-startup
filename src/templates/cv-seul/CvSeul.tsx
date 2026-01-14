@@ -1,6 +1,6 @@
 // templates/CvTokyo/CvTokyo.tsx
 import React, { useEffect, useRef } from "react";
-import "./cvviena.scss";
+import "./cvseul.scss";
 
 import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,10 @@ import { useTemplateColors } from "../useTemplateColors";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
-import { CvVienaSectionsRender } from "./sections-render/CvVienaSectionsRender";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
+import { CvSeulSectionsRender } from "./sections-render/CvSeulSectionsRender";
 
-export const cvVienaDefaults = {
+export const cvSeulDefaults = {
   textColor: "#494949ff",
   nameColor: "#0d0c0c",
   professionColor: "#808080",
@@ -25,7 +25,7 @@ export const cvVienaDefaults = {
   font: "Arial, Helvetica, sans-serif",
 };
 
-export const cvVienaDefaultOrder: string[] = [
+export const cvSeulDefaultOrder: string[] = [
   "identitySection",
   "personalInfoSection",
   "contactSection",
@@ -43,13 +43,13 @@ export const cvVienaDefaultOrder: string[] = [
 ];
 
 
-export const CvViena: React.FC<ITemplateProps> = (props) => {
+export const CvSeul: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvVienaDefaults);
+  const styles = useTemplateColors(cvSeulDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   
   useEffect(() => {
-      dispatch(setOrder(cvVienaDefaultOrder));
+      dispatch(setOrder(cvSeulDefaultOrder));
       if(sidebarOption === "create" || sidebarOption === "home"){
         dispatch(setAllowCvPhoto(true));
       }
@@ -100,7 +100,7 @@ export const CvViena: React.FC<ITemplateProps> = (props) => {
   // ---------------------------------------------------------------------------
   // PREPARAR SECCIONES
   // ---------------------------------------------------------------------------
-  const vienaSections = React.useMemo(() => {
+  const seulSections = React.useMemo(() => {
     return sectionsOrder
       .filter((n) => sectionInfo[n]?.enabled)
       .map((name) => ({
@@ -108,7 +108,7 @@ export const CvViena: React.FC<ITemplateProps> = (props) => {
         orientation:
           (sectionInfo[name]?.orientation || "vertical") as "vertical" | "horizontal" | "header",
         render: (
-          <CvVienaSectionsRender
+          <CvSeulSectionsRender
             key={name}
             sectionName={name}
             data={{
@@ -138,9 +138,9 @@ export const CvViena: React.FC<ITemplateProps> = (props) => {
     return sectionInfoEditor[sectionName]?.isEditorOpen ?? false;
   };
   
-  const verticalSections = vienaSections.filter((s) => s.orientation === "vertical");
-  const horizontalSections = vienaSections.filter((s) => s.orientation === "horizontal");
-  const headerSection = vienaSections.filter((s) => s.orientation === "header");
+  const verticalSections = seulSections.filter((s) => s.orientation === "vertical");
+  const horizontalSections = seulSections.filter((s) => s.orientation === "horizontal");
+  const headerSection = seulSections.filter((s) => s.orientation === "header");
 
   // ----------------------------------------------
 // ESTADOS QUE GUARDAN LOS RESULTADOS FINALES
@@ -171,7 +171,7 @@ const [page2Horizontal, setPage2Horizontal] = React.useState<string[]>([]);
     const p2: string[] = [];
 
     const nodes = Array.from(
-      container.querySelectorAll(".cv-viena__split--vertical > div")
+      container.querySelectorAll(".cv-seul__split--vertical > div")
     );
 
     nodes.forEach((node) => {
@@ -179,7 +179,7 @@ const [page2Horizontal, setPage2Horizontal] = React.useState<string[]>([]);
       const relativeBottom = rect.bottom - containerRect.top;
 
       const sectionName =
-        node.className.match(/cv-viena__(.*?)\s/)?.[1] ?? "unknown";
+        node.className.match(/cv-seul__(.*?)\s/)?.[1] ?? "unknown";
 
       if (relativeBottom < LIMIT_1) {
         p1.push(sectionName);
@@ -231,7 +231,7 @@ useEffect(() => {
     const p2: string[] = [];
 
     const nodes = Array.from(
-      container.querySelectorAll(".cv-viena__split--horizontal > div")
+      container.querySelectorAll(".cv-seul__split--horizontal > div")
     );
 
     nodes.forEach((node) => {
@@ -239,7 +239,7 @@ useEffect(() => {
       const relativeBottom = rect.bottom - containerRect.top;
 
       const sectionName =
-        node.className.match(/cv-viena__(.*?)\s/)?.[1] ?? "unknown";
+        node.className.match(/cv-seul__(.*?)\s/)?.[1] ?? "unknown";
 
       if (relativeBottom < LIMIT_1) {
         p1.push(sectionName);
@@ -274,48 +274,48 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-viena" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-seul" style={{ fontFamily: styles.fontFamily }}>
 
       {/* medicion oculta por overflow columna vertical */}
-      <div className="cv-viena__hidden--vertical" ref={verticalContainerRef}>
-        <div className="cv-viena__limit-line"/>
-        <div className="cv-viena__limit-line-overflowed"/>
+      <div className="cv-seul__hidden--vertical" ref={verticalContainerRef}>
+        <div className="cv-seul__limit-line"/>
+        <div className="cv-seul__limit-line-overflowed"/>
 
-        <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical viena-page-one">
+        <div className="cv-seul__split">
+          <div className="cv-seul__split--vertical seul-page-one">
             {verticalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
-                <div onClick={()=>handleClick(s.name)} className={`cv-viena__${s.name} ${isEditorOpen(s.name) ? "cv-viena__section--active" : "cv-viena__section"} cv-viena__section--vertical`}>
+                <div onClick={()=>handleClick(s.name)} className={`cv-seul__${s.name} ${isEditorOpen(s.name) ? "cv-seul__section--active" : "cv-seul__section"} cv-seul__section--vertical`}>
                   {s.render}
                 </div>
               ))}
           </div>
 
-          <div className="cv-viena__split--horizontal viena-page-one">
+          <div className="cv-seul__split--horizontal seul-page-one">
           </div>
         </div>
       </div>
       {/* medicion oculta por overflow columna horizontal */}
-      <div className="cv-viena__hidden--horizontal" ref={horizontalContainerRef}>
-        <div className="cv-viena__limit-line"/>
-        <div className="cv-viena__limit-line-overflowed"/>
+      <div className="cv-seul__hidden--horizontal" ref={horizontalContainerRef}>
+        <div className="cv-seul__limit-line"/>
+        <div className="cv-seul__limit-line-overflowed"/>
         {headerSection
          .map((s) => (
-          <div onClick={()=>handleClick(s.name)} className={`cv-viena__${s.name} ${isEditorOpen(s.name) ? "cv-viena__section--active" : "cv-viena__section"} cv-viena__section--header`}>
+          <div onClick={()=>handleClick(s.name)} className={`cv-seul__${s.name} ${isEditorOpen(s.name) ? "cv-seul__section--active" : "cv-seul__section"} cv-seul__section--header`}>
             {s.render}
           </div>
         ))}
 
-        <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical viena-page-one">
+        <div className="cv-seul__split">
+          <div className="cv-seul__split--vertical seul-page-one">
           </div>
 
-          <div className="cv-viena__split--horizontal viena-page-one">
+          <div className="cv-seul__split--horizontal seul-page-one">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
-                <div onClick={()=>handleClick(s.name)} className={`cv-viena__${s.name} ${isEditorOpen(s.name) ? "cv-viena__section--active" : "cv-viena__section"} cv-viena__section--horizontal`}>
+                <div onClick={()=>handleClick(s.name)} className={`cv-seul__${s.name} ${isEditorOpen(s.name) ? "cv-seul__section--active" : "cv-seul__section"} cv-seul__section--horizontal`}>
                   {s.render}
                 </div>
               ))}
@@ -325,7 +325,7 @@ useEffect(() => {
       
       <div className={(sidebarOption === "create" || sidebarOption === "cv") && !previewPopupOpen && !templatesPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
-      <div className="cv-viena__page">
+      <div className="cv-seul__page">
         
         {/* MARCA DE AGUA */}
         {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
@@ -336,29 +336,29 @@ useEffect(() => {
         {headerSection.map((s) => (
           <div
             onClick={() => handleClick(s.name)}
-            className={`cv-viena__${s.name} ${
-              isEditorOpen(s.name) ? "cv-viena__section--active" : "cv-viena__section"
-            } cv-viena__section--header`}
+            className={`cv-seul__${s.name} ${
+              isEditorOpen(s.name) ? "cv-seul__section--active" : "cv-seul__section"
+            } cv-seul__section--header`}
           >
             {s.render}
           </div>
         ))}
 
         {/* PAGE 1 */}
-        <div className="cv-viena__split">
-          <div className="cv-viena__split--vertical viena-page-one">
+        <div className="cv-seul__split">
+          <div className="cv-seul__split--vertical seul-page-one">
             {page1Vertical.map((name) => {
-              const sec = vienaSections.find((s) => s.name === name);
+              const sec = seulSections.find((s) => s.name === name);
               if (!sec) return null;
               return (
                 <div
                   key={name}
                   onClick={() => handleClick(name)}
-                  className={`cv-viena__${name} ${
+                  className={`cv-seul__${name} ${
                     isEditorOpen(name)
-                      ? "cv-viena__section--active"
-                      : "cv-viena__section"
-                  } cv-viena__section--vertical`}
+                      ? "cv-seul__section--active"
+                      : "cv-seul__section"
+                  } cv-seul__section--vertical`}
                 >
                   {sec.render}
                 </div>
@@ -366,19 +366,19 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-viena__split--horizontal viena-page-one">
+          <div className="cv-seul__split--horizontal seul-page-one">
             {page1Horizontal.map((name) => {
-              const sec = vienaSections.find((s) => s.name === name);
+              const sec = seulSections.find((s) => s.name === name);
               if (!sec) return null;
               return (
                 <div
                   key={name}
                   onClick={() => handleClick(name)}
-                  className={`cv-viena__${name} ${
+                  className={`cv-seul__${name} ${
                     isEditorOpen(name)
-                      ? "cv-viena__section--active"
-                      : "cv-viena__section"
-                  } cv-viena__section--horizontal`}
+                      ? "cv-seul__section--active"
+                      : "cv-seul__section"
+                  } cv-seul__section--horizontal`}
                 >
                   {sec.render}
                 </div>
@@ -391,38 +391,38 @@ useEffect(() => {
 
         {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
           <>
-          <p className="cv-viena__page--number">Pagina 1</p>
-          <div className="cv-viena__limit-page">{previewPopupOpen === false && sidebarOption === "create" &&  <p className="cv-viena__limit-page-text">Pagina 2</p>} </div>
+          <p className="cv-seul__page--number">Pagina 1</p>
+          <div className="cv-seul__limit-page">{previewPopupOpen === false && sidebarOption === "create" &&  <p className="cv-seul__limit-page-text">Pagina 2</p>} </div>
          </>
       ) }
       </div>
 
       {/* PAGE 2 */}
       {(page2Vertical.length > 0 || page2Horizontal.length > 0) && (
-        <div className="cv-viena__page">
+        <div className="cv-seul__page">
 
         {/* MARCA DE AGUA */}
         {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
           <WaterMark/>
         )}
 
-          <div className="cv-viena__limit-line-overflowed">
-            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-viena__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
+          <div className="cv-seul__limit-line-overflowed">
+            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-seul__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
           </div>
-          <div className="cv-viena__split">
-            <div className="cv-viena__split--vertical">
+          <div className="cv-seul__split">
+            <div className="cv-seul__split--vertical">
               {page2Vertical.map((name) => {
-                const sec = vienaSections.find((s) => s.name === name);
+                const sec = seulSections.find((s) => s.name === name);
                 if (!sec) return null;
                 return (
                   <div
                     key={name}
                     onClick={() => handleClick(name)}
-                    className={`cv-viena__${name} ${
+                    className={`cv-seul__${name} ${
                       isEditorOpen(name)
-                        ? "cv-viena__section--active"
-                        : "cv-viena__section"
-                    } cv-viena__section--vertical`}
+                        ? "cv-seul__section--active"
+                        : "cv-seul__section"
+                    } cv-seul__section--vertical`}
                   >
                     {sec.render}
                   </div>
@@ -430,19 +430,19 @@ useEffect(() => {
               })}
             </div>
 
-            <div className="cv-viena__split--horizontal">
+            <div className="cv-seul__split--horizontal">
               {page2Horizontal.map((name) => {
-                const sec = vienaSections.find((s) => s.name === name);
+                const sec = seulSections.find((s) => s.name === name);
                 if (!sec) return null;
                 return (
                   <div
                     key={name}
                     onClick={() => handleClick(name)}
-                    className={`cv-viena__${name} ${
+                    className={`cv-seul__${name} ${
                       isEditorOpen(name)
-                        ? "cv-viena__section--active"
-                        : "cv-viena__section"
-                    } cv-viena__section--horizontal`}
+                        ? "cv-seul__section--active"
+                        : "cv-seul__section"
+                    } cv-seul__section--horizontal`}
                   >
                     {sec.render}
                   </div>
@@ -451,7 +451,7 @@ useEffect(() => {
             </div>
 
           </div>
-          <p className="cv-viena__page--number">Pagina 2</p>
+          <p className="cv-seul__page--number">Pagina 2</p>
         </div>
       )}
       </div>
@@ -460,4 +460,4 @@ useEffect(() => {
   );
 };
 
-export default CvViena;
+export default CvSeul;
