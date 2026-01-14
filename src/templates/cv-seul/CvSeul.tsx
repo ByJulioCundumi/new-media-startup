@@ -292,7 +292,7 @@ useEffect(() => {
               ))}
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-one">
+          <div className="cv-seul__split--horizontal seul-page-two">
           </div>
         </div>
       </div>
@@ -311,7 +311,7 @@ useEffect(() => {
           <div className="cv-seul__split--vertical seul-page-one">
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-one">
+          <div className="cv-seul__split--horizontal seul-page-two">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -366,7 +366,7 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-one">
+          <div className="cv-seul__split--horizontal seul-page-two">
             {page1Horizontal.map((name) => {
               const sec = seulSections.find((s) => s.name === name);
               if (!sec) return null;
