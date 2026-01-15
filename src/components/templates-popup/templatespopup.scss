@@ -55,15 +55,16 @@
     font-weight: 700;
     color: #ffffff;
   }
+}
 
-  .close-btn {
+.close-btn-tpl {
     background: none;
     border: none;
     cursor: pointer;
     padding: 5px;
-    color: #ffffff;
+    color: #484848;
+    width: fit-content;
   }
-}
 
 /* ===========================
    FILTROS

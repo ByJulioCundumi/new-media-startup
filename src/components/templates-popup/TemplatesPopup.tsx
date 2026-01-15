@@ -140,17 +140,6 @@ export default function TemplatesPopup() {
   return (
     <div className="template-popup-overlay">
       <div ref={popupRef} className="template-popup popup-animate">
-        {/* HEADER */}
-        <div className="template-popup-header">
-          <h2>Selecciona Tu Plantilla</h2>
-          <button
-            className="close-btn"
-            onClick={() => dispatch(setTemplatePopupOpen(false))}
-            aria-label="Cerrar"
-          >
-            <IoClose size={26} />
-          </button>
-        </div>
 
         {/* FILTROS FIJOS */}
         <div className="template-popup-filters-fixed">
@@ -172,6 +161,14 @@ export default function TemplatesPopup() {
             <p className="template-fav-text">{showFavorites ? "Todas" : "Favoritos"}</p>
           </button>
           </div>
+
+          <button
+            className="close-btn-tpl"
+            onClick={() => dispatch(setTemplatePopupOpen(false))}
+            aria-label="Cerrar"
+          >
+            <IoClose size={26} />
+          </button>
         </div>
 
         {/* GRID SCROLLABLE */}

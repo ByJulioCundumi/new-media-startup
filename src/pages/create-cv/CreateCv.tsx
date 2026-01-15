@@ -44,6 +44,7 @@ import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { IoCloudDone } from "react-icons/io5";
 import { LuSave, LuSaveOff } from "react-icons/lu";
+import { isOnline } from "../../util/isOnline";
 
 const getCurrentData = (state: IState) => ({
   cvTitle: state.cvCreation.selectedCvTitle,
@@ -379,7 +380,7 @@ const [showSections, setShowSections] = useState(true)
 
       {/* Indicador visual de modo de guardado */}
       <div className="save-mode-indicator">
-        {isSavingInCloud ? (
+        {isSavingInCloud && isOnline() ? (
           <span className="save-mode-indicator__cloud">
             <LuSave />
             En la nube

@@ -19,7 +19,7 @@ export const cvVienaDefaults = {
   textColor: "#494949ff",
   nameColor: "#0d0c0c",
   professionColor: "#808080",
-  sectionTitleColor: "#ffffff",
+  sectionTitleColor: "#282930",
   itemColor: "#635f5f",
   qrColor: "#000000",
   font: "Arial, Helvetica, sans-serif",

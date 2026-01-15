@@ -100,36 +100,20 @@ const getProgressColorClass = (progress: number) => {
             </span>
           )}
 
-          
+          {validPhoto && (
+            <img
+              src={validPhoto}
+              className="cv-seul__identitySection--img"
+            />
+          )}
 
           <div className="cv-seul__identitySection--text">
             <h1
               className="cv-seul__identitySection--title"
               style={{ color: styles.nameColor }}
             >
-              {fullName.length > 0 ? <>{firstName || identitySection.firstName} {lastName || identitySection.lastName} </> : "Mi CV"}
+              {fullName.length > 0 ? <>{firstName || identitySection.firstName} <br />{lastName || identitySection.lastName} </> : "Mi CV"}
             </h1>
-            
-            <div className="cv-seul__img">
-                {validPhoto && (
-                    <img
-                    src={validPhoto}
-                    className="cv-seul__identitySection--img"
-                    />
-                )}
-
-                {allowQrCode && (
-                <div className="cv-seul__identitySection--qr-wrapper">
-                    <QRCodeSVG
-                    value={qrUrl}
-                    size={75}
-                    level="Q"
-                    bgColor="#ffffff"
-                    fgColor={styles.qrColor}
-                    />
-                </div>
-                )}
-            </div>
             <p
               className="cv-seul__identitySection--occupation"
               style={{ color: styles.professionColor }}
@@ -139,6 +123,17 @@ const getProgressColorClass = (progress: number) => {
           </div>
         </div>
 
+        {allowQrCode && (
+          <div className="cv-seul__identitySection--qr-wrapper">
+            <QRCodeSVG
+              value={qrUrl}
+              size={70}
+              level="Q"
+              bgColor="#000000"
+              fgColor={styles.qrColor}
+            />
+          </div>
+        )}
         </>
       );
     // ==================== LADO IZQUIERDO ====================

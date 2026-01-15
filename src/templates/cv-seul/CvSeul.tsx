@@ -17,11 +17,11 @@ import { CvSeulSectionsRender } from "./sections-render/CvSeulSectionsRender";
 
 export const cvSeulDefaults = {
   textColor: "#494949ff",
-  nameColor: "#0d0c0c",
-  professionColor: "#808080",
+  nameColor: "#ffffff",
+  professionColor: "#b0b0b0",
   sectionTitleColor: "#ffffff",
   itemColor: "#635f5f",
-  qrColor: "#000000",
+  qrColor: "#ffffff",
   font: "Arial, Helvetica, sans-serif",
 };
 
@@ -292,7 +292,7 @@ useEffect(() => {
               ))}
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-two">
+          <div className="cv-seul__split--horizontal seul-page-one">
           </div>
         </div>
       </div>
@@ -311,7 +311,7 @@ useEffect(() => {
           <div className="cv-seul__split--vertical seul-page-one">
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-two">
+          <div className="cv-seul__split--horizontal seul-page-one">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -366,7 +366,7 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-seul__split--horizontal seul-page-two">
+          <div className="cv-seul__split--horizontal seul-page-one">
             {page1Horizontal.map((name) => {
               const sec = seulSections.find((s) => s.name === name);
               if (!sec) return null;

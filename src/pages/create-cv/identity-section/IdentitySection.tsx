@@ -20,6 +20,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { toggleSectionOpen } from "../../../reducers/editorsSlice";
 import { deleteCvPhotoApi, uploadCvPhotoApi } from "../../../api/cv";
 import { hasValidSubscriptionTime } from "../../../util/checkSubscriptionTime";
+import { isOnline } from "../../../util/isOnline";
 
 const IdentitySection = () => {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const IdentitySection = () => {
   const file = e.target.files?.[0];
   if (!file) return;
 
-  if(hasValidSubscriptionTime(subscriptionExpiresAt)){
+  if(hasValidSubscriptionTime(subscriptionExpiresAt) && isOnline()){
     try {
       const { cvPhoto } = await uploadCvPhotoApi(selectedCvId, file); // cvId del estado o params
       dispatch(setPhoto(cvPhoto));
