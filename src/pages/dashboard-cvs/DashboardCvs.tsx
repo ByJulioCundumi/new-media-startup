@@ -415,12 +415,12 @@ export default function DashboardCVs() {
         {/* ===== OFERTA LABORAL ===== */}
               <div className="home-page__offer">
                 <h2 className="home-page__job">
-                  Trabaja {""}
+                  ¡Solo {""}
                   <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      Desde Casa
+                      Para Miembros!
                     </span>
                 </h2>
-                <p style={{textAlign: "center", color: "#818181ff"}}>Gana comisiones de hasta el 70% por promocionar nuestro creador de Curriculums</p>
+                <p style={{textAlign: "center", color: "#818181ff"}}>Al ser un miembro activo de nuestra plataforma, puedes recomendar nuestros planes y obtener un 50% de comisión a través de nuestro programa de afiliados.</p>
                 
                 <JobOffer />
               </div>
