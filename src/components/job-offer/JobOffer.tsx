@@ -65,7 +65,7 @@ const JobOffer = () => {
       <section className="job-offer-card-container">
         <article className="job-offer-card">
               <a href="#" style={{textDecoration: "underline"}} className="job-stat-info">
-                 Solicitar Afiliacion Gratis
+                 Solicitar Mi Afiliacion 
                 <LuExternalLink />
               </a>
 

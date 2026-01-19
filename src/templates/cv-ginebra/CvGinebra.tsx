@@ -1,6 +1,6 @@
 // templates/CvTokyo/CvTokyo.tsx
 import React, { useEffect, useRef } from "react";
-import "./cvroma.scss";
+import "./cvginebra.scss";
 
 import type { ITemplateProps } from "../../interfaces/ITemplateProps";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,13 +9,13 @@ import type { IState } from "../../interfaces/IState";
 import { setOrder } from "../../reducers/cvSectionsSlice";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useTemplateColors } from "../useTemplateColors";
-import { CvRomaSectionsRender } from "./sections-render/CvRomaSectionsRender";
 import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
+import { CvGinebraSectionsRender } from "./sections-render/CvGinebraSectionsRender";
 
-export const cvRomaDefaults = {
+export const cvGinebraDefaults = {
   textColor: "#494949ff",
   nameColor: "#0d0c0c",
   professionColor: "#808080",
@@ -25,7 +25,7 @@ export const cvRomaDefaults = {
   font: "Arial, Helvetica, sans-serif",
 };
 
-export const cvRomaDefaultOrder: string[] = [
+export const cvGinebraDefaultOrder: string[] = [
   "identitySection",
   "personalInfoSection",
   "contactSection",
@@ -42,14 +42,14 @@ export const cvRomaDefaultOrder: string[] = [
   "hobbieSection",
 ];
 
-export const CvRoma: React.FC<ITemplateProps> = (props) => {
-  const styles = useTemplateColors(cvRomaDefaults);
+export const CvGinebra: React.FC<ITemplateProps> = (props) => {
+  const styles = useTemplateColors(cvGinebraDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   // estilos
   useEffect(() => {
-    dispatch(setOrder(cvRomaDefaultOrder));
+    dispatch(setOrder(cvGinebraDefaultOrder));
     if(sidebarOption === "create"){
-                  dispatch(setAllowCvPhoto(false));
+                  dispatch(setAllowCvPhoto(true));
                 }
   }, []);
   // ---------------------------------------------------------------------------
@@ -99,7 +99,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
   // ---------------------------------------------------------------------------
   // PREPARAR SECCIONES
   // ---------------------------------------------------------------------------
-  const romaSections = React.useMemo(() => {
+  const ginebraSections = React.useMemo(() => {
     return sectionsOrder
       .filter((n) => sectionInfo[n]?.enabled)
       .map((name) => ({
@@ -107,7 +107,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
         orientation:
           (sectionInfo[name]?.orientation || "vertical") as "vertical" | "horizontal" | "header",
         render: (
-          <CvRomaSectionsRender
+          <CvGinebraSectionsRender
             key={name}
             sectionName={name}
             data={{
@@ -137,7 +137,7 @@ export const CvRoma: React.FC<ITemplateProps> = (props) => {
     return sectionInfoEditor[sectionName]?.isEditorOpen ?? false;
   };
   
-  const headerSection = romaSections.filter((s) => s.orientation === "header");
+  const headerSection = ginebraSections.filter((s) => s.orientation === "header");
 
   // ----------------------------------------------
 // ESTADOS QUE GUARDAN LOS RESULTADOS FINALES
@@ -164,7 +164,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
     const p2: string[] = [];
 
     const nodes = Array.from(
-      container.querySelectorAll(".cv-roma__vertical > div")
+      container.querySelectorAll(".cv-ginebra__vertical > div")
     );
 
     nodes.forEach((node) => {
@@ -172,7 +172,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
       const relativeBottom = rect.bottom - containerRect.top;
 
       const sectionName =
-        node.className.match(/cv-roma__(.*?)\s/)?.[1] ?? "unknown";
+        node.className.match(/cv-ginebra__(.*?)\s/)?.[1] ?? "unknown";
 
       if (relativeBottom < LIMIT_1) {
         p1.push(sectionName);
@@ -208,24 +208,24 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-roma" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-ginebra" style={{ fontFamily: styles.fontFamily }}>
 
       {/* medicion oculta por overflow columna vertical */}
-      <div className="cv-roma__hidden--vertical" ref={verticalContainerRef}>
-        <div className="cv-roma__limit-line"/>
-        <div className="cv-roma__limit-line-overflowed"/>
+      <div className="cv-ginebra__hidden--vertical" ref={verticalContainerRef}>
+        <div className="cv-ginebra__limit-line"/>
+        <div className="cv-ginebra__limit-line-overflowed"/>
         {headerSection
          .map((s) => (
-          <div onClick={()=>handleClick(s.name)} className={`cv-roma__${s.name} ${isEditorOpen(s.name) ? "cv-roma__section--active" : "cv-roma__section"} cv-roma__section--header`}>
+          <div onClick={()=>handleClick(s.name)} className={`cv-ginebra__${s.name} ${isEditorOpen(s.name) ? "cv-ginebra__section--active" : "cv-ginebra__section"} cv-ginebra__section--header`}>
             {s.render}
           </div>
         ))}
 
-        <div className="cv-roma__vertical">
-            {romaSections
+        <div className="cv-ginebra__vertical">
+            {ginebraSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
-                <div onClick={()=>handleClick(s.name)} className={`cv-roma__${s.name} ${isEditorOpen(s.name) ? "cv-roma__section--active" : "cv-roma__section"} cv-roma__section--vertical`}>
+                <div onClick={()=>handleClick(s.name)} className={`cv-ginebra__${s.name} ${isEditorOpen(s.name) ? "cv-ginebra__section--active" : "cv-ginebra__section"} cv-ginebra__section--vertical`}>
                   {s.render}
                 </div>
               ))}
@@ -234,7 +234,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
 
       <div className={(sidebarOption === "create" || sidebarOption === "cv") && !previewPopupOpen && !templatesPopupOpen ? "cv__viewer" : ""}>
       {/* renderizado de secciones por pagina con su header */}
-      <div className="cv-roma__page">
+      <div className="cv-ginebra__page">
         
         {/* MARCA DE AGUA */}
         {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
@@ -245,28 +245,28 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
         {headerSection.map((s) => (
           <div
             onClick={() => handleClick(s.name)}
-            className={`cv-roma__${s.name} ${
-              isEditorOpen(s.name) ? "cv-roma__section--active" : "cv-roma__section"
-            } cv-roma__section--header`}
+            className={`cv-ginebra__${s.name} ${
+              isEditorOpen(s.name) ? "cv-ginebra__section--active" : "cv-ginebra__section"
+            } cv-ginebra__section--header`}
           >
             {s.render}
           </div>
         ))}
 
         {/* PAGE 1 */}
-        <div className="cv-roma__vertical">
+        <div className="cv-ginebra__vertical">
             {page1Vertical.map((name) => {
-              const sec = romaSections.find((s) => s.name === name);
+              const sec = ginebraSections.find((s) => s.name === name);
               if (!sec) return null;
               return (
                 <div
                   key={name}
                   onClick={() => handleClick(name)}
-                  className={`cv-roma__${name} ${
+                  className={`cv-ginebra__${name} ${
                     isEditorOpen(name)
-                      ? "cv-roma__section--active"
-                      : "cv-roma__section"
-                  } cv-roma__section--vertical`}
+                      ? "cv-ginebra__section--active"
+                      : "cv-ginebra__section"
+                  } cv-ginebra__section--vertical`}
                 >
                   {sec.render}
                 </div>
@@ -277,37 +277,37 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
 
         {(page2Vertical.length > 0) && (
           <>
-          <p className="cv-roma__page--number">Pagina 1</p>
-          <div className="cv-roma__limit-page">{previewPopupOpen === false && sidebarOption === "create" && <p className="cv-roma__limit-page-text">Pagina 2</p>} </div>
+          <p className="cv-ginebra__page--number">Pagina 1</p>
+          <div className="cv-ginebra__limit-page">{previewPopupOpen === false && sidebarOption === "create" && <p className="cv-ginebra__limit-page-text">Pagina 2</p>} </div>
          </>
       ) }
       </div>
 
       {/* PAGE 2 */}
       {(page2Vertical.length > 0) && (
-        <div className="cv-roma__page">
+        <div className="cv-ginebra__page">
           
           {/* MARCA DE AGUA */}
           {(!hasValidSubscriptionTime(subscriptionExpiresAt) && sidebarOption !== "home" && sidebarOption !== "cv") && (
             <WaterMark/>
           )}
 
-          <div className="cv-roma__limit-line-overflowed">
-            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-roma__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
+          <div className="cv-ginebra__limit-line-overflowed">
+            {previewPopupOpen === false && sidebarOption === "create" && <p className="cv-ginebra__limit-line-overflowed-text"><LuTriangleAlert /> Los reclutadores leen primero lo esencial: mantén tu CV en máximo 2 páginas.</p>}
           </div>
-          <div className="cv-roma__vertical">
+          <div className="cv-ginebra__vertical">
               {page2Vertical.map((name) => {
-                const sec = romaSections.find((s) => s.name === name);
+                const sec = ginebraSections.find((s) => s.name === name);
                 if (!sec) return null;
                 return (
                   <div
                     key={name}
                     onClick={() => handleClick(name)}
-                    className={`cv-roma__${name} ${
+                    className={`cv-ginebra__${name} ${
                       isEditorOpen(name)
-                        ? "cv-roma__section--active"
-                        : "cv-roma__section"
-                    } cv-roma__section--vertical`}
+                        ? "cv-ginebra__section--active"
+                        : "cv-ginebra__section"
+                    } cv-ginebra__section--vertical`}
                   >
                     {sec.render}
                   </div>
@@ -315,7 +315,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
               })}
             </div>
 
-          <p className="cv-roma__page--number">Pagina 2</p>
+          <p className="cv-ginebra__page--number">Pagina 2</p>
         </div>
       )}
       </div>
@@ -324,4 +324,4 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
   );
 };
 
-export default CvRoma;
+export default CvGinebra;

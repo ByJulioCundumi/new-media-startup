@@ -1,14 +1,14 @@
 /* ==============================================
    PAGE LAYOUT – TOKYO (Doble columna con paginación)
    ============================================== */
-.cv-seul {
+.cv-ginebra {
   position: relative;
   background-color: rgba(240, 248, 255, 0);
   *{
     font-family: inherit;
   }
 }
-.cv-seul__limit-line{
+.cv-ginebra__limit-line{
   position: absolute;
   top: 1082px; // 1122px - 40px padding bottom
   left: 0;
@@ -20,7 +20,7 @@
   height: 0;
   border-top: 1.5px dashed rgba(0, 110, 255, 0.25);
 }
-.cv-seul__limit-line-text {
+.cv-ginebra__limit-line-text {
   position: absolute;
   left: 50%;
   top: -12px;
@@ -37,7 +37,7 @@
   pointer-events: none;
   animation: cvtokyoPulse 1.9s infinite ease-in-out;
 }
-.cv-seul__limit-line-overflowed{
+.cv-ginebra__limit-line-overflowed{
   position: absolute;
   top: 1122px; // 1122px - 40px padding bottom
   left: 0;
@@ -50,7 +50,7 @@
   border-top: 1.5px dashed rgba(255, 0, 0, 0.418);
 }
 /* Etiqueta elegante */
-.cv-seul__limit-line-overflowed-text {
+.cv-ginebra__limit-line-overflowed-text {
   position: absolute;
   right: 9rem;
   top: -20px;
@@ -70,7 +70,7 @@
     margin-right: 0.2rem;
   }
 }
-.cv-seul__limit-page{
+.cv-ginebra__limit-page{
   position: absolute;
   bottom: -0.8rem; // 1122px - 40px padding bottom
   height: 2px;
@@ -81,7 +81,7 @@
   height: 0;
   border-top: 2px solid rgba(255, 0, 0, 0.25);
 }
-.cv-seul__limit-page-text {
+.cv-ginebra__limit-page-text {
   position: absolute;
   left: 50%;
   top: -5px;
@@ -96,11 +96,11 @@
   box-shadow: 0 0px 6px rgba(255, 0, 0, 0.103);
   white-space: nowrap;
   pointer-events: none;
-  animation: cvvienaPulse 1.9s infinite ease-in-out;
+  animation: cvginebraPulse 1.9s infinite ease-in-out;
 }
 
 
-@keyframes cvseulPulse {
+@keyframes cvginebraPulse {
   0%, 100% {
     transform: translateX(-50%) translateY(40%);
   }
@@ -109,30 +109,20 @@
   }
 }
 
-.cv-seul__hidden--vertical{
+.cv-ginebra__hidden--vertical{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 0px;
+  padding: 40px 50px;
   background-color: white;
   //position: relative;
   position: absolute;
   top: 0;
   left: -999999px;
 }
-.cv-seul__hidden--horizontal{
+.cv-ginebra__page{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 0px;
-  background-color: white;
-  //position: relative;
-  position: absolute;
-  top: 0;
-  right: -999999px;
-}
-.cv-seul__page{
-  min-height: 1122px;
-  width: 794px;
-  padding: 0px 0px;
+  padding: 40px 50px;
   background-color: white;
   margin-bottom: 1.5rem;
   position: relative;
@@ -147,53 +137,10 @@
 }
 
 /* --------------------- Split de columnas --------------------- */
-.cv-seul__split {
-  display: flex;
-  height: 1122px;
-  margin-top: 0;
-  padding-top: 0;
-
-  &--vertical {
-    width: 32%;
-    padding: 35px 35px;
+.cv-ginebra__vertical {
+    padding: 35px 25px;
     padding-bottom: 0;
-    background-color: #403274;
-
-    &>:first-child{
-      padding: 10px;
-      margin-bottom: 5px;
-      margin-left: -5px;
-    }
-    
-    &>:not(:first-child){
-      border-radius: 0px;
-      border-radius: 0px;
-      padding: 10px;
-      margin-bottom: 20px;
-      margin-left: -5px;
-    }
-  }
-
-  &--horizontal {
-    width: 68%;
-    padding: 35px 35px;
-    padding-bottom: 0;
-
-    &>:first-child{
-      padding: 10px;
-      margin-bottom: 0px;
-    }
-    
-    &>:not(:first-child){
-      border-radius: 0px;
-      padding: 15px 10px;
-      margin-bottom: 0px;
-    }
-  }
-}
-
-.seul-page-one{
-  padding-top: 280px;
+    padding-left: 0;
 }
 
 /* ========================
@@ -208,10 +155,10 @@
   }
 
   /* Cada página debe ocupar exactamente A4 */
-  .cv-seul__page {
+  .cv-ginebra__page {
     height: 1122px !important;
     width: 794px !important;
-    padding: 0px 0px !important;
+    padding: 40px 50px !important;
     box-sizing: border-box;
     background: white !important;
     page-break-after: always;
@@ -219,15 +166,14 @@
   }
 
   /* Ocultar contenedores de medición */
-  .cv-seul__hidden--vertical,
-  .cv-seul__hidden--horizontal,
-  .cv-seul__limit-line,
-  .cv-seul__limit-line-overflowed {
+  .cv-ginebra__hidden--vertical,
+  .cv-ginebra__limit-line,
+  .cv-ginebra__limit-line-overflowed {
     display: none !important;
   }
 
   /* Evitar saltos a mitad de sección */
-  .cv-seul__section {
+  .cv-ginebra__section {
     page-break-inside: avoid !important;
   }
 
@@ -239,7 +185,7 @@
 }
 
 
-.cv-seul__watermark {
+.cv-ginebra__watermark {
   position: absolute;
   inset: 0;
   top: 0;

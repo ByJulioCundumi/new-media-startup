@@ -1,4 +1,4 @@
-.cv-seul{
+.cv-ginebra{
   &__section{
     border: 1px solid #00ccff00;
 
@@ -35,31 +35,25 @@
   &__identitySection {
     display: flex;
       gap: 2rem;
-      align-items: start;
-      justify-content: space-between;
-      padding: 10px 20px;
-      padding-right: 0;
-      padding-bottom: 10px;
-      border: 12px solid white;
-      border-radius: 0px;
+      justify-content: start;
+      padding: 15px 10px;
+      padding-bottom: 55px;
+      border: 1px solid transparent;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.2s ease;
-      min-height: 150px;
-      position: absolute;
-      left: 3rem;
-      right: 3rem;
-      top: 3rem;
-      background-color: #403274;
-      border-radius: 5px;
+      margin-bottom: -3rem;
 
       &:hover {
-        background-color: #403274;
-        border: 12px solid #f9fffe;
+        background-color: #00ccff09;
+        border: 1px solid #00ccff13;
+        box-shadow: 0px 0px 2px #00ccff27;
       }
 
       &--active {
         background-color: #00ccff09;
         border: 1px solid #00ccff13;
+        box-shadow: 0px 0px 2px #00ccff27;
       }
 
       &.space {
@@ -76,23 +70,27 @@
         border-radius: 0;
         object-fit: cover;
         margin-top: 0.5rem;
-        margin-right: 1rem;
+        position: absolute;
+        top: 2rem;
+        left: 50px;
       }
 
       &--text {
         display: flex;
         flex-direction: column;
-        gap: 0rem;
-        line-height: 3.8rem;
+        align-items: start;
+        width: fit-content;
+        gap: 0.5rem;
+        line-height: 1.5rem;
         margin: auto 0;
         word-break: break-word; // rompe palabras largas
         overflow-wrap: break-word; // soporta compatibilidad
       }
 
       &--title {
-        font-size: 3rem;
+        font-size: 2.5rem;
+        line-height: 3.2rem;
         font-weight: 600;
-        max-width: 450px;
         color: rgb(68, 68, 68); // será sobrescrito por style={{ color: styles.title }}
         text-transform: uppercase;
       }
@@ -100,7 +98,6 @@
       &--occupation {
         font-size: 1.3rem;
         font-weight: 400;
-        line-height: 2.2rem;
         color: #5f5f5f; // será sobrescrito por style={{ color: styles.profession }}
       }
 
@@ -109,8 +106,8 @@
         text-align: center;
         margin-top: 0.5rem;
         position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
+        top: 3rem;
+        right: 50px;
       }
 
       &--qr-text {
@@ -121,6 +118,7 @@
   
     &--main{
       display: flex;
+      justify-content: center;
       gap: 1.5rem;
       position: relative;
     }
@@ -133,61 +131,44 @@
     // ------------------------------
   // General - Horizontal
   // ------------------------------
-  &__contactSection, &__personalInfoSection, &__skillSection, &__languajeSection, &__linkSection,
+  &__contactSection, &__personalInfoSection, &__skillSection, &__languageSection, &__linkSection,
   &__hobbieSection, &__profileSection, &__experienceSection, &__educationSection, &__courseSection,
   &__awardSection, &__referenceSection, &__customSection{
-    padding-left: 0;
     cursor: pointer;
-
+    padding: 0 20px;
+    margin-bottom: 1rem;
     word-break: break-word; // rompe palabras largas
       overflow-wrap: break-word; // soporta compatibilidad
 
+      border-left: 2px solid black;
+
     &--title {
-      font-size: 1.1rem;
+      font-size: 1.5rem;
       font-weight: 600;
       position: relative;
       display: inline-block; /* importante para que el borde mida solo el título */
+      padding-bottom: 15px;   /* espacio entre texto y borde */
       color: black;
       position: relative;
       text-transform: uppercase;
-      background-color: #403274;
-      padding: 0.2rem 0.5rem;
+    }
+
+    &--item{
+      padding-left: 2rem;
     }
   }
 
    // ------------------------------
   // General - Vertical
   // ------------------------------
-  &__personalInfoSection, &__contactSection, &__skillSection, &__languajeSection, &__linkSection, &__hobbieSection{
-    &--title{
-      color: rgb(228, 228, 228);
-      padding: 0;
-      padding-bottom: 15px;
-      font-size: 1.45rem;
-      background-color: #1f053500;
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0.4rem;
-        width: 40px;     /* <<--- el borde llega solo a la mitad */
-        height: 3px;
-        border-radius: 100px;
-        background: #ffffff;
-      }
-    }
+  &__personalInfoSection, &__contactSection, &__skillSection, &__languageSection, &__linkSection, &__hobbieSection{
     &--item-value{
-      color: #afafaf;
+      color: #00000077;
     }
     &--item{
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
-
-      &-name{
-        color: rgb(206, 206, 206);
-      }
     }
   }
 
@@ -195,8 +176,42 @@
   // CONTACT SECTION
   // ------------------------------
   &__contactSection {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    margin-bottom: 10px;
+    height: 70px;
+
+    &--box{
+        display: flex;
+        justify-content: space-between;
+        background-color: #fafafa;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+
+        color: rgb(59, 59, 59);
+    }
+
     &--item {
-      margin-top: 0.7rem;
+        white-space: nowrap;
+        height: fit-content;
+        margin-top: 1rem;
 
       &-name {
         font-weight: 600;
@@ -222,9 +237,33 @@
   // PERSONAL INFO SECTION
   // ------------------------------
   &__personalInfoSection {
-    &--item {
-      margin-top: 0.7rem;
+    display: flex;
+    justify-content: start;
+    gap: 0.5rem;
+    position: relative;
+    border-left: none;
+    margin-top: -2rem;
+    padding-left: 0.8rem;
+    margin-bottom: 2rem;
 
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        color: rgb(78, 78, 78);
+    }
+
+    &--item {
+        padding-left: 0;
       &-name {
         font-weight: 600;
         font-size: 0.95rem;
@@ -240,6 +279,28 @@
   // SKILL SECTION
   // ------------------------------
   &__skillSection {
+    margin-bottom: 1rem;
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
+    &--content{
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(2,1fr);
+    }
+    
     &--item {
       margin-top: 0.9rem;
 
@@ -251,7 +312,6 @@
       &-level {
         font-size: 0.9rem;
         opacity: 0.8;
-        color: #dcdcdc;
       }
     }
 
@@ -266,16 +326,16 @@
     &--progress {
       margin-top: 0.35rem;
       width: 100%;
-      height: 6px;
-      background-color: #414141; // gris claro
+      height: 2px;
+      background-color: #dcdcdc; // gris claro
       border-radius: 4px;
       overflow: hidden;
     }
 
     /* Barra interna */
     &--progress-bar {
-      height: 80%;
-      background-color: #ffffff; // negro
+      height: 100%;
+      background-color: #051235; // negro
       border-radius: 4px;
       transition: width 0.4s ease;
     }
@@ -284,7 +344,28 @@
   // ------------------------------
   // LANGUAGE SECTION
   // ------------------------------
-  &__languajeSection {
+  &__languageSection {
+    margin-bottom: 1rem;
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    &--content{
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(2,1fr);
+    }
+
     &--item {
       margin-top: 0.9rem;
 
@@ -296,7 +377,6 @@
       &-level {
         font-size: 0.9rem;
         opacity: 0.8;
-        color: #dcdcdc;
       }
     }
 
@@ -311,16 +391,16 @@
     &--progress {
       margin-top: 0.35rem;
       width: 100%;
-      height: 6px;
-      background-color: #414141; // gris suave
+      height: 2px;
+      background-color: #dcdcdc; // gris suave
       border-radius: 4px;
       overflow: hidden;
     }
 
     /* Barra interna */
     &--progress-bar {
-      height: 80%;
-      background-color: #ffffff; // negro sólido
+      height: 100%;
+      background-color: #051235; // negro sólido
       border-radius: 4px;
       transition: width 0.4s ease;
     }
@@ -330,6 +410,28 @@
   // LINK SECTION
   // ------------------------------
   &__linkSection {
+    &--title{
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      padding-bottom: 8px;
+      background-color: #fafafa;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 0.3rem;
+      
+    }
+    
+    &--content{
+      margin-bottom: 1.5rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(4,1fr);
+    }
+
     &--item {
       margin-top: 0.7rem;
 
@@ -337,7 +439,7 @@
       &-name {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #afafaf;
+        color: #051235;
         text-decoration: none;
         cursor: pointer;
         transition: opacity 0.2s ease;
@@ -353,7 +455,6 @@
         opacity: 0.7;
         margin-top: 0.15rem;
         word-break: break-all; // para URL largas en CV
-        color: #afafaf;
       }
     }
   }
@@ -362,15 +463,28 @@
   // HOBBIE SECTION
   // ------------------------------
   &__hobbieSection {
-    &--title {
-      margin-bottom: 0.6rem;
+    &--title{
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      padding-bottom: 8px;
+      background-color: #fafafa;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 1rem;
+      
     }
-
+    
     /* Contenedor de los chips */
     &--list {
+      margin-bottom: 1.5rem;
       display: flex;
+      justify-content: space-evenly;
       flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
 
     /* Chip individual */
@@ -394,11 +508,27 @@
   // PROFILE SECTION
   // ------------------------------
   &__profileSection {
+
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
     &--item {
       font-size: 0.98rem;
       line-height: 1.4;
-      margin-top: 1rem;
       color: #919191;
+      text-align: start;
     }
   }
 
@@ -406,6 +536,21 @@
   // EXPERIENCE SECTION
   // ------------------------------
   &__experienceSection {
+
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
 
     &--item-box{
       display: flex;
@@ -462,7 +607,9 @@
       &-date-description {
         line-height: 1.4;
         color: #949494;
-        margin-left: 1rem;
+        max-width: 600px;
+      margin: 0 auto;
+      text-align: start;
       }
     }
   }
@@ -471,6 +618,21 @@
   // EDUCATION SECTION
   // ------------------------------
   &__educationSection {
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
     &--item {
       margin-top: 1rem;
       color: #919191;
@@ -522,7 +684,7 @@
       &-date-description {
         line-height: 1.4;
         color: #a0a0a0;
-        padding-left: 1rem;
+        padding-left: 0rem;
       }
     }
   }
@@ -531,6 +693,21 @@
   // COURSE SECTION
   // ------------------------------
   &__courseSection {
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
     &--item {
       margin-top: 1rem;
       color: #919191;
@@ -582,7 +759,10 @@
       &-date-description {
         line-height: 1.4;
         color: #a0a0a0;
-        padding-left: 1rem;
+        max-width: 600px;
+      margin: 0 auto;
+      text-align: start;
+      padding-bottom: 1rem;
       }
     }
   }
@@ -591,6 +771,21 @@
   // AWARD SECTION
   // ------------------------------
   &__awardSection {
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
     &--item {
       margin-top: 1rem;
       display: flex;
@@ -611,6 +806,10 @@
 
       &-date-description {
         color: #919191;
+        max-width: 600px;
+      margin: 0 auto;
+      text-align: start;
+      padding-bottom: 1rem;
       }
     }
   }
@@ -619,8 +818,30 @@
   // REFERENCE SECTION
   // ------------------------------
   &__referenceSection {
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+
+    &--content{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
     &--item {
-      margin-top: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
@@ -654,9 +875,26 @@
   // CUSTOM SECTION
   // ------------------------------
   &__customSection {
+    &--title{
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        padding-bottom: 8px;
+        background-color: #fafafa;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+    }
+    
     &--item {
       margin-top: 1rem;
       color: #919191;
+      text-align: start;
+      margin-bottom: 1rem;
     }
   }
 }
