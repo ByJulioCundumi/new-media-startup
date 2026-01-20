@@ -152,10 +152,6 @@ const getProgressColorClass = (progress: number) => {
                   <p className="cv-ginebra__contactSection--item-value" style={{ color: styles.textColor, opacity: "100%" }}>{item.value}</p>
                 </div>
               ))}
-
-              {
-                contactSection.length <= 0 && <h2 className="cv-ginebra__contactSection--title">Informacion De Contacto</h2>
-              }
         </div>
       );
 
