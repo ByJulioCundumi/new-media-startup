@@ -73,6 +73,7 @@ export const CvGinebraSectionsRender: React.FC<SectionRenderProps> = ({
   const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();
   const occupation = jobTitle || identitySection.jobTitle || "";
   const qrUrl = qrCodeUrl || identitySection.qrCodeUrl || "";
+  const validPhoto = photo || identitySection.photo || "";
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {
@@ -98,6 +99,13 @@ const getProgressColorClass = (progress: number) => {
               {section.progress}%
               <TbArrowBadgeRight className="cv-ginebra__arrow" />
             </span>
+          )}
+
+          {validPhoto && (
+            <img
+              src={validPhoto}
+              className="cv-ginebra__identitySection--img"
+            />
           )}
 
 
@@ -157,7 +165,9 @@ const getProgressColorClass = (progress: number) => {
 
     case "personalInfoSection":
       return (
-        <>
+        <div className="cv-ginebra__contactSection--box">
+        <h2 className="cv-ginebra__personalInfoSection--title" style={{ color: styles.sectionTitleColor }}>
+            {sectionByName[sectionName]?.title || "Detalles"}
             {
               !previewPopupOpen && sidebarOption === "create" && templatesPopupOpen === false && <span className={`cv-ginebra__section-number progress-indicator ${getProgressColorClass(section.progress)}`}>
                 {section.progress}%
@@ -167,16 +177,14 @@ const getProgressColorClass = (progress: number) => {
                   }} className="cv-ginebra__remove" />
               </span>
             }
+          </h2>
+
               {personalInfo.map((item) => (
                 <div key={item.id} className="cv-ginebra__personalInfoSection--item">
                   <p className="cv-ginebra__personalInfoSection--item-value" style={{ color: styles.textColor, opacity: "60%" }}>{item.value},</p>
                 </div>
               ))}
-
-              {
-                personalInfo.length <= 0 && <h2 className="cv-ginebra__personalInfoSection--title">Informacion Personal</h2>
-              }
-        </>
+        </div>
       );
 
     case "skillSection":
