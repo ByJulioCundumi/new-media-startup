@@ -1,14 +1,14 @@
 /* ==============================================
    PAGE LAYOUT – TOKYO (Doble columna con paginación)
    ============================================== */
-.cv-miami {
+.cv-rio {
   position: relative;
   background-color: rgba(240, 248, 255, 0);
   *{
     font-family: inherit;
   }
 }
-.cv-miami__limit-line{
+.cv-rio__limit-line{
   position: absolute;
   top: 1082px; // 1122px - 40px padding bottom
   left: 0;
@@ -20,7 +20,7 @@
   height: 0;
   border-top: 1.5px dashed rgba(0, 110, 255, 0.25);
 }
-.cv-miami__limit-line-text {
+.cv-rio__limit-line-text {
   position: absolute;
   left: 50%;
   top: -12px;
@@ -37,7 +37,7 @@
   pointer-events: none;
   animation: cvtokyoPulse 1.9s infinite ease-in-out;
 }
-.cv-miami__limit-line-overflowed{
+.cv-rio__limit-line-overflowed{
   position: absolute;
   top: 1122px; // 1122px - 40px padding bottom
   left: 0;
@@ -50,7 +50,7 @@
   border-top: 1.5px dashed rgba(255, 0, 0, 0.418);
 }
 /* Etiqueta elegante */
-.cv-miami__limit-line-overflowed-text {
+.cv-rio__limit-line-overflowed-text {
   position: absolute;
   right: 9rem;
   top: -20px;
@@ -70,7 +70,7 @@
     margin-right: 0.2rem;
   }
 }
-.cv-miami__limit-page{
+.cv-rio__limit-page{
   position: absolute;
   bottom: -0.8rem; // 1122px - 40px padding bottom
   height: 2px;
@@ -81,7 +81,7 @@
   height: 0;
   border-top: 2px solid rgba(255, 0, 0, 0.25);
 }
-.cv-miami__limit-page-text {
+.cv-rio__limit-page-text {
   position: absolute;
   left: 50%;
   top: -5px;
@@ -96,11 +96,11 @@
   box-shadow: 0 0px 6px rgba(255, 0, 0, 0.103);
   white-space: nowrap;
   pointer-events: none;
-  animation: cvmiamiPulse 1.9s infinite ease-in-out;
+  animation: cvrioPulse 1.9s infinite ease-in-out;
 }
 
 
-@keyframes cvmiamiPulse {
+@keyframes cvrioPulse {
   0%, 100% {
     transform: translateX(-50%) translateY(40%);
   }
@@ -109,30 +109,30 @@
   }
 }
 
-.cv-miami__hidden--vertical{
+.cv-rio__hidden--vertical{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 50px;
+  padding: 0px 0px;
   background-color: white;
   //position: relative;
   position: absolute;
   top: 0;
   left: -999999px;
 }
-.cv-miami__hidden--horizontal{
+.cv-rio__hidden--horizontal{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 50px;
+  padding: 0px 0px;
   background-color: white;
   //position: relative;
   position: absolute;
   top: 0;
   right: -999999px;
 }
-.cv-miami__page{
+.cv-rio__page{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 50px;
+  padding: 0px 0px;
   background-color: white;
   margin-bottom: 1.5rem;
   position: relative;
@@ -147,19 +147,17 @@
 }
 
 /* --------------------- Split de columnas --------------------- */
-.cv-miami__split {
+.cv-rio__split {
   display: flex;
-  height: auto;
+  height: 1122px;
   margin-top: 0;
   padding-top: 0;
-  height: 1122px;
 
   &--vertical {
     width: 32%;
-    padding: 35px 25px;
+    padding: 35px 35px;
     padding-bottom: 0;
-    padding-left: 0;
-    text-align: center;
+    background-color: #282930;
 
     &>:first-child{
       padding: 10px;
@@ -178,46 +176,26 @@
 
   &--horizontal {
     width: 68%;
-    padding: 35px 0px;
+    padding: 35px 35px;
     padding-bottom: 0;
-    padding-right: 0;
-    
+
     &>:first-child{
-        padding: 7px 35px;
-        margin-bottom: 20px;
-        border-left: 1px solid rgba(0, 0, 0, 0.211);
+      padding: 10px;
+      margin-bottom: 0px;
     }
     
     &>:not(:first-child){
       border-radius: 0px;
-      padding: 7px 35px;
-      margin-bottom: 20px;
-      border-left: 1px solid rgba(0, 0, 0, 0.211);
+      padding: 15px 10px;
+      margin-bottom: 0px;
     }
   }
 }
 
-.miami-page-one{
-  padding-top: 230px;
+.rio-page-one{
+  padding-top: 280px;
 }
 
-.cv-miami__page--bg-top{
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background-color: white;
-}
-
-.cv-miami__page--bg-bottom{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background-color: white;
-}
 /* ========================
     IMPRESIÓN A4 PERFECTA
    ======================== */
@@ -230,10 +208,10 @@
   }
 
   /* Cada página debe ocupar exactamente A4 */
-  .cv-miami__page {
+  .cv-rio__page {
     height: 1122px !important;
     width: 794px !important;
-    padding: 0px 50px !important;
+    padding: 0px 0px !important;
     box-sizing: border-box;
     background: white !important;
     page-break-after: always;
@@ -241,15 +219,15 @@
   }
 
   /* Ocultar contenedores de medición */
-  .cv-miami__hidden--vertical,
-  .cv-miami__hidden--horizontal,
-  .cv-miami__limit-line,
-  .cv-miami__limit-line-overflowed {
+  .cv-rio__hidden--vertical,
+  .cv-rio__hidden--horizontal,
+  .cv-rio__limit-line,
+  .cv-rio__limit-line-overflowed {
     display: none !important;
   }
 
   /* Evitar saltos a mitad de sección */
-  .cv-miami__section {
+  .cv-rio__section {
     page-break-inside: avoid !important;
   }
 
@@ -261,7 +239,7 @@
 }
 
 
-.cv-miami__watermark {
+.cv-rio__watermark {
   position: absolute;
   inset: 0;
   top: 0;

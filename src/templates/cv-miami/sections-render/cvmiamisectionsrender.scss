@@ -34,20 +34,18 @@
 
   &__identitySection--main{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin: 0 auto;
   }
 
   &__identitySection {
     display: flex;
       gap: 0rem;
-      align-items: start;
       justify-content: space-between;
-      padding: 10px 10px;
+      align-items: center;
+      padding: 10px 25px;
       padding-bottom: 10px;
       border: 1px solid transparent;
-      border-radius: 15px;
+      border-radius: 50px;
       cursor: pointer;
       transition: all 0.2s ease;
       min-height: 150px;
@@ -55,16 +53,18 @@
       left: 3rem;
       right: 3rem;
       top: 3rem;
-       background-color: #fafafa;
+       background-color: #19de7c38;
+       border-top-right-radius: 0;
+       border-bottom-left-radius: 0;
 
       &:hover {
-        background-color: #f2fafc;
+        background-color: #19de7c38;
         border: 1px solid #00ccff13;
         box-shadow: 0px 0px 2px #00ccff27;
       }
 
       &--active {
-        background-color: #00ccff09;
+        background-color: #19de7c38;
         border: 1px solid #00ccff13;
         box-shadow: 0px 0px 2px #00ccff27;
       }
@@ -78,17 +78,18 @@
       }
 
       &--img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         border-radius: 0;
         object-fit: cover;
-        margin-top: 0.5rem;
+        border-radius: 100%;
+        border: 1px solid white;
+        box-shadow: 0px 0px 15px white;
       }
 
       &--text {
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 1rem;
         line-height: 2.5rem;
         margin: auto 0;
@@ -100,7 +101,7 @@
         font-size: 2.2rem;
         font-weight: 700;
         max-width: 450px;
-        color: rgb(68, 68, 68); // será sobrescrito por style={{ color: styles.title }}
+        color: rgb(255, 255, 255); // será sobrescrito por style={{ color: styles.title }}
         text-transform: uppercase;
       }
 
@@ -109,7 +110,7 @@
         font-weight: 400;
         line-height: 1rem;
         margin-bottom: 1rem;
-        color: #5f5f5f; // será sobrescrito por style={{ color: styles.profession }}
+        color: #e8e8e8; // será sobrescrito por style={{ color: styles.profession }}
       }
 
       &--qr-wrapper {
@@ -117,8 +118,8 @@
         text-align: center;
         margin-top: 0.5rem;
         position: absolute;
-        top: 0rem;
-        right: 0.5rem;
+        top: 1.2rem;
+        right: 1.5rem;
       }
 
       &--qr-text {
@@ -151,13 +152,16 @@
       overflow-wrap: break-word; // soporta compatibilidad
 
     &--title {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 800;
       position: relative;
       display: inline-block; /* importante para que el borde mida solo el título */
-      color: black;
+      color: rgb(255, 255, 255);
       position: relative;
       text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      background-color: #19de7c38;
+      border-radius: 10px;
     }
 
     &--item-level{
