@@ -112,7 +112,7 @@ const getProgressColorClass = (progress: number) => {
               className="cv-rio__identitySection--title"
               style={{ color: styles.nameColor }}
             >
-              {fullName.length > 0 ? <>{firstName || identitySection.firstName} <br />{lastName || identitySection.lastName} </> : "Mi CV"}
+              {fullName.length > 0 ? <>{firstName || identitySection.firstName} {lastName || identitySection.lastName} </> : "Mi CV"}
             </h1>
             <p
               className="cv-rio__identitySection--occupation"

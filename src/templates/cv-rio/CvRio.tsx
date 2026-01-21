@@ -17,7 +17,7 @@ import { CvRioSectionsRender } from "./sections-render/CvRioSectionsRender";
 
 export const cvRioDefaults = {
   textColor: "#494949ff",
-  nameColor: "#0d0c0c",
+  nameColor: "#ffc117",
   professionColor: "#808080",
   sectionTitleColor: "#282930",
   itemColor: "#635f5f",
@@ -292,7 +292,7 @@ useEffect(() => {
               ))}
           </div>
 
-          <div className="cv-rio__split--horizontal rio-page-one">
+          <div className="cv-rio__split--horizontal rio-page-two">
           </div>
         </div>
       </div>
@@ -311,7 +311,7 @@ useEffect(() => {
           <div className="cv-rio__split--vertical rio-page-one">
           </div>
 
-          <div className="cv-rio__split--horizontal rio-page-one">
+          <div className="cv-rio__split--horizontal rio-page-two">
             {horizontalSections
               .filter((s) => s.name !== "identitySection")
               .map((s) => (
@@ -366,7 +366,7 @@ useEffect(() => {
             })}
           </div>
 
-          <div className="cv-rio__split--horizontal rio-page-one">
+          <div className="cv-rio__split--horizontal rio-page-two">
             {page1Horizontal.map((name) => {
               const sec = rioSections.find((s) => s.name === name);
               if (!sec) return null;

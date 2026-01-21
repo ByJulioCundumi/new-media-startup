@@ -52,6 +52,18 @@ export const mockTemplateData: ITemplateProps = {
       endYear: "",
       present: true,
       description: "Construcción de interfaces modernas con React."
+    },
+    {
+      id: "x2",
+      position: "Desarrollador Frontend",
+      employer: "Tech Solutions",
+      location: "Medellín",
+      startMonth: "Marzo",
+      startYear: "2021",
+      endMonth: "",
+      endYear: "",
+      present: true,
+      description: "Construcción de interfaces modernas con React."
     }
   ],
 

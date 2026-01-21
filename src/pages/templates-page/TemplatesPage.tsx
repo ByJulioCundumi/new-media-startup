@@ -24,6 +24,7 @@ import JobOffer from "../../components/job-offer/JobOffer";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import { Typewriter } from "react-simple-typewriter";
 import { FiStar } from "react-icons/fi";
+import HomePage from "../home-page/HomePage";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -145,10 +146,18 @@ export default function TemplatesPage() {
   return (
     <>
       <section className="templates-page">
-      <div className="templates-page__info">
-        <h2>Plantillas de CV</h2>
-        <p>Elige la plantilla perfecta para destacar tu perfil profesional.</p>
-      </div>
+      <div className="home-page__content">
+              <div className="home-page__content--text">
+                <h2>
+                  ¡Crea {" "}
+                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                    Tus CVs En Minutos!{""}
+                  </span>
+                   
+                </h2>
+                <p>Modifica el orden de las secciones en tu cv, elije los colores de tu preferencia, asigna QR para ver tus cvs en linea y mucho màs.</p>
+              </div>
+            </div>
 
       {/* TOP BAR */}
       <div className="tp-topbar">
@@ -227,38 +236,8 @@ export default function TemplatesPage() {
           })
         )}
       </div>
-      
-      {/* ===== OFERTA LABORAL ===== */}
-            <div className="job-page__commissions">
-        {/* ===== OFERTA LABORAL ===== */}
-              <div className="home-page__offer">
-                <h2 className="home-page__job">
-                  ¡Solo {""}
-                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      Para Miembros!
-                    </span>
-                </h2>
-                <p style={{textAlign: "center", color: "#818181ff"}}>Al ser un miembro activo de nuestra plataforma, puedes recomendar nuestros planes y obtener un 50% de comisión a través de nuestro programa de afiliados.</p>
-                
-                <JobOffer />
-              </div>
 
-              <h1 className="job-page__badge">
-          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Solo </span>{" "}
-          <span className="job-page__typewriter">
-            <Typewriter
-              words={["Miembros Activos!"]}
-              loop={0}
-              cursor
-              cursorStyle="|"
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={1500}
-            />
-          </span>
-        </h1>
-              </div>
-
+      <HomePage/>
     </section>
       <Footer/>
     </>

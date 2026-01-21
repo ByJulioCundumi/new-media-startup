@@ -157,7 +157,7 @@
     width: 32%;
     padding: 35px 35px;
     padding-bottom: 0;
-    background-color: #282930;
+    background-color: #222a35;
 
     &>:first-child{
       padding: 10px;
@@ -182,6 +182,10 @@
     &>:first-child{
       padding: 10px;
       margin-bottom: 0px;
+
+      h2{
+        border-bottom: none;
+      }
     }
     
     &>:not(:first-child){
@@ -193,7 +197,11 @@
 }
 
 .rio-page-one{
-  padding-top: 280px;
+  padding-top: 350px;
+}
+
+.rio-page-two{
+  padding-top: 40px;
 }
 
 /* ========================

@@ -39,13 +39,17 @@ function Navbar() {
 
         {/* LINKS */}
         <ul className="navbar__links">
-          <Link
-              to={"/"}
-              className={sidebarOption === "home" ? "active link" : " link"}
-              onClick={() => dispatch(setSidebar("home"))}
-            >
-             <HiHome /> <span>Inicio</span>
-            </Link>
+
+            <Link
+            to="/templates"
+            className={`link ${
+              sidebarOption === "templates" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("templates"))}
+          >
+            <HiHome />
+            <span>Inicio</span>
+          </Link>
 
           <Link
             to="/cvs"
@@ -54,19 +58,8 @@ function Navbar() {
             }`}
             onClick={() => dispatch(setSidebar("cvs"))}
           >
-            <LuPencilLine />
-            <span>Crea un CV</span>
-          </Link>
-
-          <Link
-            to="/templates"
-            className={`link ${
-              sidebarOption === "templates" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("templates"))}
-          >
             <LuFileSearch />
-            <span>Plantillas</span>
+            <span>Crea un CV</span>
           </Link>
 
           <Link
