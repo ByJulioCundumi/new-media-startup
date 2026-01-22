@@ -25,6 +25,7 @@ import { setAllowQrCode } from "../../reducers/identitySlice";
 import { Typewriter } from "react-simple-typewriter";
 import { FiStar } from "react-icons/fi";
 import HomePage from "../home-page/HomePage";
+import Hero from "../home-page/hero/Hero";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -145,19 +146,8 @@ export default function TemplatesPage() {
 
   return (
     <>
+    <Hero/>
       <section className="templates-page">
-      <div className="home-page__content">
-              <div className="home-page__content--text">
-                <h2>
-                  ¡Crea {" "}
-                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                    Tus CVs En Minutos!{""}
-                  </span>
-                   
-                </h2>
-                <p>Modifica el orden de las secciones en tu cv, elije los colores de tu preferencia, asigna QR para ver tus cvs en linea y mucho màs.</p>
-              </div>
-            </div>
 
       {/* TOP BAR */}
       <div className="tp-topbar">

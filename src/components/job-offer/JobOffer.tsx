@@ -64,7 +64,7 @@ const JobOffer = () => {
     <>
       <section className="job-offer-card-container">
         <article className="job-offer-card">
-              <a href="#" style={{textDecoration: "underline"}} className="job-stat-info">
+              <a href="#" className="job-stat-info">
                  Solicitar Mi Afiliacion 
                 <LuExternalLink />
               </a>
@@ -86,7 +86,7 @@ const JobOffer = () => {
             </button>
             }
             <p className="action-note">
-              *Solo Para Usuarios con suscripcion activa en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
+              *Solo Para Usuarios activos en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>
           </aside>
         </article>

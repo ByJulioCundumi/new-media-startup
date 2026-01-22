@@ -1,74 +1,65 @@
-import { MdOutlineDiamond } from "react-icons/md";
-import { templates } from "../../../templates/templates";
+import React from "react";
 import "./hero.scss";
-import { FaFileAlt, FaBolt, FaCheckCircle } from "react-icons/fa";
-import { mockHomeTemplateData } from "../../../templates/mockHomeTemplateData";
-import { Link } from "react-router-dom";
-import { Typewriter } from "react-simple-typewriter";
+import JobOffer from "../../../components/job-offer/JobOffer";
 
-function Hero() {
-  // Tomamos una plantilla cualquiera para el preview (ej: la primera)
-  const TemplateComponent = templates[2].component;
-  const year = new Date().getFullYear();
-
+const Hero = () => {
   return (
     <section className="hero">
       <div className="hero__container">
-        {/* ================= LEFT CONTENT ================= */}
-        <div className="hero__content">
+        {/* LEFT */}
+        <div className="hero__left">
+          <span className="hero__eyebrow">Creador de CVs profesionales</span>
 
-  <h1 className="hero__badge">
-    <span className="hero__typewriter" style={{fontWeight: 300}}>Prueba</span>{" "}
-    <span className="hero__typewriter">
-      <Typewriter
-        words={["Nuestras Herramientas"]}
-        loop={0}
-        cursor
-        cursorStyle="|"
-        typeSpeed={70}
-        deleteSpeed={50}
-        delaySpeed={1500}
-      />
-    </span>
-  </h1>
+          <h1 className="hero__headline">
+            Diseña <span>currículums modernos</span> y logra <br /> más entrevistas
+          </h1>
 
-  <h2 className="hero__title">
-    Diseña Tus CV <span>En Pocos Minutos</span> 
-  </h2>
+          <p className="hero__subheadline">
+            Crea tu CV en minutos con plantillas profesionales,
+            personalización inteligente y descarga inmediata.
+          </p>
 
-  <p className="hero__description">
-    Genera currículums profesionales optimizados para reclutadores,
-    listos para enviar y adaptados a cualquier oferta laboral.
-  </p>
+          <ul className="hero__features">
+            <li>✔ Plantillas profesionales</li>
+            <li>✔ Personalización rápida</li>
+            <li>✔ Compatible con ATS</li>
+            <li>✔ Descarga inmediata</li>
+          </ul>
+        </div>
 
-  <div className="hero__actions">
-    <Link to="/cvs" className="hero__button hero__button--primary">
-      Crear mi CV gratis
-    </Link>
-    <Link to="/templates" className="hero__button hero__button--secondary">
-      Ver plantillas
-    </Link>
-  </div>
+        {/* CTA */}
+        <aside className="hero__cta">
+          <div className="home-page__offer">
+                          <h2 className="home-page__job">
+                            <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
+                                ¡Comparte y Gana!
+                              </span>
+                          </h2>
+                          <p style={{textAlign: "center", color: "#818181ff"}}>Recomienda nuestra plataforma y gana 50% de comisión con nuestro programa de afiliados.</p>
+                          
+                          <JobOffer />
+                        </div>
+        </aside>
+      </div>
 
-  <ul className="hero__features">
-    <li><FaCheckCircle /> Plantillas profesionales</li>
-    <li><FaBolt /> Rápido y fácil</li>
-    <li><FaFileAlt /> Descarga en PDF</li>
-  </ul>
-</div>
-
-
-        {/* ================= RIGHT CV PREVIEW ================= */}
-          <div className="hero__cv-preview">
-            <span className="tag-h"><MdOutlineDiamond/> Premium</span>
-            <div className="hero__cv-scale">
-              <TemplateComponent {...mockHomeTemplateData} />
-            </div>
-            {/*<div className="hero__cv-line"></div>*/}
-          </div>
+      {/* WAVE */}
+      <div className="hero__wave">
+        <svg
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+        >
+          <path d="
+            M0,50
+            C240,100 480,0 720,30
+            960,60 1200,100 1440,40
+            L1440,100
+            L0,100
+            Z
+          " />
+        </svg>
       </div>
     </section>
   );
-}
+};
 
 export default Hero;

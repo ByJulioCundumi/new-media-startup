@@ -213,38 +213,6 @@ function PricingPage() {
             </div>
           ))}
         </div>
-
-        {/* ===== OFERTA LABORAL ===== */}
-              <div className="job-page__commissions">
-        {/* ===== OFERTA LABORAL ===== */}
-              <div className="home-page__offer">
-                <h2 className="home-page__job">
-                  ¡Solo {""}
-                  <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                      Para Miembros!
-                    </span>
-                </h2>
-                <p style={{textAlign: "center", color: "#818181ff"}}>Al ser un miembro activo de nuestra plataforma, puedes recomendar nuestros planes y obtener un 50% de comisión a través de nuestro programa de afiliados.</p>
-                
-                <JobOffer />
-              </div>
-
-              <h1 className="job-page__badge">
-          <span className="job-page__typewriter" style={{fontWeight: 300}}>¡Solo </span>{" "}
-          <span className="job-page__typewriter">
-            <Typewriter
-              words={["Miembros Activos!"]}
-              loop={0}
-              cursor
-              cursorStyle="|"
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={1500}
-            />
-          </span>
-        </h1>
-              </div>
-
       </section>
 
       <Footer />
