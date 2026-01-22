@@ -1,6 +1,7 @@
 import CvGinebra from "./cv-ginebra/CvGinebra";
 import CvMiami from "./cv-miami/CvMiami";
 import CvParis from "./cv-paris/CvParis";
+import CvPortland from "./cv-portland/CvPortland";
 import CvRio from "./cv-rio/CvRio";
 import CvRoma from "./cv-roma/CvRoma";
 import CvSeul from "./cv-seul/CvSeul";
@@ -16,4 +17,5 @@ export const templates = [
   { id: "Ginebra", label: "Ginebra", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvGinebra },
   { id: "Miami", label: "Miami", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvMiami },
   { id: "Rio", label: "Rio", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvRio },
+  { id: "Portland", label: "Portland", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvPortland },
 ];

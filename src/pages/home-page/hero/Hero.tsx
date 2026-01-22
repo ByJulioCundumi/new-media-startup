@@ -31,11 +31,12 @@ const Hero = () => {
         <aside className="hero__cta">
           <div className="home-page__offer">
                           <h2 className="home-page__job">
+                            ¡Trabajo {""}
                             <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                                ¡Comparte y Gana!
+                                Sin Experiencia!
                               </span>
                           </h2>
-                          <p style={{textAlign: "center", color: "#818181ff"}}>Recomienda nuestra plataforma y gana 50% de comisión con nuestro programa de afiliados.</p>
+                          <p style={{textAlign: "center", color: "rgb(179, 179, 179)"}}>Recomienda nuestra plataforma y gana 50% de comisión con nuestro programa de afiliados.</p>
                           
                           <JobOffer />
                         </div>
