@@ -11,6 +11,7 @@ import { LuExternalLink } from "react-icons/lu";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { useNavigate } from "react-router-dom";
 import { openAuthModal } from "../../reducers/authModalSlice";
+import { RiMailSendLine } from "react-icons/ri";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,8 +66,9 @@ const JobOffer = () => {
       <section className="job-offer-card-container">
         <article className="job-offer-card">
               <a href="#" className="job-stat-info">
+                <RiMailSendLine />
                  Solicitar Mi Afiliacion 
-                <LuExternalLink />
+                 <RiMailSendLine />
               </a>
 
           <aside className="job-action">
@@ -86,7 +88,7 @@ const JobOffer = () => {
             </button>
             }
             <p className="action-note">
-              *Solo Para Usuarios activos en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
+              *Solo Para Miembros suscritos en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
             </p>
           </aside>
         </article>

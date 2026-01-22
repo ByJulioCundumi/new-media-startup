@@ -15,6 +15,7 @@ import { openAuthModal } from "../../reducers/authModalSlice";
 import Invitation from "../../components/invitation/Invitation";
 import JobOffer from "../../components/job-offer/JobOffer";
 import { Typewriter } from "react-simple-typewriter";
+import JobPage from "../job-page/JobPage";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -214,6 +215,8 @@ function PricingPage() {
           ))}
         </div>
       </section>
+
+      <JobPage/>
 
       <Footer />
 

@@ -14,6 +14,7 @@ import { resetCvSections } from "../../reducers/cvSectionsSlice";
 import type { IState } from "../../interfaces/IState";
 import { FaAmazon, FaBriefcase, FaBuilding, FaGlobe, FaGoogle, FaIndustry, FaLaptopCode, FaMicrosoft, FaQuoteLeft } from "react-icons/fa";
 import { Typewriter } from "react-simple-typewriter";
+import JobPage from "../job-page/JobPage";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -172,6 +173,8 @@ const HomePage: React.FC = () => {
     </div>
   </div>
 </section>
+
+<JobPage/>
     </section>
   );
 };

@@ -73,18 +73,8 @@ function Navbar() {
             <span>Planes</span>
           </Link>
 
-          <Link
-            to="/affiliate"
-            className={`link jobs-pulse ${
-              sidebarOption === "affiliate" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("affiliate"))}
-          >
-            <MdOutlineWorkOutline />
-            <span>Gana Comisiones</span>
-          </Link>
 
-          {logged && role === "USER" && (
+          {role === "USER" && (
             <Link
               to="/account"
               className={`link ${
@@ -92,7 +82,7 @@ function Navbar() {
               }`}
               onClick={() => dispatch(setSidebar("account"))}
             >
-              <TbSettingsCode /> <span>Cuenta</span>
+              <TbSettingsCode /> <span>Mi Cuenta</span>
             </Link>
           )}
 

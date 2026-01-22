@@ -26,6 +26,7 @@ import { Typewriter } from "react-simple-typewriter";
 import { FiStar } from "react-icons/fi";
 import HomePage from "../home-page/HomePage";
 import Hero from "../home-page/hero/Hero";
+import JobPage from "../job-page/JobPage";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();

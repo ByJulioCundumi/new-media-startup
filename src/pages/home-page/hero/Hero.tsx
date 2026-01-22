@@ -6,57 +6,89 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="hero__container">
+
         {/* LEFT */}
         <div className="hero__left">
-          <span className="hero__eyebrow">Creador de CVs profesionales</span>
 
-          <h1 className="hero__headline">
-            Diseña <span>currículums modernos</span> y logra <br /> más entrevistas
-          </h1>
+          {/* BADGE */}
+          <div className="hero__badge">
+            <span className="hero__badge-dot" />
+            Creador de CVs profesionales
+          </div>
 
-          <p className="hero__subheadline">
-            Crea tu CV en minutos con plantillas profesionales,
-            personalización inteligente y descarga inmediata.
-          </p>
+          {/* HEADING */}
+          <div className="hero__heading">
+            <h1 className="hero__headline">
+              Diseña <span>Tus CVs Y</span> consigue empleo
+            </h1>
 
-          <ul className="hero__features">
-            <li>✔ Plantillas profesionales</li>
-            <li>✔ Personalización rápida</li>
-            <li>✔ Compatible con ATS</li>
-            <li>✔ Descarga inmediata</li>
-          </ul>
+            <p className="hero__subheadline">
+              Crea tu CV en minutos con plantillas profesionales,
+              personalización inteligente y descarga inmediata.
+            </p>
+          </div>
+
+          {/* FEATURES */}
+          <div className="hero__features-grid">
+            <div className="hero__feature">
+              <span>✔</span>
+              <p>Plantillas profesionales</p>
+            </div>
+
+            <div className="hero__feature">
+              <span>✔</span>
+              <p>Personalización rápida</p>
+            </div>
+
+            <div className="hero__feature">
+              <span>✔</span>
+              <p>Compatible con ATS</p>
+            </div>
+
+            <div className="hero__feature">
+              <span>✔</span>
+              <p>Descarga inmediata</p>
+            </div>
+          </div>
+
+          {/* TRUST */}
+          <div className="hero__trust">
+            Usado por <strong>miles de candidatos</strong> para conseguir entrevistas
+          </div>
+
         </div>
 
-        {/* CTA */}
+        {/* RIGHT CTA */}
         <aside className="hero__cta">
           <div className="home-page__offer">
-                          <h2 className="home-page__job">
-                            ¡Trabajo {""}
-                            <span style={{ color: "#ffb120ff", fontWeight: "500" }}>
-                                Sin Experiencia!
-                              </span>
-                          </h2>
-                          <p style={{textAlign: "center", color: "rgb(179, 179, 179)"}}>Recomienda nuestra plataforma y gana 50% de comisión con nuestro programa de afiliados.</p>
-                          
-                          <JobOffer />
-                        </div>
+            <h2 className="home-page__job">
+              ¡Trabaja <span>En Remoto!</span>
+            </h2>
+
+            <p>
+              Recomienda nuestra plataforma y gana
+              <strong> 50% de comisión</strong> con nuestro programa de afiliados.
+            </p>
+
+            <JobOffer />
+          </div>
         </aside>
+
       </div>
 
       {/* WAVE */}
       <div className="hero__wave">
-        <svg
-          viewBox="0 0 1440 100"
-          preserveAspectRatio="none"
-        >
-          <path d="
-            M0,50
-            C240,100 480,0 720,30
-            960,60 1200,100 1440,40
-            L1440,100
-            L0,100
-            Z
-          " />
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <path
+            d="
+              M0,50
+              C240,100 480,0 720,30
+              960,60 1200,100 1440,40
+              L1440,100
+              L0,100
+              Z
+            "
+          />
         </svg>
       </div>
     </section>
