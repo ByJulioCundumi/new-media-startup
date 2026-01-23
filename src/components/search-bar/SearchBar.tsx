@@ -1,5 +1,5 @@
 import { FiSearch } from "react-icons/fi";
-import "./SearchBar.scss";
+import "./searchbar.scss";
 
 interface ISearchBarProps {
   textHolder: string;

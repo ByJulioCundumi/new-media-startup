@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./jobFaq.scss";
+import "./jobfaq.scss";
 import {
   FaChevronDown,
   FaQuestionCircle,

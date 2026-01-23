@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./LoginForm.scss";
+import "./loginform.scss";
 import { IoMailOutline, IoLockClosedOutline, IoEye, IoEyeOff } from "react-icons/io5";
 import { login, type AuthUser } from "../../../api/auth";
 

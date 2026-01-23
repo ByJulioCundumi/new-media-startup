@@ -1,7 +1,7 @@
 import React from "react";
 import { MdEmail, MdManageSearch } from "react-icons/md";
 import { FaPercentage, FaUser } from "react-icons/fa";
-import "./GeneralInfoForm.scss";
+import "./generalinfoform.scss";
 import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
 import { FiAlertTriangle, FiExternalLink } from "react-icons/fi";

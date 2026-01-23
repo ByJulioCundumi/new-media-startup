@@ -1,4 +1,4 @@
-import "./jobOffer.scss";
+import "./joboffer.scss";
 import {
   FaTimes,
 } from "react-icons/fa";

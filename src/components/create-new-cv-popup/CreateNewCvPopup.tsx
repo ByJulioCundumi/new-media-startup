@@ -1,6 +1,6 @@
 // components/create-new-cv-popup/CreateNewCvPopup.tsx
 import { useState, useEffect } from "react";
-import "./CreateNewCvPopup.scss";
+import "./createnewcvpopup.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import {

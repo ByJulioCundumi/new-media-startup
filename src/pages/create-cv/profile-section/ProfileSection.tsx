@@ -1,4 +1,4 @@
-import "./profileSection.scss";
+import "./profilesection.scss";
 import { FiChevronDown } from "react-icons/fi";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useEffect, useMemo, useState } from "react";

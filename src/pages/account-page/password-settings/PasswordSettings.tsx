@@ -1,5 +1,5 @@
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
-import "./PasswordSettings.scss";
+import "./passwordsettings.scss";
 import { MdLockOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { FaSave, FaCheckCircle } from "react-icons/fa";
 import { changePassword } from "../../../api/auth";

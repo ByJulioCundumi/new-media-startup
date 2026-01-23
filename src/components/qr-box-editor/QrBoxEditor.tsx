@@ -10,7 +10,7 @@ import {
 import type { IState } from "../../interfaces/IState";
 import { setQrCodeUrl } from "../../reducers/identitySlice";
 
-import "./qrBoxEditor.scss";
+import "./qrboxeditor.scss";
 
 const BASE_CV_URL = "https://www.cvremoto.com";
 

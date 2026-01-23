@@ -1,6 +1,6 @@
 // DashboardCVs.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import "./DashboardCVs.scss";
+import "./dashboardcvs.scss";
 
 import { templates } from "../../templates/templates";
 
