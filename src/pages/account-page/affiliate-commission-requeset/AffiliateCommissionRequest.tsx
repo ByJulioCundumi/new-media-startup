@@ -7,7 +7,6 @@ import {
   RiCheckLine,
   RiCloseLine,
   RiInformationLine,
-  RiVipCrownLine,
 } from "react-icons/ri";
 import {
   getMyCommissionRequestApi,
@@ -46,7 +45,6 @@ const AffiliateCommissionRequest: React.FC = () => {
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const navigate = useNavigate()
 
   const prevRequestRef = React.useRef<CommissionRequestData | null>(null);
 

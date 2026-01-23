@@ -65,7 +65,7 @@ const userSlice = createSlice({
       state.cvCount = action.payload.cvCount
       state.commissionRequestStatus = action.payload.commissionRequestStatus
     },
-    clearUser: (state) => {
+    clearUser: (_) => {
       return initialState;
     },
     setFavorites: (state, action: PayloadAction<string[]>) => {

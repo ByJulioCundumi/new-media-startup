@@ -1,4 +1,4 @@
-import React from "react";
+
 import "./hero.scss";
 import JobOffer from "../../../components/job-offer/JobOffer";
 

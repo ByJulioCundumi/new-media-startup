@@ -1,7 +1,7 @@
 
 
 // Importamos todas las acciones "set" de cada slice
-import { setIdentity, setPhoto } from "../reducers/identitySlice";
+import { setIdentity } from "../reducers/identitySlice";
 import { setContactEntries } from "../reducers/contactSlice";
 import { setProfileContent } from "../reducers/profileSlice";
 import { setEducationData } from "../reducers/educationSlice";

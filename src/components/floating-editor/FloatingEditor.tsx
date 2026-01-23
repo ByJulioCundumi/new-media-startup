@@ -26,7 +26,6 @@ const FloatingEditor: React.FC = () => {
   const dispatch = useDispatch();
 
   // ---------------- HOOKS ----------------
-  const sections = useSelector((state: IState) => state.cvSections.sections);
   const sectionsEditor = useSelector((state: IState) => state.cvSectionsEditors.sections);
 
   const [position, setPosition] = useState({ x: 15, y: 110 });

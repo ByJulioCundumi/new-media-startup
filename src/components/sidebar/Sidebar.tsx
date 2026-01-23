@@ -1,22 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./sidebar.scss";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { IoCreate, IoCreateOutline, IoPricetagsOutline, IoSearchSharp } from "react-icons/io5";
-import { MdOutlineAdminPanelSettings, MdOutlineWorkHistory, MdOutlineWorkOutline, MdWork } from "react-icons/md";
-import { LuFileSearch, LuLayoutDashboard, LuPencilLine, LuSettings2, LuUsers } from "react-icons/lu";
-import { RiArrowGoBackFill, RiDashboardFill, RiHome2Line, RiLogoutBoxLine } from "react-icons/ri";
+import { LuFileSearch, LuPencilLine } from "react-icons/lu";
+import { RiArrowGoBackFill, RiLogoutBoxLine } from "react-icons/ri";
 import type { IState } from "../../interfaces/IState";
-import { TbArrowBack, TbSettingsCode, TbTemplate } from "react-icons/tb";
+import {  TbSettingsCode } from "react-icons/tb";
 import { HiHome, HiOutlineCreditCard } from "react-icons/hi2";
-import { PiCardsThreeLight } from "react-icons/pi";
-import { GrSelect } from "react-icons/gr";
-import { FaRegCreditCard } from "react-icons/fa";
 
 const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { sidebarOption } = useSelector((state: IState) => state.sidebar);
 

@@ -1,24 +1,15 @@
 import React, { useEffect } from "react";
 import "./homepage.scss";
 import { setSidebar } from "../../reducers/sidebarSlice";
-import { useDispatch, useSelector } from "react-redux";
-import Footer from "../../components/footer/Footer";
-import Hero from "./hero/Hero";
+import { useDispatch } from "react-redux";
 import { setAllowQrCode } from "../../reducers/identitySlice";
-import JobOffer from "../../components/job-offer/JobOffer";
-import ColorFontPopup from "../../components/color-font-popup/ColorFontPopup";
 import { closePopup, openPopup, restoreDefaults } from "../../reducers/colorFontSlice";
-import SectionProgress from "../../components/section-progress/SectionProgress";
-import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
-import type { IState } from "../../interfaces/IState";
 import { FaAmazon, FaBriefcase, FaBuilding, FaGlobe, FaGoogle, FaIndustry, FaLaptopCode, FaMicrosoft, FaQuoteLeft } from "react-icons/fa";
-import { Typewriter } from "react-simple-typewriter";
 import JobPage from "../job-page/JobPage";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
-  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
 
   useEffect(() => {
     dispatch(setSidebar("home"));

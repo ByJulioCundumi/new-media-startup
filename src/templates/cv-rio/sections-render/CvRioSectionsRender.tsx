@@ -1,9 +1,9 @@
 // templates/components/CvTokyoSectionsRender.tsx
-import React, { useEffect, useLayoutEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { disableSection } from "../../../reducers/cvSectionsSlice";
 import "./cvriosectionsrender.scss"
-import { TbArrowBadgeRight, TbGitBranchDeleted, TbTrashX } from "react-icons/tb";
+import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
 import { QRCodeSVG } from "qrcode.react";
 import { useTemplateColors } from "../../useTemplateColors";
@@ -67,7 +67,6 @@ export const CvRioSectionsRender: React.FC<SectionRenderProps> = ({
     firstName,
     lastName,
     jobTitle,
-    allowCvPhoto
   } = useSelector((state: IState) => state.identity);
 
   const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();

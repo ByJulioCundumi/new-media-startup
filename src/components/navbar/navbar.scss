@@ -66,12 +66,12 @@
         transform 0.2s ease;
 
       &:hover {
-        color: #0099ff;
+        color: #313131;
         transform: translateY(-1px);
       }
 
       &.active {
-        color: #0099ff;
+        color: #313131;
         font-weight: 600;
       }
     }

@@ -359,6 +359,14 @@
   }
 }
 
+.alert{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgb(255, 140, 140);
+}
+
 .general-row{
   display: flex;
   align-items: center;

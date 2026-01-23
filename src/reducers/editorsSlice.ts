@@ -121,7 +121,7 @@ const cvSectionsEditorSlice = createSlice({
       });
     },
 
-    setCvSections(state, action: PayloadAction<ICvSectionsEditorState>) {
+    setCvSections(_, action: PayloadAction<ICvSectionsEditorState>) {
   return { ...action.payload };
 },
     resetCvSections() {

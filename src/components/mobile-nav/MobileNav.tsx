@@ -2,15 +2,12 @@ import { NavLink } from "react-router-dom";
 import "./mobileNav.scss";
 
 import {
-  FaHome,
-  FaBriefcase,
   FaPlusCircle,
-  FaUsers,
   FaUser,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
-import { MdOutlineWorkOutline, MdSettingsSuggest } from "react-icons/md";
+import { MdOutlineWorkOutline } from "react-icons/md";
 import { TbSettingsCode } from "react-icons/tb";
 import { LuFileSearch } from "react-icons/lu";
 import { HiHome } from "react-icons/hi2";

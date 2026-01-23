@@ -7,14 +7,12 @@ import type { IState } from "../../interfaces/IState";
 
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
 import { TbPencilPlus, TbSettingsCode } from "react-icons/tb";
-import { HiHome, HiOutlineArrowRightEndOnRectangle } from "react-icons/hi2";
-import { LuFileSearch, LuPencilLine, LuUserRoundPlus } from "react-icons/lu";
+import { HiHome } from "react-icons/hi2";
+import { LuFileSearch } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdOutlineDiamond,
-  MdOutlineWorkOutline,
 } from "react-icons/md";
-import { openAuthModal } from "../../reducers/authModalSlice";
 
 function Navbar() {
   const dispatch = useDispatch();

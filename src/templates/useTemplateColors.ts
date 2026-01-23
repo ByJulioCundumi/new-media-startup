@@ -1,10 +1,8 @@
 import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { IState } from "../interfaces/IState";
-import { loadTemplateDefaults } from "../reducers/colorFontSlice";
 
 export const useTemplateColors = (defaults: any) => {
-  const dispatch = useDispatch();
   const selected = useSelector((state: IState) => state.colorFont.selected);
 
   // 🔍 Detecta si selected está vacío comparando CADA propiedad

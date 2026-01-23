@@ -21,8 +21,6 @@ import { BiCloudUpload, BiSync } from "react-icons/bi";
 import { BiLoaderAlt } from "react-icons/bi";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import JobOffer from "../../components/job-offer/JobOffer";
-import { Typewriter } from "react-simple-typewriter";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 

@@ -73,7 +73,7 @@ const ProfileAvatar: React.FC = () => {
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              {isVip ? `${planTitle}: ${expirationDate}` : "Remover Marca de agua"}
+              {isVip ? `${planTitle}: ${expirationDate}` : "Actualiza Tu Plan Actual"}
             </p>
           </div>
         </div>

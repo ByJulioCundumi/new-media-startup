@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SearchBar from "../../../components/search-bar/SearchBar";
 import {
   getCommissionRequestsPaginatedApi,

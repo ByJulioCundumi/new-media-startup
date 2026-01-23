@@ -1,9 +1,9 @@
 // templates/components/CvTokyoSectionsRender.tsx
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { disableSection } from "../../../reducers/cvSectionsSlice";
 import "./cvportlandsectionsrender.scss"
-import { TbArrowBadgeRight, TbGitBranchDeleted, TbTrashX } from "react-icons/tb";
+import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
 import { QRCodeSVG } from "qrcode.react";
 import { useTemplateColors } from "../../useTemplateColors";
@@ -63,10 +63,9 @@ export const CvPortlandSectionsRender: React.FC<SectionRenderProps> = ({
   const {
   qrCodeUrl,
   allowQrCode,
-  photo,
   firstName,
   lastName,
-  jobTitle,allowCvPhoto
+  jobTitle,
 } = useSelector((state: IState) => state.identity);
 
   

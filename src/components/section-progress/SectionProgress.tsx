@@ -5,7 +5,7 @@ import { LuCheck, LuEyeClosed } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { FaSave } from "react-icons/fa";
 
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
@@ -36,31 +36,7 @@ function SectionProgress() {
   const { selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
   const { sidebarOption } = useSelector((state: IState) => state.sidebar);
 
-  const OPTIONAL_SECTIONS = [
-    "personalInfoSection",
-    "linkSection",
-    "courseSection",
-    "hobbieSection",
-    "referenceSection",
-    "awardSection",
-    "customSection",
-  ];
-
-  const enabledOptionalCount = useMemo(
-    () =>
-      sections.filter(
-        (s) => OPTIONAL_SECTIONS.includes(s.name) && s.enabled
-      ).length,
-    [sections]
-  );
-
   const enabledSectionsCount = sections.filter((s) => s.enabled).length;
-
-  const scrollUp = () =>
-    containerRef.current?.scrollBy({ top: -150, behavior: "smooth" });
-
-  const scrollDown = () =>
-    containerRef.current?.scrollBy({ top: 150, behavior: "smooth" });
 
   useEffect(() => {
     if (containerRef.current) {
@@ -98,20 +74,6 @@ function SectionProgress() {
     if (value < 100) return "section-progress-yellow";
     return "section-progress-blue";
   };
-
-  const totalEnabledSections = sections.filter((s) => s.enabled);
-  const overallProgress = totalEnabledSections.length
-    ? Math.round(
-        totalEnabledSections.reduce((acc, s) => acc + s.progress, 0) /
-          totalEnabledSections.length
-      )
-    : 0;
-
-  const progressColorClass = useMemo(() => {
-    if (overallProgress < 50) return "progress-red";
-    if (overallProgress < 100) return "progress-yellow";
-    return "progress-blue";
-  }, [overallProgress]);
 
   const [editing, setEditing] = useState(false);
 

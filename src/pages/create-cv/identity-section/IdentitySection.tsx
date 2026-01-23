@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FiUser, FiCamera, FiTrash2, FiChevronDown } from "react-icons/fi";
+import { FiCamera, FiTrash2, FiChevronDown } from "react-icons/fi";
 
 import "./identitysection.scss";
 import type { IState } from "../../../interfaces/IState";

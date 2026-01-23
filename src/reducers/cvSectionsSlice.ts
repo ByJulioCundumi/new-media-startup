@@ -189,7 +189,7 @@ const cvSectionsSlice = createSlice({
       state.order = incoming;
     },
 
-    setCvSections(state, action: PayloadAction<ICvSectionsState>) {
+    setCvSections(_, action: PayloadAction<ICvSectionsState>) {
   return { ...action.payload };
 },
     resetCvSections() {

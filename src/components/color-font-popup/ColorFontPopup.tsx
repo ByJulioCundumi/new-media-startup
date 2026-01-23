@@ -20,8 +20,6 @@ import {
   setQrColor,
   setFont,
   restoreDefaults,
-  loadTemplateDefaults,
-  loadStoredValues,
   setNameColor,
   setTextColor,
 } from "../../reducers/colorFontSlice";
@@ -34,7 +32,6 @@ const ColorFontPopup: React.FC = () => {
   const { isOpen, selected, defaults } = useSelector(
     (state: IState) => state.colorFont
   );
-  const DEFAULT_TEMPLATE = useSelector((state:IState)=>state.colorFont.defaults)
 
   // 🖱 estado para mover el popup
   const [position, setPosition] = useState({ x: 60, y: 110 });

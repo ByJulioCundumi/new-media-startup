@@ -1,12 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  FaPalette,
-  FaSyncAlt,
-  FaSave,
-} from "react-icons/fa";
 import "./toolbarcv.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { IoCheckmarkDoneOutline, IoChevronBackOutline, IoDiamond, IoSaveOutline } from "react-icons/io5";
+import { IoCheckmarkDoneOutline, IoChevronBackOutline} from "react-icons/io5";
 import type { IState } from "../../interfaces/IState";
 import {
   FaRegFaceFrown,
@@ -37,16 +32,15 @@ import { clearAllReferences } from "../../reducers/referencesSlice";
 import { clearAllAwards } from "../../reducers/awardsSlice";
 import { clearAllCustom } from "../../reducers/customSlice";
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LuSave } from "react-icons/lu";
-import { TbArrowAutofitContent } from "react-icons/tb";
 import { RiArrowLeftRightFill } from "react-icons/ri";
 
 const ToolbarCV: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { hasUnsavedChanges, isSaving } = useSelector((state: IState) => state.cvSave);
+  const { hasUnsavedChanges } = useSelector((state: IState) => state.cvSave);
   const cvSections = useSelector((state: IState) => state.cvSections);
 
   const [progress, setProgress] = useState(0);

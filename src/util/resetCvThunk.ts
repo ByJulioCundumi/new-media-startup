@@ -2,7 +2,7 @@
 
 // Importa todas las acciones de reset que ya tienes
 import { resetIdentity } from "../reducers/identitySlice";
-import { resetProfileContent, resetProfile } from "../reducers/profileSlice"; // ajusta si tienes reset
+import { resetProfileContent } from "../reducers/profileSlice"; // ajusta si tienes reset
 import { resetEducation } from "../reducers/educationSlice";
 import { resetExperience } from "../reducers/experienceSlice";
 import { resetSkills } from "../reducers/skillsSlice";

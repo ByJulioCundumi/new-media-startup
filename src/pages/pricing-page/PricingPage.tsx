@@ -1,20 +1,15 @@
 import { Check, Sparkles, X } from "lucide-react";
 import { IoDiamondOutline } from "react-icons/io5";
-import { MdOutlineVerifiedUser, MdWorkOutline } from "react-icons/md";
+import { MdOutlineVerifiedUser } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import "./pricingpage.scss";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import type { IState } from "../../interfaces/IState";
-import { FiAlertTriangle } from "react-icons/fi";
-import { LuBadgeInfo } from "react-icons/lu";
-import { TbInfoTriangleFilled, TbMessageFilled } from "react-icons/tb";
+import { TbMessageFilled } from "react-icons/tb";
 import { openAuthModal } from "../../reducers/authModalSlice";
-import Invitation from "../../components/invitation/Invitation";
-import JobOffer from "../../components/job-offer/JobOffer";
-import { Typewriter } from "react-simple-typewriter";
 import JobPage from "../job-page/JobPage";
 
 function PricingPage() {

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { IoInformationCircleOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { Typewriter } from "react-simple-typewriter";
 import "./remoteinfobubble.scss";
-import { FaRegShareSquare } from "react-icons/fa";
 import { MdWorkOutline } from "react-icons/md";
 
 const RemoteInfoBubble: React.FC = () => {

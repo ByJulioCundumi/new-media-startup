@@ -43,7 +43,7 @@ const educationSlice = createSlice({
       return state.filter((e) => e.id !== action.payload);
     },
 
-    setEducationData(state, action: PayloadAction<IEducationEntry[]>) {
+    setEducationData(_, action: PayloadAction<IEducationEntry[]>) {
       return action.payload;
     },
     resetEducation() {

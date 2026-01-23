@@ -42,7 +42,7 @@ const experienceSlice = createSlice({
       return state.filter((e) => e.id !== action.payload);
     },
 
-    setExperienceData(state, action: PayloadAction<IExperienceEntry[]>) {
+    setExperienceData(_, action: PayloadAction<IExperienceEntry[]>) {
       return action.payload;
     },
     resetExperience() {

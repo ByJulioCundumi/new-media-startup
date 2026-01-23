@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import {  MdPendingActions } from "react-icons/md";
-import { LuExternalLink } from "react-icons/lu";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { useNavigate } from "react-router-dom";
 import { openAuthModal } from "../../reducers/authModalSlice";

@@ -12,6 +12,7 @@ import CvTokyo from "./cv-tokyo/CvTokyo";
 import CvViena from "./cv-viena/CvViena";
 
 export const templates = [
+  { id: "Medellin", label: "Medellin", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvMedellin },
   { id: "Tokio", label: "Tokio", categories: ["Limpio", "Sin foto", "Elegante", "Premium"], component: CvTokyo },
   { id: "Roma", label: "Roma", categories: ["Limpio", "Sin foto", "Elegante", "Premium"], component: CvRoma },
   { id: "Viena", label: "Viena", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvViena },
@@ -21,7 +22,6 @@ export const templates = [
   { id: "Miami", label: "Miami", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvMiami },
   { id: "Rio", label: "Rio", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvRio },
   { id: "Portland", label: "Portland", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvPortland },
-  { id: "Medellin", label: "Medellin", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvMedellin },
   { id: "Lima", label: "Lima", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvLima },
   { id: "Praga", label: "Praga", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvPraga },
 ];

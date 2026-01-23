@@ -1,13 +1,12 @@
 // templates/components/CvTokyoSectionsRender.tsx
-import React, { useEffect, useLayoutEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { disableSection } from "../../../reducers/cvSectionsSlice";
 import "./cvlimasectionsrender.scss"
-import { TbArrowBadgeRight, TbGitBranchDeleted, TbTrashX } from "react-icons/tb";
+import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
 import type { IState } from "../../../interfaces/IState";
 import { QRCodeSVG } from "qrcode.react";
 import { useTemplateColors } from "../../useTemplateColors";
-import { setAllowQrCode } from "../../../reducers/identitySlice";
 import { cvLimaDefaults } from "../CvLima";
 
 interface SectionRenderProps {
@@ -64,17 +63,14 @@ export const CvLimaSectionsRender: React.FC<SectionRenderProps> = ({
   const {
     qrCodeUrl,
     allowQrCode,
-    photo,
     firstName,
     lastName,
     jobTitle,
-    allowCvPhoto
   } = useSelector((state: IState) => state.identity);
 
   const fullName = `${firstName || identitySection.firstName || ""} ${lastName || identitySection.lastName || ""}`.trim();
   const occupation = jobTitle || identitySection.jobTitle || "";
   const qrUrl = qrCodeUrl || identitySection.qrCodeUrl || "";
-  const validPhoto = photo || identitySection.photo || "";
 
   // Función helper al inicio del componente:
 const getProgressColorClass = (progress: number) => {

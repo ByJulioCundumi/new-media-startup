@@ -39,10 +39,9 @@ import { setCustomEntries } from "../../reducers/customSlice";
 import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
 import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
-import { TbAlertSquareRounded, TbPencilPlus } from "react-icons/tb";
+import { TbPencilPlus } from "react-icons/tb";
 import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import { IoCloudDone } from "react-icons/io5";
 import { LuSave, LuSaveOff } from "react-icons/lu";
 import { isOnline } from "../../util/isOnline";
 
@@ -71,7 +70,7 @@ function CreateCv() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { cvId } = useParams<{ cvId: string }>();
-  const { selectedTemplateId, selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
+  const { selectedTemplateId } = useSelector((state: IState) => state.cvCreation);
   const { previewPopupOpen } = useSelector((state: IState) => state.toolbarOption);
   const { allowQrCode } = useSelector((state: IState) => state.identity);
   const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);

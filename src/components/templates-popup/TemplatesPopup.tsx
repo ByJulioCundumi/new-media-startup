@@ -1,10 +1,10 @@
 // components/templates-popup/TemplatesPopup.tsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./templatespopup.scss";
 
 import { templates } from "../../templates/templates";
 import { mockTemplateData } from "../../templates/mockTemplateData";
-import { IoClose, IoShieldCheckmarkOutline, IoStar, IoStarOutline } from "react-icons/io5";
+import { IoClose, IoStar, IoStarOutline } from "react-icons/io5";
 import SearchBar from "../search-bar/SearchBar";
 import { CategorySelector } from "../category-selector/CategorySelector";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,7 @@ import {
   removeFavoriteTemplateApi,
 } from "../../api/user";
 import { setFavorites } from "../../reducers/userSlice";
-import { MdOutlineCheck, MdOutlineCreditCardOff, MdOutlineDiamond } from "react-icons/md";
-import { Sparkles } from "lucide-react";
+import { MdOutlineDiamond } from "react-icons/md";
 import { BsPatchCheck } from "react-icons/bs";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import { FiStar } from "react-icons/fi";

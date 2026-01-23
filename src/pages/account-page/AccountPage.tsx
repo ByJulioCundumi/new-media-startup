@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./accountpage.scss";
 import GeneralInfoForm from "./general-info-form/GeneralInfoForm";
 import PasswordSettings from "./password-settings/PasswordSettings";

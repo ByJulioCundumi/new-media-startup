@@ -1,14 +1,12 @@
 import React from "react";
 import { MdEmail, MdManageSearch } from "react-icons/md";
-import { FaPercentage, FaUser, FaCrown } from "react-icons/fa";
-import { HiOutlineSearch, HiOutlineSwitchHorizontal } from "react-icons/hi";
-import { MdCancel } from "react-icons/md";
+import { FaPercentage, FaUser } from "react-icons/fa";
 import "./GeneralInfoForm.scss";
 import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { FiAlertTriangle, FiExternalLink, FiLink } from "react-icons/fi";
+import { FiAlertTriangle, FiExternalLink } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { IoCardOutline, IoDiamondOutline } from "react-icons/io5";
+import { IoDiamondOutline } from "react-icons/io5";
 import { TbAlertSquare } from "react-icons/tb";
 import { hasValidSubscriptionTime } from "../../../util/checkSubscriptionTime";
 
@@ -64,7 +62,7 @@ const GeneralInfoForm: React.FC = () => {
         {/* Comisión de afiliado */}
         {
           affiliateCommission > 0 ? <div className="general-info-form__field">
-          <label className="general-row">Tu Comision Actual </label>
+          <label className="general-row">Tu Comisión Actual </label>
           <div className="general-info-form__input-icon">
             <FaPercentage />
             <input
@@ -86,7 +84,7 @@ const GeneralInfoForm: React.FC = () => {
               disabled
             />
           </div>
-             <a className="affiliate-link" style={{fontWeight: 300}} href="#"><FiExternalLink /> Trabaja Con Nosotros y gana hasta el 70%</a>
+             <a className="affiliate-link" style={{fontWeight: 300}} href="#"><FiExternalLink /> Trabaja Con Nosotros y gana hasta el 50%</a>
         </div>
         }
       </div>
@@ -139,6 +137,8 @@ const GeneralInfoForm: React.FC = () => {
               </Link>
             </div>
         </div>
+            
+            {hasValidSubscriptionTime(subscriptionExpiresAt) === false && <p className="alert"><FiAlertTriangle /> Renueva tu suscripción para acceder a todas las funciones de CvRemoto.</p>}
       </div>
     </div>
   );

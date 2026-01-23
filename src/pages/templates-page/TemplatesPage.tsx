@@ -1,5 +1,5 @@
 // TemplatesPage.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./templatespage.scss";
 
 import { templates } from "../../templates/templates";
@@ -16,17 +16,14 @@ import {
   addFavoriteTemplateApi,
   removeFavoriteTemplateApi,
 } from "../../api/user";
-import { setFavorites, setUser } from "../../reducers/userSlice";
+import { setFavorites } from "../../reducers/userSlice";
 import Footer from "../../components/footer/Footer";
 import { MdOutlineDiamond } from "react-icons/md";
 import { RiFileEditLine } from "react-icons/ri";
-import JobOffer from "../../components/job-offer/JobOffer";
 import { setAllowQrCode } from "../../reducers/identitySlice";
-import { Typewriter } from "react-simple-typewriter";
 import { FiStar } from "react-icons/fi";
 import HomePage from "../home-page/HomePage";
 import Hero from "../home-page/hero/Hero";
-import JobPage from "../job-page/JobPage";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();

@@ -7,10 +7,10 @@ function Footer() {
 
         {/* LOGO + DESCRIPCIÓN */}
         <div className="footer-brand">
-          <h2 className="footer-logo">CV Generator</h2>
+          <h2 className="footer-logo">CV Remoto</h2>
           <p className="footer-desc">
             Crea un CV profesional en minutos con plantillas modernas,
-            exportación instantánea y herramientas avanzadas que impulsan tu carrera.
+            descarga instantánea y herramientas avanzadas.
           </p>
         </div>
 
@@ -22,15 +22,13 @@ function Footer() {
             <a>Crear CV</a>
             <a>Plantillas</a>
             <a>Afiliados</a>
-            <a>Precios</a>
           </div>
 
           <div className="footer-column">
             <h4>Compañía</h4>
             <a>Nosotros</a>
-            <a>Blog</a>
-            <a>Soporte</a>
             <a>Contacto</a>
+            <a>Precios</a>
           </div>
 
           <div className="footer-column">
@@ -45,7 +43,7 @@ function Footer() {
 
       {/* COPYRIGHT */}
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} CV Generator — Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} CV Remoto — Todos los derechos reservados.</p>
       </div>
     </footer>
   );

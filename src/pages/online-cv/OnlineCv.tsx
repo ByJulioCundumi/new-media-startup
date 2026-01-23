@@ -32,7 +32,6 @@ import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFont
 
 import { getPublicCvById } from "../../api/cv"; //
 import { TbArrowBackUp, TbWorldWww } from "react-icons/tb";
-import { IoDiamondOutline } from "react-icons/io5";
 
 function OnlineCv() {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,7 +39,7 @@ function OnlineCv() {
   const { publicId } = useParams<{ publicId: string }>();
   const [cvUpdate, setCvUpdatae] = useState("")
 
-  const { selectedTemplateId, selectedCvTitle } = useSelector((state: IState) => state.cvCreation);
+  const { selectedTemplateId } = useSelector((state: IState) => state.cvCreation);
 
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

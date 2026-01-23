@@ -1,5 +1,4 @@
 import React from "react";
-import { LuScanQrCode } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import type { IState } from "../../interfaces/IState";

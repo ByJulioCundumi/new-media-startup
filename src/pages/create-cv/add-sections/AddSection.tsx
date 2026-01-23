@@ -26,7 +26,6 @@ import { clearAllHobbies } from "../../../reducers/hobbiesSlice";
 import { clearAllReferences } from "../../../reducers/referencesSlice";
 import { clearAllAwards } from "../../../reducers/awardsSlice";
 import { clearAllCustom } from "../../../reducers/customSlice";
-import { TbArrowBadgeRight, TbTrashX } from "react-icons/tb";
 import { LuTrash } from "react-icons/lu";
 import { clearAllPersonalInfo } from "../../../reducers/personalInfoSlice";
 import { resetEducation } from "../../../reducers/educationSlice";
