@@ -1,8 +1,10 @@
 import CvGinebra from "./cv-ginebra/CvGinebra";
+import CvLima from "./cv-lima/CvLima";
 import CvMedellin from "./cv-medellin/CvMedellin";
 import CvMiami from "./cv-miami/CvMiami";
 import CvParis from "./cv-paris/CvParis";
 import CvPortland from "./cv-portland/CvPortland";
+import CvPraga from "./cv-praga/CvPraga";
 import CvRio from "./cv-rio/CvRio";
 import CvRoma from "./cv-roma/CvRoma";
 import CvSeul from "./cv-seul/CvSeul";
@@ -20,4 +22,6 @@ export const templates = [
   { id: "Rio", label: "Rio", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvRio },
   { id: "Portland", label: "Portland", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvPortland },
   { id: "Medellin", label: "Medellin", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvMedellin },
+  { id: "Lima", label: "Lima", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvLima },
+  { id: "Praga", label: "Praga", categories: ["Limpio", "Con foto", "Elegante", "Premium"], component: CvPraga },
 ];

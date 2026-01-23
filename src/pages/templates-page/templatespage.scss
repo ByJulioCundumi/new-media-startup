@@ -85,7 +85,7 @@
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
-  color: #f1c40f;
+  color: #ffc101;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -96,7 +96,7 @@
 
   &.active {
     background: #ffffff;
-    border-color: #f1c40f;
+    border-color: #ffc101;
   }
 }
 
@@ -197,7 +197,7 @@
   font-weight: 600;
   margin-bottom: -1rem;
   margin-left: 0.5rem;
-  color: #cfa808;
+  color: #ffc101;
 }
 
 .tpl-category {

@@ -1,14 +1,14 @@
 /* ==============================================
    PAGE LAYOUT – TOKYO (Doble columna con paginación)
    ============================================== */
-.cv-medellin {
+.cv-lima {
   position: relative;
   background-color: rgba(240, 248, 255, 0);
   *{
     font-family: inherit;
   }
 }
-.cv-medellin__limit-line{
+.cv-lima__limit-line{
   position: absolute;
   top: 1082px; // 1122px - 40px padding bottom
   left: 0;
@@ -20,7 +20,7 @@
   height: 0;
   border-top: 1.5px dashed rgba(0, 110, 255, 0.25);
 }
-.cv-medellin__limit-line-text {
+.cv-lima__limit-line-text {
   position: absolute;
   left: 50%;
   top: -12px;
@@ -37,7 +37,7 @@
   pointer-events: none;
   animation: cvtokyoPulse 1.9s infinite ease-in-out;
 }
-.cv-medellin__limit-line-overflowed{
+.cv-lima__limit-line-overflowed{
   position: absolute;
   top: 1122px; // 1122px - 40px padding bottom
   left: 0;
@@ -50,7 +50,7 @@
   border-top: 1.5px dashed rgba(255, 0, 0, 0.418);
 }
 /* Etiqueta elegante */
-.cv-medellin__limit-line-overflowed-text {
+.cv-lima__limit-line-overflowed-text {
   position: absolute;
   right: 9rem;
   top: -20px;
@@ -70,7 +70,7 @@
     margin-right: 0.2rem;
   }
 }
-.cv-medellin__limit-page{
+.cv-lima__limit-page{
   position: absolute;
   bottom: -0.8rem; // 1122px - 40px padding bottom
   height: 2px;
@@ -81,7 +81,7 @@
   height: 0;
   border-top: 2px solid rgba(255, 0, 0, 0.25);
 }
-.cv-medellin__limit-page-text {
+.cv-lima__limit-page-text {
   position: absolute;
   left: 50%;
   top: -5px;
@@ -96,11 +96,11 @@
   box-shadow: 0 0px 6px rgba(255, 0, 0, 0.103);
   white-space: nowrap;
   pointer-events: none;
-  animation: cvmedellinPulse 1.9s infinite ease-in-out;
+  animation: cvlimaPulse 1.9s infinite ease-in-out;
 }
 
 
-@keyframes cvmedellinPulse {
+@keyframes cvlimaPulse {
   0%, 100% {
     transform: translateX(-50%) translateY(40%);
   }
@@ -109,30 +109,30 @@
   }
 }
 
-.cv-medellin__hidden--vertical{
+.cv-lima__hidden--vertical{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 0px;
+  padding: 0px 50px;
   background-color: white;
   //position: relative;
   position: absolute;
   top: 0;
   left: -999999px;
 }
-.cv-medellin__hidden--horizontal{
+.cv-lima__hidden--horizontal{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 0px;
+  padding: 0px 50px;
   background-color: white;
   //position: relative;
   position: absolute;
   top: 0;
   right: -999999px;
 }
-.cv-medellin__page{
+.cv-lima__page{
   min-height: 1122px;
   width: 794px;
-  padding: 0px 0px;
+  padding: 0px 50px;
   background-color: white;
   margin-bottom: 1.5rem;
   position: relative;
@@ -147,18 +147,19 @@
 }
 
 /* --------------------- Split de columnas --------------------- */
-.cv-medellin__split {
+.cv-lima__split {
   display: flex;
-  height: 1122px;
+  height: auto;
   margin-top: 0;
   padding-top: 0;
+  height: 1122px;
 
   &--vertical {
     width: 32%;
-    padding: 35px 35px;
-    padding-right: 20px;
+    padding: 35px 25px;
     padding-bottom: 0;
-    background-color: #ffffff;
+    padding-left: 0;
+    text-align: center;
 
     &>:first-child{
       padding: 10px;
@@ -177,40 +178,46 @@
 
   &--horizontal {
     width: 68%;
-    padding: 35px 35px;
-    padding-left: 0;
+    padding: 35px 0px;
     padding-bottom: 0;
-
+    padding-right: 0;
+    
     &>:first-child{
-      padding: 10px;
-      margin-bottom: 0px;
-      margin-bottom: 1.5rem;
-      padding-left: 25px;
-
-      h2{
-        border-bottom: none;
-      }
+        padding: 7px 35px;
+        margin-bottom: 20px;
+        border-left: 1px solid rgba(0, 0, 0, 0.211);
     }
     
     &>:not(:first-child){
       border-radius: 0px;
-      padding: 15px 10px;
-      margin-bottom: 0px;
-      border-left: 2px solid rgb(221, 221, 221);
-      margin-bottom: 1.5rem;
-      padding-left: 25px;
+      padding: 7px 35px;
+      margin-bottom: 20px;
+      border-left: 1px solid rgba(0, 0, 0, 0.211);
     }
   }
 }
 
-.medellin-page-one{
-  padding-top: 350px;
+.lima-page-one{
+  padding-top: 230px;
 }
 
-.medellin-page-two{
-  padding-top: 40px;
+.cv-lima__page--bg-top{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: white;
 }
 
+.cv-lima__page--bg-bottom{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: white;
+}
 /* ========================
     IMPRESIÓN A4 PERFECTA
    ======================== */
@@ -223,10 +230,10 @@
   }
 
   /* Cada página debe ocupar exactamente A4 */
-  .cv-medellin__page {
+  .cv-lima__page {
     height: 1122px !important;
     width: 794px !important;
-    padding: 0px 0px !important;
+    padding: 0px 50px !important;
     box-sizing: border-box;
     background: white !important;
     page-break-after: always;
@@ -234,15 +241,15 @@
   }
 
   /* Ocultar contenedores de medición */
-  .cv-medellin__hidden--vertical,
-  .cv-medellin__hidden--horizontal,
-  .cv-medellin__limit-line,
-  .cv-medellin__limit-line-overflowed {
+  .cv-lima__hidden--vertical,
+  .cv-lima__hidden--horizontal,
+  .cv-lima__limit-line,
+  .cv-lima__limit-line-overflowed {
     display: none !important;
   }
 
   /* Evitar saltos a mitad de sección */
-  .cv-medellin__section {
+  .cv-lima__section {
     page-break-inside: avoid !important;
   }
 
@@ -254,7 +261,7 @@
 }
 
 
-.cv-medellin__watermark {
+.cv-lima__watermark {
   position: absolute;
   inset: 0;
   top: 0;

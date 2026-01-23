@@ -1,17 +1,20 @@
-.cv-miami{
+.cv-praga{
   &__section{
     border: 1px solid #00ccff00;
+    border-left: 2px solid transparent;
 
     &:hover {
       background-color: #00ccff09;
       border: 1px solid #00ccff13;
       box-shadow: 0px 0px 2px #00ccff27;
+      border-left: 2px solid transparent;
     }
 
     &--active{
       background-color: #00ccff09;
       border: 1px solid #00ccff13;
       box-shadow: 0px 0px 2px #00ccff27;
+      border-left: 2px solid transparent;
     }
   }
 
@@ -32,41 +35,41 @@
     color: rgb(83, 83, 83);
   }
 
-  &__identitySection--main{
-    display: flex;
-    align-items: center;
-  }
+  
 
   &__identitySection {
     display: flex;
-      gap: 0rem;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 25px;
+      gap: 2rem;
+      padding: 10px 0px;
+      padding-right: 0;
       padding-bottom: 10px;
-      border: 1px solid transparent;
-      border-radius: 50px;
+      border-radius: 0px;
       cursor: pointer;
       transition: all 0.2s ease;
       min-height: 150px;
       position: absolute;
-      left: 3rem;
-      right: 3rem;
-      top: 3rem;
-       background-color: #ffffff;
-       border-top-right-radius: 0;
-       border-bottom-left-radius: 0;
+      left: 0rem;
+      top: 0rem;
+      height: 150px;
+      background-color: #ffffff;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      z-index: 10;
+      
+
+      &--main{
+    display: flex;
+    flex-direction: column;
+    width: 253px;
+    padding: 0 20px;
+  }
 
       &:hover {
         background-color: #ffffff;
-        border: 1px solid #00ccff13;
-        box-shadow: 0px 0px 2px #00ccff27;
       }
 
       &--active {
         background-color: #ffffff;
-        border: 1px solid #00ccff13;
-        box-shadow: 0px 0px 2px #00ccff27;
       }
 
       &.space {
@@ -78,39 +81,51 @@
       }
 
       &--img {
-        width: 90px;
-        height: 90px;
+        width: 180px;
+        height: 180px;
         border-radius: 0;
         object-fit: cover;
+        margin-top: 0.5rem;
+        margin-right: 1rem;
         border-radius: 100%;
-        border: 1px solid white;
-        box-shadow: 0px 0px 15px white;
+        position: absolute;
+        border: 6px solid #ffc101;
+        border-radius: 100%;
+        top: 1rem;
+        left: 2.2rem;
       }
 
       &--text {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        line-height: 2.5rem;
+        gap: 0rem;
+        line-height: 2.2rem;
         margin: auto 0;
         word-break: break-word; // rompe palabras largas
         overflow-wrap: break-word; // soporta compatibilidad
+        margin-top: 13.5rem;
+        text-align: center;
       }
 
       &--title {
-        font-size: 2.4rem;
-        font-weight: 700;
+        font-size: 1.6rem;
+        font-weight: 600;
         max-width: 450px;
-        color: #19de7c69; // será sobrescrito por style={{ color: styles.title }}
-        text-transform: uppercase;
+        color: #ffc101; // será sobrescrito por style={{ color: styles.title }}
+        text-align: center;
       }
 
       &--occupation {
-        font-size: 1.3rem;
-        font-weight: 400;
-        line-height: 1rem;
-        margin-bottom: 1rem;
-        color: #e8e8e8; // será sobrescrito por style={{ color: styles.profession }}
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: #c2c2c2; // será sobrescrito por style={{ color: styles.profession }}
+        text-align: center;
+        line-height: 1.5rem;
+        border-bottom: 1px solid #ffc101;
+        padding-bottom: 10px;
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 0.3rem;
       }
 
       &--qr-wrapper {
@@ -118,8 +133,9 @@
         text-align: center;
         margin-top: 0.5rem;
         position: absolute;
-        top: 1.2rem;
-        right: 1.5rem;
+        top: 1.5rem;
+        right: -31rem;
+        z-index: 10;
       }
 
       &--qr-text {
@@ -152,20 +168,22 @@
       overflow-wrap: break-word; // soporta compatibilidad
 
     &--title {
-      font-size: 1rem;
-      font-weight: 800;
+      font-size: 1.5rem;
+      font-weight: 700;
       position: relative;
       display: inline-block; /* importante para que el borde mida solo el título */
-      color: rgb(255, 255, 255);
+      color: #ffc101;
+      background-color: #fafafa;
       position: relative;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      background-color: #19de7c38;
+      width: 100%;
+      padding: 0.2rem 0.7rem;
       border-radius: 10px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
 
-    &--item-level{
-      margin-left: 0.5rem;
+    &--item{
+        padding-left: 1rem;
     }
   }
 
@@ -173,16 +191,29 @@
   // General - Vertical
   // ------------------------------
   &__personalInfoSection, &__contactSection, &__skillSection, &__languajeSection, &__linkSection, &__hobbieSection{
-    text-align: center;
-
+    &--title{
+      color: #ffc101;
+      padding: 0;
+      padding-bottom: 15px;
+      font-size: 1.45rem;
+      background-color: #1f053500;
+      border-bottom: 1px solid #ffc101;
+      border-radius: 0;
+      margin-bottom: 0.5rem;
+      width: fit-content;
+      margin-left: 1rem;
+    }
     &--item-value{
-      color: #00000077;
+      color: #afafaf;
     }
     &--item{
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+      gap: 0.3rem;
+
+      &-name{
+        color: rgb(206, 206, 206);
+      }
     }
   }
 
@@ -246,6 +277,7 @@
       &-level {
         font-size: 0.9rem;
         opacity: 0.8;
+        color: #dcdcdc;
       }
     }
 
@@ -259,18 +291,18 @@
     /* Contenedor de la barra */
     &--progress {
       margin-top: 0.35rem;
-      width: 70%;
-      height: 6px;
-      background-color: #dcdcdc; // gris claro
-      border-radius: 4px;
+      width: 100%;
+      height: 2px;
+      background-color: #f0f0f0; // gris claro
+      border-radius: 1px;
       overflow: hidden;
     }
 
     /* Barra interna */
     &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro
-      border-radius: 4px;
+      height: 80%;
+      background-color: #080837; // negro
+      border-radius: 1px;
       transition: width 0.4s ease;
     }
   }
@@ -290,6 +322,7 @@
       &-level {
         font-size: 0.9rem;
         opacity: 0.8;
+        color: #dcdcdc;
       }
     }
 
@@ -303,18 +336,18 @@
     /* Contenedor de la barra */
     &--progress {
       margin-top: 0.35rem;
-      width: 70%;
-      height: 6px;
-      background-color: #dcdcdc; // gris suave
-      border-radius: 4px;
+      width: 100%;
+      height: 2px;
+      background-color: #f0f0f0; // gris suave
+      border-radius: 1px;
       overflow: hidden;
     }
 
     /* Barra interna */
     &--progress-bar {
-      height: 100%;
-      background-color: #051235; // negro sólido
-      border-radius: 4px;
+      height: 80%;
+      background-color: #080837; // negro sólido
+      border-radius: 1px;
       transition: width 0.4s ease;
     }
   }
@@ -330,7 +363,7 @@
       &-name {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #051235;
+        color: #afafaf;
         text-decoration: none;
         cursor: pointer;
         transition: opacity 0.2s ease;
@@ -346,6 +379,7 @@
         opacity: 0.7;
         margin-top: 0.15rem;
         word-break: break-all; // para URL largas en CV
+        color: #afafaf;
       }
     }
   }
@@ -389,7 +423,7 @@
     &--item {
       font-size: 0.98rem;
       line-height: 1.4;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #919191;
     }
   }
@@ -404,7 +438,7 @@
       justify-content: space-between;
     }
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #919191;
 
       &-head {
@@ -464,7 +498,7 @@
   // ------------------------------
   &__educationSection {
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #919191;
 
       &-head {
@@ -524,7 +558,7 @@
   // ------------------------------
   &__courseSection {
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #919191;
 
       &-head {
@@ -584,7 +618,7 @@
   // ------------------------------
   &__awardSection {
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
@@ -612,7 +646,7 @@
   // ------------------------------
   &__referenceSection {
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
@@ -647,7 +681,7 @@
   // ------------------------------
   &__customSection {
     &--item {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #919191;
     }
   }
