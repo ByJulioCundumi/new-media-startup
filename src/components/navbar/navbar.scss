@@ -20,12 +20,13 @@
   &__logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     cursor: pointer;
 
     .logo-icon {
-      font-size: 1.6rem;
-      color: #181818;
+      font-size: 2rem;
+      color: #ffbb00;
+      margin-bottom: -0.5rem;
     }
 
     .logo-text {

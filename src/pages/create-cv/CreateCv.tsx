@@ -39,11 +39,11 @@ import { setCustomEntries } from "../../reducers/customSlice";
 import { setPersonalInfoEntries } from "../../reducers/personalInfoSlice";
 import { setCvSections } from "../../reducers/cvSectionsSlice";
 import { loadStoredValues, loadTemplateDefaults } from "../../reducers/colorFontSlice";
-import { TbPencilPlus } from "react-icons/tb";
 import QrBoxEditor from "../../components/qr-box-editor/QrBoxEditor";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { LuSave, LuSaveOff } from "react-icons/lu";
 import { isOnline } from "../../util/isOnline";
+import { PiReadCvLogo } from "react-icons/pi";
 
 const getCurrentData = (state: IState) => ({
   cvTitle: state.cvCreation.selectedCvTitle,
@@ -309,7 +309,7 @@ const [showSections] = useState(true)
     return (
       <div className="create-cv__loading-overlay">
         <div className="create-cv__loading-container">
-          <h2 className="create-cv__loading-title"><TbPencilPlus /> CvRemoto</h2>
+          <h2 className="create-cv__loading-title"><PiReadCvLogo /> CvRemoto</h2>
           <div className="create-cv__loading-dots">
             <span></span><span></span><span></span><span></span><span></span>
           </div>

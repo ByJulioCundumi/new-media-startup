@@ -17,10 +17,10 @@ import { clearUser, setUser } from './reducers/userSlice'
 import CreateNewCvPopup from './components/create-new-cv-popup/CreateNewCvPopup'
 import { addFavoriteTemplateApi } from './api/user'
 import AdminPage from './pages/admin-page/AdminPage'
-import { TbPencilPlus } from 'react-icons/tb'
 import Auth from './components/auth/Auth'
 import OnlineCv from './pages/online-cv/OnlineCv'
 import MobileNav from './components/mobile-nav/MobileNav'
+import { PiReadCvLogo } from 'react-icons/pi'
 
 function App() {
   const dispatch = useDispatch()
@@ -69,7 +69,7 @@ function App() {
   return (
     <div className="app__loading-overlay">
       <div className="app__loading-container">
-        <h2 className="app__loading-title"><TbPencilPlus /> CvRemoto</h2>
+        <h2 className="app__loading-title"><PiReadCvLogo /> CvRemoto</h2>
         <div className="app__loading-dots">
           <span></span>
           <span></span>

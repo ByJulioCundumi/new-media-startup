@@ -6,13 +6,14 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import type { IState } from "../../interfaces/IState";
 
 import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import { TbPencilPlus, TbSettingsCode } from "react-icons/tb";
+import { TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { LuFileSearch } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdOutlineDiamond,
 } from "react-icons/md";
+import { PiReadCvLogo } from "react-icons/pi";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function Navbar() {
           onClick={() => dispatch(setSidebar("home"))}
         >
           <div className="logo-icon">
-            <TbPencilPlus />
+            <PiReadCvLogo />
           </div>
           <span className="logo-text">CvRemoto</span>
         </Link>
