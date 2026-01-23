@@ -1,14 +1,16 @@
 import "./jobpage.scss";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSidebar } from "../../reducers/sidebarSlice";
 
 import JobOffer from "../../components/job-offer/JobOffer";
 import JobFaq from "../../components/job-faq/JobFaq";
 import { Typewriter } from "react-simple-typewriter";
+import type { IState } from "../../interfaces/IState";
 
 function JobPage() {
   const dispatch = useDispatch();
+  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
 
   useEffect(() => {
     dispatch(setSidebar("affiliate"));
@@ -66,7 +68,7 @@ function JobPage() {
             <JobOffer />
           </div>
 
-          <JobFaq />
+          {sidebarOption !== "pricing" && <JobFaq />}
         </div>
       </div>
     </section>

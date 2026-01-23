@@ -140,6 +140,11 @@
 
     path {
       fill: #ffffff;
+
+      /* BORDE */
+      stroke: #e5e7eb;       // color del borde
+      stroke-width: 1px;     // grosor
+      stroke-linejoin: round;
     }
   }
 }
