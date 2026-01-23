@@ -78,7 +78,7 @@ function CreateCv() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFromBackend, setIsFromBackend] = useState(false);
   const [backendLoadedData, setBackendLoadedData] = useState<any>(null); // ← NUEVO: datos crudos del backend
-const [showSections, setShowSections] = useState(true)
+const [showSections] = useState(true)
   // ----------------------------------------------------------------------------------
   // Carga del CV (local o backend)
   // ----------------------------------------------------------------------------------

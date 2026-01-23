@@ -17,7 +17,6 @@ import { getMyCommissionApi } from "../../../api/auth";
 import "./affiliatecommissisonrequest.scss";
 import { useSelector } from "react-redux";
 import type { IState } from "../../../interfaces/IState";
-import { useNavigate } from "react-router-dom";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
@@ -44,7 +43,6 @@ const AffiliateCommissionRequest: React.FC = () => {
 
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   const prevRequestRef = React.useRef<CommissionRequestData | null>(null);
 
@@ -54,7 +52,7 @@ const AffiliateCommissionRequest: React.FC = () => {
   const loadData = async () => {
     setInitialLoading(true);
     try {
-      const [commission, myRequest] = await Promise.all([
+      const [_, myRequest] = await Promise.all([
         getMyCommissionApi(),
         getMyCommissionRequestApi().catch(() => null),
       ]);
@@ -160,11 +158,9 @@ const AffiliateCommissionRequest: React.FC = () => {
       return;
     }
 
-    if (isFreePlan) {
-      setShowUpgradeModal(true);
-    } else {
+    if (isFreePlan === false) {
       setShowSubmitConfirm(true);
-    }
+    } 
   };
 
   const isPending = request?.status === "PENDING";
