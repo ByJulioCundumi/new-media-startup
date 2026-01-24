@@ -1,135 +1,127 @@
 import "./joboffer.scss";
-import {
-  FaTimes,
-} from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import { MdPendingActions } from "react-icons/md";
+import { RiMailSendLine } from "react-icons/ri";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import type { IState } from "../../interfaces/IState";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
-import {  MdPendingActions } from "react-icons/md";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import { useNavigate } from "react-router-dom";
 import { openAuthModal } from "../../reducers/authModalSlice";
-import { RiMailSendLine } from "react-icons/ri";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loadingCvs, setLoadingCvs] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const isLogged = useSelector((state: IState) => state.user.logged);
-  const {commissionRequestStatus, subscriptionExpiresAt} = useSelector((state: IState) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const openModal = async () => {
-    // Caso 1: No está logueado
-    if (!isLogged) {
-      alert("Debes iniciar sesión para postularte.");
-      dispatch(openAuthModal({}))
-      return;
+  const { logged, commissionRequestStatus, subscriptionExpiresAt } =
+    useSelector((state: IState) => state.user);
+
+  const handleOpenModal = async () => {
+    if (!logged) {
+      dispatch(openAuthModal({}));
+      return alert("Debes iniciar sesión para postularte.");
     }
 
-    // Caso 2: Está logueado → verificar CVs online
-    setLoadingCvs(true);
+    if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
+      alert("Este programa requiere una suscripción activa.");
+      return navigate("/pricing");
+    }
+
     try {
-      if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
-        alert(
-          "Este programa solo esta disponible para usuarios con una suscripcion activa."
-        );
-        navigate("/pricing")
-        return;
-      }
-
-      // Caso 3: Todo OK → abrir modal
+      setLoading(true);
       setIsModalOpen(true);
-      setErrorMessage(null);
-    } catch (err) {
-      console.warn("Error cargando CVs online:", err);
-      setErrorMessage("Hubo un error al verificar tus CVs. Inténtalo más tarde.");
+      setError(null);
+    } catch {
+      setError("Error al verificar la información. Intenta más tarde.");
     } finally {
-      setLoadingCvs(false);
+      setLoading(false);
     }
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const closeError = () => {
-    setErrorMessage(null);
+  const renderActionButton = () => {
+    switch (commissionRequestStatus) {
+      case "PENDING":
+        return (
+          <button className="apply-button pending" disabled>
+            En revisión <MdPendingActions />
+          </button>
+        );
+      case "APPROVED":
+        return (
+          <button className="apply-button success" disabled>
+            ¡Fuiste aceptado!
+          </button>
+        );
+      default:
+        return (
+          <button
+            className="apply-button"
+            onClick={handleOpenModal}
+            disabled={loading}
+          >
+            {loading ? "Verificando..." : "Validar solicitud"}
+          </button>
+        );
+    }
   };
 
   return (
     <>
-      <section className="job-offer-card-container">
-        <article className="job-offer-card">
-              <a href="#" className="job-stat-info">
-                <RiMailSendLine />
-                 Solicitar Mi Afiliacion 
-                 <RiMailSendLine />
-              </a>
+      <section className="job-offer">
+        <article className="job-offer__card">
+          <a className="job-offer__badge">
+            <RiMailSendLine />
+            Solicitar afiliación
+            <RiMailSendLine />
+          </a>
 
-          <aside className="job-action">
-            {
-              (commissionRequestStatus === "CANCELLED" || commissionRequestStatus === "REJECTED" || commissionRequestStatus === null || commissionRequestStatus === "") && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-                {loadingCvs ? "Verificando..." : "Validar Solicitud"} 
-            </button>
-            }
-            {
-              commissionRequestStatus === "PENDING" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              En Revision... <MdPendingActions />
-            </button>
-            }
-            {
-              commissionRequestStatus === "APPROVED" && <button className="apply-button" onClick={openModal} disabled={loadingCvs}>
-              ¡Fuiste Aceptado! 
-            </button>
-            }
-            <p className="action-note">
-              *Solo Para Miembros suscritos en  <span style={{textDecoration: "underline"}}>cvremoto.com</span>
+          <aside className="job-offer__action">
+            {renderActionButton()}
+            <p className="job-offer__note">
+              * Solo para miembros suscritos en{" "}
+              <span>cvremoto.com</span>
             </p>
           </aside>
         </article>
       </section>
 
-      {/* Mensaje de error flotante */}
-      {errorMessage && (
-        <div className="error-toast">
-          <p>{errorMessage}</p>
-          <button className="error-close" onClick={closeError}>
+      {/* ERROR */}
+      {error && (
+        <div className="toast-error">
+          <p>{error}</p>
+          <button onClick={() => setError(null)}>
             <FaTimes />
           </button>
         </div>
       )}
 
-      {/* Modal */}
+      {/* MODAL */}
       {isModalOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content job-offer-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-btn" onClick={closeModal}>
+        <div className="modal" onClick={() => setIsModalOpen(false)}>
+          <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal__close" onClick={() => setIsModalOpen(false)}>
               <FaTimes />
             </button>
 
-            <div>
-              <h2>¡Completa tu postulación!</h2>
-              <p className="modal-subtitle">
-                <strong>Paso. (1) </strong> <a href="#">Solicita tu afiliacion</a> desde hotmart. <br />
-              </p>
-              <p className="modal-subtitle">
-                <strong>Paso. (2) </strong> Completa los campos de la cuenta hotmart solicitante.
-              </p>
-            </div>
+            <h2>Completa tu postulación</h2>
 
-            {/* Formulario de comisión solo si hay CVs online */}
-            {(
-              <div className="commission-form-container">
-                <AffiliateCommissionRequest />
-              </div>
-            )}
+            <p className="modal__step">
+              <strong>Paso 1:</strong> Solicita tu afiliación desde Hotmart
+            </p>
+            <p className="modal__step">
+              <strong>Paso 2:</strong> Completa los datos de la cuenta solicitante
+            </p>
 
-            <p className="modal-footer">
-              ¡únete a cientos de afiliados que ya generan ingresos en linea!
+            <AffiliateCommissionRequest />
+
+            <p className="modal__footer">
+              Únete a cientos de afiliados que ya generan ingresos online
             </p>
           </div>
         </div>

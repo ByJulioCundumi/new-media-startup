@@ -33,7 +33,7 @@
   }
 
   &.active {
-    color: #00aeff;
+    color: #f0be36;
   }
 
   &.active::after {
@@ -41,7 +41,7 @@
     position: absolute;
     bottom: 6px;
     width: 24px;
-    height: 3px;
+    height: 1px;
     background: #00aeff;
     border-radius: 4px;
   }
@@ -51,7 +51,6 @@
 .mobile-nav__item--main {
   svg {
     font-size: 2.2rem;
-    color: #f0be36;
   }
 
   span {

@@ -1,372 +1,144 @@
-// === ESTILOS DE LA TARJETA DE OFERTA ===
-.job-offer-card-container {
-  padding: 2rem 1rem;
+.job-offer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 
-  strong{
+  &__card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.8rem 1.8rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
     display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    font-weight: 500;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 360px;
+    width: fit-content;
   }
-}
 
-.job-offer-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 1.7rem 2rem;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
-  width: fit-content;
-}
+  &__badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    font-weight: 500;
+    color: #374151;
+  }
 
-.job-content {
-  flex: 1;
-}
+  &__action {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 
-.company-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-}
+  &__note {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #64748b;
 
-.company-logo {
-  width: 56px;
-  height: 56px;
-  background: #eef2ff;
-  color: #ffbb00;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-}
-
-.company-name {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #080f35;
-}
-
-.company-tagline {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #64748b;
-}
-
-.job-offer__info {
-  padding-bottom: 0.8rem;
-  margin-top: -0.2rem;
-  color: rgba(35, 34, 40, 0.63);
-  line-height: 1.5;
-}
-
-.job-stat-info {
-  color: #3d3d3d;
-  border: 1px solid rgba(0, 0, 0, 0.025);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.056);
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 0.4rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.job-action {
-  width: 280px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 1.2rem 1.6rem;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
-  justify-content: center;
+    span {
+      text-decoration: underline;
+      font-weight: 500;
+    }
+  }
 }
 
 .apply-button {
   background: #f0be36;
-  color: #ffffff;
+  color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 0.6rem 1rem;
-  font-size: 1.05rem;
+  padding: 0.6rem;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  transition: background 0.25s ease;
+  transition: 0.2s;
 
   &:hover {
     background: #4338ca;
   }
+
+  &.pending {
+    background: #94a3b8;
+  }
+
+  &.success {
+    background: #16a34a;
+  }
 }
 
-.action-note {
-  margin-top: 0.9rem;
-  padding-bottom: 0.9rem;
-  font-size: 0.8rem;
-  text-align: center;
-  color: #64748b;
-}
-
-// === MODAL (POPUP) ===
-.modal-overlay {
+/* MODAL */
+.modal {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.65);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000;
+  align-items: center;
   padding: 1rem;
-}
+  z-index: 1000;
 
-.modal-content.job-offer-modal {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 2rem;
-  max-width: 500px;
-  width: 100%;
-  height: fit-content;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  animation: modalFadeIn 0.3s ease;
-
-  h2 {
-    font-size: 1.8rem;
-    color: #0f172a;
-  }
-}
-
-.modal-subtitle {
-  color: #475569;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0rem;
-  background: none;
-  border: none;
-  font-size: 1.6rem;
-  color: #64748b;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f1f5f9;
-    color: #0f172a;
-  }
-}
-
-.modal-message-center {
-  text-align: center;
-  padding: 2rem 0;
-
-  &.no-cvs {
-    padding: 3rem 0;
+  &__content {
+    background: #fff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
   }
 
-  p {
-    font-size: 1.1rem;
+  &__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  &__step {
+    margin-top: 0.8rem;
     color: #475569;
-    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  &__footer {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #64748b;
   }
 }
 
-.loading-text {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #64748b;
-}
-
-// === ACCIONES DEL MODAL ===
-.modal-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.modal-btn {
-  padding: 0.85rem 1.8rem;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s;
-  font-size: 1rem;
-
-  &.primary {
-    background: #4f46e5;
-    color: white;
-    &:hover {
-      background: #4338ca;
-    }
-  }
-
-  &.secondary {
-    background: #f1f5f9;
-    color: #475569;
-    &:hover {
-      background: #e2e8f0;
-    }
-  }
-}
-
-.modal-subtitle{
-  padding: 0 1rem;
-  margin-top: 0.5rem;
-
-  strong{
-    font-weight: 500;
-    margin-right: 0.5rem;
-  }
-
-  a{
-    text-decoration: underline;
-    color: rgb(16, 9, 92);
-    font-weight: 500;
-  }
-
-  span{
-    text-decoration: underline;
-    color: rgb(16, 9, 92);
-    font-weight: 500;
-  }
-}
-
-.modal-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 0.95rem;
-  color: #64748b;
-  font-weight: 500;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Mensaje de error tipo toast
-.error-toast {
+/* ERROR TOAST */
+.toast-error {
   position: fixed;
-  top: 100px;
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
   background: #fef2f2;
   border: 1px solid #fca5a5;
   color: #dc2626;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1rem;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  gap: 0.8rem;
   z-index: 2000;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  max-width: 90%;
-  animation: toastFadeIn 0.4s ease;
-
-  p {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
-  }
 }
 
-.error-close {
-  background: none;
-  border: none;
-  color: #dc2626;
-  font-size: 1.3rem;
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-  }
-}
-
-@keyframes toastFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-.commission-form-container{
-  height: fit-content;
-}
-
-@media (max-width: 500px) { 
-  .modal-content.job-offer-modal {
-    padding: 2rem 1rem;
-  h2 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-}
-}
-
-@media (max-width: 450px) {
-  .modal-overlay{
-    padding: 0.5rem;
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .job-offer__card {
+    align-items: center;
+    max-width: 640px;
   }
 
-  .modal-content.job-offer-modal {
-  h2 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-}
-
-  .job-stats{
-    display: flex;
-    justify-content: center;
-  }
-
-  .job-offer-card-container{
-    scale: 0.9;
-    margin: -1rem -2.5rem;
-    margin-bottom: -3.5rem;
+  .job-offer__action {
+    width: 240px;
   }
 }

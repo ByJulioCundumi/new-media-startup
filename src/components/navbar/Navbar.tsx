@@ -28,7 +28,7 @@ function Navbar() {
         <Link
           to="/"
           className="navbar__logo"
-          onClick={() => dispatch(setSidebar("home"))}
+          onClick={() => dispatch(setSidebar("templates"))}
         >
           <div className="logo-icon">
             <PiReadCvLogo />
@@ -40,7 +40,7 @@ function Navbar() {
         <ul className="navbar__links">
 
             <Link
-            to="/templates"
+            to="/"
             className={`link ${
               sidebarOption === "templates" ? "active" : ""
             }`}

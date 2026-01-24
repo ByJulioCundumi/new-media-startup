@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./homepage.scss";
-import { setSidebar } from "../../reducers/sidebarSlice";
 import { useDispatch } from "react-redux";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import { closePopup, openPopup, restoreDefaults } from "../../reducers/colorFontSlice";
@@ -12,7 +11,6 @@ const HomePage: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSidebar("home"));
     dispatch(setAllowQrCode(true));
     dispatch(openPopup());
 

@@ -1,10 +1,8 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import './App.scss'
 import Navbar from './components/navbar/Navbar'
-import HomePage from './pages/home-page/HomePage'
 import DashboardCVs from './pages/dashboard-cvs/DashboardCvs'
 import TemplatesPage from './pages/templates-page/TemplatesPage'
-import JobPage from './pages/job-page/JobPage'
 import AccountPage from './pages/account-page/AccountPage'
 import CreateCv from './pages/create-cv/CreateCv'
 import { useDispatch, useSelector } from 'react-redux'
@@ -99,13 +97,11 @@ function App() {
 
         {/* Rutas */}
         <Routes>
-            <Route path='/' element={<HomePage/>} />
+            <Route path='/' element={<TemplatesPage/>} />
             <Route path="cv/:publicId?" element={<OnlineCv />} />
             <Route path='cvs' element={<DashboardCVs/>} />
             <Route path="create/:cvId?" element={<CreateCv />} />
-            <Route path='templates' element={<TemplatesPage/>} />
             <Route path='pricing' element={<PricingPage/>} />
-            <Route path='affiliate' element={<JobPage/>} />
             <Route path='account' element={<AccountPage/>} />
             <Route path='admin' element={<AdminPage/>} />
         </Routes>

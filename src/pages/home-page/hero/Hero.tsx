@@ -70,8 +70,8 @@ const Hero = () => {
               <strong> 50% de comisión</strong> con nuestro programa de afiliados.
             </p>
 
-            <JobOffer />
           </div>
+            <JobOffer />
         </aside>
 
       </div>
