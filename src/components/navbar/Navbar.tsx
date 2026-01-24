@@ -12,6 +12,7 @@ import { LuFileSearch } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdOutlineDiamond,
+  MdWorkOutline,
 } from "react-icons/md";
 import { PiReadCvLogo } from "react-icons/pi";
 
@@ -70,6 +71,17 @@ function Navbar() {
           >
             <MdOutlineDiamond className="navbar__pricing" />
             <span>Planes</span>
+          </Link>
+
+          <Link
+            to="/affiliates"
+            className={`link ${
+              sidebarOption === "affiliates" ? "active" : ""
+            }`}
+            onClick={() => dispatch(setSidebar("affiliates"))}
+          >
+            <MdWorkOutline className="navbar__pricing" />
+            <span>Affiliados</span>
           </Link>
 
 

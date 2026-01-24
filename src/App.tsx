@@ -19,6 +19,7 @@ import Auth from './components/auth/Auth'
 import OnlineCv from './pages/online-cv/OnlineCv'
 import MobileNav from './components/mobile-nav/MobileNav'
 import { PiReadCvLogo } from 'react-icons/pi'
+import AffiliatePage from './pages/affililate-page/AffiliatePage'
 
 function App() {
   const dispatch = useDispatch()
@@ -102,6 +103,7 @@ function App() {
             <Route path='cvs' element={<DashboardCVs/>} />
             <Route path="create/:cvId?" element={<CreateCv />} />
             <Route path='pricing' element={<PricingPage/>} />
+            <Route path='affiliates' element={<AffiliatePage/>} />
             <Route path='account' element={<AccountPage/>} />
             <Route path='admin' element={<AdminPage/>} />
         </Routes>

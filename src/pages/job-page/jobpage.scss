@@ -161,6 +161,17 @@
   }
 
   .job-page {
+    padding: 0;
     padding-top: 90px;
+  }
+
+  .job-page__offer{
+    display: flex;
+    flex-direction: column;
+
+    &-box{
+      padding: 0 1rem;
+      text-align: center;
+    }
   }
 }

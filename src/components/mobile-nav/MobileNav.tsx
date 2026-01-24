@@ -9,6 +9,7 @@ import type { IState } from "../../interfaces/IState";
 import { TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { IoCreateOutline } from "react-icons/io5";
+import { MdWorkOutline } from "react-icons/md";
 
 const MobileNav = () => {
   const {role} = useSelector((state:IState)=>state.user)
@@ -18,6 +19,11 @@ const MobileNav = () => {
       <NavLink to="/" className="mobile-nav__item">
         <HiHome />
         <span>Inicio</span>
+      </NavLink>
+
+      <NavLink to="/affiliates" className="mobile-nav__item">
+        <MdWorkOutline />
+        <span>Afiliados</span>
       </NavLink>
 
       <NavLink to="/cvs" className="mobile-nav__item mobile-nav__item--main">

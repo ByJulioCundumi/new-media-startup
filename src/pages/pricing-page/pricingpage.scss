@@ -4,14 +4,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #fdfdfd 0%, #ffffff 100%);
+  background:
+    radial-gradient(
+      1000px 200px at 20% 20%,
+      #f5f4f4,
+      transparent
+    ),
+    #ffffff;
   min-height: 100vh;
   animation: fadeIn 0.8s ease;
 
   .pricing-header {
     max-width: 840px;
     text-align: center;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
 
     h1 {
       font-size: 2.8rem;
@@ -43,7 +49,7 @@
     max-width: 1400px;
     justify-content: center;
     padding: 0 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0rem;
   }
 
   .pricing-card {
@@ -51,7 +57,7 @@
     background: white;
     border-radius: 28px;
     padding: 2.5rem 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.042);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.068);
     transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
@@ -67,9 +73,9 @@
     }
 
     &.pricing-highlight {
-      background: linear-gradient(180deg, #ffffff 0%, #fbfafe 100%);
-      border: 2px solid #fcd56a;
-      box-shadow: 0 20px 40px rgba(106, 90, 249, 0.12);
+      background: linear-gradient(180deg, #ffffff 10%, #feffc0 120%);
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 10px rgba(19, 19, 19, 0.062);
 
       .pricing-btn-select {
         background-color: #ffc014;
@@ -90,7 +96,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 6px 15px rgba(90, 153, 249, 0.3);
+      box-shadow: 0 6px 15px rgba(249, 220, 90, 0.3);
       animation: float 3s ease-in-out infinite;
 
       @keyframes float {
@@ -297,6 +303,7 @@
 
     .pricing-header {
       padding: 0 1.2rem;
+      margin-bottom: 0;
 
       h1 {
         font-size: 2.1rem;
@@ -309,7 +316,7 @@
     }
 
     .pricing-grid {
-      padding: 0 2rem;
+      padding: 2rem 2rem;
       gap: 2rem;
       margin-bottom: -4rem;
     }

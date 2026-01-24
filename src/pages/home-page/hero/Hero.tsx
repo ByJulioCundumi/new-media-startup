@@ -62,7 +62,7 @@ const Hero = () => {
         <aside className="hero__cta">
           <div className="home-page__offer">
             <h2 className="home-page__job">
-              ¡Trabaja <span>En Remoto!</span>
+              ¡Trabajo <span>Disponible!</span>
             </h2>
 
             <p>
