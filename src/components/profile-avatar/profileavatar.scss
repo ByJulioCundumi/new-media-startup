@@ -52,7 +52,7 @@
 /* ----- VIP STYLE: Premium & elegante ----- */
 .subscription-badge.vip {
   background-color: rgb(255, 255, 255);
-  border-color: #ffbb00;
+  border-color: #ffd667;
   color: #ffbb00;
   font-weight: 500;
 }
@@ -157,12 +157,6 @@
       padding-bottom: 7px;
     }
     }
-  }
-}
-
-@media (max-width: 500px) { 
-  .subscription-badge__text{
-    display: none;
   }
 }
 

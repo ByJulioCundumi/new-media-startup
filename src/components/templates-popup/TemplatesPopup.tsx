@@ -165,8 +165,6 @@ export default function TemplatesPopup() {
             {showFavorites ? <IoStar/> : <FiStar/>}
             <p className="template-fav-text">{showFavorites ? "Todas" : "Favoritos"}</p>
           </button>
-          </div>
-
           <button
             className="close-btn-tpl"
             onClick={() => dispatch(setTemplatePopupOpen(false))}
@@ -174,6 +172,8 @@ export default function TemplatesPopup() {
           >
             <IoClose size={26} />
           </button>
+          </div>
+
         </div>
 
         {/* GRID SCROLLABLE */}

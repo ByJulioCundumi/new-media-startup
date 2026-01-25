@@ -520,10 +520,12 @@
 @media (max-width: 800px) {
   .dashboard-cvs{
     padding: 6rem 0rem;
+    gap: 0.6rem;
   }
 
   .create-new{
     height: fit-content;
+    padding: 0rem;
 
     .create-box{
       display: flex;
@@ -544,6 +546,7 @@
     width: 100%;
     z-index: 50;
     border-bottom: 1px solid rgba(0, 0, 0, 0.055);
+    margin-bottom: 1rem;
   }
 }
 
@@ -553,7 +556,7 @@
     margin: 0 auto;
   }
   .dashboard-cvs{
-    padding: 6rem 0rem;
+    padding: 5rem 0rem;
   }
   .header-right{
     flex-direction: column;

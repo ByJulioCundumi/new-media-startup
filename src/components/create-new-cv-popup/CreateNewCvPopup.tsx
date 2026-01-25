@@ -158,9 +158,6 @@ export default function CreateNewCvPopup() {
       navigate(`/create/${cvIdToNavigate}`);
     } catch (err: any) {
       console.error("Error al crear CV en la nube:", err);
-      toast.error("Error al crear CV en la nube", {
-          duration: 5000,
-        });
 
       // Fallback seguro: siempre crear local si falla la nube
       const localId = createLocalDraft(title, selectedTemplateId);

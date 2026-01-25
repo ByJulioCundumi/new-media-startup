@@ -22,7 +22,6 @@ const ProfileAvatar: React.FC = () => {
 
   const {
     logged,
-    subscriptionPlan,
     subscriptionExpiresAt,
   } = useSelector((state: IState) => state.user);
 
@@ -45,12 +44,6 @@ const ProfileAvatar: React.FC = () => {
 
   const expirationDate = formatExpirationDate(subscriptionExpiresAt as string | null | undefined);
 
-  const planTitle = isVip
-    ? subscriptionPlan === "MONTHLY"
-      ? "Plan Mensual"
-      : "Plan Anual"
-    : "Plan Gratuito";
-
   const handleLogout = async () => {
     try {
       await logout();
@@ -72,7 +65,7 @@ const ProfileAvatar: React.FC = () => {
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              {isVip ? `${planTitle}: ${expirationDate}` : "Actualiza Tu Plan"}
+              {isVip ? `Exp: ${expirationDate}` : "Actualiza Tu Plan"}
             </p>
           </div>
         </div>
