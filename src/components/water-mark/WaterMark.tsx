@@ -6,7 +6,7 @@ function WaterMark() {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
 
   return (
-    <div className={`water-mark`}>
+    <div className={`${sidebarOption === "templates" ? "water-mark-fine" : "water-mark"}`}>
         <p>CREADO CON CVREMOTO.COM</p>
     </div>
   )
