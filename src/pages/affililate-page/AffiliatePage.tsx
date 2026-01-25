@@ -10,47 +10,97 @@ import { setSidebar } from "../../reducers/sidebarSlice";
 import { useDispatch } from "react-redux";
 
 const AffiliatePage = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(setSidebar("affiliates"));
-      }, []);
+  useEffect(() => {
+    dispatch(setSidebar("affiliates"));
+  }, [dispatch]);
 
   return (
     <>
-        <section className="affiliate">
-      <div className="affiliate__container">
+      <section className="affiliate">
+        <div className="affiliate__container">
 
-        {/* HERO */}
-        <motion.div
-          className="affiliate__hero"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="affiliate__badge">Programa exclusivo para miembros</span>
-          <h1 className="affiliate__title">
-            Gana <span>El 50% De Comisión</span> <br /> Por Compartir
-          </h1>
-          <p className="affiliate__subtitle">
-            Únete a nuestro programa de afiliados y genera ingresos en USD
-            recomendando nuestra plataformas para crear CVs
-            profesionales.
-          </p>
-        </motion.div>
+          {/* HERO */}
+          <motion.div
+            className="affiliate__hero"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
 
-        <div className="affiliate__job-card">
-            <JobOffer/>
-            <div className="affiliate__video">
-                <p><MdKeyboardArrowDown /> Descubre Como Aplicar <MdKeyboardArrowDown /></p>
-                <YoutubeEmbed/>
+            {/* BADGE + FLOATING CARDS */}
+            <div className="affiliate__badge-wrapper">
+
+              {/* LEFT CARD */}
+              <motion.div
+                className="affiliate__float-card affiliate__float-card--left"
+                animate={{ y: [-12, 12] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "linear"
+                }}
+              >
+                <span>💰</span>
+                <p>50% comisión</p>
+              </motion.div>
+
+              {/* BADGE */}
+              <span className="affiliate__badge">
+                Programa exclusivo para miembros
+              </span>
+
+              {/* RIGHT CARD */}
+              <motion.div
+                className="affiliate__float-card affiliate__float-card--right"
+                animate={{ y: [12, -12] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "linear"
+                }}
+              >
+                <span>🌎</span>
+                <p>Pagos en USD</p>
+              </motion.div>
+
             </div>
-            <JobFaq/>
-        </div>
 
-      </div>
-    </section>
-    <Footer/>
+            <h1 className="affiliate__title">
+              Gana <span>El 50% De Comisión</span>
+              <br /> Por Compartir
+            </h1>
+
+            <p className="affiliate__subtitle">
+              Únete a nuestro programa de afiliados y genera ingresos en USD
+              recomendando nuestra plataforma para crear CVs profesionales.
+            </p>
+
+          </motion.div>
+
+          {/* CONTENT */}
+          <div className="affiliate__job-card">
+            <JobOffer />
+
+            <div className="affiliate__video">
+              <p>
+                <MdKeyboardArrowDown />
+                Descubre Cómo Aplicar
+                <MdKeyboardArrowDown />
+              </p>
+              <YoutubeEmbed />
+            </div>
+
+            <JobFaq />
+          </div>
+
+        </div>
+      </section>
+
+      <Footer />
     </>
   );
 };

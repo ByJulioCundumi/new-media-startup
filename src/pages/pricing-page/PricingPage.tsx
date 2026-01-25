@@ -204,7 +204,7 @@ function PricingPage() {
                   plan.isFree ? "pricing-free-btn" : ""
                 }`}
               >
-                {plan.isFree ? "Empezar Gratis" : "Elegir Plan"}
+                {plan.isFree ? "Empezar Gratis" : "Comprar Suscripcion"}
               </button>
             </div>
           ))}

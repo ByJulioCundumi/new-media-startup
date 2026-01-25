@@ -10,7 +10,7 @@ function JobPage() {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
 
   return (
-    <section className="job-page">
+    <section className={`job-page ${sidebarOption === "pricing" && "more-p"}`}>
       {/* ===== WAVE SUPERIOR ===== */}
       <div className="wave-top">
         <svg
