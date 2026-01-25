@@ -15,7 +15,6 @@ import {
 } from "react-icons/hi2";
 import { openAuthModal } from "../../reducers/authModalSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
-import { LuUserRoundPlus } from "react-icons/lu";
 
 const ProfileAvatar: React.FC = () => {
   const dispatch = useDispatch();
@@ -73,7 +72,7 @@ const ProfileAvatar: React.FC = () => {
 
           <div className="subscription-badge__text">
             <p className="subscription-badge__subtitle">
-              {isVip ? `${planTitle}: ${expirationDate}` : "Actualiza Tu Plan Actual"}
+              {isVip ? `${planTitle}: ${expirationDate}` : "Actualiza Tu Plan"}
             </p>
           </div>
         </div>
@@ -84,7 +83,7 @@ const ProfileAvatar: React.FC = () => {
         onClick={handleLogout}
         title={"Cerrar sesión"}
       >
-        <HiOutlineArrowLeftStartOnRectangle size={20} />
+        <HiOutlineArrowLeftStartOnRectangle size={15} />
       </button>
         </>
       }
@@ -95,16 +94,7 @@ const ProfileAvatar: React.FC = () => {
                       className="login"
                       onClick={() => dispatch(openAuthModal({}))}
                     >
-                      <HiOutlineArrowRightEndOnRectangle size={30} />
-                    </button>
-        
-                    <button
-                      className="signup"
-                      onClick={() =>
-                        dispatch(openAuthModal({ section: "signup" }))
-                      }
-                    >
-                      <LuUserRoundPlus /> Crear Cuenta
+                     Iniciar Sesion <HiOutlineArrowRightEndOnRectangle size={30} /> 
                     </button>
                   </div>
       }

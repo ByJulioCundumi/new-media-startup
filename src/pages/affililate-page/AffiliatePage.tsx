@@ -8,6 +8,8 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { useEffect } from "react";
 import { setSidebar } from "../../reducers/sidebarSlice";
 import { useDispatch } from "react-redux";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { GiTrophyCup } from "react-icons/gi";
 
 const AffiliatePage = () => {
   const dispatch = useDispatch();
@@ -43,8 +45,8 @@ const AffiliatePage = () => {
                   ease: "linear"
                 }}
               >
-                <span>💰</span>
-                <p>50% comisión</p>
+                <span><GiTrophyCup /></span>
+                <p>50% de comisión</p>
               </motion.div>
 
               {/* BADGE */}
@@ -63,7 +65,7 @@ const AffiliatePage = () => {
                   ease: "linear"
                 }}
               >
-                <span>🌎</span>
+                <span><FaMoneyBillTrendUp /></span>
                 <p>Pagos en USD</p>
               </motion.div>
 

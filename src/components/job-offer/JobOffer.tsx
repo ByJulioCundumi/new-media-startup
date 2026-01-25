@@ -10,6 +10,7 @@ import type { IState } from "../../interfaces/IState";
 import AffiliateCommissionRequest from "../../pages/account-page/affiliate-commission-requeset/AffiliateCommissionRequest";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { openAuthModal } from "../../reducers/authModalSlice";
+import toast from "react-hot-toast";
 
 const JobOffer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,11 +26,17 @@ const JobOffer = () => {
   const handleOpenModal = async () => {
     if (!logged) {
       dispatch(openAuthModal({}));
-      return alert("Debes iniciar sesión para postularte.");
+      toast.error("Debes iniciar sesión para postularte.", {
+        duration: 5000,
+        icon: '🔒',
+      });
+      return
     }
 
     if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
-      alert("Este programa requiere una suscripción activa.");
+      toast.error("Este programa es exclusivo para miembros suscritos.", {
+        duration: 6000,
+      });
       return navigate("/pricing");
     }
 
@@ -38,7 +45,9 @@ const JobOffer = () => {
       setIsModalOpen(true);
       setError(null);
     } catch {
-      setError("Error al verificar la información. Intenta más tarde.");
+      const msg = "Error al verificar la información. Intenta más tarde.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -77,7 +86,7 @@ const JobOffer = () => {
         <article className="job-offer__card">
           <a className="job-offer__badge">
             <RiMailSendLine />
-            Solicitar afiliación
+            <span>Solicitar afiliación</span>
             <RiMailSendLine />
           </a>
 

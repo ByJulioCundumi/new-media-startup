@@ -11,10 +11,9 @@ import { HiHome } from "react-icons/hi2";
 import { LuFileSearch } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
-  MdOutlineDiamond,
   MdWorkOutline,
 } from "react-icons/md";
-import { PiReadCvLogo } from "react-icons/pi";
+import { PiReadCvLogo, PiShoppingCartBold } from "react-icons/pi";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -69,7 +68,7 @@ function Navbar() {
             }`}
             onClick={() => dispatch(setSidebar("pricing"))}
           >
-            <MdOutlineDiamond className="navbar__pricing" />
+            <PiShoppingCartBold className="navbar__pricing" />
             <span>Planes</span>
           </Link>
 

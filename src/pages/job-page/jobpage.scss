@@ -1,7 +1,7 @@
 .job-page {
   width: 100%;
   font-family: "Inter", sans-serif;
-  background: #fcfcfc;
+  background: #f8f8f8;
   color: #0f0f2a;
   animation: fadeIn 0.8s ease;
   overflow-x: hidden;
@@ -72,6 +72,7 @@
 
 .more-p{
   padding-bottom: 3rem;
+  background-color: #f8f8f8;
 }
 
 /* ================= ANIMACIONES ================= */
@@ -117,9 +118,9 @@
 
 .job-page {
   position: relative;
-  background: #fcfcfc;
+  background: #f8f8f8;
   overflow-x: hidden;
-  padding-top: 120px;
+  padding-top: 130px;
 }
 
 /* ================= WAVE TOP ================= */
@@ -167,6 +168,7 @@
   .job-page {
     padding: 0;
     padding-top: 90px;
+    padding-bottom: 30px;
   }
 
   .job-page__offer{

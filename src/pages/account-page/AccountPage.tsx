@@ -9,6 +9,7 @@ import { HiOutlineArrowLeftStartOnRectangle } from "react-icons/hi2";
 import { logout, deleteAccount } from "../../api/auth"; // ← Asegúrate de importar deleteAccount
 import { clearUser } from "../../reducers/userSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function AccountPage() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function AccountPage() {
       navigate("/");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
+      toast.error("Error al cerrar sesión", {
+          duration: 5000,
+        });
     } finally {
       dispatch(clearUser());
     }

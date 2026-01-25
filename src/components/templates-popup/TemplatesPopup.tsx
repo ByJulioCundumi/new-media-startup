@@ -21,6 +21,7 @@ import { MdOutlineDiamond } from "react-icons/md";
 import { BsPatchCheck } from "react-icons/bs";
 import { setAllowQrCode } from "../../reducers/identitySlice";
 import { FiStar } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export default function TemplatesPopup() {
   const dispatch = useDispatch();
@@ -65,6 +66,9 @@ export default function TemplatesPopup() {
         try {
           await getFavoriteTemplatesApi(); // Asumiendo que actualiza Redux internamente
         } catch (err) {
+          toast.error("Error cargando favoritos", {
+            duration: 5000,
+          });
           console.error("Error cargando favoritos en popup:", err);
         }
       };
@@ -96,7 +100,9 @@ export default function TemplatesPopup() {
       dispatch(setFavorites(updatedFavorites));
     } catch (err) {
       console.error("Error actualizando favorito:", err);
-      alert("Error al actualizar favoritos");
+      toast.error("Error al actualizar favoritos", {
+            duration: 5000,
+          });
     }
   };
 

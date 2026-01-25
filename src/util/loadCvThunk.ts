@@ -21,6 +21,7 @@ import { setCvPhoto, setPublicId, setSelectedCvId, setSelectedCvTitle, setSelect
 import type { AppDispatch } from "../app/store";
 import { getCvByIdApi } from "../api/cv";
 import { setOriginalData } from "../reducers/cvSaveSlice";
+import toast from "react-hot-toast";
 
 
 export const loadCvForEditing =
@@ -86,6 +87,9 @@ export const loadCvForEditing =
       return cvData;
     } catch (error: any) {
       console.error("Error al cargar el CV para edición:", error);
+      toast.error("Error al cargar el CV para edición", {
+                          duration: 5000,
+                        });
       throw error; // Propagar el error para manejarlo en el componente si es necesario
     }
   };

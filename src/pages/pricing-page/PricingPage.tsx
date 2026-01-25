@@ -11,6 +11,7 @@ import type { IState } from "../../interfaces/IState";
 import { TbMessageFilled } from "react-icons/tb";
 import { openAuthModal } from "../../reducers/authModalSlice";
 import JobPage from "../job-page/JobPage";
+import { FaCartShopping } from "react-icons/fa6";
 
 function PricingPage() {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ function PricingPage() {
     },
     {
       name: "Plan Mensual",
-      price: "$14.99",
+      price: "$9.99",
       period: "USD / Mes",
       highlight: true,
       isFree: false,
@@ -117,10 +118,10 @@ function PricingPage() {
     },
     {
       name: "Plan Anual",
-      price: "$4.99",
+      price: "$3.99",
       period: "USD / Mes",
-      monthlyEquivalent: "Cobro Anual / $59.99",
-      savings: "Ahorras 66.7%",
+      monthlyEquivalent: "Cobro Anual / $47.88",
+      savings: "Ahorras 60%",
       highlight: true,
       isFree: false,
       popular: true,
@@ -204,7 +205,7 @@ function PricingPage() {
                   plan.isFree ? "pricing-free-btn" : ""
                 }`}
               >
-                {plan.isFree ? "Empezar Gratis" : "Comprar Suscripcion"}
+               <FaCartShopping /> {plan.isFree ? "Empezar Gratis" : "Comprar Suscripcion"}
               </button>
             </div>
           ))}

@@ -1,15 +1,13 @@
 import { NavLink } from "react-router-dom";
 import "./mobilenav.scss";
 
-import {
-  FaUser,
-} from "react-icons/fa";
 import { useSelector } from "react-redux";
 import type { IState } from "../../interfaces/IState";
 import { TbSettingsCode } from "react-icons/tb";
 import { HiHome } from "react-icons/hi2";
 import { IoCreateOutline } from "react-icons/io5";
 import { MdWorkOutline } from "react-icons/md";
+import { PiShoppingCartBold } from "react-icons/pi";
 
 const MobileNav = () => {
   const {role} = useSelector((state:IState)=>state.user)
@@ -32,7 +30,7 @@ const MobileNav = () => {
       </NavLink>
 
       <NavLink to="/pricing" className="mobile-nav__item">
-        <FaUser />
+        <PiShoppingCartBold />
         <span>Planes</span>
       </NavLink>
 

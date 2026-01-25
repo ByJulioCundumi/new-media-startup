@@ -14,6 +14,7 @@ import { createCvApi } from "../../api/cv"; // Ya no necesitamos getCvCountApi
 import { useNavigate } from "react-router-dom";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import toast from "react-hot-toast";
 
 // CONFIGURACIÓN INICIAL DE SECCIONES (igual que backend)
 const defaultCvSections = {
@@ -144,7 +145,9 @@ export default function CreateNewCvPopup() {
           message += "\nNo hay conexión a internet. Se guardó localmente.";
         }
 
-        alert(message);
+        toast.success(message, {
+          duration: 5000,
+        });
       }
 
       // Navegación
@@ -155,13 +158,17 @@ export default function CreateNewCvPopup() {
       navigate(`/create/${cvIdToNavigate}`);
     } catch (err: any) {
       console.error("Error al crear CV en la nube:", err);
+      toast.error("Error al crear CV en la nube", {
+          duration: 5000,
+        });
 
       // Fallback seguro: siempre crear local si falla la nube
       const localId = createLocalDraft(title, selectedTemplateId);
-      alert(
-        "No se pudo guardar en la nube (error de conexión o servidor).\n\n" +
-        "El CV se ha creado como borrador local. Podrás seguir editándolo."
-      );
+
+      toast.error("Error guardar en la nube.\n\n" +
+        "El CV se creo como borrador local.", {
+          duration: 5000,
+        });
 
       dispatch(setCreateCvPopup(false));
       dispatch(setTemplatePopupOpen(false));

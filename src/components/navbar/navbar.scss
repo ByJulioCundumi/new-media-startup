@@ -134,6 +134,12 @@
 
 @media (max-width: 500px) { 
   .navbar{
-    padding: 16px 20px;
+    padding: 16px 17px;
+
+    &__logo{
+      .logo-text{
+        font-size: 19px;
+      }
+    }
   }
 }

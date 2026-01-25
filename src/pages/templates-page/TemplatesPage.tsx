@@ -24,6 +24,7 @@ import { setAllowQrCode } from "../../reducers/identitySlice";
 import { FiStar } from "react-icons/fi";
 import HomePage from "../home-page/HomePage";
 import Hero from "../home-page/hero/Hero";
+import toast from "react-hot-toast";
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
@@ -58,6 +59,9 @@ export default function TemplatesPage() {
           await getFavoriteTemplatesApi(); // La API ya actualiza Redux (asumiendo que lo hace)
         } catch (err) {
           console.error("Error cargando favoritos:", err);
+          toast.error("Error cargando favoritos", {
+                    duration: 5000,
+                  });
         }
       };
       loadFavorites();
@@ -92,7 +96,9 @@ export default function TemplatesPage() {
 
   } catch (err) {
     console.error("Error actualizando favorito:", err);
-    alert("Error al actualizar favoritos. Intenta de nuevo.");
+    toast.error("Error al actualizar favoritos. Intenta de nuevo.", {
+                    duration: 5000,
+                  });
   }
 };
 

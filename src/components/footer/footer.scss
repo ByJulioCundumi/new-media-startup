@@ -4,7 +4,7 @@
 
 .footer {
   background: #060f25; // negro azul oscuro
-  padding: 4rem 20px 2.5rem;
+  padding: 3rem 20px 2.5rem;
   color: #fff;
 }
 
@@ -86,6 +86,11 @@
 
 /* RESPONSIVE ---------------------------------------- */
 @media (max-width: 768px) {
+  .footer{
+    padding-top: 2rem;
+    padding-bottom: 6rem;
+  }
+
   .footer-container {
     text-align: left;
   }

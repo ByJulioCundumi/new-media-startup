@@ -51,6 +51,10 @@
   white-space: nowrap;
   z-index: 1;
 
+  span{
+    color: #fac823;
+  }
+
   /* 🔑 CLAVES DE FLUIDEZ */
   will-change: transform;
   backface-visibility: hidden;

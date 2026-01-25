@@ -20,6 +20,9 @@ import OnlineCv from './pages/online-cv/OnlineCv'
 import MobileNav from './components/mobile-nav/MobileNav'
 import { PiReadCvLogo } from 'react-icons/pi'
 import AffiliatePage from './pages/affililate-page/AffiliatePage'
+import AuthGuard from './util/AuthGuard'
+import AdminGuard from './util/AdminGuard'
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const dispatch = useDispatch()
@@ -93,6 +96,18 @@ function App() {
         {isOpen && <CreateNewCvPopup/>}
         <MobileNav/>
 
+        <Toaster
+        position="top-right"     // puedes cambiar a bottom-right, top-center, etc.
+        toastOptions={{
+          duration: 4000,
+          style: {
+            borderRadius: '10px',
+            background: '#fcfcfc',
+            color: '#ffa137',
+          },
+        }}
+      />
+
         {/* paginas */}
         <Outlet/>
 
@@ -104,8 +119,14 @@ function App() {
             <Route path="create/:cvId?" element={<CreateCv />} />
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliates' element={<AffiliatePage/>} />
-            <Route path='account' element={<AccountPage/>} />
-            <Route path='admin' element={<AdminPage/>} />
+            <Route path='account' element={
+              <AuthGuard>
+                <AccountPage />
+              </AuthGuard>} />
+            <Route path='admin' element={
+              <AdminGuard>
+                <AdminPage />
+              </AdminGuard>} />
         </Routes>
       </section>
     </BrowserRouter>

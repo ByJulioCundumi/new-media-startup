@@ -1,3 +1,4 @@
+import { PiReadCvLogo } from "react-icons/pi";
 import "./footer.scss";
 
 function Footer() {
@@ -7,7 +8,7 @@ function Footer() {
 
         {/* LOGO + DESCRIPCIÓN */}
         <div className="footer-brand">
-          <h2 className="footer-logo">CV Remoto</h2>
+          <h2 className="footer-logo"><PiReadCvLogo /> CV Remoto</h2>
           <p className="footer-desc">
             Crea un CV profesional en minutos con plantillas modernas,
             descarga instantánea y herramientas avanzadas.

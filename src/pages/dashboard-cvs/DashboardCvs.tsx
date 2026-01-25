@@ -21,6 +21,7 @@ import { BiCloudUpload, BiSync } from "react-icons/bi";
 import { BiLoaderAlt } from "react-icons/bi";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
+import toast from "react-hot-toast";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 
@@ -39,7 +40,7 @@ export default function DashboardCVs() {
   const [syncingPending, setSyncingPending] = useState(false);
 
   const hasActiveSubscription = hasValidSubscriptionTime(subscriptionExpiresAt);
-  const restrictedMessage = "Con el plan actual no puedes guardar o sincronizar CVs en la nube. Actualiza tu plan";
+  const restrictedMessage = "Actualiza tu plan para guardar y sincronizar CVs en la nube.";
 
   const loadCvs = async (showLoading = false) => {
     if (showLoading) setLoading(true);
@@ -49,6 +50,9 @@ export default function DashboardCVs() {
         try {
           backendCvs = await getAllCvsApi();
         } catch (err) {
+          toast.error("Error cargando CVs del backend", {
+            duration: 5000,
+          });
           console.warn("Error cargando CVs del backend:", err);
         }
       }
@@ -68,6 +72,9 @@ export default function DashboardCVs() {
 
       setCvs(finalCvs);
     } catch (error) {
+      toast.error("Error cargando CVs", {
+        duration: 5000,
+      });
       console.error("Error cargando CVs:", error);
     } finally {
       if (showLoading) setLoading(false);
@@ -105,8 +112,10 @@ export default function DashboardCVs() {
       }
       await loadCvs();
     } catch (error: any) {
+      toast.error("No se pudo eliminar el CV", {
+        duration: 5000,
+      });
       console.error("Error eliminando CV:", error);
-      alert("No se pudo eliminar el CV.");
     } finally {
       setDeletingId(null);
     }
@@ -116,12 +125,16 @@ export default function DashboardCVs() {
     e.stopPropagation();
 
     if (!isLogged) {
-      alert("Debes iniciar sesión para guardar en la nube");
+      toast.error("Debes iniciar sesión para guardar en la nube", {
+        duration: 5000,
+      });
       return;
     }
 
     if (!hasActiveSubscription) {
-      alert(restrictedMessage);
+      toast.error(restrictedMessage, {
+        duration: 5000,
+      });
       return;
     }
 
@@ -138,8 +151,10 @@ export default function DashboardCVs() {
 
       await loadCvs();
     } catch (error) {
+      toast.error("Error al guardar en la nube", {
+        duration: 5000,
+      });
       console.error("Error guardando en nube:", error);
-      alert("Error al guardar en la nube");
     } finally {
       setSavingId(null);
     }
@@ -172,14 +187,18 @@ export default function DashboardCVs() {
     if (!isLogged) return;
 
     if (!hasActiveSubscription) {
-      alert(restrictedMessage);
+      toast.error(restrictedMessage, {
+        duration: 5000,
+      });
       return;
     }
 
     const pendingSyncDrafts = localDrafts.filter((d: any) => d.backendId);
 
     if (pendingSyncDrafts.length === 0) {
-      alert("No hay cambios pendientes para sincronizar.");
+      toast.success("No hay cambios pendientes para sincronizar", {
+        duration: 5000,
+      });
       return;
     }
 
@@ -194,6 +213,9 @@ export default function DashboardCVs() {
         successfulSyncs.push(localId);
       } catch (err) {
         console.error(`Error sincronizando CV ${draft.backendId}:`, err);
+        toast.error("Error sincronizando CV", {
+        duration: 5000,
+      });
       }
     }
 
@@ -207,9 +229,13 @@ export default function DashboardCVs() {
     setSyncingPending(false);
 
     if (successfulSyncs.length > 0) {
-      alert(`¡${successfulSyncs.length} CV(s) sincronizados correctamente!`);
+      toast.success(`¡${successfulSyncs.length} CV(s) sincronizados correctamente!`, {
+        duration: 5000,
+      });
     } else {
-      alert("No se pudieron sincronizar los cambios. Revisa tu conexión.");
+      toast.error(`No se pudieron sincronizar los cambios. Revisa tu conexión.`, {
+        duration: 5000,
+      });
     }
   };
 
@@ -239,10 +265,10 @@ export default function DashboardCVs() {
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as CvFilter)}
           >
-            <option value="all">Todos los CVs</option>
-            <option value="local">Solo locales</option>
-            <option value="pending">Pendientes de sincronizar</option>
-            <option value="online">Guardados online</option>
+            <option value="all">Todos</option>
+            <option value="local">Locales</option>
+            <option value="pending">Por sincronizar</option>
+            <option value="online">Guardados</option>
           </select>
         </div>
       </div>

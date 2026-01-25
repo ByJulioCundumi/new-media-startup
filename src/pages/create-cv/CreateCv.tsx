@@ -44,6 +44,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { LuSave, LuSaveOff } from "react-icons/lu";
 import { isOnline } from "../../util/isOnline";
 import { PiReadCvLogo } from "react-icons/pi";
+import toast from "react-hot-toast";
 
 const getCurrentData = (state: IState) => ({
   cvTitle: state.cvCreation.selectedCvTitle,
@@ -212,6 +213,9 @@ const [showSections] = useState(true)
         localStorage.setItem("draftCvs", JSON.stringify(updatedDrafts));
       } else {
         if (!hasValidSubscriptionTime(subscriptionExpiresAt)) {
+          toast.error("Suscripción expirada", {
+            duration: 5000,
+          });
           throw new Error("Suscripción expirada");
         }
         await updateCvApi(cvId, currentDataSelector);
@@ -221,9 +225,13 @@ const [showSections] = useState(true)
       dispatch(setHasUnsavedChanges(false));
     } catch (err: any) {
       if(hasValidSubscriptionTime(subscriptionExpiresAt)){
-        alert("Cambios guardados localmente.");
+        toast.success("Cambios guardados localmente", {
+            duration: 5000,
+          });
       } else{
-        alert("Cambios guardados localmente. Actualiza tu plan para guardar en la nube.");
+        toast.success("Cambios guardados localmente. Actualiza tu plan para guardar en la nube", {
+            duration: 5000,
+          });
       }
 
       const draftToSave = {
