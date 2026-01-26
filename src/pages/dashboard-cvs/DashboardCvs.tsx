@@ -253,7 +253,7 @@ export default function DashboardCVs() {
           <p>Administra, visualiza y crea fácilmente nuevos CVs.</p>
         </div>
 
-        <div className="header-right">
+        <div className={`${cvs.length > 0 ? "header-right" : "header-right-movile"} `}>
           <SearchBar
             textHolder="Buscar CV..."
             value={searchQuery}
@@ -313,7 +313,7 @@ export default function DashboardCVs() {
         <p className="no-cvs-text">
           {searchQuery || filterType !== "all"
             ? "No se encontraron CVs con los filtros aplicados."
-            : "No tienes CVs creados todavía."}
+            : "No tienes CVs creados."}
         </p>
       )}
 
