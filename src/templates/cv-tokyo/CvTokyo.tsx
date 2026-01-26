@@ -14,6 +14,8 @@ import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
+import { loadDefaultColors, resetColorFontState } from "../../reducers/colorFontSlice";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvTokyoDefaults = {
   textColor: "#494949ff",
@@ -49,9 +51,23 @@ export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
 
   useEffect(() => {
+    dispatch(loadColorAllowed({
+            textColor: true,
+            nameColor: true,
+            professionColor: true,
+            sectionTitleColor: true,
+            itemColor: true,
+            qrColor: true,
+          }));
+
       dispatch(setOrder(cvTokyoDefaultOrder));
       if(sidebarOption === "create"){
+        dispatch(loadDefaultColors(cvTokyoDefaults));
               dispatch(setAllowCvPhoto(false));
+            }
+      
+      return ()=>{
+              dispatch(resetColorFontState())
             }
     }, []);
   // ---------------------------------------------------------------------------

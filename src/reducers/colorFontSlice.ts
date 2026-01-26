@@ -100,6 +100,10 @@ loadDefaultColors(
     resetToTemplateDefaults(state) {
     state.selected = { ...state.defaults };
     },
+
+    resetColorFontState() {
+  return initialState;
+},
   },
 });
 
@@ -118,7 +122,8 @@ export const {
   setNameColor,
   setTextColor,
   loadSelectedColors,
-  loadDefaultColors
+  loadDefaultColors,
+  resetColorFontState
 } = colorFontSlice.actions;
 
 export default colorFontSlice.reducer;
