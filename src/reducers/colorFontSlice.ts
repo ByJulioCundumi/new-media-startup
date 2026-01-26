@@ -77,6 +77,26 @@ const colorFontSlice = createSlice({
       state.selected = { ...state.selected, ...action.payload };
     },
 
+    loadSelectedColors(
+  state,
+  action: PayloadAction<Partial<IColorFontState["selected"]>>
+) {
+  state.selected = {
+    ...state.selected,
+    ...action.payload,
+  };
+},
+
+loadDefaultColors(
+  state,
+  action: PayloadAction<Partial<IColorFontState["defaults"]>>
+) {
+  state.defaults = {
+    ...state.defaults,
+    ...action.payload,
+  };
+},
+
     resetToTemplateDefaults(state) {
     state.selected = { ...state.defaults };
     },
@@ -96,7 +116,9 @@ export const {
   loadStoredValues,
   resetToTemplateDefaults,
   setNameColor,
-  setTextColor
+  setTextColor,
+  loadSelectedColors,
+  loadDefaultColors
 } = colorFontSlice.actions;
 
 export default colorFontSlice.reducer;

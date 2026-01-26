@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useMemo, useState, useRef } from "react";
+import React, {
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import {
   FiX,
   FiRefreshCw,
@@ -7,10 +13,12 @@ import {
   FiInfo,
 } from "react-icons/fi";
 import { IoColorPaletteSharp } from "react-icons/io5";
+import { RiDraggable } from "react-icons/ri";
 
 import "./colorfontpopup.scss";
 
 import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../interfaces/IState";
 
 import {
   closePopup,
@@ -23,40 +31,31 @@ import {
   setNameColor,
   setTextColor,
 } from "../../reducers/colorFontSlice";
-import type { IState } from "../../interfaces/IState";
-import { RiDraggable } from "react-icons/ri";
 
 const ColorFontPopup: React.FC = () => {
   const dispatch = useDispatch();
-  const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+
+  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
   const { isOpen, selected, defaults } = useSelector(
     (state: IState) => state.colorFont
   );
+  const colorAllowed = useSelector(
+    (state: IState) => state.colorAllowed
+  );
 
-  // 🖱 estado para mover el popup
+  /* ================= DRAG (ORIGINAL) ================= */
   const [position, setPosition] = useState({ x: 60, y: 110 });
   const [dragging, setDragging] = useState(false);
   const offsetRef = useRef({ x: 0, y: 0 });
-
   const containerRef = useRef<HTMLDivElement>(null);
 
-const fontOptions = [
-  "Arial, Helvetica, sans-serif",
-  "Roboto",
-  "Montserrat",
-  "Open Sans",
-  "Lato",
-  "Merriweather",
-  "Playfair Display",
-  "Inter",
-];
+  const isDraggable = sidebarOption === "home";
+  const canClose = sidebarOption !== "home";
 
-const isDraggable = sidebarOption === "home";
-const canClose = sidebarOption !== "home";
-
-  // Iniciar drag
+  // Iniciar drag (MISMA LÓGICA)
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setDragging(!isDraggable);
+
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       offsetRef.current = {
@@ -69,6 +68,7 @@ const canClose = sidebarOption !== "home";
   // Mover popup
   const handleMouseMove = (e: MouseEvent) => {
     if (!dragging) return;
+
     setPosition({
       x: e.clientX - offsetRef.current.x,
       y: e.clientY - offsetRef.current.y,
@@ -95,7 +95,7 @@ const canClose = sidebarOption !== "home";
     };
   }, [dragging]);
 
-  /** SAVE AUTO */
+  /* ================= LOGIC ================= */
   useEffect(() => {
     if (!isOpen) return;
     localStorage.setItem("cv_color_config", JSON.stringify(selected));
@@ -103,19 +103,38 @@ const canClose = sidebarOption !== "home";
 
   const handleOverlayClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (canClose && e.target === e.currentTarget) dispatch(closePopup());
+      if (canClose && e.target === e.currentTarget) {
+        dispatch(closePopup());
+      }
     },
     [dispatch, canClose]
   );
 
-  const hasChanges = useMemo(() => {
-    return JSON.stringify(selected) !== JSON.stringify(defaults);
-  }, [selected, defaults]);
+  const hasChanges = useMemo(
+    () => JSON.stringify(selected) !== JSON.stringify(defaults),
+    [selected, defaults]
+  );
 
   if (!isOpen) return null;
 
-  const ColorBox = (label: string, value: string, setter: (v: string) => any) => (
-    <div className="cfp-box">
+  /* ================= CONFIG ================= */
+  const fontOptions = [
+    "Arial, Helvetica, sans-serif",
+    "Roboto",
+    "Montserrat",
+    "Open Sans",
+    "Lato",
+    "Merriweather",
+    "Playfair Display",
+    "Inter",
+  ];
+
+  const ColorBox = (
+    label: string,
+    value: string,
+    setter: (v: string) => void
+  ) => (
+    <div className="cfp-box" key={label}>
       <div className="cfp-box-header">
         <FiDroplet className="cfp-box-icon" />
         <span>{label}</span>
@@ -140,43 +159,101 @@ const canClose = sidebarOption !== "home";
     </div>
   );
 
+  const colorBoxes = [
+    {
+      key: "textColor",
+      label: "Texto",
+      value: selected.textColor,
+      action: setTextColor,
+    },
+    {
+      key: "nameColor",
+      label: "Título",
+      value: selected.nameColor,
+      action: setNameColor,
+    },
+    {
+      key: "professionColor",
+      label: "Profesión",
+      value: selected.professionColor,
+      action: setProfessionColor,
+    },
+    {
+      key: "sectionTitleColor",
+      label: "Secciones",
+      value: selected.sectionTitleColor,
+      action: setSectionTitleColor,
+    },
+    {
+      key: "itemColor",
+      label: "Ítems",
+      value: selected.itemColor,
+      action: setItemColor,
+    },
+    {
+      key: "qrColor",
+      label: "Código QR",
+      value: selected.qrColor,
+      action: setQrColor,
+    },
+  ] as const;
+
   return (
-    <div className={sidebarOption !== "home" ? "cfp-overlay" : ""} onMouseDown={handleOverlayClick}>
+    <div
+      className={sidebarOption !== "home" ? "cfp-overlay" : ""}
+      onMouseDown={handleOverlayClick}
+    >
       <div
         ref={containerRef}
         className="cfp-container"
-        style={sidebarOption !== "home" ? { top: position.y, left: position.x, position: "absolute" } :{ top: position.y, left: position.x } }
+        style={
+          sidebarOption !== "home"
+            ? { top: position.y, left: position.x, position: "absolute" }
+            : { top: position.y, left: position.x }
+        }
         onMouseDown={(e) => e.stopPropagation()}
       >
         {/* HEADER draggable */}
-        <div className="cfp-header" onMouseDown={handleMouseDown} style={{ cursor: isDraggable ? "move" : "default" }}>
-          {sidebarOption !== "home" && <h3> <RiDraggable /> Personaliza Tu CV</h3>}
+        <div
+          className="cfp-header"
+          onMouseDown={handleMouseDown}
+          style={{ cursor: isDraggable ? "move" : "default" }}
+        >
+          {sidebarOption !== "home" && (
+            <h3>
+              <RiDraggable /> Personaliza Tu CV
+            </h3>
+          )}
+
           {canClose && (
-            <button className="cfp-close" onClick={() => dispatch(closePopup())}>
+            <button
+              className="cfp-close"
+              onClick={() => dispatch(closePopup())}
+            >
               <FiX />
             </button>
           )}
         </div>
 
-        {/* resto del contenido... */}
+        {/* COLORES */}
         <div className="cfp-subtitle">
           <IoColorPaletteSharp />
           <span>Colores</span>
         </div>
 
         <div className="cfp-grid">
-          {ColorBox("Texto", selected.textColor, (c) => dispatch(setTextColor(c)))}
-          {ColorBox("Título", selected.nameColor, (c) => dispatch(setNameColor(c)))}
-          {ColorBox("Profesión", selected.professionColor, (c) =>
-            dispatch(setProfessionColor(c))
-          )}
-          {ColorBox("Secciones", selected.sectionTitleColor, (c) =>
-            dispatch(setSectionTitleColor(c))
-          )}
-          {ColorBox("Ítems", selected.itemColor, (c) => dispatch(setItemColor(c)))}
-          {ColorBox("Código QR", selected.qrColor, (c) => dispatch(setQrColor(c)))}
+          {colorBoxes
+            .filter((box) => colorAllowed[box.key])
+            .map((box) =>
+              ColorBox(
+                box.label,
+                box.value,
+                (c) => dispatch(box.action(c))
+              )
+            )}
         </div>
 
+        {/* FUENTES */}
         <div className="cfp-subtitle">
           <FiType />
           <span>Tipografía</span>
@@ -188,14 +265,15 @@ const canClose = sidebarOption !== "home";
             onChange={(e) => dispatch(setFont(e.target.value))}
             className="cfp-font-select"
           >
-            {fontOptions.map((f) => (
-              <option key={f} value={f}>
-                {f}
+            {fontOptions.map((font) => (
+              <option key={font} value={font}>
+                {font}
               </option>
             ))}
           </select>
         </div>
 
+        {/* RESET */}
         <button
           className={`cfp-reset-btn ${!hasChanges ? "disabled" : ""}`}
           disabled={!hasChanges}

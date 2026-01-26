@@ -14,7 +14,7 @@ const AuthGuard = ({ children }: Props) => {
 
   useEffect(() => {
     if (!logged) {
-      dispatch(openAuthModal({ section: "signup" }));
+      dispatch(openAuthModal({}));
     }
   }, [logged, dispatch]);
 

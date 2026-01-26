@@ -40,7 +40,7 @@
   &__identitySection {
     display: flex;
       gap: 2rem;
-      padding: 10px 0px;
+      padding: 0px 0px;
       padding-right: 0;
       padding-bottom: 10px;
       border-radius: 0px;
@@ -51,10 +51,11 @@
       left: 0rem;
       top: 0rem;
       height: 150px;
-      background-color: #ffc101;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+      border: none;
       z-index: 10;
+      background-color: inherit;
       
 
       &--main{
@@ -62,10 +63,12 @@
     flex-direction: column;
     width: 253px;
     padding: 0 20px;
+    background-color: inherit;
   }
 
       &:hover {
         background-color: #ffc101;
+        border: none;
       }
 
       &--active {
@@ -93,6 +96,7 @@
         border-radius: 100%;
         top: 1rem;
         left: 2rem;
+        background-color: white;
       }
 
       &--text {
@@ -403,7 +407,7 @@
       font-weight: 500;
       color: #000;
 
-      border: 1px solid #051235;
+      border: 1px solid #dadada;
       transition: background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
     }
   }

@@ -14,6 +14,8 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvMedellinSectionsRender } from "./sections-render/CvMedellinSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
+import { loadDefaultColors } from "../../reducers/colorFontSlice";
 
 export const cvMedellinDefaults = {
   textColor: "#494949ff",
@@ -49,9 +51,18 @@ export const CvMedellin: React.FC<ITemplateProps> = (props) => {
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
   
   useEffect(() => {
+      dispatch(loadColorAllowed({
+        textColor: true,
+        nameColor: true,
+        professionColor: true,
+        sectionTitleColor: false,
+        itemColor: true,
+        qrColor: true,
+      }));
       dispatch(setOrder(cvMedellinDefaultOrder));
       if(sidebarOption === "create" || sidebarOption === "home"){
         dispatch(setAllowCvPhoto(true));
+        dispatch(loadDefaultColors(cvMedellinDefaults));
       }
     }, []);
   // ---------------------------------------------------------------------------

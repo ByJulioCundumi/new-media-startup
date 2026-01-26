@@ -1,6 +1,7 @@
 import type { IAuthModalState } from "./IAuthModal";
 import type { IAwardEntry } from "./IAward";
 import type { ICategories } from "./ICategory";
+import type { IcolorAllowed } from "./IColorAllowed";
 import type { IColorFontState } from "./IColorFont";
 import type { IContactEntry } from "./IContact";
 import type { ICourseEntry } from "./ICourses";
@@ -48,5 +49,6 @@ export interface IState{
     cvCreation: ICvCreationState,
     cvSave: ICvSaveState,
     authModal: IAuthModalState
-    cvSectionsEditors: ICvSectionsEditorState
+    cvSectionsEditors: ICvSectionsEditorState,
+    colorAllowed: IcolorAllowed
 }
