@@ -1,0 +1,6 @@
+name = "cv-startup-front"
+compatibility_date = "2026-01-23"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
