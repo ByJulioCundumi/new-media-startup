@@ -15,6 +15,18 @@ import { useNavigate } from "react-router-dom";
 import { setTemplatePopupOpen } from "../../reducers/toolbarOptionSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import toast from "react-hot-toast";
+import { cvMedellinDefaults } from "../../templates/cv-medellin/CvMedellin";
+import { cvTokyoDefaults } from "../../templates/cv-tokyo/CvTokyo";
+import { cvRomaDefaults } from "../../templates/cv-roma/CvRoma";
+import { cvVienaDefaults } from "../../templates/cv-viena/CvViena";
+import { cvParisDefaults } from "../../templates/cv-paris/CvParis";
+import { cvSeulDefaults } from "../../templates/cv-seul/CvSeul";
+import { cvGinebraDefaults } from "../../templates/cv-ginebra/CvGinebra";
+import { cvMiamiDefaults } from "../../templates/cv-miami/CvMiami";
+import { cvRioDefaults } from "../../templates/cv-rio/CvRio";
+import { cvPortlandDefaults } from "../../templates/cv-portland/CvPortland";
+import { cvLimaDefaults } from "../../templates/cv-lima/CvLima";
+import { cvPragaDefaults } from "../../templates/cv-praga/CvPraga";
 
 // CONFIGURACIÓN INICIAL DE SECCIONES (igual que backend)
 const defaultCvSections = {
@@ -65,6 +77,35 @@ export default function CreateNewCvPopup() {
   const [loading, setLoading] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
+  const defaultCvColorFont = (id:string)=>{
+  switch(id){
+    case "Medellin":
+      return cvMedellinDefaults;
+    case "Tokyo":
+      return cvTokyoDefaults;
+    case "Roma":
+      return cvRomaDefaults;
+    case "Viena":
+      return cvVienaDefaults;
+    case "Paris":
+      return cvParisDefaults;
+    case "Seul":
+      return cvSeulDefaults;
+    case "Ginebra":
+      return cvGinebraDefaults;
+    case "Miami":
+      return cvMiamiDefaults;
+    case "Rio":
+      return cvRioDefaults;
+    case "Portland":
+      return cvPortlandDefaults;
+    case "Lima":
+      return cvLimaDefaults;
+    case "Praga":
+      return cvPragaDefaults;
+  }
+}
+
   if (!isOpen) return null;
 
   const hasValidSubscription = hasValidSubscriptionTime(subscriptionExpiresAt);
@@ -94,7 +135,7 @@ export default function CreateNewCvPopup() {
       customEntries: [],
       personalInfoEntries: [],
       cvSections: defaultCvSections,
-      colorFont: { defaults: {}, selected: {} },
+      colorFont: { defaults: defaultCvColorFont(templateId), selected: defaultCvColorFont(templateId) },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

@@ -45,6 +45,8 @@ import { LuSave, LuSaveOff } from "react-icons/lu";
 import { isOnline } from "../../util/isOnline";
 import { PiReadCvLogo } from "react-icons/pi";
 import toast from "react-hot-toast";
+import { cvMedellinDefaults } from "../../templates/cv-medellin/CvMedellin";
+import { cvTokyoDefaults } from "../../templates/cv-tokyo/CvTokyo";
 
 const getCurrentData = (state: IState) => ({
   cvTitle: state.cvCreation.selectedCvTitle,
@@ -75,6 +77,7 @@ function CreateCv() {
   const { previewPopupOpen } = useSelector((state: IState) => state.toolbarOption);
   const { allowQrCode } = useSelector((state: IState) => state.identity);
   const { subscriptionExpiresAt } = useSelector((state: IState) => state.user);
+  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isFromBackend, setIsFromBackend] = useState(false);
@@ -122,8 +125,14 @@ const [showSections] = useState(true)
           if (draftCv.cvSections) dispatch(setCvSections(draftCv.cvSections));
 
           if (draftCv.colorFont) {
-            if (draftCv.colorFont.defaults) dispatch(loadTemplateDefaults(draftCv.colorFont.defaults));
-            if (draftCv.colorFont.selected) dispatch(loadStoredValues(draftCv.colorFont.selected));
+            // DESPUÉS selected → sobreescribe lo que corresponda
+            dispatch(loadStoredValues({
+              ...draftCv.colorFont.selected  || {},        // prioridad a lo guardado
+              ...draftCv.colorFont.defaults || {},          // fallback
+            }));
+            // Primero defaults (para tener la base y el botón "restaurar")
+            dispatch(loadTemplateDefaults(draftCv.colorFont.defaults || {}));
+
           }
 
           dispatch(setOriginalData(draftCv));
@@ -188,6 +197,7 @@ const [showSections] = useState(true)
   const hasUnsavedChanges = useSelector((state: IState) => state.cvSave.hasUnsavedChanges);
   const isSaving = useSelector((state: IState) => state.cvSave.isSaving);
   const currentDataSelector = useSelector(getCurrentData);
+  const currentColorFont = useSelector((s:IState) => s.colorFont);
 
   useEffect(() => {
     if (!originalData || !cvId) return;
@@ -239,6 +249,10 @@ const [showSections] = useState(true)
         localId: crypto.randomUUID(),
         isDraft: true,
         ...currentDataSelector,
+        colorFont: {
+          defaults: currentColorFont.defaults,
+          selected: currentColorFont.selected || currentColorFont.defaults
+        },
         updatedAt: new Date().toISOString(),
       };
 
@@ -303,6 +317,14 @@ const [showSections] = useState(true)
       dispatch(setPublicId(""));
     };
   }, []);
+
+  useEffect(() => {
+    if(selectedTemplateId === "Medellin" && sidebarOption === "create"){
+      dispatch(loadTemplateDefaults(cvMedellinDefaults))
+    } else if(selectedTemplateId === "Tokyo"){
+      dispatch(loadTemplateDefaults(cvTokyoDefaults))
+    }
+  }, [selectedTemplateId]);
 
   const SelectedTemplate = templates.find((t) => t.id === selectedTemplateId)?.component;
 

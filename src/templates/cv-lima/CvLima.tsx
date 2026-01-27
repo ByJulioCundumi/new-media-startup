@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvLimaSectionsRender } from "./sections-render/CvLimaSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvLimaDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvLimaDefaultOrder: string[] = [
 
 export const CvLima: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvLimaDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-
-  useEffect(() => {
-      dispatch(setOrder(cvLimaDefaultOrder));
-      if(sidebarOption === "create"){
-              dispatch(setAllowCvPhoto(false));
-            }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvLimaDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvLimaDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(false));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-lima" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-lima" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-lima__hidden--vertical" ref={verticalContainerRef}>

@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvParisSectionsRender } from "./sections-render/CvParisSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvParisDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvParisDefaultOrder: string[] = [
 
 export const CvParis: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvParisDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-
-  useEffect(() => {
-      dispatch(setOrder(cvParisDefaultOrder));
-      if(sidebarOption === "create"){
-              dispatch(setAllowCvPhoto(true));
-            }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvParisDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvParisDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-paris" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-paris" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-paris__hidden--vertical" ref={verticalContainerRef}>

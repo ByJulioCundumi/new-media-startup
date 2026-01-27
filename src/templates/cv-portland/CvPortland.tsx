@@ -14,6 +14,7 @@ import WaterMark from "../../components/water-mark/WaterMark";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvPortlandSectionsRender } from "./sections-render/CvPortlandSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvPortlandDefaults = {
   textColor: "#494949ff",
@@ -43,15 +44,24 @@ export const cvPortlandDefaultOrder: string[] = [
 ];
 
 export const CvPortland: React.FC<ITemplateProps> = (props) => {
-  const styles = useTemplateColors(cvPortlandDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  // estilos
-  useEffect(() => {
-    dispatch(setOrder(cvPortlandDefaultOrder));
-    if(sidebarOption === "create"){
-                  dispatch(setAllowCvPhoto(false));
-                }
-  }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvPortlandDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvPortlandDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(false));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -208,7 +218,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-portland" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-portland" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-portland__hidden--vertical" ref={verticalContainerRef}>

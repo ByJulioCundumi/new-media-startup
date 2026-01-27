@@ -46,11 +46,11 @@ export const cvMedellinDefaultOrder: string[] = [
 
 export const CvMedellin: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvMedellinDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
+  const {defaults} = useSelector((state:IState)=>state.colorFont)
+  const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvMedellinDefaults);;
   
   useEffect(() => {
-    
       dispatch(loadColorAllowed({
         textColor: true,
         nameColor: true,
@@ -284,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-medellin" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-medellin" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-medellin__hidden--vertical" ref={verticalContainerRef}>

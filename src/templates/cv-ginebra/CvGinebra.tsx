@@ -14,6 +14,7 @@ import WaterMark from "../../components/water-mark/WaterMark";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvGinebraSectionsRender } from "./sections-render/CvGinebraSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvGinebraDefaults = {
   textColor: "#494949ff",
@@ -43,15 +44,24 @@ export const cvGinebraDefaultOrder: string[] = [
 ];
 
 export const CvGinebra: React.FC<ITemplateProps> = (props) => {
-  const styles = useTemplateColors(cvGinebraDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  // estilos
-  useEffect(() => {
-    dispatch(setOrder(cvGinebraDefaultOrder));
-    if(sidebarOption === "create"){
-                  dispatch(setAllowCvPhoto(true));
-                }
-  }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvGinebraDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvGinebraDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -208,7 +218,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-ginebra" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-ginebra" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-ginebra__hidden--vertical" ref={verticalContainerRef}>

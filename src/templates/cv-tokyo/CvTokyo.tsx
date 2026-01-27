@@ -14,7 +14,6 @@ import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
-import { loadDefaultColors, resetColorFontState } from "../../reducers/colorFontSlice";
 import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvTokyoDefaults = {
@@ -47,29 +46,24 @@ export const cvTokyoDefaultOrder: string[] = [
 
 export const CvTokyo: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvTokyoDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-
-  useEffect(() => {
-    dispatch(loadColorAllowed({
-            textColor: true,
-            nameColor: true,
-            professionColor: true,
-            sectionTitleColor: true,
-            itemColor: true,
-            qrColor: true,
-          }));
-
-      dispatch(setOrder(cvTokyoDefaultOrder));
-      if(sidebarOption === "create"){
-        dispatch(loadDefaultColors(cvTokyoDefaults));
-              dispatch(setAllowCvPhoto(false));
-            }
-      
-      return ()=>{
-              dispatch(resetColorFontState())
-            }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvTokyoDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvTokyoDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(false));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -290,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-tokyo" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-tokyo" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-tokyo__hidden--vertical" ref={verticalContainerRef}>

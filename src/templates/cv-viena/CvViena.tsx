@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { CvVienaSectionsRender } from "./sections-render/CvVienaSectionsRender";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvVienaDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvVienaDefaultOrder: string[] = [
 
 export const CvViena: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvVienaDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  
-  useEffect(() => {
-      dispatch(setOrder(cvVienaDefaultOrder));
-      if(sidebarOption === "create" || sidebarOption === "home"){
-        dispatch(setAllowCvPhoto(true));
-      }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvVienaDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvVienaDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-viena" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-viena" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-viena__hidden--vertical" ref={verticalContainerRef}>

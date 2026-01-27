@@ -69,16 +69,8 @@ export const loadCvForEditing =
       }
 
       // --- 5. Colores y fuentes ---
-      if (cvData.colorFont) {
-        // Primero cargamos los defaults de la plantilla
-        if (cvData.colorFont.defaults) {
-          dispatch(loadTemplateDefaults(cvData.colorFont.defaults));
-        }
-        // Luego aplicamos los valores personalizados (selected) si existen
-        if (cvData.colorFont.selected) {
-          dispatch(loadStoredValues(cvData.colorFont.selected));
-        }
-      }
+      dispatch(loadTemplateDefaults(cvData.colorFont.defaults || {}));
+      dispatch(loadStoredValues(cvData.colorFont.selected || cvData.colorFont.defaults));
       
       // ← GUARDAR ESTADO ORIGINAL
       dispatch(setOriginalData(cvData));

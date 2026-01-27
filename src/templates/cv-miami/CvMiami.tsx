@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvMiamiSectionsRender } from "./sections-render/CvMiamiSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvMiamiDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvMiamiDefaultOrder: string[] = [
 
 export const CvMiami: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvMiamiDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-
-  useEffect(() => {
-      dispatch(setOrder(cvMiamiDefaultOrder));
-      if(sidebarOption === "create"){
-              dispatch(setAllowCvPhoto(true));
-            }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvMiamiDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvMiamiDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-miami" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-miami" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-miami__hidden--vertical" ref={verticalContainerRef}>

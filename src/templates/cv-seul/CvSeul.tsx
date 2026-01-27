@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvSeulSectionsRender } from "./sections-render/CvSeulSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvSeulDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvSeulDefaultOrder: string[] = [
 
 export const CvSeul: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvSeulDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  
-  useEffect(() => {
-      dispatch(setOrder(cvSeulDefaultOrder));
-      if(sidebarOption === "create" || sidebarOption === "home"){
-        dispatch(setAllowCvPhoto(true));
-      }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvSeulDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvSeulDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-seul" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-seul" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-seul__hidden--vertical" ref={verticalContainerRef}>

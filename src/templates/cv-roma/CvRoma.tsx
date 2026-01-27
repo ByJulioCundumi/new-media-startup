@@ -14,6 +14,7 @@ import { toggleSectionEditor } from "../../reducers/editorsSlice";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvRomaDefaults = {
   textColor: "#494949ff",
@@ -43,15 +44,24 @@ export const cvRomaDefaultOrder: string[] = [
 ];
 
 export const CvRoma: React.FC<ITemplateProps> = (props) => {
-  const styles = useTemplateColors(cvRomaDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  // estilos
-  useEffect(() => {
-    dispatch(setOrder(cvRomaDefaultOrder));
-    if(sidebarOption === "create"){
-                  dispatch(setAllowCvPhoto(false));
-                }
-  }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvRomaDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvRomaDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(false));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -208,7 +218,7 @@ const [page2Vertical, setPage2Vertical] = React.useState<string[]>([]);
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-roma" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-roma" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-roma__hidden--vertical" ref={verticalContainerRef}>

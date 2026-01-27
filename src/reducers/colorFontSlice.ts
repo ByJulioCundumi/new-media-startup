@@ -56,13 +56,13 @@ const colorFontSlice = createSlice({
     },
 
     /** Cargar defaults de la plantilla actual */
-    loadTemplateDefaults(
-      state,
-      action: PayloadAction<Partial<IColorFontState["defaults"]>>
-    ) {
-      state.defaults = { ...state.defaults, ...action.payload };
-      state.selected = { ...state.defaults };
-    },
+    loadTemplateDefaults(state, action: PayloadAction<Partial<IColorFontState["defaults"]>>) {
+  state.defaults = { ...state.defaults, ...action.payload };
+
+  if (Object.values(state.selected).every(v => !v)) {
+    state.selected = { ...state.defaults };
+  }
+},
 
     /** Restaurar valores seleccionados a defaults */
     restoreDefaults(state) {
@@ -101,9 +101,6 @@ loadDefaultColors(
     state.selected = { ...state.defaults };
     },
 
-    resetColorFontState() {
-  return initialState;
-},
   },
 });
 
@@ -123,7 +120,6 @@ export const {
   setTextColor,
   loadSelectedColors,
   loadDefaultColors,
-  resetColorFontState
 } = colorFontSlice.actions;
 
 export default colorFontSlice.reducer;

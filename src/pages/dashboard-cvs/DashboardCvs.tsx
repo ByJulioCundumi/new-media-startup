@@ -22,6 +22,7 @@ import { BiLoaderAlt } from "react-icons/bi";
 import SearchBar from "../../components/search-bar/SearchBar";
 import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import toast from "react-hot-toast";
+import { loadStoredValues, loadTemplateDefaults, restoreDefaults } from "../../reducers/colorFontSlice";
 
 type CvFilter = "all" | "local" | "pending" | "online";
 
@@ -239,6 +240,19 @@ export default function DashboardCVs() {
     }
   };
 
+  const openCv = (cvKey: string, cv:any)=>{
+    console.log(cv)
+    if (cv) {
+      dispatch(loadStoredValues(cv.colorFont.selected || {}));
+      dispatch(loadTemplateDefaults(cv.colorFont.defaults || {}));
+      navigate(`/create/${cvKey}`)
+    }
+  }
+
+  useEffect(()=>{
+    dispatch(restoreDefaults());
+  },[])
+
   return (
     <div className="dashboard-box">
       <div className="dashboard-cvs">
@@ -395,7 +409,7 @@ export default function DashboardCVs() {
                 </div>
               )}
 
-              <div className="cv-preview" onClick={() => navigate(`/create/${cvKey}`)}>
+              <div className="cv-preview" onClick={()=>openCv(cvKey, cv)}>
                 <div className="cv-preview-scale">
                   <Component
                     personalInfo={cv.personalInfoEntries || []}

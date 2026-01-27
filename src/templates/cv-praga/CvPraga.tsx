@@ -14,6 +14,7 @@ import { hasValidSubscriptionTime } from "../../util/checkSubscriptionTime";
 import WaterMark from "../../components/water-mark/WaterMark";
 import { setAllowCvPhoto } from "../../reducers/identitySlice";
 import { CvPragaSectionsRender } from "./sections-render/CvPragaSectionsRender";
+import { loadColorAllowed } from "../../reducers/colorAllowedSlice";
 
 export const cvPragaDefaults = {
   textColor: "#494949ff",
@@ -45,15 +46,24 @@ export const cvPragaDefaultOrder: string[] = [
 
 export const CvPraga: React.FC<ITemplateProps> = (props) => {
   // estilos
-  const styles = useTemplateColors(cvPragaDefaults);
   const {sidebarOption} = useSelector((state:IState)=>state.sidebar)
-  
-  useEffect(() => {
-      dispatch(setOrder(cvPragaDefaultOrder));
-      if(sidebarOption === "create" || sidebarOption === "home"){
-        dispatch(setAllowCvPhoto(true));
-      }
-    }, []);
+    const {defaults} = useSelector((state:IState)=>state.colorFont)
+    const styles = sidebarOption === "create" ? defaults : useTemplateColors(cvPragaDefaults);;
+    
+    useEffect(() => {
+        dispatch(loadColorAllowed({
+          textColor: true,
+          nameColor: true,
+          professionColor: true,
+          sectionTitleColor: false,
+          itemColor: true,
+          qrColor: true,
+        }));
+        dispatch(setOrder(cvPragaDefaultOrder));
+        if(sidebarOption === "create"){
+          dispatch(setAllowCvPhoto(true));
+        }
+      }, []);
   // ---------------------------------------------------------------------------
   // EXTRACCIÓN DE PROPS
   // ---------------------------------------------------------------------------
@@ -274,7 +284,7 @@ useEffect(() => {
   // RENDER de secciones
   // ---------------------------------------------------------------------------
   return (
-    <div className="cv-praga" style={{ fontFamily: styles.fontFamily }}>
+    <div className="cv-praga" style={{ fontFamily: styles.font }}>
 
       {/* medicion oculta por overflow columna vertical */}
       <div className="cv-praga__hidden--vertical" ref={verticalContainerRef}>

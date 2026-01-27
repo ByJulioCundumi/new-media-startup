@@ -19,12 +19,10 @@ import { clearAllReferences } from "../reducers/referencesSlice";
 import { clearAllAwards } from "../reducers/awardsSlice";
 import { clearAllCustom } from "../reducers/customSlice";
 import { clearAllPersonalInfo } from "../reducers/personalInfoSlice";
-
-// ColorFont
-import { restoreDefaults } from "../reducers/colorFontSlice"; // o resetToTemplateDefaults
 import type { AppDispatch } from "../app/store";
 
 export const resetCvEditor = () => (dispatch: AppDispatch) => {
+
   dispatch(resetIdentity());
   dispatch(resetProfileContent());
   // dispatch(resetProfile());
@@ -43,7 +41,4 @@ export const resetCvEditor = () => (dispatch: AppDispatch) => {
   dispatch(clearAllAwards());
   dispatch(clearAllCustom());
   dispatch(clearAllPersonalInfo());
-
-  // Opcional: limpiar colorFont
-  dispatch(restoreDefaults());
 };
