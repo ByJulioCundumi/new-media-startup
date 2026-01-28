@@ -6,6 +6,10 @@ import { closePopup, openPopup, restoreDefaults } from "../../reducers/colorFont
 import { resetCvSections } from "../../reducers/cvSectionsSlice";
 import { FaAmazon, FaBriefcase, FaBuilding, FaGlobe, FaGoogle, FaIndustry, FaLaptopCode, FaMicrosoft, FaQuoteLeft } from "react-icons/fa";
 import JobPage from "../job-page/JobPage";
+import CampaignsSection from "../campaigns-section/CampaignsSection";
+import VideoSection from "../video-section/VideoSection";
+import Hero from "./hero/Hero";
+import Footer from "../../components/footer/Footer";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +27,11 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <section className="home-page">
+    <>
+      <section className="home-page">
+      <Hero/>
+      
+
       {/* ===== EMPRESAS ===== */}
 <section className="home-page__companies">
   <span className="eyebrow">Empresas donde aplican nuestros usuarios</span>
@@ -33,52 +41,10 @@ const HomePage: React.FC = () => {
     consultoras y startups a nivel global.
   </p>
 
-  <div className="companies-grid">
-    <div className="company-icon">
-      <FaGoogle />
-      <span>Google</span>
-    </div>
-
-    <div className="company-icon">
-      <FaAmazon />
-      <span>Amazon</span>
-    </div>
-
-    <div className="company-icon">
-      <FaMicrosoft />
-      <span>Microsoft</span>
-    </div>
-
-    <div className="company-icon">
-      <FaLaptopCode />
-      <span>Tech Companies</span>
-    </div>
-
-    <div className="company-icon">
-      <FaIndustry />
-      <span>Consultoras</span>
-    </div>
-
-    <div className="company-icon">
-      <FaBriefcase />
-      <span>Corporativos</span>
-    </div>
-
-    <div className="company-icon">
-      <FaBuilding />
-      <span>Startups</span>
-    </div>
-
-    <div className="company-icon">
-      <FaGlobe />
-      <span>Empresas Remotas</span>
-    </div>
-  </div>
-
-  <small className="companies-note">
-    Los íconos representan categorías y tipos de empresas.
-  </small>
+  <CampaignsSection/>
 </section>
+
+<VideoSection/>
 
       {/* ===== TESTIMONIOS ===== */}
 <section className="home-page__testimonials">
@@ -165,6 +131,8 @@ const HomePage: React.FC = () => {
 
 <JobPage/>
     </section>
+<Footer/>
+    </>
   );
 };
 

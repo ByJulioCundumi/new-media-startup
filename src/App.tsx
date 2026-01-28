@@ -23,6 +23,7 @@ import AffiliatePage from './pages/affililate-page/AffiliatePage'
 import AuthGuard from './util/AuthGuard'
 import AdminGuard from './util/AdminGuard'
 import { Toaster } from 'react-hot-toast';
+import HomePage from './pages/home-page/HomePage'
 
 function App() {
   const dispatch = useDispatch()
@@ -113,7 +114,7 @@ function App() {
 
         {/* Rutas */}
         <Routes>
-            <Route path='/' element={<TemplatesPage/>} />
+            <Route path='/' element={<HomePage/>} />
             <Route path="cv/:publicId?" element={<OnlineCv />} />
             <Route path='cvs' element={<DashboardCVs/>} />
             <Route path="create/:cvId?" element={<CreateCv />} />

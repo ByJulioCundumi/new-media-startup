@@ -36,8 +36,8 @@ function JobPage() {
           <div className="job-page__offer">
             <div className="job-page__offer-box">
               <h2 className="job-page__title">
-                Eres miembro suscrito de{" "}
-                <span className="job-page__highlight">cvremoto.com?</span>
+                Genera Ingresos{" "}
+                <span className="job-page__highlight">Como Afiliado</span>
               </h2>
 
               <p className="job-page__subtitle">

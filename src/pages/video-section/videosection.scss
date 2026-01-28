@@ -1,0 +1,142 @@
+.video-section {
+  width: 100%;
+  background: #ffffff;
+  padding: 0rem 2rem;
+  margin-top: -3rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__text{
+    max-width: 700px;
+  }
+}
+
+/* ===== HEADER ===== */
+.video-section__header {
+  max-width: 1300px;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.video-section__header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: #6b7280;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
+
+/* ===== CATEGORÍAS ===== */
+.video-section__categories {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.category-chip {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+
+  &.active {
+    background: #111827;
+    color: #ffffff;
+    border-color: #111827;
+  }
+}
+
+/* ===== CAROUSEL ===== */
+.video-carousel {
+  max-width: 1300px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 1.5rem 0;
+}
+
+.video-carousel__track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scroll-horizontal 32s linear infinite;
+}
+
+.video-carousel__item {
+  min-width: 280px;
+  flex-shrink: 0;
+}
+
+/* Animación */
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* UX */
+.video-carousel:hover .video-carousel__track {
+  animation-play-state: paused;
+}
+
+.video-section__header-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.propose-challenge-btn {
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  margin-top: 1.5rem;
+
+  &:hover {
+    background: #1f2937;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

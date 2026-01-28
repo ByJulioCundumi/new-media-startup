@@ -13,18 +13,17 @@ const Hero = () => {
           {/* BADGE */}
           <div className="hero__badge">
             <span className="hero__badge-dot" />
-            Creador de CVs profesionales
+            Acepta El Reto!
           </div>
 
           {/* HEADING */}
           <div className="hero__heading">
             <h1 className="hero__headline">
-              Diseña <span>Tus CVs Y</span> consigue empleo
+              Genera <span>Ingresos</span> Complatando <br /><span>Retos En Video</span>
             </h1>
 
             <p className="hero__subheadline">
-              Crea tu CV en minutos con plantillas profesionales,
-              personalización inteligente y descarga inmediata.
+              Selecciona los retos de tu interes, completa y entrega sus videos y recibe tu pago en USD.
             </p>
           </div>
 
@@ -32,28 +31,28 @@ const Hero = () => {
           <div className="hero__features-grid">
             <div className="hero__feature">
               <span>✔</span>
-              <p>Plantillas profesionales</p>
+              <p>Crea Tu Cuenta Gratis</p>
             </div>
 
             <div className="hero__feature">
               <span>✔</span>
-              <p>Personalización rápida</p>
+              <p>Descrubre Videos Único</p>
             </div>
 
             <div className="hero__feature">
               <span>✔</span>
-              <p>Compatible con ATS</p>
+              <p>Propon Nuevos Retos</p>
             </div>
 
             <div className="hero__feature">
               <span>✔</span>
-              <p>Descarga inmediata</p>
+              <p>Accede A Contenido Exclusivo</p>
             </div>
           </div>
 
           {/* TRUST */}
           <div className="hero__trust">
-            Usado por <strong>miles de candidatos</strong> para conseguir entrevistas
+            Únete a <strong>nuestra plataforma</strong> y disfruta nuestro contenido.
           </div>
 
         </div>
@@ -62,12 +61,12 @@ const Hero = () => {
         <aside className="hero__cta">
           <div className="home-page__offer">
             <h2 className="home-page__job">
-              ¡Trabajo <span>Disponible!</span>
+              ¡Comparte <span> Y Gana!</span>
             </h2>
 
             <p>
               Recomienda nuestra plataforma y gana
-              <strong> 50% de comisión</strong> con nuestro programa de afiliados.
+              <strong> 50% de comisión</strong> con nuestro progarama de afiliados.
             </p>
 
           </div>
