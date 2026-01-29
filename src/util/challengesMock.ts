@@ -24,6 +24,8 @@ export interface ChallengeProps {
   startDate: string;
   videoUrl: string;
 
+  initialExpanded?: boolean;
+
   createdAt: string;
 
   user: {
@@ -60,6 +62,8 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-28T12:00:00Z",
 
+    initialExpanded: false,
+
     user: {
       fullName: "Juan Pérez",
       userId: "user1",
@@ -87,6 +91,8 @@ export const mockProposals: ChallengeProps[] = [
     videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
 
     createdAt: "2025-07-30T08:00:00Z",
+
+    initialExpanded: true,
 
     user: {
       fullName: "Ana Gómez",
@@ -120,6 +126,8 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-08-01T10:00:00Z",
 
+    initialExpanded: false,
+
     user: {
       fullName: "Carlos Mendoza",
       userId: "user3",
@@ -147,6 +155,8 @@ export const mockProposals: ChallengeProps[] = [
     videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
 
     createdAt: "2025-07-15T09:00:00Z",
+
+    initialExpanded: true,
 
     user: {
       fullName: "María López",
@@ -180,6 +190,8 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-10T11:00:00Z",
 
+    initialExpanded: false,
+
     user: {
       fullName: "Laura Torres",
       userId: "user5",
@@ -207,6 +219,8 @@ export const mockProposals: ChallengeProps[] = [
     videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
 
     createdAt: "2025-06-25T14:00:00Z",
+
+    initialExpanded: true,
 
     user: {
       fullName: "Miguel Rivera",
@@ -240,6 +254,8 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-29T13:00:00Z",
 
+    initialExpanded: false,
+
     user: {
       fullName: "Sofía Martínez",
       userId: "user7",
@@ -267,6 +283,8 @@ export const mockProposals: ChallengeProps[] = [
     videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
 
     createdAt: "2025-07-31T15:00:00Z",
+
+    initialExpanded: true,
 
     user: {
       fullName: "Diego Ramírez",
@@ -300,6 +318,8 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-27T11:00:00Z",
 
+    initialExpanded: false,
+
     user: {
       fullName: "Valeria Soto",
       userId: "user9",
@@ -327,6 +347,8 @@ export const mockProposals: ChallengeProps[] = [
     videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
 
     createdAt: "2025-07-29T09:00:00Z",
+    
+    initialExpanded: true,
 
     user: {
       fullName: "Andrés Morales",

@@ -103,7 +103,7 @@ const VideoSection: React.FC = () => {
       </div>
 
       <button className="propose-challenge-btn">
-            + Proponer Un Nuevo Reto
+            Explora Todos los videos
           </button>
     </section>
   )

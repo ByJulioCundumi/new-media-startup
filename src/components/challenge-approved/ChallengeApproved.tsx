@@ -10,11 +10,18 @@ import "./challengeapproved.scss";
 import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbSettingsCode, TbTicket } from "react-icons/tb";
 import { LuListTodo, LuReceipt, LuSettings2 } from "react-icons/lu";
 
+interface ChallengeApprovedProps {
+  initialExpanded?: boolean;
+}
+
 const description =
   "Realiza un unboxing creativo de un gadget popular. Crea un tutorial sobre desarrollo web. Realiza un unboxing creativo de un gadget popular.";
 
-export default function ChallengeApproved() {
-  const [expanded, setExpanded] = useState(false);
+export default function ChallengeApproved({
+  initialExpanded = false,
+}: ChallengeApprovedProps) {
+
+   const [expanded, setExpanded] = useState(initialExpanded);
   const progress = 0;
 
   const isLong = description.length > 105;

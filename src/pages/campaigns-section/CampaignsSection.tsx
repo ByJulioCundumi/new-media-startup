@@ -32,6 +32,18 @@ const CampaignsSection: React.FC = () => {
 
   return (
     <section className="campaigns-section">
+      {/* ================= HEADER ================= */}
+
+<div className="video-section__header-row">
+          <div className="video-section__header-top">
+            <h2>Como Funciona?</h2>
+            <p className="video-section__text">
+              Descubre desafíos reales ya cumplidos por la comunidad.
+              Videos auténticos, recompensas reales y contenido exclusivo
+              para miembros.
+            </p>
+          </div>
+        </div>
 
       {/* Carrusel tipo stack 3D */}
       <div className="campaigns-section__carousel-wrapper">
@@ -73,6 +85,24 @@ const CampaignsSection: React.FC = () => {
           </div>
         </div>
       </div>
+
+            {/* ================= WAVE BOTTOM ================= */}
+      <div className="campaigns-section__wave">
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <path d="
+      M0,80
+      C120,20 240,140 360,110
+      C480,80 600,10 720,40
+      C840,70 960,150 1080,120
+      C1200,90 1320,30 1440,60
+      L1440,160
+      L0,160
+      Z
+    " />
+  </svg>
+</div>
+
+
     </section>
   );
 };

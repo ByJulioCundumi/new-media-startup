@@ -19,7 +19,7 @@ const Hero = () => {
           {/* HEADING */}
           <div className="hero__heading">
             <h1 className="hero__headline">
-              Genera <span>Ingresos</span> Complatando <br /><span>Retos En Video</span>
+              Genera <span>Ingresos</span> Realizando <br /><span>Retos En Video</span>
             </h1>
 
             <p className="hero__subheadline">

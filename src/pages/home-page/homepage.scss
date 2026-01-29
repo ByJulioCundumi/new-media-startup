@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 5rem;
+  background-color: #fff;
 
   &__content {
     max-width: 1250px;
@@ -61,11 +62,14 @@
     rgba(0, 0, 0, 0.02),
     rgba(0, 0, 0, 0)
   );
+  position: relative;
   padding: 4rem 2rem;
   padding-bottom: 0rem;
   text-align: center;
   overflow: hidden;
   margin-bottom: -3rem;
+  margin-top: -5rem;
+  padding-top: 9.5rem;
 
   h2 {
     font-size: 2rem;
@@ -85,7 +89,7 @@
     display: flex;
     gap: 2rem;
     width: max-content;
-    animation: scrollTestimonials 40s linear infinite;
+    animation: scrollTestimonials 10s linear infinite;
   }
 
   .testimonial-card {
@@ -127,6 +131,16 @@
     transform: translateX(-50%);
   }
 }
+
+@keyframes testimonialsWaveMove {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 
 
   /* ===== EMPRESAS ===== */
@@ -222,6 +236,31 @@
   }
 }
 }
+
+/* ===== TESTIMONIALS WAVE TOP ===== */
+.testimonials-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%; // necesario para loop fluido
+  height: 160px;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 0;
+  margin-top: -2rem;
+  animation: testimonialsWaveMove 22s linear infinite;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  path {
+    fill: #ffffff; // color de la sección anterior
+  }
+}
+
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {

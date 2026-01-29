@@ -4,11 +4,11 @@
 
     background: linear-gradient(
   120deg,
-  #fafafa 64%,   /* Verde claro - esquina superior izquierda */
-  #ecb90f 0%  /* Verde más oscuro - derecha */
+  #040f2d 64%,   /* Verde claro - esquina superior izquierda */
+  #ffffff 0%  /* Verde más oscuro - derecha */
 );
 
-  color: #050825;
+  color: #1d1d1d;
   padding: 8rem 1.5rem;
 
   &__container {
@@ -40,7 +40,8 @@
     gap: 0.5rem;
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
-    background: rgba(255, 248, 230, 0.08);
+    background: rgba(255, 255, 255, 0.232);
+    border: 1px solid rgba(255, 255, 255, 0.345);
     color: #ffc101;
     font-size: 0.95rem;
     font-weight: 600;
@@ -74,7 +75,7 @@
 
   &__subheadline {
     font-size: 1.1rem;
-    color: #202020;
+    color: #848484;
     max-width: 520px;
   }
 
@@ -105,10 +106,10 @@
   /* TRUST */
   &__trust {
     font-size: 0.9rem;
-    color: #202020;
+    color: #848484;
 
     strong {
-      color: #202020;
+      color: #848484;
       font-weight: 600;
     }
   }

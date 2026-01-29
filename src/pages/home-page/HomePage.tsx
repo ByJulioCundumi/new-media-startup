@@ -29,25 +29,32 @@ const HomePage: React.FC = () => {
   return (
     <>
       <section className="home-page">
-      <Hero/>
-      
-
-      {/* ===== EMPRESAS ===== */}
-<section className="home-page__companies">
-  <span className="eyebrow">Empresas donde aplican nuestros usuarios</span>
-  <h2>CVs compatibles con procesos reales de selección</h2>
-  <p>
-    Nuestros CVs son utilizados para postularse a empresas tecnológicas,
-    consultoras y startups a nivel global.
-  </p>
-
-  <CampaignsSection/>
-</section>
-
-<VideoSection/>
+        <Hero/>
+      <CampaignsSection/>
+      <VideoSection/>
 
       {/* ===== TESTIMONIOS ===== */}
 <section className="home-page__testimonials">
+    {/* ===== WAVE TOP ===== */}
+  <div className="testimonials-wave">
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <path
+      d="
+        M0,90
+        C120,45 240,135 360,110
+        C480,85 600,40 720,65
+        C840,90 960,140 1080,115
+        C1200,95 1320,55 1440,75
+        L1440,0
+        L0,0
+        Z
+      "
+    />
+  </svg>
+</div>
+
+
+
   <h2>Lo que dicen nuestros usuarios</h2>
 
   <div className="testimonials-carousel">
