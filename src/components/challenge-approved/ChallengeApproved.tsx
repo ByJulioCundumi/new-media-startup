@@ -38,11 +38,7 @@ export default function ChallengeApproved({
 
   return (
     <article className="challenge-approved">
-      <div
-        className={`challenge-approved__ribbon`}
-      >
-         {"Tendencia"}
-      </div>
+    
 
       {/* BOTÓN PARTICIPA */}
           

@@ -1,0 +1,110 @@
+.status-select {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  font-family: inherit;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+
+  &__trigger {
+    width: 100%;
+    height: 44px;
+    padding: 0 1rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    cursor: pointer;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #111827;
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+  }
+
+  &__value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__chevron {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #6b7280;
+    border-bottom: 2px solid #6b7280;
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+
+    &.is-open {
+      transform: rotate(-135deg);
+    }
+  }
+
+  &__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 0.4rem;
+  z-index: 20;
+
+  list-style: none;      // ← CLAVE
+  margin: 0;             // ← CLAVE
+
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  animation: statusSelectFade 0.18s ease-out;
+}
+
+
+  &__option {
+  list-style: none;      // refuerzo
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #111827;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+
+  &.is-active {
+    background: #eef2ff;
+    color: #4338ca;
+    font-weight: 600;
+  }
+}
+
+}
+
+@keyframes statusSelectFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,54 +1,13 @@
 import type { IAuthModalState } from "./IAuthModal";
-import type { IAwardEntry } from "./IAward";
 import type { ICategories } from "./ICategory";
-import type { IcolorAllowed } from "./IColorAllowed";
-import type { IColorFontState } from "./IColorFont";
-import type { IContactEntry } from "./IContact";
-import type { ICourseEntry } from "./ICourses";
-import type { ICustomEntry } from "./ICustom";
-import type { ICvCreationState } from "./ICvCreation";
-import type { ICvSaveState } from "./ICvSave";
-import type { ICvSectionsState } from "./ICvSections";
-import type { IEducationEntry } from "./IEducation";
-import type { IExperienceEntry } from "./IExperience";
-import type { IHobbyEntry } from "./IHobbies";
-import type { IIdentityData } from "./IIdentity";
-import type { ILanguageEntry } from "./ILanguages";
-import type { ILinkEntry } from "./ILinks";
-import type { IPersonalInfoEntry } from "./IPersonalInfo";
-import type { IReferenceEntry } from "./IReferences";
-import type { ICvSectionsEditorState } from "./ISectionsEditors";
+import type { INavbar } from "./INavbar";
 import type { ISidebar } from "./ISidebar";
-import type { ISkillEntry } from "./ISkills";
-import type { ITemplate } from "./ITemplate";
-import type { IToolbarOption } from "./IToolbarOption";
 import type { IUserState } from "./IUser";
 
 export interface IState{
     sidebar: ISidebar,
-    personalInfo: IPersonalInfoEntry[], // cv sections
-    educationEntries: IEducationEntry[], // cv sections
-    experienceEntries: IExperienceEntry[], // cv sections
-    skillsEntries: ISkillEntry[]; // cv sections
-    languagesEntries: ILanguageEntry[]; // cv sections
-    linksEntries: ILinkEntry[]; // cv sections
-    coursesEntries: ICourseEntry[]; // cv sections
-    hobbiesEntries: IHobbyEntry[]; // cv sections
-    referencesEntries: IReferenceEntry[] // cv sections
-    awardsEntries: IAwardEntry[]; // cv sections
-    customEntries: ICustomEntry[] // cv sections
-    profileSection: string, // cv sections
-    cvSections: ICvSectionsState,
-    identity: IIdentityData; // cv sections
-    contactEntries: IContactEntry[], // cv sections
-    colorFont: IColorFontState,
-    toolbarOption: IToolbarOption,
     categories: ICategories,
-    template: ITemplate,
     user: IUserState,
-    cvCreation: ICvCreationState,
-    cvSave: ICvSaveState,
-    authModal: IAuthModalState
-    cvSectionsEditors: ICvSectionsEditorState,
-    colorAllowed: IcolorAllowed
+    authModal: IAuthModalState,
+    navbar: INavbar
 }

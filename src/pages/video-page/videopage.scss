@@ -1,0 +1,9 @@
+.video-page{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1350px;
+    margin: 0 auto;
+}

@@ -11,9 +11,12 @@ import { HiHome } from "react-icons/hi2";
 import { LuFileSearch } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
+  MdManageSearch,
   MdWorkOutline,
 } from "react-icons/md";
 import { PiReadCvLogo, PiShoppingCartBold } from "react-icons/pi";
+import { IoSearchOutline } from "react-icons/io5";
+import SearchBar from "../search-bar/SearchBar";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -50,16 +53,20 @@ function Navbar() {
             <span>Inicio</span>
           </Link>
 
-          <Link
-            to="/cvs"
+          {
+            sidebarOption !== "explore" ? <Link
+            to="/explore"
             className={`link ${
-              sidebarOption === "cvs" ? "active" : ""
+              sidebarOption === "explore" ? "active" : ""
             }`}
-            onClick={() => dispatch(setSidebar("cvs"))}
+            onClick={() => dispatch(setSidebar("explore"))}
           >
-            <LuFileSearch />
-            <span>Crea un CV</span>
+            <IoSearchOutline />
+            <span>Explorar</span>
           </Link>
+            :
+            <SearchBar textHolder="Buscar"/>
+          }
 
           <Link
             to="/pricing"
@@ -69,7 +76,7 @@ function Navbar() {
             onClick={() => dispatch(setSidebar("pricing"))}
           >
             <PiShoppingCartBold className="navbar__pricing" />
-            <span>Planes</span>
+            <span>Suscripciones</span>
           </Link>
 
           <Link

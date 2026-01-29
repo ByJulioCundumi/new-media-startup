@@ -18,6 +18,10 @@ import AuthGuard from './util/AuthGuard'
 import AdminGuard from './util/AdminGuard'
 import { Toaster } from 'react-hot-toast';
 import HomePage from './pages/home-page/HomePage'
+import ExplorePage from './pages/explore-page/ExplorePage'
+import ChallengePage from './pages/challenge-page/ChallengePage'
+import ProposalPage from './pages/proposal-page/ProposalPage'
+import VideoPage from './pages/video-page/VideoPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -103,6 +107,11 @@ function App() {
         {/* Rutas */}
         <Routes>
             <Route path='/' element={<HomePage/>} />
+            <Route path='explore/*' element={<ExplorePage/>}>
+              <Route path='' element={<ChallengePage/>} />
+              <Route path='proposals' element={<ProposalPage/>} />
+              <Route path='videos' element={<VideoPage/>} />
+            </Route>
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='affiliates' element={<AffiliatePage/>} />
             <Route path='account' element={

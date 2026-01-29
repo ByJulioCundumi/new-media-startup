@@ -81,7 +81,7 @@ const CampaignsSection: React.FC = () => {
         </div>
 
         <button className="propose-challenge-btnb">
-            Explora Retos Disponibles
+            Explora Los Retos Disponibles
           </button>
       </div>
       

@@ -1,30 +1,20 @@
 import React, { useEffect } from "react";
 import "./homepage.scss";
 import { useDispatch } from "react-redux";
-import { setAllowQrCode } from "../../reducers/identitySlice";
-import { closePopup, openPopup, restoreDefaults } from "../../reducers/colorFontSlice";
-import { resetCvSections } from "../../reducers/cvSectionsSlice";
-import { FaAmazon, FaBriefcase, FaBuilding, FaGlobe, FaGoogle, FaIndustry, FaLaptopCode, FaMicrosoft, FaQuoteLeft } from "react-icons/fa";
+import { FaQuoteLeft } from "react-icons/fa";
 import JobPage from "../job-page/JobPage";
 import CampaignsSection from "../campaigns-section/CampaignsSection";
 import VideoSection from "../video-section/VideoSection";
 import Hero from "./hero/Hero";
 import Footer from "../../components/footer/Footer";
 import JobFaq from "../../components/job-faq/JobFaq";
+import { setSidebar } from "../../reducers/sidebarSlice";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setAllowQrCode(true));
-    dispatch(openPopup());
-
-    return () => {
-      dispatch(setAllowQrCode(false));
-      dispatch(restoreDefaults());
-      dispatch(resetCvSections());
-      dispatch(closePopup())
-    };
+    dispatch(setSidebar("home"));
   }, []);
 
   return (

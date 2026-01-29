@@ -1,0 +1,17 @@
+.challenge-page{
+    padding: 2rem 3rem;
+    display: flex;
+    gap: 1.5rem 1.5rem;
+    background-color: rgb(253, 253, 253);
+
+    &__left{
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    &__right{
+
+    }
+}

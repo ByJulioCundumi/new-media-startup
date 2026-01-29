@@ -1,0 +1,77 @@
+import React, { useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
+import "./explorenavbar.scss"
+import { useDispatch, useSelector } from "react-redux"
+import type { IState } from "../../interfaces/IState"
+import { BsPatchCheck } from "react-icons/bs"
+import { TiLightbulb } from "react-icons/ti"
+import { setExplreNavbar } from "../../reducers/navbarSlice"
+import { MdSlowMotionVideo } from "react-icons/md"
+import { AiOutlineYoutube } from "react-icons/ai"
+import { PiFilmSlateLight, PiYoutubeLogoLight } from "react-icons/pi"
+import { FaMoneyBillTrendUp } from "react-icons/fa6"
+
+const ExploreNavbar: React.FC = () => {
+  const dispatch = useDispatch()
+  const { exploreNavbar } = useSelector((state: IState) => state.navbar)
+  const indicatorRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const activeEl = document.querySelector(
+      ".explore-navbar__option.active"
+    ) as HTMLElement
+
+    const indicator = indicatorRef.current
+
+    if (activeEl && indicator) {
+      indicator.style.width = `${activeEl.offsetWidth}px`
+      indicator.style.left = `${activeEl.offsetLeft}px`
+    }
+  }, [exploreNavbar])
+
+  return (
+    <div className="explore-navbar">
+      <div className="explore-navbar__track">
+        <div
+          className="explore-navbar__indicator"
+          ref={indicatorRef}
+        />
+
+        <Link
+          onClick={() => dispatch(setExplreNavbar("challenges"))}
+          to="/explore"
+          className={`explore-navbar__option ${
+            exploreNavbar === "challenges" ? "active" : ""
+          }`}
+        >
+          <FaMoneyBillTrendUp />
+          <span>Retos</span>
+        </Link>
+
+        <Link
+          onClick={() => dispatch(setExplreNavbar("proposals"))}
+          to="/explore/proposals"
+          className={`explore-navbar__option ${
+            exploreNavbar === "proposals" ? "active" : ""
+          }`}
+        >
+          <TiLightbulb />
+          <span>Propuestas</span>
+        </Link>
+
+        <Link
+          onClick={() => dispatch(setExplreNavbar("videos"))}
+          to="/explore/videos"
+          className={`explore-navbar__option ${
+            exploreNavbar === "videos" ? "active" : ""
+          }`}
+        >
+          <PiFilmSlateLight />
+          <span>Videos</span>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export default ExploreNavbar

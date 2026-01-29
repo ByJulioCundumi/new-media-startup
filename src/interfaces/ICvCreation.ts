@@ -1,8 +1,0 @@
-export interface ICvCreationState {
-  isOpen: boolean;
-  selectedTemplateId: string,
-  selectedCvTitle: string,
-  selectedCvId: string
-  publicId: string
-  cvPhoto: string
-}
