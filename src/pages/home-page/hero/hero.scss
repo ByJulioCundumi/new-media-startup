@@ -8,7 +8,15 @@
   #ffffff 0%  /* Verde más oscuro - derecha */
 );
 
-  color: #1d1d1d;
+background-image:
+    linear-gradient(
+      120deg,
+      rgba(4, 15, 45, 0.92) 60%,
+      rgba(255, 204, 35, 0.541) 100%
+    ),
+    url("https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif");
+
+  color: #e4e4e4;
   padding: 8rem 1.5rem;
 
   &__container {
@@ -136,7 +144,7 @@
   /* WAVE */
   &__wave {
     position: absolute;
-    bottom: -2rem;
+    bottom: -1rem;
     left: 0;
     width: 200%;
     height: 120px;

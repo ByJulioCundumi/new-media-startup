@@ -92,7 +92,7 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-30T08:00:00Z",
 
-    initialExpanded: true,
+    initialExpanded: false,
 
     user: {
       fullName: "Ana Gómez",
@@ -156,7 +156,7 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-15T09:00:00Z",
 
-    initialExpanded: true,
+    initialExpanded: false,
 
     user: {
       fullName: "María López",
@@ -220,7 +220,7 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-06-25T14:00:00Z",
 
-    initialExpanded: true,
+    initialExpanded: false,
 
     user: {
       fullName: "Miguel Rivera",
@@ -284,7 +284,7 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-31T15:00:00Z",
 
-    initialExpanded: true,
+    initialExpanded: false,
 
     user: {
       fullName: "Diego Ramírez",
@@ -348,7 +348,7 @@ export const mockProposals: ChallengeProps[] = [
 
     createdAt: "2025-07-29T09:00:00Z",
     
-    initialExpanded: true,
+    initialExpanded: false,
 
     user: {
       fullName: "Andrés Morales",

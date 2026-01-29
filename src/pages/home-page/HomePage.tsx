@@ -10,6 +10,7 @@ import CampaignsSection from "../campaigns-section/CampaignsSection";
 import VideoSection from "../video-section/VideoSection";
 import Hero from "./hero/Hero";
 import Footer from "../../components/footer/Footer";
+import JobFaq from "../../components/job-faq/JobFaq";
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -134,6 +135,8 @@ const HomePage: React.FC = () => {
       </div>
     </div>
   </div>
+
+  <JobFaq/>
 </section>
 
 <JobPage/>

@@ -61,7 +61,6 @@ function JobPage() {
             <JobOffer />
           </div>
 
-          {sidebarOption !== "pricing" && <JobFaq />}
         </div>
       </div>
     </section>

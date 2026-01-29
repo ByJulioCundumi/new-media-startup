@@ -23,7 +23,7 @@ const Hero = () => {
             </h1>
 
             <p className="hero__subheadline">
-              Selecciona los retos de tu interes, completa y entrega sus videos y recibe tu pago en USD.
+              Completa los retos de tu interes, entrega sus videos y recibe los pagos por tu trabajo.
             </p>
           </div>
 
@@ -77,19 +77,21 @@ const Hero = () => {
 
       {/* WAVE */}
       <div className="hero__wave">
-        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-          <path
-            d="
-              M0,50
-              C240,100 480,0 720,30
-              960,60 1200,100 1440,40
-              L1440,100
-              L0,100
-              Z
-            "
-          />
-        </svg>
-      </div>
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <path
+      d="
+        M0,100
+        C150,0 300,200 450,100
+        C600,0 750,200 900,100
+        C1050,0 1200,200 1350,100
+        L1440,160
+        L0,160
+        Z
+      "
+    />
+  </svg>
+</div>
+
     </section>
   );
 };
