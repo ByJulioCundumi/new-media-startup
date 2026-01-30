@@ -95,7 +95,7 @@ function Navbar() {
               }`}
               onClick={() => dispatch(setSidebar("account"))}
             >
-              <TbSettingsCode /> <span>Mi Cuenta</span>
+              <TbSettingsCode /> <span>Mi Actividad</span>
             </Link>
           )}
 

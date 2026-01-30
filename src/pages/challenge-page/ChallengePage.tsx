@@ -9,11 +9,19 @@ function ChallengePage() {
     <section className="challenge-page">
         <div className="challenge-page__left">
             {mockProposals.slice(0,3).map((challenge) => (
-                <ChallengeApproved key={challenge.id} {...challenge} />
+                <div className="challenge-page__item">
+                    <div className="challenge-page__item--main">
+                      <ChallengeApproved key={challenge.id} {...challenge} />
+                      <div>
+                        <p>Tempo restante para la entrega del video</p>
+                        <p>3 Dias</p>
+                      </div>
+                    </div>
+                    <ChallengeInfo/>
+                </div>
             ))}
         </div>
 
-        <ChallengeInfo/>
 
     </section>
   )

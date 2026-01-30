@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CgMoreVertical } from "react-icons/cg";
-import { BsPatchCheckFill, BsShieldCheck } from "react-icons/bs";
+import { BsHeart, BsPatchCheckFill, BsShieldCheck } from "react-icons/bs";
 import { MdFlagCircle, MdLockPerson, MdOutlineKeyboardDoubleArrowRight, MdVideoSettings } from "react-icons/md";
 import { IoCheckmarkDoneOutline, IoDiamond, IoFootstepsOutline, IoFootstepsSharp, IoPlay, IoReceiptOutline } from "react-icons/io5";
 import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime } from "react-icons/gi";
@@ -107,18 +107,12 @@ export default function ChallengeRequested({
       <div className="challenge-requested__footer">
         <div className="challenge-requested__progress">
           <div className="challenge-requested__interactions">
+            <p>
+              <BsHeart /> 251
+            </p>
             
-            <p style={{marginRight: "0.5rem"}}>
+            <p>
                 <FaRegComment /> 621
-            </p>
-            <p>
-              <TbArrowBigUp />
-            </p>
-            <p>
-              +22°
-            </p>
-            <p>
-              <TbArrowBigDown />
             </p>
           </div>
 

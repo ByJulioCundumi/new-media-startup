@@ -1,8 +1,8 @@
 .status-select {
   position: relative;
-  width: 100%;
-  max-width: 240px;
+  width: 240px;
   font-family: inherit;
+  z-index: 500;
 
   @media (max-width: 768px) {
     max-width: 100%;

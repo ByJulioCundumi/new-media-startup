@@ -1,6 +1,6 @@
 .challenge-info {
-  max-width: 700px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 900px;
   padding: 1.5rem 1.5rem;
   padding-top: 0rem;
   font-family: "Inter", sans-serif;
@@ -10,6 +10,7 @@
   top: 9rem;
   background-color: white;
   border-radius: 15px;
+  height: 600px;
 }
 
 .challenge-info__title h1 {
@@ -225,4 +226,93 @@
   .challenge-info__content {
     grid-template-columns: 1fr;
   }
+}
+
+.reward {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: #ffbb00;
+  margin-bottom: 0.8rem;
+}
+
+.description {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.video-placeholder {
+  height: 180px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #111827, #1f2937);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 14px;
+  background: #ffbb00;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.judges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.judge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  border-radius: 14px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.judge-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.judge-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.vote-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.done {
+    color: #16a34a;
+  }
+
+  &.pending {
+    color: #f59e0b;
+  }
+}
+
+.vote-deadline {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.muted {
+  font-size: 0.8rem;
+  color: #777;
 }

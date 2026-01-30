@@ -1,18 +1,19 @@
 .request-page{
     display: flex;
-    padding: 1rem 3rem;
-    gap: 2rem;
-    justify-content: space-between;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1rem;
 
     &__container{
         display: grid;
         grid-template-columns: repeat(3,1fr);
         gap: 1rem;
-        width: 100%;
-        max-width: 1300px;
     }
 
-    &__request{
-        width: 500px;
+    &__select{
+        position: sticky;
+        top: 7.5rem;
+        z-index: 10;
+        background-color: white;
     }
 }

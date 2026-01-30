@@ -51,17 +51,10 @@ const ConnectionsPanel: React.FC = () => {
           <FaUserFriends /> Seguidos
           <span>74</span>
         </button>
-
-        <button
-          className={activeTab === "favorites" ? "active" : ""}
-          onClick={() => setActiveTab("favorites")}
-        >
-          <TbWorldSearch /> Usuarios <TbWorldSearch />
-        </button>
       </nav>
 
       {/* SELECTED USER */}
-      {selectedUser && (
+      {selectedUser ?  (
       <div className="connections-panel__selected">
         
             <img src={selectedUser.avatar} alt={selectedUser.username} />
@@ -77,8 +70,11 @@ const ConnectionsPanel: React.FC = () => {
             >
               <FaTimes />
             </button>
-      </div>
-        )}
+      </div> 
+        )
+        :
+      <div className="connections-space"></div>
+      }
 
       {/* SEARCH */}
       <div className="connections-panel__search">
@@ -109,6 +105,14 @@ const ConnectionsPanel: React.FC = () => {
           <p className="empty">No se encontraron usuarios</p>
         )}
       </div>
+
+      
+        <button
+          className={"connections-panel__users"}
+          onClick={() => setActiveTab("favorites")}
+        >
+          <TbWorldSearch /> Usuarios 
+        </button>
     </aside>
   );
 };

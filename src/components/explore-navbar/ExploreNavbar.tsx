@@ -46,7 +46,7 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <GiFilmProjector />
-          <span>En Produccion <span className="explore-navbar__num">(5)</span> </span>
+          <span>En Curso <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link
@@ -57,7 +57,7 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <MdPendingActions />
-          <span>Retos <span className="explore-navbar__num">(5)</span> </span>
+          <span>Propuestas <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link
@@ -68,7 +68,7 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <PiFilmSlateLight />
-          <span>Videos </span>
+          <span>Ganadores </span>
         </Link>
       </div>
     </div>

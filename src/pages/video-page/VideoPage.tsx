@@ -46,18 +46,18 @@ function VideoPage() {
 
   return (
     <section className="video-page">
-        <div className="video-page__container">
-          <CategorySelector
-          selectedCategories={selectedCategories}
-          onCategoryChange={setSelectedCategories}
-        />
-          <div className="video-page__container--content">
-            {[...mockVideos, ...mockVideos].map((video, index) => (
-            <div className="video-carousel__item" key={index}>
-              <VideoCard {...video} />
-            </div>
-          ))}
+
+          <div className="video-page__select">
+            <CategorySelector
+              selectedCategories={selectedCategories}
+              onCategoryChange={setSelectedCategories}
+            />
           </div>
+
+        <div className="video-page__container">
+          {[...mockVideos, ...mockVideos].map((video, index) => (
+              <VideoCard {...video} />
+          ))}
         </div>
 
     </section>
