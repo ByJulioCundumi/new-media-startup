@@ -46,9 +46,6 @@ function VideoPage() {
 
   return (
     <section className="video-page">
-        <div className="video-page__request">
-          <ConnectionsPanel/>
-        </div>
         <div className="video-page__container">
           <CategorySelector
           selectedCategories={selectedCategories}

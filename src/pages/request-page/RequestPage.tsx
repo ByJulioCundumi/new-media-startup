@@ -7,9 +7,6 @@ import "./requestpage.scss"
 function RequestPage() {
   return (
     <section className="request-page">
-        <div className="request-page__request">
-          <ConnectionsPanel/>
-        </div>
         <div className="request-page__container">
           {mockProposals.map((challenge) => (
             <ChallengeRequested key={challenge.id} {...challenge} />

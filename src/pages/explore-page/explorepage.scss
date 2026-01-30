@@ -3,6 +3,10 @@
     min-height: 100vh;
     padding: 4rem 0rem;
 
+    &__content{
+        display: flex;
+    }
+
     &__topbar{
         position: sticky;
         top: 4.5rem;

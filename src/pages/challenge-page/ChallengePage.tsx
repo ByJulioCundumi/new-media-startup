@@ -7,9 +7,6 @@ import ConnectionsPanel from '../../components/connections-panel/ConnectionsPane
 function ChallengePage() {
   return (
     <section className="challenge-page">
-        <div className="challenge-page__right">
-            <ConnectionsPanel/>
-        </div>
         <div className="challenge-page__left">
             {mockProposals.slice(0,3).map((challenge) => (
                 <ChallengeApproved key={challenge.id} {...challenge} />

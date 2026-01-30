@@ -12,6 +12,7 @@ import { IoBookmarkOutline } from "react-icons/io5"
 import { TbBookmark } from "react-icons/tb"
 import NotificationBell from "../../components/notification-bell/NotificationBell"
 import SearchBar from "../../components/search-bar/SearchBar"
+import ConnectionsPanel from "../../components/connections-panel/ConnectionsPanel"
 
 function ExplorePage() {
     const dispatch = useDispatch()
@@ -46,7 +47,14 @@ function ExplorePage() {
         </div>
       </div>
 
-      <Outlet/>
+      <div className="explore__content">
+        <div className="explore__content--left">
+          <ConnectionsPanel/>
+        </div>
+        <div className="explore__content--right">
+          <Outlet/>
+        </div>
+      </div>
     </div>
   )
 }
