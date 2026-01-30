@@ -23,6 +23,7 @@ export interface ChallengeProps {
   likedByMe?: boolean;
   startDate: string;
   videoUrl: string;
+  deadline: string;
 
   initialExpanded?: boolean;
 
@@ -63,6 +64,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-28T12:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Juan Pérez",
@@ -93,6 +95,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-30T08:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Ana Gómez",
@@ -127,6 +130,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-08-01T10:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Carlos Mendoza",
@@ -157,6 +161,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-15T09:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "María López",
@@ -191,6 +196,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-10T11:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Laura Torres",
@@ -221,6 +227,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-06-25T14:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Miguel Rivera",
@@ -255,6 +262,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-29T13:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Sofía Martínez",
@@ -285,6 +293,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-31T15:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Diego Ramírez",
@@ -319,6 +328,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-27T11:00:00Z",
 
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Valeria Soto",
@@ -349,6 +359,7 @@ export const mockProposals: ChallengeProps[] = [
     createdAt: "2025-07-29T09:00:00Z",
     
     initialExpanded: false,
+    deadline: "2026-02-03T23:59:59Z",
 
     user: {
       fullName: "Andrés Morales",

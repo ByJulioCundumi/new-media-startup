@@ -19,7 +19,9 @@ function RequestPage() {
 
         <div className="request-page__container">
           {mockProposals.map((challenge) => (
-            <ChallengeRequested key={challenge.id} {...challenge} />
+            <div className="request-page__item">
+              <ChallengeRequested key={challenge.id} {...challenge} />
+            </div>
           ))}
         </div>
 

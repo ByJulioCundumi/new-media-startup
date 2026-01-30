@@ -143,7 +143,7 @@ export default function ChallengeRequested({
           </div>
 
           <button className="challenge-requested__button">
-            <TbTicket /> Envia a produccion
+             Me Interesa Este Reto
           </button>
         </div>
       </div>

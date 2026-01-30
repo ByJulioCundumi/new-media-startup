@@ -1,21 +1,38 @@
-.challenge-page{
-    padding: 2rem 3rem;
+.challenge-page {
+  padding: 2rem 3rem;
+  display: flex;
+  gap: 1.5rem;
+  background-color: #fdfdfd;
+
+  &__left {
     display: flex;
-    gap: 1.5rem 1.5rem;
-    background-color: rgb(253, 253, 253);
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-    &__item{
-        display: flex;
-    }
+  &__item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
 
-    &__left{
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
+  &__item-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
 
-    &__item{
-        display: flex;
-        gap: 2rem;
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .challenge-page {
+    padding: 1.5rem;
+
+    &__item {
+      flex-direction: column;
     }
+  }
 }

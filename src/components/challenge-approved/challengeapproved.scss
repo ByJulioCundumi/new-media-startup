@@ -222,22 +222,12 @@
 
     &--main{
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       width: 100%;
       align-items: center;
-      //margin-bottom: -0.8rem;
-      margin-left: 1rem;
-
-      span{
-        font-size: 0.8rem;
+      font-size: 0.85rem;
         color: #737373e1;
-        font-weight: 300;
-
-        svg{
-          font-size: 0.7rem;
-          margin-right: 0.1rem;
-        }
-      }
+        margin-top: 0.3rem;
     }
 
     &--box{
@@ -300,6 +290,13 @@
     border-bottom-right-radius: 18px;
     padding: 1rem 1.2rem;
     border-top: 3px solid white;
+
+    img {
+      width: 37px;
+      height: 37px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
 
     .name {
       font-size: 0.85rem;

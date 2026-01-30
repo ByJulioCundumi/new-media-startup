@@ -115,37 +115,25 @@ export default function ChallengeApproved({
             </p>
           </div>
 
-          <div className="challenge-approved__progress--main">
-            <div className="challenge-approved__progress--box">
-              <TbTicket className="challenge-approved__progress-left" />
-              <div className="challenge-approved__progress-bar">
-                <div style={{ width: `${progress}%` }} />
-              </div>
-              <MdFlagCircle className="challenge-approved__progress-right" />
-            </div>
-            <span>
-             <IoFootstepsOutline /> <AiOutlineFieldNumber /> 1: Logra 23 Pts
-            </span>
-          </div>
+          <span className="challenge-approved__progress--main">
+              $10 USD Al Completar
+          </span>
 
           <CgMoreVertical className="challenge-approved__menu" />
         </div>
 
         <div className="challenge-approved__user">
-          {/* Botón circular con icono de editar */}
-          <div className="challenge-approved__edit">
-            <TbRosetteDiscountCheckFilled size={20} />
-          </div>
+          <img
+            src="https://www.redaccionmedica.com/images/destacados/la-rae-modifica-a-medias-la-definicion-de-doula-a-peticion-de-enfermeria--5704_620x368.jpg"
+            alt="avatar"
+          />
 
           <div>
-            <p className="name">$25.00 USD</p>
-            <p className="status">
-              <IoCheckmarkDoneOutline /> Pago Disponible
-            </p>
+            <p className="name">@user_name231</p>
           </div>
 
           <button className="challenge-approved__button">
-            <MdOutlineKeyboardDoubleArrowRight /> Participa Gratis
+            Estado: Grabando Reto
           </button>
         </div>
       </div>
