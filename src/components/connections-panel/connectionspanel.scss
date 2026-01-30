@@ -1,5 +1,5 @@
 .connections-panel {
-  width: 250px;
+  width: 270px;
   position: relative;
   background: #ffffff;
   border-radius: 22px;
@@ -12,6 +12,7 @@
   position: fixed;
   top: 8.5rem;
   bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.055);
 
   &__header {
     h3 {
@@ -111,8 +112,8 @@
   &__users{
     position: absolute;
     bottom: 1rem;
-    border: 1px solid black;
-    background-color: #050d29;
+    border: 1px solid rgba(0, 0, 0, 0.048);
+    background-color: #ffce2e;
     border-radius: 8px;
     color: white;
     font-weight: 500;

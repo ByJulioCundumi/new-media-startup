@@ -4,7 +4,7 @@
   top: 0;
   z-index: 100;
   background: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.021);
   padding: 16px 30px;
   display: flex;
   justify-content: center;
@@ -42,6 +42,11 @@
     gap: 14px;
     list-style: none;
     margin-right: -2rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    padding: 0.15rem 1rem;
+    background-color: #9797970a;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.066);
 
     @media (max-width: 950px) {
       display: none;
@@ -49,7 +54,7 @@
 
     .link {
       position: relative;
-      font-size: 15.5px;
+      font-size: 14.5px;
       color: #95a0a8;
       padding: 6px 12px;
       border-radius: 10px;
@@ -72,7 +77,7 @@
       }
 
       &.active {
-        color: #313131;
+        color: #04021a;
         font-weight: 600;
       }
     }

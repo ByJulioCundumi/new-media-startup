@@ -6,12 +6,12 @@ import {
   FaDollarSign,
   FaClock,
   FaRegCommentDots,
-  FaChartLine,
   FaStar,
-  FaPercentage
+  FaPercentage,
+  FaCheckCircle
 } from "react-icons/fa";
 
-type Section = "overview" | "video" | "comments" | "judges";
+type Section = "video" | "comments" | "judges";
 
 const judgesMock = [
   { id: 1, user: "alice", points: 120, voted: true },
@@ -22,42 +22,42 @@ const judgesMock = [
 const totalPoints = judgesMock.reduce((a, b) => a + b.points, 0);
 
 const ChallengeInfo: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<Section>("overview");
+  const [activeSection, setActiveSection] = useState<Section>("video");
 
   return (
     <section className="challenge-info">
 
       {/* NAV */}
       <nav className="challenge-info__tabs">
-        <button onClick={() => setActiveSection("overview")} className={activeSection === "overview" ? "active" : ""}>
-          <FaChartLine /> Resumen
-        </button>
-        <button onClick={() => setActiveSection("video")} className={activeSection === "video" ? "active" : ""}>
+        <button
+          onClick={() => setActiveSection("video")}
+          className={activeSection === "video" ? "active" : ""}
+        >
           <FaVideo /> Video
         </button>
-        <button onClick={() => setActiveSection("comments")} className={activeSection === "comments" ? "active" : ""}>
+        <button
+          onClick={() => setActiveSection("comments")}
+          className={activeSection === "comments" ? "active" : ""}
+        >
           <FaRegCommentDots /> Comentarios
         </button>
-        <button onClick={() => setActiveSection("judges")} className={activeSection === "judges" ? "active" : ""}>
+        <button
+          onClick={() => setActiveSection("judges")}
+          className={activeSection === "judges" ? "active" : ""}
+        >
           <FaUsers /> Jueces
         </button>
       </nav>
 
-      {/* CONTENT */}
       <main className="challenge-info__main">
 
-        {/* RESUMEN */}
-        {activeSection === "overview" && (
+        {/* VIDEO + INFO */}
+        {activeSection === "video" && (
           <section className="card">
-            <span className="status status--open">Disponible</span>
-
-            <div className="reward">
-              <FaDollarSign /> $5 USD por video aprobado
-            </div>
 
             <p className="description">
-              Este reto fue financiado por la comunidad. Los usuarios que aportaron puntos
-              participan como jueces y evalúan la calidad final del video.
+              Este reto fue financiado por la comunidad. Los usuarios que aportaron
+              puntos participan como jueces y evalúan la calidad final del video.
             </p>
 
             <div className="stats-inline">
@@ -72,13 +72,6 @@ const ChallengeInfo: React.FC = () => {
               <li>Calidad visual y sonido</li>
               <li>Cumplimiento del reto</li>
             </ul>
-          </section>
-        )}
-
-        {/* VIDEO */}
-        {activeSection === "video" && (
-          <section className="card">
-            <h3>Video enviado</h3>
 
             <div className="video-status">
               <FaClock />
@@ -101,8 +94,11 @@ const ChallengeInfo: React.FC = () => {
             <h3>Comentarios</h3>
 
             <div className="comment">
-              <strong>@alice</strong>
-              <p>La idea está buena, pero podría mejorar el encuadre.</p>
+              <div className="avatar" />
+              <div>
+                <strong>@alice</strong>
+                <p>La idea está buena, pero podría mejorar el encuadre.</p>
+              </div>
             </div>
 
             <div className="comment-input">
@@ -112,7 +108,7 @@ const ChallengeInfo: React.FC = () => {
           </section>
         )}
 
-        {/* JUECES */}
+        {/* JUDGES */}
         {activeSection === "judges" && (
           <section className="card">
             <h3>Jueces del reto</h3>
@@ -123,21 +119,39 @@ const ChallengeInfo: React.FC = () => {
             <div className="judges-list">
               {judgesMock.map(judge => {
                 const percent = Math.round((judge.points / totalPoints) * 100);
+
                 return (
-                  <div key={judge.id} className="judge-row">
-                    <div className="judge-user">
-                      <div className="avatar" />
-                      <strong>@{judge.user}</strong>
+                  <div key={judge.id} className="judge-card">
+                    <div className="judge-header">
+                      <div className="judge-user">
+                        <div className="avatar" />
+                        <strong>@{judge.user}</strong>
+                      </div>
+
+                      {judge.voted && (
+                        <span className="judge-voted">
+                          <FaCheckCircle /> Votó
+                        </span>
+                      )}
                     </div>
 
-                    <div className="judge-meta">
+                    <div className="judge-points">
                       <span><FaStar /> {judge.points} pts</span>
-                      <span><FaPercentage /> {percent}% voto</span>
+                      <span><FaPercentage /> {percent}%</span>
                     </div>
 
-                    <span className={`vote-status ${judge.voted ? "done" : "pending"}`}>
-                      {judge.voted ? "Votó" : "Pendiente"}
-                    </span>
+                    <div className="vote-bar">
+                      <div
+                        className="vote-bar__fill"
+                        style={{ width: `${percent}%` }}
+                      />
+                    </div>
+
+                    {!judge.voted && (
+                      <span className="vote-pending">
+                        <FaClock /> Pendiente de votar
+                      </span>
+                    )}
                   </div>
                 );
               })}

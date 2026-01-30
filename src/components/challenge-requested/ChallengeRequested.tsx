@@ -25,8 +25,8 @@ export default function ChallengeRequested({
    const [expanded, setExpanded] = useState(initialExpanded);
   const progress = 0;
 
-  const isLong = description.length > 105;
-  const visibleText = expanded ? description : description.slice(0, 105);
+  const isLong = description.length > 95;
+  const visibleText = expanded ? description : description.slice(0, 95);
   const toggleText = expanded ? "Ver menos" : "...Ver más";
 
   const steps = [
@@ -139,11 +139,11 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="name">@user_name231</p>
+            <p className="name">@user_nam...</p>
           </div>
 
           <button className="challenge-requested__button">
-             Me Interesa Este Reto
+             Te Interesa este reto?
           </button>
         </div>
       </div>
