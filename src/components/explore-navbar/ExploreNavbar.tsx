@@ -10,6 +10,7 @@ import { MdPendingActions, MdSlowMotionVideo } from "react-icons/md"
 import { AiOutlineYoutube } from "react-icons/ai"
 import { PiFilmSlateLight, PiYoutubeLogoLight } from "react-icons/pi"
 import { FaMoneyBillTrendUp } from "react-icons/fa6"
+import { GiFilmProjector } from "react-icons/gi"
 
 const ExploreNavbar: React.FC = () => {
   const dispatch = useDispatch()
@@ -38,14 +39,14 @@ const ExploreNavbar: React.FC = () => {
         />
 
         <Link
-          onClick={() => dispatch(setExplreNavbar("challenges"))}
+          onClick={() => dispatch(setExplreNavbar("productions"))}
           to="/explore"
           className={`explore-navbar__option ${
-            exploreNavbar === "challenges" ? "active" : ""
+            exploreNavbar === "productions" ? "active" : ""
           }`}
         >
-          <FaMoneyBillTrendUp />
-          <span>Retos <span className="explore-navbar__num">(5)</span> </span>
+          <GiFilmProjector />
+          <span>En Produccion <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link
@@ -56,7 +57,7 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <MdPendingActions />
-          <span>Peticiones <span className="explore-navbar__num">(5)</span> </span>
+          <span>Retos <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link

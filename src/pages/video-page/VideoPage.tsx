@@ -1,3 +1,6 @@
+import { useState } from "react"
+import { CategorySelector } from "../../components/category-selector/CategorySelector"
+import ConnectionsPanel from "../../components/connections-panel/ConnectionsPanel"
 import CreateChallengeProposal from "../../components/create-challenge-proposal/CreateChallengeProposal"
 import VideoCard from "../../components/video-card/VideoCard"
 import "./videopage.scss"
@@ -38,20 +41,28 @@ const mockVideos = [
 ]
 
 function VideoPage() {
-    
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+        const [status, setStatus] = useState("all");
+
   return (
     <section className="video-page">
+        <div className="video-page__request">
+          <ConnectionsPanel/>
+        </div>
         <div className="video-page__container">
-          {[...mockVideos, ...mockVideos].map((video, index) => (
+          <CategorySelector
+          selectedCategories={selectedCategories}
+          onCategoryChange={setSelectedCategories}
+        />
+          <div className="video-page__container--content">
+            {[...mockVideos, ...mockVideos].map((video, index) => (
             <div className="video-carousel__item" key={index}>
               <VideoCard {...video} />
             </div>
           ))}
+          </div>
         </div>
 
-        <div className="video-page__request">
-          <CreateChallengeProposal/>
-        </div>
     </section>
   )
 }

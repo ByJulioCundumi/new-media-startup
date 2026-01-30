@@ -7,8 +7,9 @@ import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy } from "react-icons/g
 import { AiOutlineFieldNumber } from "react-icons/ai";
 
 import "./challengeapproved.scss";
-import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbSettingsCode, TbTicket } from "react-icons/tb";
+import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbRosetteDiscountCheck, TbRosetteDiscountCheckFilled, TbSettingsCode, TbTicket } from "react-icons/tb";
 import { LuListTodo, LuReceipt, LuSettings2 } from "react-icons/lu";
+import { FaRegComment, FaRegHeart } from "react-icons/fa";
 
 interface ChallengeApprovedProps {
   initialExpanded?: boolean;
@@ -107,13 +108,10 @@ export default function ChallengeApproved({
         <div className="challenge-approved__progress">
           <div className="challenge-approved__interactions">
             <p>
-              <TbArrowBigUp />
+              <FaRegHeart /> 251
             </p>
             <p>
-              +22°
-            </p>
-            <p>
-              <TbArrowBigDown />
+              <FaRegComment /> 621
             </p>
           </div>
 
@@ -136,18 +134,18 @@ export default function ChallengeApproved({
         <div className="challenge-approved__user">
           {/* Botón circular con icono de editar */}
           <div className="challenge-approved__edit">
-            <LuSettings2 />
+            <TbRosetteDiscountCheckFilled size={20} />
           </div>
 
           <div>
-            <p className="name"><IoReceiptOutline /> $25.00 USD</p>
+            <p className="name">$25.00 USD</p>
             <p className="status">
-              <IoCheckmarkDoneOutline /> Premio por completar
+              <IoCheckmarkDoneOutline /> Pago Disponible
             </p>
           </div>
 
           <button className="challenge-approved__button">
-            <MdOutlineKeyboardDoubleArrowRight /> Tomar Reto
+            <MdOutlineKeyboardDoubleArrowRight /> Participa Gratis
           </button>
         </div>
       </div>

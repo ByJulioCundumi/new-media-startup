@@ -11,6 +11,7 @@ import { FaSave } from "react-icons/fa"
 import { IoBookmarkOutline } from "react-icons/io5"
 import { TbBookmark } from "react-icons/tb"
 import NotificationBell from "../../components/notification-bell/NotificationBell"
+import SearchBar from "../../components/search-bar/SearchBar"
 
 function ExplorePage() {
     const dispatch = useDispatch()
@@ -27,12 +28,12 @@ function ExplorePage() {
       <div className="explore__topbar">
         <ExploreNavbar/>
         
-        <CategorySelector
-          selectedCategories={selectedCategories}
-          onCategoryChange={setSelectedCategories}
+        <SearchBar
+        
         />
 
-        <NotificationBell/>
+        <div className="explore__end">
+          <NotificationBell/>
 
         <StatusSelect
           value={status}
@@ -42,6 +43,7 @@ function ExplorePage() {
         <button className="explore__saved"><TbBookmark/></button>
 
         <GenderFilter/>
+        </div>
       </div>
 
       <Outlet/>

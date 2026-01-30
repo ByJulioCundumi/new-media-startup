@@ -108,15 +108,6 @@ const ChallengeInfo: React.FC = () => {
           )}
         </main>
 
-        {/* ASIDE */}
-        <aside className="challenge-info__aside">
-            <p>Tiempo Para Postular: 3 Dias</p>
-          <div className="aside-card">
-            <h4>Participa en este reto</h4>
-            <p>Gana recompensas reales y visibilidad.</p>
-            <button>Postularme</button>
-          </div>
-        </aside>
       </div>
     </section>
   );

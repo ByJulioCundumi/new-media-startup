@@ -53,8 +53,7 @@ function Navbar() {
             <span>Inicio</span>
           </Link>
 
-          {
-            sidebarOption !== "explore" ? <Link
+          <Link
             to="/explore"
             className={`link ${
               sidebarOption === "explore" ? "active" : ""
@@ -64,9 +63,6 @@ function Navbar() {
             <IoSearchOutline />
             <span>Explorar</span>
           </Link>
-            :
-            <SearchBar textHolder="Buscar"/>
-          }
 
           <Link
             to="/pricing"
