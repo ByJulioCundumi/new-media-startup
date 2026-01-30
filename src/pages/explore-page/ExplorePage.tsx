@@ -7,6 +7,10 @@ import StatusSelect from "../../components/status-select/StatusSelect"
 import ExploreNavbar from "../../components/explore-navbar/ExploreNavbar"
 import { Outlet } from "react-router-dom"
 import GenderFilter from "../../components/gender-filter/GenderFilter"
+import { FaSave } from "react-icons/fa"
+import { IoBookmarkOutline } from "react-icons/io5"
+import { TbBookmark } from "react-icons/tb"
+import NotificationBell from "../../components/notification-bell/NotificationBell"
 
 function ExplorePage() {
     const dispatch = useDispatch()
@@ -28,10 +32,14 @@ function ExplorePage() {
           onCategoryChange={setSelectedCategories}
         />
 
+        <NotificationBell/>
+
         <StatusSelect
           value={status}
           onChange={setStatus}
         />
+
+        <button className="explore__saved"><TbBookmark/></button>
 
         <GenderFilter/>
       </div>

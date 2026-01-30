@@ -6,7 +6,7 @@ import type { IState } from "../../interfaces/IState"
 import { BsPatchCheck } from "react-icons/bs"
 import { TiLightbulb } from "react-icons/ti"
 import { setExplreNavbar } from "../../reducers/navbarSlice"
-import { MdSlowMotionVideo } from "react-icons/md"
+import { MdPendingActions, MdSlowMotionVideo } from "react-icons/md"
 import { AiOutlineYoutube } from "react-icons/ai"
 import { PiFilmSlateLight, PiYoutubeLogoLight } from "react-icons/pi"
 import { FaMoneyBillTrendUp } from "react-icons/fa6"
@@ -45,18 +45,18 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <FaMoneyBillTrendUp />
-          <span>Retos</span>
+          <span>Retos <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link
-          onClick={() => dispatch(setExplreNavbar("proposals"))}
-          to="/explore/proposals"
+          onClick={() => dispatch(setExplreNavbar("requests"))}
+          to="/explore/requests"
           className={`explore-navbar__option ${
-            exploreNavbar === "proposals" ? "active" : ""
+            exploreNavbar === "requests" ? "active" : ""
           }`}
         >
-          <TiLightbulb />
-          <span>Propuestas</span>
+          <MdPendingActions />
+          <span>Peticiones <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
         <Link
@@ -67,7 +67,7 @@ const ExploreNavbar: React.FC = () => {
           }`}
         >
           <PiFilmSlateLight />
-          <span>Videos</span>
+          <span>Videos </span>
         </Link>
       </div>
     </div>

@@ -5,6 +5,7 @@ const STATUS_OPTIONS = [
   { label: "Todos", value: "all" },
   { label: "Disponible", value: "available" },
   { label: "En Curso", value: "production" },
+  { label: "Participando", value: "participating" },
 ];
 
 interface StatusSelectProps {

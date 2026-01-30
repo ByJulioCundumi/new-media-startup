@@ -61,12 +61,12 @@ const Hero = () => {
         <aside className="hero__cta">
           <div className="home-page__offer">
             <h2 className="home-page__job">
-              ¡Comparte <span> Y Gana!</span>
+              ¡Gana <span> Como Afiliado!</span>
             </h2>
 
             <p>
               Recomienda nuestra plataforma y gana
-              <strong> 50% de comisión</strong> con nuestro progarama de afiliados.
+              <strong> 34% de comisión</strong> por cada suscripcion referenciada.
             </p>
 
           </div>

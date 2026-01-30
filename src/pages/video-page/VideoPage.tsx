@@ -1,3 +1,4 @@
+import CreateChallengeProposal from "../../components/create-challenge-proposal/CreateChallengeProposal"
 import VideoCard from "../../components/video-card/VideoCard"
 import "./videopage.scss"
 
@@ -40,11 +41,17 @@ function VideoPage() {
     
   return (
     <section className="video-page">
-        {[...mockVideos, ...mockVideos].map((video, index) => (
+        <div className="video-page__container">
+          {[...mockVideos, ...mockVideos].map((video, index) => (
             <div className="video-carousel__item" key={index}>
               <VideoCard {...video} />
             </div>
           ))}
+        </div>
+
+        <div className="video-page__request">
+          <CreateChallengeProposal/>
+        </div>
     </section>
   )
 }

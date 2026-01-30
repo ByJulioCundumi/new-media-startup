@@ -1,20 +1,17 @@
 .video-card {
   width: 100%;
   min-width: 300px;
-  max-width: 400px;
+  max-width: 420px;
   border-radius: 18px;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
   background: #fff;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
   transition: all 0.35s ease;
   cursor: pointer;
   position: relative;
-  border: 1px solid #f0f0f0;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
   }
 
   &.completed::before {
@@ -151,7 +148,7 @@
 
   &__info {
     display: flex;
-    align-items: center;
+    align-items: start;
     padding: 0.9rem 1rem;
     gap: 0.8rem;
     position: relative;
@@ -210,10 +207,28 @@
       color: #aaa;
       cursor: pointer;
       transition: color 0.2s ease;
+      margin-top: 0.5rem;
 
       &:hover {
         color: #00e676;
       }
     }
   }
+}
+
+.video-card {
+  /* ya lo tienes */
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.video-card__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  
+  /* ¡Aquí está el cambio clave! */
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
 }

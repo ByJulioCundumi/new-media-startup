@@ -20,8 +20,8 @@ import { Toaster } from 'react-hot-toast';
 import HomePage from './pages/home-page/HomePage'
 import ExplorePage from './pages/explore-page/ExplorePage'
 import ChallengePage from './pages/challenge-page/ChallengePage'
-import ProposalPage from './pages/proposal-page/ProposalPage'
 import VideoPage from './pages/video-page/VideoPage'
+import RequestPage from './pages/request-page/RequestPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -109,7 +109,7 @@ function App() {
             <Route path='/' element={<HomePage/>} />
             <Route path='explore/*' element={<ExplorePage/>}>
               <Route path='' element={<ChallengePage/>} />
-              <Route path='proposals' element={<ProposalPage/>} />
+              <Route path='requests' element={<RequestPage/>} />
               <Route path='videos' element={<VideoPage/>} />
             </Route>
             <Route path='pricing' element={<PricingPage/>} />

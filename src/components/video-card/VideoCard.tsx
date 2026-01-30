@@ -68,7 +68,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
         <img src={profileImage} alt={username} className="video-card__avatar" />
         <div className="video-card__text">
           <p className="video-card__description">
-            {description.length > 38 ? description.slice(0, 38) + "..." : description}
+            {description.length > 58 ? description.slice(0, 58) + "..." : description}
           </p>
           <p className="video-card__meta">
             <span className="user">@{username}</span> 

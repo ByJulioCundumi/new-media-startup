@@ -11,12 +11,7 @@
   height: fit-content;
   border: 3px solid white;
 
-  background-image: repeating-linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.03) 0px,
-    rgba(0, 0, 0, 0.03) 0.8px,
-    transparent 160px
-  );
+
 
   &:hover {
     transform: translateY(-4px);

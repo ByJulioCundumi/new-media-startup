@@ -1,0 +1,119 @@
+.create-challenge {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  border-radius: 22px;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 8rem;
+
+  &__header {
+    margin-bottom: 1.6rem;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  &__subtitle {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    position: relative;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    svg {
+      font-size: 1rem;
+      color: #ffc400;
+    }
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    border-radius: 14px;
+    border: 1px solid #e5e5e5;
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #ffc400;
+      box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.15);
+    }
+  }
+
+  &__textarea {
+    resize: none;
+    min-height: 100px;
+  }
+
+  &__counter {
+    position: absolute;
+    right: 10px;
+    bottom: -18px;
+    font-size: 0.75rem;
+    color: #aaa;
+  }
+
+  &__cta {
+    margin-top: 0.8rem;
+    text-align: center;
+  }
+
+  &__button {
+    width: 100%;
+    background: linear-gradient(135deg, #ffc400, #ffb000);
+    border: none;
+    border-radius: 16px;
+    padding: 0.95rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(255, 196, 0, 0.35);
+    }
+  }
+
+  &__hint {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.3;
+  }
+}
