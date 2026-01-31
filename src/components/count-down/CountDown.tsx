@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./countdown.scss";
+import { FaClock, FaUsers, FaVideo } from "react-icons/fa";
 
 interface TimeLeft {
   days: number;
@@ -136,6 +137,25 @@ const Countdown: React.FC<CountdownProps> = ({ deadline }) => {
           En fase de grabación
         </span>
       </div>
+
+          <section className="card">
+            
+                        <p className="description">
+                          Reto 001. Este reto fue financiado por la comunidad. Los usuarios que aportaron
+                          puntos participan como jueces y evalúan la calidad final del video.
+                        </p>
+            
+                        <div className="stats-inline">
+                          <span><FaUsers /> 3 jueces</span>
+                          <span><FaVideo /> 1 video enviado</span>
+                          <span><FaClock /> 48h para votar</span>
+                        </div>
+            
+                        <div className="video-status">
+                          <FaClock />
+                          <span>Votación abierta · 1 día 12h restantes</span>
+                        </div>
+                      </section>
 
     </div>
   );

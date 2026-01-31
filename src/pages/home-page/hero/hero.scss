@@ -1,6 +1,7 @@
 .hero {
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
 
     background: linear-gradient(
   120deg,
@@ -17,15 +18,20 @@ background-image:
     url("https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif");
 
   color: #e4e4e4;
-  padding: 8rem 1.5rem;
-
+  padding: 2rem 2.5rem;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  height: 280px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  
   &__container {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1.3fr 0.9fr;
     gap: 4rem;
-    align-items: center;
 
     @media (max-width: 900px) {
       display: flex;
@@ -126,7 +132,7 @@ background-image:
   &__cta {
     background: #ffffff;
     border-radius: 1.25rem;
-    padding: 2.5rem 2rem;
+    padding: 2rem 2rem;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     text-align: center;
     display: flex;

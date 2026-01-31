@@ -13,6 +13,10 @@ import { TbBookmark } from "react-icons/tb"
 import NotificationBell from "../../components/notification-bell/NotificationBell"
 import SearchBar from "../../components/search-bar/SearchBar"
 import ConnectionsPanel from "../../components/connections-panel/ConnectionsPanel"
+import AvailableChallenges from "../../components/available-challenges/AvailableChallenges"
+import Cta from "../../components/cta/Cta"
+import Hero from "../home-page/hero/Hero"
+import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar"
 
 function ExplorePage() {
     const dispatch = useDispatch()
@@ -30,29 +34,26 @@ function ExplorePage() {
         <ExploreNavbar/>
         
         <SearchBar
-        
+          textHolder="Buscar"
         />
 
         <div className="explore__end">
           <NotificationBell/>
 
-        <StatusSelect
-          value={status}
-          onChange={setStatus}
-        />
-
-        <button className="explore__saved"><TbBookmark/></button>
-
-        <GenderFilter/>
+          
+        <ProfileAvatar/>
         </div>
       </div>
 
+        
       <div className="explore__content">
         <div className="explore__content--left">
           <ConnectionsPanel/>
         </div>
         <div className="explore__content--right">
+          <Hero/>
           <Outlet/>
+          <AvailableChallenges/>
         </div>
       </div>
     </div>

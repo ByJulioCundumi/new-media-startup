@@ -3,6 +3,9 @@ import { CategorySelector } from "../../components/category-selector/CategorySel
 import ChallengeRequested from "../../components/challenge-requested/ChallengeRequested"
 import { mockProposals } from "../../util/challengesMock"
 import "./requestpage.scss"
+import { TbBookmark } from "react-icons/tb"
+import GenderFilter from "../../components/gender-filter/GenderFilter"
+import StatusSelect from "../../components/status-select/StatusSelect"
 
 function RequestPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -10,11 +13,21 @@ function RequestPage() {
 
   return (
     <section className="request-page">
-      <div className="video-page__select">
+      <div className="request-page__select">
+        <button className="explore__saved"><TbBookmark/></button>
+        
                   <CategorySelector
                     selectedCategories={selectedCategories}
                     onCategoryChange={setSelectedCategories}
                   />
+
+
+        <GenderFilter/>
+
+        <StatusSelect
+          value={status}
+          onChange={setStatus}
+        />
                 </div>
 
         <div className="request-page__container">

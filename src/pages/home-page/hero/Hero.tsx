@@ -10,12 +10,6 @@ const Hero = () => {
         {/* LEFT */}
         <div className="hero__left">
 
-          {/* BADGE */}
-          <div className="hero__badge">
-            <span className="hero__badge-dot" />
-            Acepta El Reto!
-          </div>
-
           {/* HEADING */}
           <div className="hero__heading">
             <h1 className="hero__headline">
@@ -23,36 +17,8 @@ const Hero = () => {
             </h1>
 
             <p className="hero__subheadline">
-              Completa los retos de tu interes, entrega sus videos y recibe los pagos por tu trabajo.
+              Selecciona el reto de tu interes
             </p>
-          </div>
-
-          {/* FEATURES */}
-          <div className="hero__features-grid">
-            <div className="hero__feature">
-              <span>✔</span>
-              <p>Crea Tu Cuenta Gratis</p>
-            </div>
-
-            <div className="hero__feature">
-              <span>✔</span>
-              <p>Descrubre Videos Único</p>
-            </div>
-
-            <div className="hero__feature">
-              <span>✔</span>
-              <p>Propon Nuevos Retos</p>
-            </div>
-
-            <div className="hero__feature">
-              <span>✔</span>
-              <p>Accede A Contenido Exclusivo</p>
-            </div>
-          </div>
-
-          {/* TRUST */}
-          <div className="hero__trust">
-            Únete a <strong>nuestra plataforma</strong> y disfruta nuestro contenido.
           </div>
 
         </div>
@@ -65,7 +31,7 @@ const Hero = () => {
             </h2>
 
             <p>
-              Recomienda nuestra plataforma y gana
+              Obten un
               <strong> 34% de comisión</strong> por cada suscripcion referenciada.
             </p>
 
@@ -74,23 +40,6 @@ const Hero = () => {
         </aside>
 
       </div>
-
-      {/* WAVE */}
-      <div className="hero__wave">
-  <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
-    <path
-      d="
-        M0,100
-        C150,0 300,200 450,100
-        C600,0 750,200 900,100
-        C1050,0 1200,200 1350,100
-        L1440,160
-        L0,160
-        Z
-      "
-    />
-  </svg>
-</div>
 
     </section>
   );

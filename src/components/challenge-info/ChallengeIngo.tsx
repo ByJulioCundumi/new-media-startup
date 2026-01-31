@@ -55,29 +55,6 @@ const ChallengeInfo: React.FC = () => {
         {activeSection === "video" && (
           <section className="card">
 
-            <p className="description">
-              Este reto fue financiado por la comunidad. Los usuarios que aportaron
-              puntos participan como jueces y evalúan la calidad final del video.
-            </p>
-
-            <div className="stats-inline">
-              <span><FaUsers /> 3 jueces</span>
-              <span><FaVideo /> 1 video enviado</span>
-              <span><FaClock /> 48h para votar</span>
-            </div>
-
-            <h4>Criterios de evaluación</h4>
-            <ul>
-              <li>Creatividad y originalidad</li>
-              <li>Calidad visual y sonido</li>
-              <li>Cumplimiento del reto</li>
-            </ul>
-
-            <div className="video-status">
-              <FaClock />
-              <span>Votación abierta · 1 día 12h restantes</span>
-            </div>
-
             <div className="video-placeholder">
               🎬 Vista previa del video
             </div>

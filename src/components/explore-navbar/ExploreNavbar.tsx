@@ -39,6 +39,17 @@ const ExploreNavbar: React.FC = () => {
         />
 
         <Link
+          onClick={() => dispatch(setExplreNavbar("requests"))}
+          to="/explore/requests"
+          className={`explore-navbar__option ${
+            exploreNavbar === "requests" ? "active" : ""
+          }`}
+        >
+          <MdPendingActions />
+          <span>Retos <span className="explore-navbar__num">(5)</span> </span>
+        </Link>
+
+        <Link
           onClick={() => dispatch(setExplreNavbar("productions"))}
           to="/explore"
           className={`explore-navbar__option ${
@@ -49,16 +60,7 @@ const ExploreNavbar: React.FC = () => {
           <span>En Curso <span className="explore-navbar__num">(5)</span> </span>
         </Link>
 
-        <Link
-          onClick={() => dispatch(setExplreNavbar("requests"))}
-          to="/explore/requests"
-          className={`explore-navbar__option ${
-            exploreNavbar === "requests" ? "active" : ""
-          }`}
-        >
-          <MdPendingActions />
-          <span>Propuestas <span className="explore-navbar__num">(5)</span> </span>
-        </Link>
+        
 
         <Link
           onClick={() => dispatch(setExplreNavbar("videos"))}

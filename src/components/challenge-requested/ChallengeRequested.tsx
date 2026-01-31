@@ -3,7 +3,7 @@ import { CgMoreVertical } from "react-icons/cg";
 import { BsHeart, BsPatchCheckFill, BsShieldCheck } from "react-icons/bs";
 import { MdFlagCircle, MdLockPerson, MdOutlineKeyboardDoubleArrowRight, MdVideoSettings } from "react-icons/md";
 import { IoCheckmarkDoneOutline, IoDiamond, IoFootstepsOutline, IoFootstepsSharp, IoPlay, IoPulseOutline, IoReceiptOutline } from "react-icons/io5";
-import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime } from "react-icons/gi";
+import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime, GiTrophyCup } from "react-icons/gi";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 
 import "./challengerequested.scss";
@@ -140,11 +140,11 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="name">@user_nam...</p>
+            <p className="name"><GiTrophyCup /> $0.00 </p>
           </div>
 
           <button className="challenge-requested__button">
-             Te Interesa este reto?
+             <PiPulseDuotone /> Apoyar Reto
           </button>
         </div>
       </div>

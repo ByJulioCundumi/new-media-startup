@@ -83,7 +83,6 @@ function App() {
     <>
     <BrowserRouter>
       <section className="app">
-        {sidebarOption !== "create" && <Navbar/>}
 
         {/* popups globales */}
         {authModal.isOpen && <Auth/>}
