@@ -73,7 +73,6 @@ const Countdown: React.FC<CountdownProps> = ({ deadline }) => {
 
         <div className="countdown-user__info">
           <strong>@{mockUser.username}</strong>
-          <span>ID · {mockUser.id}</span>
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CgMoreVertical } from "react-icons/cg";
 import { BsHeart, BsPatchCheckFill, BsShieldCheck } from "react-icons/bs";
 import { MdFlagCircle, MdLockPerson, MdOutlineKeyboardDoubleArrowRight, MdVideoSettings } from "react-icons/md";
-import { IoCheckmarkDoneOutline, IoDiamond, IoFootstepsOutline, IoFootstepsSharp, IoPlay, IoReceiptOutline } from "react-icons/io5";
+import { IoCheckmarkDoneOutline, IoDiamond, IoFootstepsOutline, IoFootstepsSharp, IoPlay, IoPulseOutline, IoReceiptOutline } from "react-icons/io5";
 import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime } from "react-icons/gi";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 
@@ -10,6 +10,7 @@ import "./challengerequested.scss";
 import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbSettingsCode, TbTicket } from "react-icons/tb";
 import { LuConciergeBell, LuListTodo, LuReceipt, LuSettings2 } from "react-icons/lu";
 import { FaRegComment, FaVenusMars } from "react-icons/fa";
+import { PiPulse, PiPulseDuotone } from "react-icons/pi";
 
 interface ChallengeRequestedProps {
   initialExpanded?: boolean;
@@ -118,14 +119,14 @@ export default function ChallengeRequested({
 
           <div className="challenge-requested__progress--main">
             <div className="challenge-requested__progress--box">
-              <TbTicket className="challenge-requested__progress-left" />
+              <PiPulseDuotone className="challenge-requested__progress-left" />
               <div className="challenge-requested__progress-bar">
                 <div style={{ width: `${progress}%` }} />
               </div>
               <MdFlagCircle className="challenge-requested__progress-right" />
             </div>
             <span>
-             <TbTicket /> 10% de interes
+             <PiPulseDuotone /> 10% de interes
             </span>
           </div>
 
