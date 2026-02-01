@@ -24,8 +24,8 @@ const Hero = () => {
         <aside className="hero__cta">
           <div className="home-page__offer">
             <p>
-              <strong>Obten un 34% de comisión</strong> por cada suscripcion
-              referida.
+              <strong>Obten un 34%  </strong> de comisión Por Cada Pack de Apoyo
+              Comprado.
             </p>
           </div>
 

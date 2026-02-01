@@ -24,7 +24,7 @@ export default function ChallengeRequested({
 }: ChallengeRequestedProps) {
 
    const [expanded, setExpanded] = useState(initialExpanded);
-  const progress = 0;
+  const progress = 10;
 
   const isLong = description.length > 95;
   const visibleText = expanded ? description : description.slice(0, 95);
@@ -126,11 +126,10 @@ export default function ChallengeRequested({
               <MdFlagCircle className="challenge-requested__progress-right" />
             </div>
             <span>
-             10% de interes
+             10% de Interes
             </span>
           </div>
 
-          <CgMoreVertical className="challenge-requested__menu" />
         </div>
 
         <div className="challenge-requested__user">
@@ -140,13 +139,15 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="name"><LuReceiptText /> $0.00 </p>
-            <p className="id">@user_name221...</p>
+            <p className="name"> $0.00 USD </p>
+            <p className="id">Pago Ofrecido * Interes</p>
           </div>
 
           <button className="challenge-requested__button">
-             <PiPulseDuotone /> Hazlo
+              Apoyar
           </button>
+
+          <CgMoreVertical className="challenge-requested__menu" />
         </div>
       </div>
     </article>
