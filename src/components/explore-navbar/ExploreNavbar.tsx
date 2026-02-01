@@ -8,9 +8,9 @@ import { TiLightbulb } from "react-icons/ti"
 import { setExplreNavbar } from "../../reducers/navbarSlice"
 import { MdPendingActions, MdSlowMotionVideo } from "react-icons/md"
 import { AiOutlineYoutube } from "react-icons/ai"
-import { PiFilmSlateLight, PiYoutubeLogoLight } from "react-icons/pi"
+import { PiFilmSlateLight, PiPathDuotone, PiYoutubeLogoLight } from "react-icons/pi"
 import { FaMoneyBillTrendUp } from "react-icons/fa6"
-import { GiFilmProjector } from "react-icons/gi"
+import { GiFilmProjector, GiPathDistance } from "react-icons/gi"
 
 const ExploreNavbar: React.FC = () => {
   const dispatch = useDispatch()
@@ -50,19 +50,6 @@ const ExploreNavbar: React.FC = () => {
         </Link>
 
         <Link
-          onClick={() => dispatch(setExplreNavbar("productions"))}
-          to="/explore"
-          className={`explore-navbar__option ${
-            exploreNavbar === "productions" ? "active" : ""
-          }`}
-        >
-          <GiFilmProjector />
-          <span>En Curso <span className="explore-navbar__num">(5)</span> </span>
-        </Link>
-
-        
-
-        <Link
           onClick={() => dispatch(setExplreNavbar("videos"))}
           to="/explore/videos"
           className={`explore-navbar__option ${
@@ -72,6 +59,18 @@ const ExploreNavbar: React.FC = () => {
           <PiFilmSlateLight />
           <span>Ganadores </span>
         </Link>
+
+        <Link
+          onClick={() => dispatch(setExplreNavbar("productions"))}
+          to="/explore"
+          className={`explore-navbar__option ${
+            exploreNavbar === "productions" ? "active" : ""
+          }`}
+        >
+          <PiPathDuotone />
+          <span>Mi Actividad</span>
+        </Link>
+
       </div>
     </div>
   )

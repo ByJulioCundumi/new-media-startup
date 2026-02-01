@@ -2,14 +2,15 @@
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  color: #e4e4e4;
+  padding: 2rem 2.5rem;
+  width: 95%;
+  margin: 1.5rem auto 0;
+  height: 280px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 
-    background: linear-gradient(
-  120deg,
-  #040f2d 64%,   /* Verde claro - esquina superior izquierda */
-  #ffffff 0%  /* Verde más oscuro - derecha */
-);
-
-background-image:
+  background-image:
     linear-gradient(
       120deg,
       rgba(4, 15, 45, 0.92) 60%,
@@ -17,20 +18,13 @@ background-image:
     ),
     url("https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif");
 
-  color: #e4e4e4;
-  padding: 2rem 2.5rem;
-  width: 95%;
-  margin: 0 auto;
-  margin-top: 1.5rem;
-  height: 280px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  
   &__container {
-    max-width: 1200px;
+    max-width: 1070px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
     gap: 4rem;
 
     @media (max-width: 900px) {
@@ -39,7 +33,6 @@ background-image:
     }
   }
 
-  /* LEFT */
   &__left {
     max-width: 600px;
     display: flex;
@@ -47,29 +40,6 @@ background-image:
     gap: 1.8rem;
   }
 
-  /* BADGE */
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.232);
-    border: 1px solid rgba(255, 255, 255, 0.345);
-    color: #ffc101;
-    font-size: 0.95rem;
-    font-weight: 600;
-    width: fit-content;
-  }
-
-  &__badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ffc101;
-  }
-
-  /* HEADING */
   &__heading {
     display: flex;
     flex-direction: column;
@@ -77,13 +47,13 @@ background-image:
   }
 
   &__headline {
-    font-size: clamp(2.6rem, 4vw, 3.6rem);
+    font-size: 3.2rem;
     font-weight: 800;
     line-height: 1.1;
 
     span {
       color: #ffc400;
-      font-weight: 600;
+      font-weight: 700;
     }
   }
 
@@ -91,84 +61,31 @@ background-image:
     font-size: 1.1rem;
     color: #848484;
     max-width: 520px;
-  }
-
-  /* FEATURES */
-  &__features-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.8rem 1.5rem;
-  }
-
-  &__feature {
+    text-decoration: underline;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.836);
-    border: 1px solid #e5e7eb;
-    font-size: 0.9rem;
-    color: #1c2430;
-
-    span {
-      color: #ffbb00;
-      font-weight: 700;
-    }
+    gap: 0.3rem;
+    cursor: pointer;
   }
 
-  /* TRUST */
-  &__trust {
-    font-size: 0.9rem;
-    color: #848484;
-
-    strong {
-      color: #848484;
-      font-weight: 600;
-    }
-  }
-
-  /* CTA */
   &__cta {
     background: #ffffff;
     border-radius: 1.25rem;
-    padding: 2rem 2rem;
+    padding: 1.8rem 2rem 1.8rem;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    padding-bottom: 3rem;
-    max-width: 480px;
+    width: 100%;
+    max-width: 410px;
+    height: 300px;
+    margin-bottom: -5rem;
 
-    p{
-      max-width: 340px;
-    }
-  }
-
-  /* WAVE */
-  &__wave {
-    position: absolute;
-    bottom: -1rem;
-    left: 0;
-    width: 200%;
-    height: 120px;
-    animation: wave-move 12s linear infinite;
-    
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    path {
-      fill: #ffffff;
-
-      /* BORDE */
-      stroke: #e5e7eb;       // color del borde
-      stroke-width: 1px;     // grosor
-      stroke-linejoin: round;
+    p {
+      max-width: 300px;
+      color: black;
     }
   }
 }
@@ -177,18 +94,21 @@ background-image:
 .home-page__offer {
   display: flex;
   flex-direction: column;
-  gap: 0rem;
 
   p{
-    color: black;
+    color: rgb(127, 127, 127);
+    
+    strong{
+      color: #ffbb00;
+    font-weight: 600;
+    }
   }
 }
 
 .home-page__job {
   font-size: 1.8rem;
   font-weight: 600;
-  color: black;
-
+  color: rgb(127, 127, 127);
 
   span {
     color: #ffbb00;
@@ -196,50 +116,18 @@ background-image:
   }
 }
 
-
-/* WAVE ANIMATION */
-@keyframes wave-move {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-
-
-// ------------------------------- responsive
+/* Responsive */
 @media (max-width: 700px) {
   .hero {
     padding: 5rem 1rem 6rem;
 
-    &__container {
-      gap: 2.5rem;
-    }
-
-    /* LEFT */
     &__left {
       max-width: 100%;
-      gap: 1.4rem;
       text-align: center;
     }
 
-    /* BADGE */
-    &__badge {
-      font-size: 0.8rem;
-      padding: 0.3rem 0.6rem;
-      text-align: center;
-      width: fit-content;
-      margin: 0 auto;
-      margin-top: 1rem;
-      margin-bottom: -0.5rem;
-    }
-
-    /* HEADING */
     &__headline {
       font-size: 2rem;
-      line-height: 1.15;
     }
 
     &__subheadline {
@@ -247,45 +135,12 @@ background-image:
       max-width: 100%;
     }
 
-    /* FEATURES */
-    &__features-grid {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &__feature {
-      font-size: 0.85rem;
-      padding: 0.55rem 0.7rem;
-      width: 100%;
-      max-width: 320px;
-    }
-
-    /* TRUST */
-    &__trust {
-      font-size: 0.8rem;
-    }
-
-    /* CTA */
     &__cta {
-      padding: 1.4rem;
-      border-radius: 1rem;
       display: none;
     }
-
-    /* WAVE */
-    &__wave {
-      height: 90px;
-      bottom: -1.5rem;
-    }
   }
 
-  /* CTA INNER */
   .home-page__job {
     font-size: 1.4rem;
-  }
-
-  .home-page__offer {
-    gap: 0.8rem;
   }
 }

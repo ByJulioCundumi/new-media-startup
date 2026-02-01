@@ -1,8 +1,15 @@
 .challenge-page {
   padding: 2rem 3rem;
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   background-color: #fdfdfd;
+
+  &__select{
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+  }
 
   &__left {
     display: flex;

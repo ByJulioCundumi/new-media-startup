@@ -5,8 +5,7 @@ const JobOffer = () => {
   return (
     <>
       <section className="job-offer">
-        <article className="job-offer__card">
-          <aside className="job-offer__action">
+        <aside className="job-offer__action">
             <button
               className="apply-button"
             >
@@ -14,10 +13,9 @@ const JobOffer = () => {
           </button>
 
             <p className="job-offer__note">
-              <span>Únete Gratis</span> y comienza a ganar tus comisiones
+              <strong>Únete Gratis</strong> <span>a nuestro programa de afiliados</span>
             </p>
           </aside>
-        </article>
       </section>
     </>
   );

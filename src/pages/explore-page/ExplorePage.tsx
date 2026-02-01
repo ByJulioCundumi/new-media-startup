@@ -5,7 +5,7 @@ import { setSidebar } from "../../reducers/sidebarSlice"
 import { CategorySelector } from "../../components/category-selector/CategorySelector"
 import StatusSelect from "../../components/status-select/StatusSelect"
 import ExploreNavbar from "../../components/explore-navbar/ExploreNavbar"
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import GenderFilter from "../../components/gender-filter/GenderFilter"
 import { FaSave } from "react-icons/fa"
 import { IoBookmarkOutline } from "react-icons/io5"
@@ -17,6 +17,7 @@ import AvailableChallenges from "../../components/available-challenges/Available
 import Cta from "../../components/cta/Cta"
 import Hero from "../home-page/hero/Hero"
 import ProfileAvatar from "../../components/profile-avatar/ProfileAvatar"
+import { PiReadCvLogo } from "react-icons/pi"
 
 function ExplorePage() {
     const dispatch = useDispatch()
@@ -31,6 +32,19 @@ function ExplorePage() {
     <div className="explore">
         {/* TOP BAR */}
       <div className="explore__topbar">
+
+        {/* LOGO */}
+        <Link
+          to="/"
+          className="navbar__logo"
+          onClick={() => dispatch(setSidebar("templates"))}
+        >
+          <div className="logo-icon">
+            <PiReadCvLogo />
+          </div>
+          <span className="logo-text">CvRemoto</span>
+        </Link>
+        
         <ExploreNavbar/>
         
         <SearchBar

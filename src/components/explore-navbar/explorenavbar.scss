@@ -21,8 +21,8 @@
     bottom: 4px;
     left: 4px;
     border-radius: 40px;
-    background: #ffd000;
-    box-shadow: 0 2px 6px #ffd000;
+    background: #c9cbcc;
+    box-shadow: 0 2px 6px #c9cbcc;
     transition: all 0.3s ease;
     z-index: 1;
     display: flex;
@@ -50,10 +50,9 @@
     }
 
     &.active {
-      color: #353535;
+      color: #ffffff;
       span{
         font-weight: 500;
-        margin-bottom: -0.2rem;
       }
     }
 

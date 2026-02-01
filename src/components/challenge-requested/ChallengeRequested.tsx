@@ -7,8 +7,8 @@ import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime, GiTro
 import { AiOutlineFieldNumber } from "react-icons/ai";
 
 import "./challengerequested.scss";
-import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbSettingsCode, TbTicket } from "react-icons/tb";
-import { LuConciergeBell, LuListTodo, LuReceipt, LuSettings2 } from "react-icons/lu";
+import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbReceiptDollar, TbSettingsCode, TbTicket } from "react-icons/tb";
+import { LuConciergeBell, LuListTodo, LuReceipt, LuReceiptText, LuSettings2 } from "react-icons/lu";
 import { FaRegComment, FaVenusMars } from "react-icons/fa";
 import { PiPulse, PiPulseDuotone } from "react-icons/pi";
 
@@ -126,7 +126,7 @@ export default function ChallengeRequested({
               <MdFlagCircle className="challenge-requested__progress-right" />
             </div>
             <span>
-             <PiPulseDuotone /> 10% de interes
+             10% de interes
             </span>
           </div>
 
@@ -140,11 +140,12 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="name"><GiTrophyCup /> $0.00 </p>
+            <p className="name"><LuReceiptText /> $0.00 </p>
+            <p className="id">@user_name221...</p>
           </div>
 
           <button className="challenge-requested__button">
-             <PiPulseDuotone /> Apoyar Reto
+             <PiPulseDuotone /> Hazlo
           </button>
         </div>
       </div>

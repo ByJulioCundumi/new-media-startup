@@ -54,14 +54,11 @@ const ChallengeInfo: React.FC = () => {
         {/* VIDEO + INFO */}
         {activeSection === "video" && (
           <section className="card">
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur, accusamus.</p>
 
             <div className="video-placeholder">
               🎬 Vista previa del video
             </div>
-
-            <button className="primary-btn">
-              Evaluar calidad del video
-            </button>
           </section>
         )}
 
