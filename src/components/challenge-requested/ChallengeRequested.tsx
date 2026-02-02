@@ -7,7 +7,7 @@ import { GiCheckeredFlag, GiFilmProjector, GiLaurelsTrophy, GiSandsOfTime, GiTro
 import { AiOutlineFieldNumber } from "react-icons/ai";
 
 import "./challengerequested.scss";
-import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbReceiptDollar, TbSettingsCode, TbTicket } from "react-icons/tb";
+import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbInfoCircle, TbReceiptDollar, TbSettingsCode, TbTicket } from "react-icons/tb";
 import { LuConciergeBell, LuListTodo, LuReceipt, LuReceiptText, LuSettings2 } from "react-icons/lu";
 import { FaRegComment, FaVenusMars } from "react-icons/fa";
 import { PiPulse, PiPulseDuotone } from "react-icons/pi";
@@ -84,7 +84,7 @@ export default function ChallengeRequested({
           }
 
           <div className="challenge-requested__prize">
-            <p><IoReceiptOutline /> Ingresos segun Interes: </p>
+            <p><TbInfoCircle /> Oferta segun interes</p>
             <span>
                $0.00 USD
             </span>
@@ -124,7 +124,7 @@ export default function ChallengeRequested({
               <MdFlagCircle className="challenge-requested__progress-right" />
             </div>
             <span>
-             10% de Interes
+             10% De Interes
             </span>
           </div>
 
@@ -137,11 +137,11 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="name">Por: @user_name313</p>
+            <p className="name">@user_name313</p>
           </div>
 
           <button className="challenge-requested__button">
-              Apoyar
+              Apoyar Reto
           </button>
 
           <CgMoreVertical className="challenge-requested__menu" />

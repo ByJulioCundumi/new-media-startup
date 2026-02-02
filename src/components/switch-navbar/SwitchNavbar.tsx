@@ -57,7 +57,7 @@ function SwitchNavbar() {
     
             <Link
               onClick={() => dispatch(setExplreNavbar("activity"))}
-              to="/my-activity"
+              to="/activity"
               className={`switch-navbar__option ${
                 exploreNavbar === "activity" ? "active" : ""
               }`}
