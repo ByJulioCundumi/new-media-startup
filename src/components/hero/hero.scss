@@ -4,8 +4,8 @@
   border-radius: 20px;
   color: #e4e4e4;
   padding: 2rem 2.5rem;
-  width: 95%;
-  margin: 1.5rem auto 0;
+  width: 100%;
+  margin: 0.5rem auto 0;
   height: 280px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -17,6 +17,9 @@
       rgba(255, 204, 35, 0.541) 100%
     ),
     url("https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif");
+  
+  background-position: center;
+  background-size: cover;
 
   &__container {
     max-width: 1070px;

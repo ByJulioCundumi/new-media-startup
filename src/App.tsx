@@ -1,6 +1,5 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import './App.scss'
-import Navbar from './components/navbar/Navbar'
 import AccountPage from './pages/account-page/AccountPage'
 import { useDispatch, useSelector } from 'react-redux'
 import type { IState } from './interfaces/IState'
@@ -13,15 +12,13 @@ import AdminPage from './pages/admin-page/AdminPage'
 import Auth from './components/auth/Auth'
 import MobileNav from './components/mobile-nav/MobileNav'
 import { PiReadCvLogo } from 'react-icons/pi'
-import AffiliatePage from './pages/affililate-page/AffiliatePage'
 import AuthGuard from './util/AuthGuard'
 import AdminGuard from './util/AdminGuard'
-import { Toaster } from 'react-hot-toast';
-import HomePage from './pages/home-page/HomePage'
-import ExplorePage from './pages/explore-page/ExplorePage'
-import ChallengePage from './pages/challenge-page/ChallengePage'
+import { Toaster } from 'react-hot-toast'; 
 import VideoPage from './pages/video-page/VideoPage'
-import RequestPage from './pages/request-page/RequestPage'
+import RequestPage from './pages/challenges-page/ChallengesPage'
+import HomePage from './pages/home-page/HomePage'
+import ChallengesPage from './pages/challenges-page/ChallengesPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -89,30 +86,28 @@ function App() {
         <MobileNav/>
 
         <Toaster
-        position="top-right"     // puedes cambiar a bottom-right, top-center, etc.
-        toastOptions={{
-          duration: 4000,
-          style: {
-            borderRadius: '10px',
-            background: '#fcfcfc',
-            color: '#ffa137',
-          },
-        }}
-      />
+          position="top-right"     // puedes cambiar a bottom-right, top-center, etc.
+          toastOptions={{
+            duration: 4000,
+            style: {
+              borderRadius: '10px',
+              background: '#fcfcfc',
+              color: '#ffa137',
+            },
+          }}
+        />
 
         {/* paginas */}
         <Outlet/>
 
         {/* Rutas */}
         <Routes>
-            <Route path='/' element={<HomePage/>} />
-            <Route path='explore/*' element={<ExplorePage/>}>
-              <Route path='' element={<ChallengePage/>} />
+            <Route path='/*' element={<HomePage/>}>
+              <Route path='' element={<ChallengesPage/>} />
               <Route path='requests' element={<RequestPage/>} />
-              <Route path='videos' element={<VideoPage/>} />
+              <Route path='winners' element={<VideoPage/>} />
             </Route>
             <Route path='pricing' element={<PricingPage/>} />
-            <Route path='affiliates' element={<AffiliatePage/>} />
             <Route path='account' element={
               <AuthGuard>
                 <AccountPage />

@@ -1,5 +1,5 @@
 import "./hero.scss";
-import JobOffer from "../../../components/job-offer/JobOffer";
+import JobOffer from "../job-offer/JobOffer";
 import { TbInfoSquareRounded } from "react-icons/tb";
 
 const Hero = () => {

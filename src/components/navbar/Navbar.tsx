@@ -1,123 +1,46 @@
-import "./navbar.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
-import { setSidebar } from "../../reducers/sidebarSlice";
-import type { IState } from "../../interfaces/IState";
-
-import ProfileAvatar from "../profile-avatar/ProfileAvatar";
-import { TbSettingsCode } from "react-icons/tb";
-import { HiHome } from "react-icons/hi2";
-import { LuFileSearch } from "react-icons/lu";
-import {
-  MdAdminPanelSettings,
-  MdManageSearch,
-  MdWorkOutline,
-} from "react-icons/md";
-import { PiReadCvLogo, PiShoppingCartBold } from "react-icons/pi";
-import { IoSearchOutline } from "react-icons/io5";
-import SearchBar from "../search-bar/SearchBar";
+import { Link } from "react-router-dom"
+import "./navbar.scss"
+import { useDispatch } from "react-redux"
+import { setSidebar } from "../../reducers/sidebarSlice"
+import { PiReadCvLogo } from "react-icons/pi"
+import SwitchNavbar from "../switch-navbar/SwitchNavbar"
+import SearchBar from "../search-bar/SearchBar"
+import { useState } from "react"
+import NotificationBell from "../notification-bell/NotificationBell"
+import ProfileAvatar from "../profile-avatar/ProfileAvatar"
 
 function Navbar() {
-  const dispatch = useDispatch();
-  const { sidebarOption } = useSelector((state: IState) => state.sidebar);
-  const { logged, role } = useSelector((state: IState) => state.user);
+    const dispatch = useDispatch()
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [searchBar, setSearchBar] = useState<string>("");
+    const [status, setStatus] = useState("all");
 
   return (
-    <nav className="navbar">
-      <div className="navbar__content">
+    <div className="navbar">
 
         {/* LOGO */}
         <Link
           to="/"
           className="navbar__logo"
-          onClick={() => dispatch(setSidebar("templates"))}
+          onClick={() => dispatch(setSidebar("challenges"))}
         >
-          <div className="logo-icon">
-            <PiReadCvLogo />
-          </div>
-          <span className="logo-text">CvRemoto</span>
+          <PiReadCvLogo className="navbar__logo-icon"/>
+          <span className="navbar__logo-text">Rettomus</span>
         </Link>
+        
+        <SwitchNavbar/>
+        
+        <SearchBar
+          textHolder="Buscar"
+          onChange={setSearchBar}
+        />
 
-        {/* LINKS */}
-        <ul className="navbar__links">
-
-            <Link
-            to="/"
-            className={`link ${
-              sidebarOption === "templates" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("templates"))}
-          >
-            <HiHome />
-            <span>Inicio</span>
-          </Link>
-
-          <Link
-            to="/explore"
-            className={`link ${
-              sidebarOption === "explore" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("explore"))}
-          >
-            <IoSearchOutline />
-            <span>Explorar</span>
-          </Link>
-
-          <Link
-            to="/pricing"
-            className={`link ${
-              sidebarOption === "pricing" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("pricing"))}
-          >
-            <PiShoppingCartBold className="navbar__pricing" />
-            <span>Suscripciones</span>
-          </Link>
-
-          <Link
-            to="/affiliates"
-            className={`link ${
-              sidebarOption === "affiliates" ? "active" : ""
-            }`}
-            onClick={() => dispatch(setSidebar("affiliates"))}
-          >
-            <MdWorkOutline className="navbar__pricing" />
-            <span>Affiliados</span>
-          </Link>
-
-
-          {role === "USER" && (
-            <Link
-              to="/account"
-              className={`link ${
-                sidebarOption === "account" ? "active" : ""
-              }`}
-              onClick={() => dispatch(setSidebar("account"))}
-            >
-              <TbSettingsCode /> <span>Mi Actividad</span>
-            </Link>
-          )}
-
-          {logged && role === "ADMIN" && (
-            <Link
-              to="/admin"
-              className={`link ${
-                sidebarOption === "admin" ? "active" : ""
-              }`}
-              onClick={() => dispatch(setSidebar("admin"))}
-            >
-              <MdAdminPanelSettings />
-              <span>Admin</span>
-            </Link>
-          )}
-        </ul>
-
-        {/* ACTIONS */}
-        <ProfileAvatar />
+        <div className="navbar__end">
+          <NotificationBell/>
+          <ProfileAvatar/>
+        </div>
       </div>
-    </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

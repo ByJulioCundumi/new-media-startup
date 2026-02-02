@@ -139,8 +139,8 @@ export default function ChallengeRequested({
           />
 
           <div>
+            <p className="id">Ingresos Segun Interes</p>
             <p className="name"> $0.00 USD </p>
-            <p className="id">Pago Ofrecido * Interes</p>
           </div>
 
           <button className="challenge-requested__button">

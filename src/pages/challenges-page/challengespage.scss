@@ -1,13 +1,14 @@
-.request-page{
+.challenges-page{
     display: flex;
     flex-direction: column;
-    padding: 1rem 2rem;
+    padding: 1rem 0rem;
     gap: 1rem;
 
     &__container{
         display: grid;
         grid-template-columns: repeat(3,1fr);
         gap: 1rem;
+        padding: 0 0.5rem;
     }
 
     &__select{
@@ -21,6 +22,7 @@
     }
 
     &__item{
-        scale: 0.97;
+        scale: 0.98;
+        margin: 0 -0.2rem;
     }
 }

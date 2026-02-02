@@ -2,25 +2,25 @@ import { useState } from "react"
 import { CategorySelector } from "../../components/category-selector/CategorySelector"
 import ChallengeRequested from "../../components/challenge-requested/ChallengeRequested"
 import { mockProposals } from "../../util/challengesMock"
-import "./requestpage.scss"
+import "./challengespage.scss"
 import { TbBookmark } from "react-icons/tb"
 import GenderFilter from "../../components/gender-filter/GenderFilter"
 import StatusSelect from "../../components/status-select/StatusSelect"
 
-function RequestPage() {
+function ChallengesPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
           const [status, setStatus] = useState("all");
 
   return (
-    <section className="request-page">
-      <div className="request-page__select">
-        <button className="explore__saved"><TbBookmark/></button>
-        
-                  <CategorySelector
-                    selectedCategories={selectedCategories}
-                    onCategoryChange={setSelectedCategories}
-                  />
+    <section className="challenges-page">
+      <div className="challenges-page__select">
 
+        <button className="saved-btn"><TbBookmark/></button>
+        
+          <CategorySelector
+            selectedCategories={selectedCategories}
+            onCategoryChange={setSelectedCategories}
+          />
 
         <GenderFilter/>
 
@@ -30,9 +30,9 @@ function RequestPage() {
         />
                 </div>
 
-        <div className="request-page__container">
+        <div className="challenges-page__container">
           {mockProposals.map((challenge) => (
-            <div className="request-page__item">
+            <div className="challenges-page__item">
               <ChallengeRequested key={challenge.id} {...challenge} />
             </div>
           ))}
@@ -42,4 +42,4 @@ function RequestPage() {
   )
 }
 
-export default RequestPage
+export default ChallengesPage
