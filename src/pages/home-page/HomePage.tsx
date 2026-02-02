@@ -14,10 +14,10 @@ function HomePage() {
         <div className="home-page__content">
             <div className="home-page__left">
                 <UserStatsPanel
-                activeChallenges={3}
-                productionChallenges={1}
-                votingChallenges={2}
-                videosForSale={4}
+                activeChallenges={353}
+                productionChallenges={101}
+                votingChallenges={142}
+                videosForSale={214}
                 />
 
                 <ConnectionsPanel/>

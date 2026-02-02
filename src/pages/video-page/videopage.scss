@@ -1,19 +1,23 @@
 .video-page{
     display: flex;
     flex-direction: column;
-    padding: 1rem 2rem;
+    padding: 1rem 0rem;
     gap: 1rem;
 
     &__container{
         display: grid;
         grid-template-columns: repeat(3,1fr);
         gap: 1rem;
+        padding: 0 0.5rem;
     }
 
     &__select{
         position: sticky;
-        top: 4rem;
+        top: 0rem;
         z-index: 10;
         background-color: white;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
 }

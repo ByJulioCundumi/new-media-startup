@@ -4,6 +4,9 @@ import ConnectionsPanel from "../../components/connections-panel/ConnectionsPane
 import CreateChallengeProposal from "../../components/create-challenge-proposal/CreateChallengeProposal"
 import VideoCard from "../../components/video-card/VideoCard"
 import "./videopage.scss"
+import { TbBookmark } from "react-icons/tb"
+import GenderFilter from "../../components/gender-filter/GenderFilter"
+import StatusSelect from "../../components/status-select/StatusSelect"
 
 const mockVideos = [
   {
@@ -48,11 +51,21 @@ function VideoPage() {
     <section className="video-page">
 
           <div className="video-page__select">
-            <CategorySelector
-              selectedCategories={selectedCategories}
-              onCategoryChange={setSelectedCategories}
-            />
-          </div>
+          
+                  <button className="saved-btn"><TbBookmark/></button>
+                  
+                    <CategorySelector
+                      selectedCategories={selectedCategories}
+                      onCategoryChange={setSelectedCategories}
+                    />
+          
+                  <GenderFilter/>
+          
+                  <StatusSelect
+                    value={status}
+                    onChange={setStatus}
+                  />
+                          </div>
 
         <div className="video-page__container">
           {[...mockVideos, ...mockVideos].map((video, index) => (

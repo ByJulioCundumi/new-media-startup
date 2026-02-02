@@ -84,11 +84,9 @@ export default function ChallengeRequested({
           }
 
           <div className="challenge-requested__prize">
+            <p><IoReceiptOutline /> Ingresos segun Interes: </p>
             <span>
-              <GiFilmProjector className="challenge-requested__green" /> Entrega en 7 días
-            </span>
-            <span>
-              <IoPlay className="challenge-requested__green" /> 4:00 min
+               $0.00 USD
             </span>
           </div>
         </div>
@@ -139,8 +137,7 @@ export default function ChallengeRequested({
           />
 
           <div>
-            <p className="id">Ingresos Segun Interes</p>
-            <p className="name"> $0.00 USD </p>
+            <p className="name">Por: @user_name313</p>
           </div>
 
           <button className="challenge-requested__button">

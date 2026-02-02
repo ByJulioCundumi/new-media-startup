@@ -25,7 +25,7 @@ const Hero = () => {
           <div className="home-page__offer">
             <p>
               <strong>Obten un 34%  </strong> de comisión Por Cada Pack de Apoyo
-              Comprado.
+              Vendido.
             </p>
           </div>
 

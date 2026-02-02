@@ -10,6 +10,7 @@
   flex-direction: column;
   gap: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.055);
+  height: 100%;
 
   &__header {
     h3 {
@@ -104,6 +105,7 @@
     max-height: 250px;
     overflow-y: auto;
     padding-right: 4px;
+    padding-bottom: 2.5rem;
   }
 
   &__users{
