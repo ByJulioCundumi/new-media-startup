@@ -1,41 +1,44 @@
-import { useState } from "react";
-import "./activityNav.scss";
+import "./activitynav.scss";
+import { useDispatch, useSelector } from "react-redux";
+import type { IState } from "../../interfaces/IState";
+import { setActivityNav } from "../../reducers/navbarSlice";
 
 export type ActivityTab =
-  | "my-challenges"
-  | "supported-challenges"
-  | "video-sales";
+  | "challenges"
+  | "supported"
+  | "selling";
 
 const ActivityNav = () => {
-  const [activeTab, setActiveTab] = useState<ActivityTab>("my-challenges");
+  const dispatch = useDispatch()
+  const {activityNav} = useSelector((state:IState)=>state.navbar)
 
   return (
     <nav className="activity-nav">
       <button
         className={`activity-nav__item ${
-          activeTab === "my-challenges" ? "activity-nav__item--active" : ""
+          activityNav === "challenges" ? "activity-nav__item--active" : ""
         }`}
-        onClick={() => setActiveTab("my-challenges")}
+        onClick={() => dispatch(setActivityNav("challenges"))}
       >
         Mis retos
       </button>
 
       <button
         className={`activity-nav__item ${
-          activeTab === "supported-challenges"
+          activityNav === "supported"
             ? "activity-nav__item--active"
             : ""
         }`}
-        onClick={() => setActiveTab("supported-challenges")}
+        onClick={() => dispatch(setActivityNav("supported"))}
       >
         Retos apoyados
       </button>
 
       <button
         className={`activity-nav__item ${
-          activeTab === "video-sales" ? "activity-nav__item--active" : ""
+          activityNav === "selling" ? "activity-nav__item--active" : ""
         }`}
-        onClick={() => setActiveTab("video-sales")}
+        onClick={() => dispatch(setActivityNav("selling"))}
       >
         Venta de videos
       </button>
