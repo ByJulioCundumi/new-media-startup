@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./activitynav.scss";
+import "./activityNav.scss";
 
 export type ActivityTab =
   | "my-challenges"
@@ -17,7 +17,7 @@ const ActivityNav = () => {
         }`}
         onClick={() => setActiveTab("my-challenges")}
       >
-        <span className="activity-nav__label">Mis retos</span>
+        Mis retos
       </button>
 
       <button
@@ -28,7 +28,7 @@ const ActivityNav = () => {
         }`}
         onClick={() => setActiveTab("supported-challenges")}
       >
-        <span className="activity-nav__label">Retos apoyados</span>
+        Retos apoyados
       </button>
 
       <button
@@ -37,7 +37,7 @@ const ActivityNav = () => {
         }`}
         onClick={() => setActiveTab("video-sales")}
       >
-        <span className="activity-nav__label">Venta de videos</span>
+        Venta de videos
       </button>
     </nav>
   );

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { IState } from "../../interfaces/IState";
 import { useEffect, useRef } from "react";
-import { setExplreNavbar } from "../../reducers/navbarSlice";
 import { MdPendingActions } from "react-icons/md";
 import { PiFilmSlateLight, PiPathDuotone } from "react-icons/pi";
+import { setHomePageNav } from "../../reducers/navbarSlice";
 
 function SwitchNavbar() {
   const dispatch = useDispatch()
-    const { exploreNavbar } = useSelector((state: IState) => state.navbar)
+    const { homePageNav } = useSelector((state: IState) => state.navbar)
     const indicatorRef = useRef<HTMLDivElement>(null)
   
     useEffect(() => {
@@ -23,7 +23,7 @@ function SwitchNavbar() {
         indicator.style.width = `${activeEl.offsetWidth}px`
         indicator.style.left = `${activeEl.offsetLeft}px`
       }
-    }, [exploreNavbar])
+    }, [homePageNav])
 
   return (
     <div className="switch-navbar">
@@ -34,10 +34,10 @@ function SwitchNavbar() {
             />
     
             <Link
-              onClick={() => dispatch(setExplreNavbar("challenges"))}
+              onClick={() => dispatch(setHomePageNav("challenges"))}
               to="/"
               className={`switch-navbar__option ${
-                exploreNavbar === "challenges" ? "active" : ""
+                homePageNav === "challenges" ? "active" : ""
               }`}
             >
               <MdPendingActions />
@@ -45,10 +45,10 @@ function SwitchNavbar() {
             </Link>
     
             <Link
-              onClick={() => dispatch(setExplreNavbar("winners"))}
+              onClick={() => dispatch(setHomePageNav("winners"))}
               to="/winners"
               className={`switch-navbar__option ${
-                exploreNavbar === "winners" ? "active" : ""
+                homePageNav === "winners" ? "active" : ""
               }`}
             >
               <PiFilmSlateLight />
@@ -56,10 +56,10 @@ function SwitchNavbar() {
             </Link>
     
             <Link
-              onClick={() => dispatch(setExplreNavbar("activity"))}
+              onClick={() => dispatch(setHomePageNav("activity"))}
               to="/activity"
               className={`switch-navbar__option ${
-                exploreNavbar === "activity" ? "active" : ""
+                homePageNav === "activity" ? "active" : ""
               }`}
             >
               <PiPathDuotone />

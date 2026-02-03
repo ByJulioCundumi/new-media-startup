@@ -1,4 +1,6 @@
 export interface INavbar{
-    exploreNavbar: string,
+    homePageNav: string;
     genderFilter: "all" | "male" | "female";
+    currentPage: string;
+    activityNav: string;
 }

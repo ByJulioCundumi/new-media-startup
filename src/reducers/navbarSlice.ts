@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    exploreNavbar: "challenges",
-    genderFilter: "all"
+    homePageNav: "challenges",
+    currentPage: "challenges",
+    activityNav: "challenges",
+    genderFilter: "all",
 }
 
 const NavbarSlice = createSlice({
     name: "navbar",
     initialState,
     reducers: {
-        setExplreNavbar: (state, actions)=>{
+        setHomePageNav: (state, actions)=>{
             return {
                 ...state,
-                exploreNavbar: actions.payload
+                homePageNav: actions.payload
             }
         },
          setGenderFilter: (state, actions)=>{
@@ -20,9 +22,21 @@ const NavbarSlice = createSlice({
                 ...state,
                 genderFilter: actions.payload
             }
+        },
+         setCurrentPage: (state, actions)=>{
+            return {
+                ...state,
+                currentPage: actions.payload
+            }
+        },
+        setActivityNav: (state, actions)=>{
+            return {
+                ...state,
+                activityNav: actions.payload
+            }
         }
     }
 })
 
-export const {setExplreNavbar, setGenderFilter} = NavbarSlice.actions
+export const {setHomePageNav, setGenderFilter, setCurrentPage, setActivityNav} = NavbarSlice.actions
 export default NavbarSlice.reducer

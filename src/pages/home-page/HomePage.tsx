@@ -5,8 +5,12 @@ import "./homepage.scss"
 import AvailableChallenges from "../../components/available-challenges/AvailableChallenges"
 import Navbar from "../../components/navbar/Navbar"
 import UserStatsPanel from "../../components/user-stats-panel/UserStatsPanel"
+import { useSelector } from "react-redux"
+import type { IState } from "../../interfaces/IState"
 
 function HomePage() {
+    const {currentPage} = useSelector((state:IState)=>state.navbar)
+
   return (
     <section className="home-page">
         <Navbar/>
@@ -24,7 +28,7 @@ function HomePage() {
             </div>
 
             <div className="home-page__right">
-                <Hero/>
+                {currentPage !== "activity" && <Hero/>}
                 <Outlet/>
             </div>
         </div>

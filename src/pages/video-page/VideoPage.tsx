@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CategorySelector } from "../../components/category-selector/CategorySelector"
 import ConnectionsPanel from "../../components/connections-panel/ConnectionsPanel"
 import CreateChallengeProposal from "../../components/create-challenge-proposal/CreateChallengeProposal"
@@ -7,6 +7,8 @@ import "./videopage.scss"
 import { TbBookmark } from "react-icons/tb"
 import GenderFilter from "../../components/gender-filter/GenderFilter"
 import StatusSelect from "../../components/status-select/StatusSelect"
+import { useDispatch } from "react-redux"
+import { setCurrentPage } from "../../reducers/navbarSlice"
 
 const mockVideos = [
   {
@@ -44,8 +46,13 @@ const mockVideos = [
 ]
 
 function VideoPage() {
+  const dispatch = useDispatch()
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
         const [status, setStatus] = useState("all");
+
+  useEffect(()=>{
+      dispatch(setCurrentPage("videos"))
+    },[])
 
   return (
     <section className="video-page">
