@@ -38,7 +38,7 @@ const ActivityNav = () => {
         className={`activity-nav__item ${
           activityNav === "selling" ? "activity-nav__item--active" : ""
         }`}
-        onClick={() => dispatch(setActivityNav("selling"))}
+        onClick={() => dispatch(setActivityNav("selling")                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              )}
       >
         Venta de videos
       </button>

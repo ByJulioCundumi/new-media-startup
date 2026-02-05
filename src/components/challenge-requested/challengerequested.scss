@@ -207,13 +207,13 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
       align-items: center;
       gap: 0.3rem;
       font-size: 0.7rem;
-      color: #ffbb00;
-      background: #ffbb000e;
+      color: #13a888;
+      background: #13a88810;
       border-radius: 8px;
       padding: 0.3rem 0.5rem;
       cursor: pointer;
       transition: all 0.2s ease;
-      border: 1px solid #ffbb002d;
+      border: 1px solid #13a88811;
       font-weight: 500;
 
       &:hover {
@@ -266,7 +266,7 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
 
       div {
         height: 100%;
-        background: linear-gradient(90deg, #ffbb00, #ffbb00);
+        background: linear-gradient(90deg, #13a888, #13a888);
         transition: width 0.5s ease;
       }
     }
@@ -274,14 +274,14 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
     &-left,
     &-right {
       font-size: 1rem;
-      color: #ffbb00;
+      color: #13a888;
     }
 
     &-left {
       font-size: 1rem;
-      color: #ffbb00;
+      color: #13a888;
       border-radius: 100%;
-      border: 1px solid #ffbb00;
+      border: 1px solid #13a888;
       padding: 0.2rem;
       display: flex;
       justify-content: center;
