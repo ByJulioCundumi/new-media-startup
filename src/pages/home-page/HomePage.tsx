@@ -28,7 +28,7 @@ function HomePage() {
             </div>
 
             <div className="home-page__right">
-                {currentPage === "challenges" && <Hero/>}
+                {(currentPage === "challenges" || currentPage === "videos") && <Hero/>}
                 <Outlet/>
             </div>
         </div>

@@ -54,7 +54,7 @@ const Hero = () => {
             </h1>
 
             <p className="hero__subheadline">
-              <TbInfoSquareRounded /> Descubre cómo funciona
+              <TbInfoSquareRounded /> Gana un 20% de comision como afiliado
             </p>
           </div>
         </div>

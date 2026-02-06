@@ -11,6 +11,7 @@ import { TbArrowBigDown, TbArrowBigUp, TbEdit, TbInfoCircle, TbReceiptDollar, Tb
 import { LuConciergeBell, LuListTodo, LuReceipt, LuReceiptText, LuSettings2 } from "react-icons/lu";
 import { FaRegComment, FaVenusMars } from "react-icons/fa";
 import { PiPulse, PiPulseDuotone } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 interface ChallengeRequestedProps {
   initialExpanded?: boolean;
@@ -24,6 +25,7 @@ export default function ChallengeRequested({
 }: ChallengeRequestedProps) {
 
    const [expanded, setExpanded] = useState(initialExpanded);
+   const navigate = useNavigate()
   const progress = 10;
 
   const isLong = description.length > 95;
@@ -48,7 +50,7 @@ export default function ChallengeRequested({
       {/* PARTE SUPERIOR */}
       <div className="challenge-requested__image">
         <div className="challenge-requested__text-box">
-          <p className="challenge-requested__description">
+          <p className="challenge-requested__description" onClick={()=> navigate("/post")}>
             <span className="challenge-requested__num">
               <MdLockPerson /> Reto 001
             </span>

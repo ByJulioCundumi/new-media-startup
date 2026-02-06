@@ -1,7 +1,12 @@
 import "./challengeInfo.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiThumbsUp, FiShare2, FiArrowLeft } from "react-icons/fi";
 import { FaTimes, FaMedal } from "react-icons/fa";
+import { PiPulseDuotone } from "react-icons/pi";
+import { MdFlagCircle } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { setCurrentPage } from "../../reducers/navbarSlice";
+import { TbInfoCircle } from "react-icons/tb";
 
 const mockSupporters = Array.from({ length: 12 }).map((_, i) => ({
   id: i,
@@ -11,6 +16,7 @@ const mockSupporters = Array.from({ length: 12 }).map((_, i) => ({
 }));
 
 const ChallengeInfo = () => {
+  const dispatch = useDispatch()
   const [comments, setComments] = useState([
     { id: 1, user: "Carlos", text: "Excelente reto 👏" },
     { id: 2, user: "Ana", text: "Muy buen video. ¡A por el 100%!" },
@@ -39,6 +45,10 @@ const ChallengeInfo = () => {
 
   const sortedSupporters = [...mockSupporters].sort((a, b) => b.points - a.points);
   const totalPoints = sortedSupporters.reduce((sum, u) => sum + u.points, 0);
+
+  useEffect(()=>{
+    dispatch(setCurrentPage("post"))
+  },[])
 
   return (
     <div className="challenge-info">
@@ -80,7 +90,6 @@ const ChallengeInfo = () => {
 
           {/* Description */}
           <section className="challenge-description">
-            <h1 className="challenge-title">Reto: 100% Interés del Público</h1>
             <p>
               Completa el reto, alcanza el 100% de interés del público y valida tu video para
               venta dentro de la plataforma. El nivel de apoyo define el valor final del reto.
@@ -139,8 +148,14 @@ const ChallengeInfo = () => {
         <aside className="challenge-info__sidebar">
           <div className="interest-card">
             <div className="interest-header">
-              <h3>Interés del público</h3>
-              <span className="total-points">{totalPoints.toLocaleString()} pts</span>
+
+              <div className="challenge-requested__prize">
+                          <p><TbInfoCircle /> Oferta segun interes</p>
+                          <span>
+                             $0.00 USD
+                          </span>
+                        </div>
+
             </div>
 
             {selectedUser && (
@@ -185,6 +200,9 @@ const ChallengeInfo = () => {
                 );
               })}
             </div>
+
+          <button>Apoyar Reto</button>
+
           </div>
         </aside>
       </div>
