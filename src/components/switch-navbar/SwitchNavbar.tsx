@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { MdPendingActions } from "react-icons/md";
 import { PiFilmSlateLight, PiPathDuotone } from "react-icons/pi";
 import { setHomePageNav } from "../../reducers/navbarSlice";
+import { HiOutlineShoppingCart } from "react-icons/hi2";
 
 function SwitchNavbar() {
   const dispatch = useDispatch()
@@ -64,6 +65,17 @@ function SwitchNavbar() {
             >
               <PiPathDuotone />
               <span>Mi Actividad</span>
+            </Link>
+
+            <Link
+              onClick={() => dispatch(setHomePageNav("activity"))}
+              to="/activity"
+              className={`switch-navbar__option ${
+                homePageNav === "activity" ? "active" : ""
+              }`}
+            >
+              <HiOutlineShoppingCart />
+              <span></span>
             </Link>
     
           </div>

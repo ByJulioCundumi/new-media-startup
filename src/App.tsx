@@ -20,6 +20,7 @@ import RequestPage from './pages/challenges-page/ChallengesPage'
 import HomePage from './pages/home-page/HomePage'
 import ChallengesPage from './pages/challenges-page/ChallengesPage'
 import ActivityPage from './pages/activity-page/ActivityPage'
+import ChallengeInfo from './components/challenge-info/ChallengeIngo'
 
 function App() {
   const dispatch = useDispatch()
@@ -108,6 +109,7 @@ function App() {
               <Route path='requests' element={<RequestPage/>} />
               <Route path='winners' element={<VideoPage/>} />
               <Route path='activity' element={<ActivityPage/>} />
+              <Route path='post' element={<ChallengeInfo/>} />
             </Route>
             <Route path='pricing' element={<PricingPage/>} />
             <Route path='account' element={

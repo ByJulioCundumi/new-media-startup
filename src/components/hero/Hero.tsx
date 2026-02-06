@@ -49,8 +49,8 @@ const Hero = () => {
         <div className="hero__left">
           <div className="hero__heading">
             <h1 className="hero__headline">
-              <span>Genera Ingresos</span> Realizando <br />
-              Retos <span>En Video</span>
+              <span>Genera Ingresos</span> Realizando
+              Retos <br /> <span>En Video</span>
             </h1>
 
             <p className="hero__subheadline">
@@ -65,7 +65,7 @@ const Hero = () => {
           <div className="hero__carousel">
             <div key={index} className="hero__slide">
               <div className="hero__icon">{steps[index].icon}</div>
-              <h4>{steps[index].title}</h4>
+              <h4>{index+1}. {steps[index].title}</h4>
               <p>{steps[index].desc}</p>
             </div>
           </div>
