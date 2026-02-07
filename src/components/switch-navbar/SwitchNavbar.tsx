@@ -7,6 +7,8 @@ import { MdPendingActions } from "react-icons/md";
 import { PiFilmSlateLight, PiPathDuotone } from "react-icons/pi";
 import { setHomePageNav } from "../../reducers/navbarSlice";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { RiAccountPinCircleLine } from "react-icons/ri";
+import { CgYoutube } from "react-icons/cg";
 
 function SwitchNavbar() {
   const dispatch = useDispatch()
@@ -52,7 +54,7 @@ function SwitchNavbar() {
                 homePageNav === "winners" ? "active" : ""
               }`}
             >
-              <PiFilmSlateLight />
+              <CgYoutube size={20}/>
               <span>Ganadores </span>
             </Link>
     
@@ -63,15 +65,15 @@ function SwitchNavbar() {
                 homePageNav === "activity" ? "active" : ""
               }`}
             >
-              <PiPathDuotone />
-              <span>Mi Actividad</span>
+              <RiAccountPinCircleLine />
+              <span>Mi Cuenta</span>
             </Link>
 
             <Link
               onClick={() => dispatch(setHomePageNav("activity"))}
-              to="/activity"
+              to="/subscriptions"
               className={`switch-navbar__option ${
-                homePageNav === "activity" ? "active" : ""
+                homePageNav === "subscriptions" ? "active" : ""
               }`}
             >
               <HiOutlineShoppingCart />

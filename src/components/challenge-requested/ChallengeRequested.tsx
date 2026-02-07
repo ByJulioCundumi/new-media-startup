@@ -126,7 +126,7 @@ export default function ChallengeRequested({
               <MdFlagCircle className="challenge-requested__progress-right" />
             </div>
             <span>
-             10% De Interes
+             50 pts para iniciar
             </span>
           </div>
 

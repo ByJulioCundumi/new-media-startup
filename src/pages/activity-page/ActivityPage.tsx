@@ -8,6 +8,7 @@ import type { IState } from "../../interfaces/IState"
 import MyChallenges from "../my-challenges/MyChallenges"
 import SupportedChallenges from "../supported-challenges/SupportedChallenges"
 import SellingPage from "../selling-page/SellingPage"
+import Profile from "../../components/profile/Profile"
 
 function ActivityPage() {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ function ActivityPage() {
 
   return (
     <section className="activity-page">
+      <Profile/>
         <div className="activity-page__topbar">
             <ActivityNav/>
             <StatusSelect />
