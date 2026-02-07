@@ -56,9 +56,9 @@
     }
 
     &:hover .video-card__play {
-      color: #ffd900;
+      color: #0d9e8b;
       transform: scale(1.15);
-      filter: drop-shadow(0 0 10px #ffd900);
+      filter: drop-shadow(0 0 10px #0d9e8b);
     }
 
     .video-card__duration {
@@ -81,7 +81,7 @@
       bottom: 14px;
       right: 12px;
       z-index: 3;
-      background: linear-gradient(135deg, #ffc400, #ffc400);
+      background: linear-gradient(135deg, #0d9e8b, #0d9e8b);
       color: #fff;
       font-weight: 600;
       font-size: 14px;
@@ -108,8 +108,8 @@
       }
 
       &:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 16px #ffc400;
+        transform: scale(1.02);
+        box-shadow: 0 0 16px #0d9e8b;
       }
     }
 
@@ -140,7 +140,7 @@
         }
 
         svg {
-          color: #ffc400;
+          color: #0d9e8b;
         }
       }
     }
@@ -159,7 +159,7 @@
       height: 42px;
       border-radius: 100%;
       object-fit: cover;
-      border: 1px solid #ffc400;
+      border: 1px solid #0d9e8b;
       flex-shrink: 0;
       box-shadow: 0 0 10px rgba(0, 255, 140, 0.25);
     }
@@ -194,9 +194,9 @@
         }
 
         .verified {
-          color: #ffc400;
+          color: #0d9e8b;
           font-size: 14px;
-          filter: drop-shadow(0 0 4px #ffc400);
+          filter: drop-shadow(0 0 4px #0d9e8b);
         }
       }
     }

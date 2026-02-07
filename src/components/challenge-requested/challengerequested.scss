@@ -83,7 +83,7 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
   }
 
   &__num{
-    color: #ffbb00;
+    color: #707070;
     font-weight: 300;
     padding: 0.3rem 0.6rem;
     border-radius: 10px;
@@ -96,7 +96,7 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
   }
 
   &__see-more {
-    color: #ffbb00;
+    color: #707070;
     margin-left: 0.2rem;
     cursor: pointer;
     font-weight: 400;
@@ -356,9 +356,9 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
 
     button {
       margin-left: auto;
-      background: linear-gradient(90deg, #13a888, #13a888);
-      border: none;
-      color: #fff;
+      background-color: rgb(255, 255, 255);
+      border: 1px solid #0000001a;
+      color: #0d9e8b;
       padding: 0.5rem 0.9rem;
       border-radius: 8px;
       display: flex;
@@ -367,6 +367,7 @@ box-shadow: 0 0px 10px rgba(0, 0, 0, 0.082);
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: 500;
 
       &:hover {
         opacity: 0.9;

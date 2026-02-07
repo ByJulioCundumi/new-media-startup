@@ -49,14 +49,8 @@ const VideoCard: React.FC<VideoCardProps> = ({
         <div className="video-card__duration">{duration}</div>
 
         <div className="video-card__reward">
-          <GiTrophyCup /> <span>Ganó {reward}</span>
+          <GiTrophyCup /> <span> {reward}</span>
         </div>
-
-        {
-          sidebarOption !== "home" && <div className="video-card__reward">
-          <GiTrophyCup /> <span>Ganó {reward}</span>
-        </div>
-        }
 
         <div className="video-card__actions">
           <button><LuHeart /> {likes}</button>

@@ -22,7 +22,7 @@ const UserStatsPanel: React.FC<UserStatsPanelProps> = ({
 
       <div className="stats-panel__list">
         <div className="stats-panel__item">
-          <span className="stats-panel__label"><MdPendingActions /> Campaña</span>
+          <span className="stats-panel__label"><MdPendingActions /> Mis Retos</span>
           <span className="stats-panel__value">{activeChallenges}</span>
         </div>
 

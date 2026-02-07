@@ -53,29 +53,6 @@ const ConnectionsPanel: React.FC = () => {
         </button>
       </nav>
 
-      {/* SELECTED USER */}
-      {selectedUser ?  (
-      <div className="connections-panel__selected">
-        
-            <img src={selectedUser.avatar} alt={selectedUser.username} />
-
-            <div className="connections-panel__selected-info">
-              <strong>@{selectedUser.username}</strong>
-            </div>
-
-            <button
-              className="connections-panel__clear"
-              onClick={() => setSelectedUserId(null)}
-              aria-label="Deseleccionar usuario"
-            >
-              <FaTimes />
-            </button>
-      </div> 
-        )
-        :
-      <div className="connections-space"></div>
-      }
-
       {/* SEARCH */}
       <div className="connections-panel__search">
         <FaSearch />
